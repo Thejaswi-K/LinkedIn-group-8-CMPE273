@@ -112,15 +112,24 @@ var applicantSchema = new mongoose.Schema({
     default: false
   },
 
-
-
-//job id is saved
+  //job id is saved
   savedJobs: [
-        {
-        type: Schema.Types.ObjectId,
-        ref : 'Jobs'
-        }
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Jobs"
+    }
   ],
+  
+  connectionsRequests : {
+    type: Array,
+    required : false, 
+    defuaut: []
+  },
+  connections: {
+    type: Array,
+    required: false,
+    defuaut: []
+  }
 });
 
 module.exports = mongoose.model("Applicants", applicantSchema);

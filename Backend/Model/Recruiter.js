@@ -81,6 +81,16 @@ var recruiterSchema = new mongoose.Schema({
   isRecruiter: {
     type: Boolean,
     default: true
+  },
+  connectionsRequests : {
+    type: Array,
+    required : false, 
+    defuaut: []
+  },
+  connections : {
+    type: Array,
+    required : false, 
+    defuaut: []
   }
 });
 
