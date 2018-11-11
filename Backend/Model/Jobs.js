@@ -83,7 +83,7 @@ var jobSchema = new mongoose.Schema({
     required: false,
     default: []
   },
-  application: [
+  jobApplication: [
     {
       application_id: {
         type: String,
