@@ -7,12 +7,12 @@ var cors = require("cors");
 app.use(require("sanitize").middleware);
 
 var mysql = require("mysql");
-var pool = require("./pool");
+
 
 var jwt = require("jsonwebtoken");
 var passport = require("passport");
 
-var crypt = require("./db/crypt");
+
 var kafka = require("./kafka/client");
 
 app.use(cors({ origin: "localhost:3000", credentials: true }));
