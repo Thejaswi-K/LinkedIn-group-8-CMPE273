@@ -104,6 +104,28 @@ app.get('/jobs/:title&:location', function (req, res) {
         }
     });
   });
+
+
+
+app.get('/jobs/:job_id', function (req, res) {
+    console.log("inside backend get jobs details")
+  
+    kafka.make_request('jobs_topic',{"path":"getJobsDetail", "id":req.params.job_id}, function(err,result){
+        if(err){
+            res.status(404).json({success:false,  error: "Job not found"}).send(err);
+        }
+        else
+        console.log("Job details", result);
+        { if(result.status){
+          res.status(200)
+          res.send(result);
+        }else{ 
+          res.status(400)
+          .json({success: false})
+        }
+        }
+    });
+  });
   
 
 app.get('/healthcheck', (req,res) =>{
