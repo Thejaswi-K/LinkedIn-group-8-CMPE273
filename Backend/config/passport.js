@@ -1,8 +1,8 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const mongoose = require('mongoose');
-const TravellerUser = mongoose.model('travellerUser');
-const OwnerUser = mongoose.model('ownerUser');
+const Recruiter = mongoose.model('Recruiters');
+const Applicant = mongoose.model('Applicants');
 const keys = require('../config/keys');
 
 const opts = {};
@@ -12,8 +12,8 @@ opts.secretOrKey = keys.secretOrKey;
 module.exports = passport => {
     passport.use(
         new JwtStrategy(opts, (jwt_payload, done) => {
-            if (jwt_payload.type === "owner") {
-                OwnerUser.findById(jwt_payload.id)
+            if (jwt_payload.isRecruiter === true) {
+                Recruiter.findById(jwt_payload.email)
                     .then(user => {
                         if (user) {
                             return done(null, user);
@@ -22,7 +22,7 @@ module.exports = passport => {
                     })
                     .catch(err => console.log(err));
             } else {
-                TravellerUser.findById(jwt_payload.id)
+                Applicant.findById(jwt_payload.email)
                     .then(user => {
                         if (user) {
                             return done(null, user);
