@@ -4,6 +4,7 @@ var connection =  new require('./kafka/Connection');
 //topics files
 //var signin = require('./services/signin.js');
  var Log = require('./services/logs.js');
+var Job = require('./services/jobs.js');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -39,4 +40,5 @@ function handleTopicRequest(topic_name,fname){
 //second argument is a function that will handle this topic request
 
 handleTopicRequest("logs_topic",Log)
+handleTopicRequest("jobs_topic",Job)
 

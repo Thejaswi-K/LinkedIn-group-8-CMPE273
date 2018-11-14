@@ -119,10 +119,10 @@ var applicantSchema = new mongoose.Schema({
       ref: "Jobs"
     }
   ],
-  
-  connectionsRequests : {
+
+  connectionsRequests: {
     type: Array,
-    required : false, 
+    required: false,
     defuaut: []
   },
   connections: {
