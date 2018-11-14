@@ -84,6 +84,28 @@ app.get('/recruiters/:recruiter_id/jobs/top-ten', function (req, res) {
   });
   
 
+
+app.get('/jobs/:title&:location', function (req, res) {
+    console.log("inside backend /jobs/:title&:location")
+  
+    kafka.make_request('jobs_topic',{"path":"getJobsTitleLocation", "title":req.params.title, "location":req.params.location}, function(err,result){
+        if(err){
+            res.status(404).json({success:false,  error: "Job not found"}).send(err);
+        }
+        else
+        console.log("Job search", result);
+        { if(result.status){
+          res.status(200)
+          res.send(result);
+        }else{ 
+          res.status(400)
+          .json({success: false})
+        }
+        }
+    });
+  });
+  
+
 app.get('/healthcheck', (req,res) =>{
     console.log("health check success")
     res.status(200)
