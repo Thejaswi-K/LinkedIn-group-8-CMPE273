@@ -15,7 +15,7 @@ var passport = require("passport");
 
 var kafka = require("./kafka/client");
 
-app.use(cors({ origin: "localhost:3000", credentials: true }));
+app.use(cors({origin: "localhost:3000", credentials: true }));
 
 //Allow Access Control
 app.use(function(req, res, next) {
@@ -35,98 +35,24 @@ app.use(function(req, res, next) {
 
 
 
+var index = require('./routes/api/index')
+var applicant = require('./routes/api/applicant');
+var jobs = require('./routes/api/jobs');
+var recruiter = require('./routes/api/recruiter');
 
 
 
 
-app.get('/applicants/:applicant_id/logs/profile-view-count', function (req, res) {
-    console.log("inside backend profile-view-count")
-  
-    kafka.make_request('logs_topic',{"path":"getProfileViewCount", "id":req.params.applicant_id}, function(err,result){
-        if(err){
-            res.status(404).json({success:false,  error: "Applicant not found"}).send(err);
-        }
-        else
-        console.log("applicant log profile view count", result);
-        { if(result.status){
-          res.status(200)
-          res.send(result);
-        }else{ 
-          res.status(400)
-          .json({success: false})
-        }
-        }
-    });
-  });
-  
+
+app.use('/', index);
+app.use('/jobs' , jobs);
+app.use('/applicants', applicant);
+app.use('/recruiters', recruiter);
 
 
 
 
-app.get('/recruiters/:recruiter_id/jobs/top-ten', function (req, res) {
-    console.log("inside backend jobs/top-ten")
-  
-    kafka.make_request('logs_topic',{"path":"getJobsTopTen", "id":req.params.recruiter_id}, function(err,result){
-        if(err){
-            res.status(404).json({success:false,  error: "Recruiter not found"}).send(err);
-        }
-        else
-        console.log("Recruiter log Top Ten Jobs", result);
-        { if(result.status){
-          res.status(200)
-          res.send(result);
-        }else{ 
-          res.status(400)
-          .json({success: false})
-        }
-        }
-    });
-  });
-  
 
-
-app.get('/jobs/:title&:location', function (req, res) {
-    console.log("inside backend /jobs/:title&:location")
-  
-    kafka.make_request('jobs_topic',{"path":"getJobsTitleLocation", "title":req.params.title, "location":req.params.location}, function(err,result){
-        if(err){
-            res.status(404).json({success:false,  error: "Job not found"}).send(err);
-        }
-        else
-        console.log("Job search", result);
-        { if(result.status){
-          res.status(200)
-          res.send(result);
-        }else{ 
-          res.status(400)
-          .json({success: false})
-        }
-        }
-    });
-  });
-
-
-
-app.get('/jobs/:job_id', function (req, res) {
-    console.log("inside backend get jobs details")
-  
-    kafka.make_request('jobs_topic',{"path":"getJobsDetail", "id":req.params.job_id}, function(err,result){
-        if(err){
-            res.status(404).json({success:false,  error: "Job not found"}).send(err);
-        }
-        else
-        console.log("Job details", result);
-        { if(result.status){
-          res.status(200)
-          res.send(result);
-        }else{ 
-          res.status(400)
-          .json({success: false})
-        }
-        }
-    });
-  });
-  
 
 app.get('/healthcheck', (req,res) =>{
     console.log("health check success")
