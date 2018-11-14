@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const JWT_KEY = "secret";
 
-var mongo = require("./mongo");
+var mongo = require("../db/mongo");
 var mongoURL = "mongodb://mithun:password273@ds121753.mlab.com:21753/linkedin";
 
 require("dotenv").config();
