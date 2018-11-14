@@ -2,7 +2,6 @@ var MongoClient = require('mongodb').MongoClient;
 var db;
 var connected = false;
 
-
 /**
  * Connects to the MongoDB Database with the provided URL
  */
