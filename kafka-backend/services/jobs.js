@@ -8,7 +8,7 @@ const JWT_KEY = "secret";
 
 var mongo = require("../db/mongo");
 var mongoURL = "mongodb://mithun:password273@ds121753.mlab.com:21753/linkedin";
-
+var ObjectId = require("mongodb").ObjectID;
 require("dotenv").config();
 
 exports.handlerService = function handlerService(msg, callback) {
@@ -63,7 +63,7 @@ function getJobsDetail(msg, callback) {
       if (err) console.log("Mongo connection error", err);
       else {
         console.log("connected to mongo client");
-        var result = db.collection("jobs").findOne({ _id: msg.id });
+        var result = db.collection("jobs").findOne({ _id: ObjectId(msg.id) });
         result
           .then(doc => {
             if (doc != null) {
