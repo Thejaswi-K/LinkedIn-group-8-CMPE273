@@ -1,7 +1,8 @@
-import mongoose from 'mongoose';
-import applicantModel from '../Model/Applicant';
-import recruiterModel from '../Model/Recruiter';
-import jobsModel from '../Model/Jobs';
+
+
+var applicantModel = require('../Model/Applicant');
+var recruiterModel = require('../Model/Recruiter');
+var jobsModel = require('../Model/Jobs');
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");

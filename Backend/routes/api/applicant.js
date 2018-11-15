@@ -6,7 +6,7 @@ const keys = require('../../config/keys');
 const passport = require('passport');
 var kafka = require('../../kafka/client');
 
-const Applicants = require('../../Model/Applicant');
+//const Applicants = require('../../Model/Applicant');
 
 
 /*

@@ -44,11 +44,11 @@ var recruiter = require('./routes/api/recruiter');
 
 
 
-app.use('/', index);
+//app.use('/', index);
 app.use('/jobs' , jobs);
 app.use('/applicants', applicant);
 app.use('/recruiters', recruiter);
-
+app.use
 
 
 

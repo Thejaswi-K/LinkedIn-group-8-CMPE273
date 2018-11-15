@@ -5,7 +5,7 @@ const router = express.Router();
 
 var kafka = require("../../kafka/client");
 
-router.get("/jobs/:title&:location", function(req, res) {
+router.get("/:title&:location", function(req, res) {
   console.log("inside backend /jobs/:title&:location");
 
   kafka.make_request(
@@ -34,7 +34,7 @@ router.get("/jobs/:title&:location", function(req, res) {
   );
 });
 
-router.get("/jobs/:jobId", function(req, res) {
+router.get("/:jobId", function(req, res) {
   console.log("inside backend get jobs details");
 
   kafka.make_request(

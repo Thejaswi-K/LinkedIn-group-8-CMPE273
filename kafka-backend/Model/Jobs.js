@@ -73,7 +73,7 @@ var jobSchema = new mongoose.Schema({
     required: false,
     default: []
   },
-  jobApplications: [jobApplication]
+  jobApplications: [jobApplication.schema]
 });
 
 module.exports = mongoose.model("Jobs", jobSchema);

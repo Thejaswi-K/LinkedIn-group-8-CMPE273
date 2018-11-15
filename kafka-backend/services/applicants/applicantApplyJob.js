@@ -34,7 +34,7 @@ function handle_request(msg, callback) {
         JobsModel.findOneAndUpdate(
           { _id: msg.jobId },
           {
-            $push: { jobApplication: newJobApplication },
+            $push: { jobApplications: newJobApplication },
             $inc: { noOfViews: 1 }
           },
           jobsModel.save(function(err) {
