@@ -59,12 +59,11 @@ router.get('/:applicantId/logs/profile-view-count', function (req, res) {
     });
     });
 
-
+//applicant Applies for new job
 router.post('/:applicantId/jobs/:jobId',function(req,res){
-    //Update the corresponding JobId with this into job application object ($addToSet)
-    //Increment noOfApplicants +1 
+    //Update the corresponding JobId with this info into job application object ($addToSet)
     //Increment noOfViews +1
-    //
+    // add jobId into applicant Collection as appliedJobs
     //
 
     kafka.make_request('applicant_topic', {"applicantId":req.params.applicantId , "jobId":req.params.jobId, "data" : req.body }, function(err,results){
