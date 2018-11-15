@@ -2,13 +2,13 @@
 var kafka = require("../../kafka/client");
 
 var express = require("express");
-var app = express();
+const router = express.Router();
 
 
-app.get('/recruiters/:recruiter_id/jobs/top-ten', function (req, res) {
+router.get('/recruiters/:recruiterId/jobs/top-ten', function (req, res) {
     console.log("inside backend jobs/top-ten")
   
-    kafka.make_request('logs_topic',{"path":"getJobsTopTen", "id":req.params.recruiter_id}, function(err,result){
+    kafka.make_request('logs_topic',{"path":"getJobsTopTen", "id":req.params.recruiterId}, function(err,result){
         if(err){
             res.status(404).json({success:false,  error: "Recruiter not found"}).send(err);
         }
@@ -25,4 +25,4 @@ app.get('/recruiters/:recruiter_id/jobs/top-ten', function (req, res) {
     });
   });
   
-
+  module.exports = router;

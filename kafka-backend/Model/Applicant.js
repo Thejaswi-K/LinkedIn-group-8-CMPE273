@@ -119,16 +119,23 @@ var applicantSchema = new mongoose.Schema({
       ref: "Jobs"
     }
   ],
+  appliedJobs: 
+    {
+      type: Array,
+    required: false,
+    default: []
+    }
+  ,
 
   connectionsRequests: {
     type: Array,
     required: false,
-    defuaut: []
+    default: []
   },
   connections: {
     type: Array,
     required: false,
-    defuaut: []
+    default: []
   }
 });
 

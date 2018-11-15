@@ -1,6 +1,7 @@
-const applicantModel = require("../Model/Applicant");
-const recruiterModel = require("../Model/Recruiter");
-const jobsModel = require("../Model/Jobs");
+import mongoose from 'mongoose';
+import applicantModel from '../Model/Applicant';
+import recruiterModel from '../Model/Recruiter';
+import jobsModel from '../Model/Jobs';
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");

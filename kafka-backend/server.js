@@ -5,7 +5,7 @@ var connection =  new require('./kafka/Connection');
 //var signin = require('./services/signin.js');
 var Log = require('./services/logs.js');
 var Job = require('./services/jobs.js');        
-
+var Applicant = require('./services/applicants/applicantApplyJob.js')
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
     var consumer = connection.getConsumer(topic_name);
@@ -41,4 +41,5 @@ function handleTopicRequest(topic_name,fname){
 
 handleTopicRequest("logs_topic",Log);
 handleTopicRequest("jobs_topic",Job);
+handleTopicRequest("applicant_topic",Applicant);
 

@@ -1,11 +1,11 @@
 // Hello world
 
 var express = require("express");
-var app = express();
+const router = express.Router();
 
 var kafka = require("../../kafka/client");
 
-app.get("/jobs/:title&:location", function(req, res) {
+router.get("/jobs/:title&:location", function(req, res) {
   console.log("inside backend /jobs/:title&:location");
 
   kafka.make_request(
@@ -34,12 +34,12 @@ app.get("/jobs/:title&:location", function(req, res) {
   );
 });
 
-app.get("/jobs/:job_id", function(req, res) {
+router.get("/jobs/:jobId", function(req, res) {
   console.log("inside backend get jobs details");
 
   kafka.make_request(
     "jobs_topic",
-    { path: "getJobsDetail", id: req.params.job_id },
+    { path: "getJobsDetail", id: req.params.jobId },
     function(err, result) {
       if (err) {
         res
@@ -58,3 +58,8 @@ app.get("/jobs/:job_id", function(req, res) {
     }
   );
 });
+
+
+
+
+module.exports = router;

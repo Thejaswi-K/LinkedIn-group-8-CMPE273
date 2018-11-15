@@ -34,7 +34,7 @@ app.use(function(req, res, next) {
 });
 
 
-
+//index.js stores the homepage 
 var index = require('./routes/api/index')
 var applicant = require('./routes/api/applicant');
 var jobs = require('./routes/api/jobs');

@@ -39,12 +39,6 @@ var jobSchema = new mongoose.Schema({
     set: utility.capitalizeFirstLetter,
     default: ""
   },
-
-  noOfApplicants: {
-    type: Number,
-    required: false,
-    default: 0
-  },
   noOfViews: {
     type: Number,
     required: false,
@@ -71,12 +65,7 @@ var jobSchema = new mongoose.Schema({
     required: false,
     default: ""
   },
-  //stores the applicant ID
-  appliedBy: {
-    type: Array,
-    required: false,
-    default: []
-  },
+  
   // stores the applicant ID who have saved this
   savedBy: {
     type: Array,
@@ -84,8 +73,9 @@ var jobSchema = new mongoose.Schema({
     default: []
   },
   jobApplication: [
-    {
-      application_id: {
+    { application_id :mongoose.Schema.Types.ObjectId,
+
+      applicant_id: {
         type: String,
         required: false,
         default: ""
