@@ -21,9 +21,25 @@ exports.handlerService = function handlerService(msg, callback) {
     case "getJobsDetail":
       getJobsDetail(msg, callback);
       break;
+    case "getSavedJobsNumber":
+      getSavedJobsNumber(msg, callback);
   }
 };
-//SEARCHES Job based on title and Location
+
+function getSavedJobsNumber(msg, callback) {
+  jobsModel.find({'recruiterId':msg.recruiterId}, function(err, jobs){
+    if(err){
+      callback(err, null);
+    }
+    else{
+      if(jobs){
+        callback(null, JSON.stringify({_id, savedBy}));
+      }
+    }
+  });
+}
+
+
 function getJobsTitleLocation(msg, callback) {
   console.log("KAFKA : getJobsTitleLocation --> ", msg.title, msg.location);
 

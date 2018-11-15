@@ -59,7 +59,29 @@ router.get("/:jobId", function(req, res) {
   );
 });
 
-
+router.get("/recruiters/:recruiterId/jobs/logs/saved-job-count", function(req, res){
+  console.log("inside backend get number of saved jobs");
+  kafka.make_request(
+    "jobs_topic",
+    { path: "getSavedJobsNumber", recruiterId: req.params.recruiterId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Jobs empty" })
+          .send(err);
+      } else console.log("Jobs saved number", result);
+      {
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
 
 
 module.exports = router;
