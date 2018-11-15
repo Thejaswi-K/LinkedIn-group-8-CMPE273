@@ -12,6 +12,8 @@
   "dependencies": {
     "bcrypt": "^3.0.2",
     "bcrypt-nodejs": "0.0.3",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.2.0",
     "formidable": "^1.1.1",
     "glob": "^7.1.2",
     "images-upload-middleware": "^1.1.1",
