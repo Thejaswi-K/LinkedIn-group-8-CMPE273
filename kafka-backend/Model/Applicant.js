@@ -119,6 +119,7 @@ var applicantSchema = new mongoose.Schema({
       ref: "Jobs"
     }
   ],
+  //job id is saved
   appliedJobs: 
     {
       type: Array,
