@@ -22,7 +22,7 @@ exports.handlerService = function handlerService(msg, callback) {
       break;
   }
 };
-
+//SEARCHES Job based on title and Location
 function getJobsTitleLocation(msg, callback) {
   console.log("KAFKA : getJobsTitleLocation --> ", msg.title, msg.location);
 

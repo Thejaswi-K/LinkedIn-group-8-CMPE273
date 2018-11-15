@@ -66,7 +66,27 @@ router.post('/:applicantId/jobs/:jobId',function(req,res){
     // add jobId into applicant Collection as appliedJobs
     //
 
-    kafka.make_request('applicant_topic', {"applicantId":req.params.applicantId , "jobId":req.params.jobId, "data" : req.body }, function(err,results){
+    kafka.make_request('applicant_topic', {"path": "jobApply","applicantId":req.params.applicantId , "jobId":req.params.jobId, "data" : req.body }, function(err,results){
+        if(err){
+            throw err;
+            done(err,{});
+            }
+        else{
+            if(results.code == 200){
+                return res.status(200).json(results.value);;
+            }else{
+                return res.status(500).json(results.value);;
+            }
+            }
+        });
+    });
+      
+
+//applicant Saves job
+router.post('/:applicantId/jobs/:jobId/save',function(req,res){
+    //Update applicant schema ADD jobid into savedJobs
+    //store applicant id in savedJobs of Jobs
+    kafka.make_request('applicant_topic', {"path": "jobSave", "applicantId":req.params.applicantId , "jobId":req.params.jobId, "data" : req.body }, function(err,results){
         if(err){
             throw err;
             done(err,{});
