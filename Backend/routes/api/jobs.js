@@ -1,11 +1,11 @@
 // Hello world
 
 var express = require("express");
-var app = express();
+const router = express.Router();
 
 var kafka = require("../../kafka/client");
 
-app.get("/jobs/:title&:location", function(req, res) {
+router.get("/:title&:location", function(req, res) {
   console.log("inside backend /jobs/:title&:location");
 
   kafka.make_request(
@@ -34,12 +34,12 @@ app.get("/jobs/:title&:location", function(req, res) {
   );
 });
 
-app.get("/jobs/:job_id", function(req, res) {
+router.get("/:jobId", function(req, res) {
   console.log("inside backend get jobs details");
 
   kafka.make_request(
     "jobs_topic",
-    { path: "getJobsDetail", id: req.params.job_id },
+    { path: "getJobsDetail", id: req.params.jobId },
     function(err, result) {
       if (err) {
         res
@@ -58,3 +58,30 @@ app.get("/jobs/:job_id", function(req, res) {
     }
   );
 });
+
+router.get("/recruiters/:recruiterId/jobs/logs/saved-job-count", function(req, res){
+  console.log("inside backend get number of saved jobs");
+  kafka.make_request(
+    "jobs_topic",
+    { path: "getSavedJobsNumber", recruiterId: req.params.recruiterId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Jobs empty" })
+          .send(err);
+      } else console.log("Jobs saved number", result);
+      {
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+
+module.exports = router;

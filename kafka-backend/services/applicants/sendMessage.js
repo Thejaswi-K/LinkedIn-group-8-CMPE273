@@ -8,11 +8,14 @@ function handle_request(msg, callback) {
   var members = [msg.from_email, msg.to_email];
 
   Messages.findOne({
-    messageMembers: { $all: ["msg.from_email", "msg.to_email"] }
+    messageMembers: members
   }).then(user => {
     if (!user) {
+      console.log("In from and to empty");
+      console.log(user);
+      console.log(members);
       const newMessage = new Messages({
-        members: members,
+        messageMembers: members,
         authorMessage: [
           {
             author: msg.from_email,
@@ -32,12 +35,12 @@ function handle_request(msg, callback) {
           console.log(err);
           res.code = "400";
           res.value = "Unsuccessfull";
-          callback(err, "Message not send properly");
+          callback(err, "New Message not saved properly");
         }
       );
     } else {
       Messages.findOneAndUpdate(
-        { messageMembers: { $all: ["msg.from_email", "msg.to_email"] } },
+        { messageMembers: members },
         {
           $push: {
             authorMessage: [
@@ -50,7 +53,10 @@ function handle_request(msg, callback) {
         }
       ).then(
         message => {
-          console.log("Message send to desired User: ", message);
+          console.log(
+            "Message send to desired User when message already exists: ",
+            message
+          );
           res.status = "200";
           res.value = "Success Sending Message to desired User";
           callback(null, res);
@@ -60,7 +66,7 @@ function handle_request(msg, callback) {
           console.log(err);
           res.code = "400";
           res.value = "Unsuccessfull";
-          callback(err, "Message not send properly");
+          callback(err, "Update Message not send properly");
         }
       );
     }

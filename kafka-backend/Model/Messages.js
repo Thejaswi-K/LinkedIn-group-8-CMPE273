@@ -1,7 +1,7 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var messageSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+const messageSchema = new Schema({
   messageMembers: {
     type: Array,
     required: false,

@@ -113,13 +113,17 @@ var applicantSchema = new mongoose.Schema({
   },
 
   //job id is saved
-  savedJobs: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Jobs"
-    }
-  ],
-
+  savedJobs: {
+    type: Array,
+    required: false,
+    default: []
+  },
+  //job id is saved
+  appliedJobs: {
+    type: Array,
+    required: false,
+    default: []
+  },
   connectionsRequests: [
     {
       requestFrom: { type: String, required: false, default: "" },
