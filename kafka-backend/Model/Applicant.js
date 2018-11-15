@@ -120,16 +120,20 @@ var applicantSchema = new mongoose.Schema({
     }
   ],
 
-  connectionsRequests: {
-    type: Array,
-    required: false,
-    defuaut: []
-  },
-  connections: {
-    type: Array,
-    required: false,
-    defuaut: []
-  }
+  connectionsRequests: [
+    {
+      requestFrom: { type: String, required: false, default: "" },
+      requestTo: { type: String, required: false, default: "" },
+      isAccepted: { type: Boolean, required: false, default: "" }
+    }
+  ],
+  connections: [
+    {
+      accptedFrom: { type: String, required: false, default: "" },
+      acceptedTo: { type: String, required: false, default: "" },
+      isAccepted: { type: Boolean, required: false, default: "" }
+    }
+  ]
 });
 
 module.exports = mongoose.model("Applicants", applicantSchema);
