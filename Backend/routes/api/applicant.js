@@ -8,7 +8,7 @@ var kafka = require('../../kafka/client');
 
 const Applicants = require('../../Model/Applicant');
 
-/*router.get('/detailsTraveller/:travellerEmail',  passport.authenticate('jwt', {session: false}),
+router.get('/detailsTraveller/:travellerEmail',  passport.authenticate('jwt', {session: false}),
     (req, res) => {
 
         const errors = {};
@@ -30,6 +30,6 @@ const Applicants = require('../../Model/Applicant');
 
 
         });
-    });*/
+    });
 
 module.exports = router;
