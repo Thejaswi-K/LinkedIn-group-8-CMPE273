@@ -4,7 +4,9 @@ var connection =  new require('./kafka/Connection');
 //topics files
 //var signin = require('./services/signin.js');
 var Log = require('./services/logs.js');
-var Job = require('./services/jobs.js');        
+var Job = require('./services/jobs.js');
+var RecruiterJobView = require('./services/recruiter/recruiterViewJobById.js');  
+var RecruiterJobUpdate = require('./services/recruiter/recruiterUpdateJob.js');         
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -41,4 +43,6 @@ function handleTopicRequest(topic_name,fname){
 
 handleTopicRequest("logs_topic",Log);
 handleTopicRequest("jobs_topic",Job);
+handleTopicRequest("recruiter_JobView",RecruiterJobView);
+handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
 

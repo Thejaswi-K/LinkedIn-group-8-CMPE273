@@ -24,5 +24,48 @@ app.get('/recruiters/:recruiter_id/jobs/top-ten', function (req, res) {
         }
     });
   });
+
+  app.get('/recruiters/recruiter_id/jobs/job_id', function(req, res){
+
+    kafka.make_request('recruiter_JobView',req.body.job_id, function(err,results){
+        console.log('in result');
+        console.log(results);
+        if (err){
+            console.log("Inside err");
+            res.json({
+                status:"error",
+                msg:"Unable to fetch Job."
+            })
+        }else{
+            console.log("Inside else");
+                res.json({
+                    fetchedJob:results
+                });
+
+                res.end();
+            }
+    });
+});
+
+app.put('/recruiters/recruiter_id/jobs/job_id', function(req, res){
+  kafka.make_request('recruiter_JobUpdate',{"id":req.body.job_id, "body":req.body}, function(err,results){
+      console.log('in result');
+      console.log(results);
+      if (err){
+          console.log("Inside err");
+          res.json({
+              status:"error",
+              msg:"Unable to Update Job."
+          })
+      }else{
+          console.log("Inside else");
+              res.json({
+                  UpdatedJob:results
+              });
+
+              res.end();
+          }
+  });
+});
   
 
