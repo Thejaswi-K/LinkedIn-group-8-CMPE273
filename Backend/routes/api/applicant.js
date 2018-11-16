@@ -146,6 +146,39 @@ router.get('/:applicant_id', passport.authenticate('jwt', {session: false}),
         });
     });
 
+
+//delete applicant
+router.delete('/:applicant_id',
+    passport.authenticate('jwt', {session: false}),
+    (req, res) => {
+
+        const errors = {};
+        kafka.make_request('applicant_delete', req.body, function (err, results) {
+            console.log('in result');
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                })
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+
+                res.end();
+            }
+
+
+        });
+
+    });
+
+
 router.get("/:applicantId/logs/profile-view-count", function(req, res) {
   console.log("inside backend profile-view-count");
 
