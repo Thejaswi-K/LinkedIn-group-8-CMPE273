@@ -1,6 +1,8 @@
-const applicantModel = require("../Model/Applicant");
-const recruiterModel = require("../Model/Recruiter");
-const jobsModel = require("../Model/Jobs");
+
+
+var applicantModel = require('../Model/Applicant');
+var recruiterModel = require('../Model/Recruiter');
+var jobsModel = require('../Model/Jobs');
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -19,8 +21,24 @@ exports.handlerService = function handlerService(msg, callback) {
     case "getJobsDetail":
       getJobsDetail(msg, callback);
       break;
+    case "getSavedJobsNumber":
+      getSavedJobsNumber(msg, callback);
   }
 };
+
+function getSavedJobsNumber(msg, callback) {
+  jobsModel.find({'recruiterId':msg.recruiterId}, function(err, jobs){
+    if(err){
+      callback(err, null);
+    }
+    else{
+      if(jobs){
+        callback(null, JSON.stringify({_id, savedBy}));
+      }
+    }
+  });
+}
+
 
 function getJobsTitleLocation(msg, callback) {
   console.log("KAFKA : getJobsTitleLocation --> ", msg.title, msg.location);
