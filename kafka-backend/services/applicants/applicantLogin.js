@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const keys = require('../../config/keys');
 var mysql = require('mysql');
-var pool = require('../../db/pool');
+var pool = require('../../db/mysql');
 
 
 

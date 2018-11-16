@@ -1,4 +1,4 @@
-// Load Property model
+// Load Applicant model
 const ApplicantUser = require('../../Model/Applicant');
 
 function handle_request(msg, callback) {

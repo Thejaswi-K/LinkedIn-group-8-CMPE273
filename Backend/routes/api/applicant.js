@@ -15,6 +15,7 @@ handle cases for double url paramters like /applicants/{applicant_id}/jobs/{job_
 ********************************************************************************************************
 */
 
+//applicant login
 router.post('/login', (req, res) => {
     kafka.make_request('applicant_login', req.body, function (err, results) {
         console.log('in result');
@@ -45,7 +46,78 @@ router.post('/login', (req, res) => {
     });
 });
 
-router.get('/applicants/:applicant_id', passport.authenticate('jwt', {session: false}),
+//applicant signup
+router.post('/', (req, res) => {
+    // const { errors, isValid } = validateRegisterInput(req.body);
+
+    // Check Validation
+    /* if (!isValid) {
+         return res.status(400).json(errors);
+     }*/
+
+    kafka.make_request('applicant_signup', req.body, function (err, results) {
+        console.log('in result');
+        console.log(results);
+        if (err) {
+            console.log("Inside err");
+            res.json({
+                status: "error",
+                msg: "System Error, Try Again."
+            })
+        } else {
+            if (results.code === 200) {
+                res.status(results.code).json({
+                    success: true,
+                    token: 'Bearer ' + results.token
+                });
+            } else {
+                res.status(results.code).json({
+                    error: results.err
+                })
+            }
+
+
+            res.end();
+        }
+
+    });
+});
+
+//update applicant profile
+router.put('/:applicant_id',
+    passport.authenticate('jwt', {session: false}),
+    (req, res) => {
+
+        const errors = {};
+        kafka.make_request('update_applicant', req.body, function (err, results) {
+            console.log('in result');
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                })
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+
+                res.end();
+            }
+
+
+        });
+
+    });
+
+
+
+
+router.get('/:applicant_id', passport.authenticate('jwt', {session: false}),
     (req, res) => {
 
         const errors = {};

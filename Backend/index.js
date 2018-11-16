@@ -17,6 +17,9 @@ var kafka = require("./kafka/client");
 
 app.use(cors({origin: "localhost:3000", credentials: true }));
 
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
 //Allow Access Control
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
