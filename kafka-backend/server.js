@@ -43,6 +43,6 @@ function handleTopicRequest(topic_name,fname){
 
 handleTopicRequest("logs_topic",Log);
 handleTopicRequest("jobs_topic",Job);
-handleTopicRequest("recruiter_JobView",RecruiterJobView);
-handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
+// handleTopicRequest("recruiter_JobView",RecruiterJobView);
+// handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
 
