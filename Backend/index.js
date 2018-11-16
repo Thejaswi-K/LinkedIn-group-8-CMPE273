@@ -34,7 +34,7 @@ app.use(function(req, res, next) {
 });
 
 
-
+//index.js stores the homepage 
 var index = require('./routes/api/index')
 var applicant = require('./routes/api/applicant');
 var jobs = require('./routes/api/jobs');
@@ -44,11 +44,11 @@ var recruiter = require('./routes/api/recruiter');
 
 
 
-app.use('/', index);
+//app.use('/', index);
 app.use('/jobs' , jobs);
 app.use('/applicants', applicant);
 app.use('/recruiters', recruiter);
-
+app.use
 
 
 

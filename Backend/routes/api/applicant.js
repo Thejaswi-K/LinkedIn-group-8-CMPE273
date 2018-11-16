@@ -74,29 +74,67 @@ router.get('/applicants/:applicant_id', passport.authenticate('jwt', {session: f
         });
     });
 
-router.get('/applicants/:applicant_id/logs/profile-view-count', function (req, res) {
+router.get('/:applicantId/logs/profile-view-count', function (req, res) {
     console.log("inside backend profile-view-count")
 
-    kafka.make_request('logs_topic', {
-        "path": "getProfileViewCount",
-        "id": req.params.applicant_id
-    }, function (err, result) {
-        if (err) {
-            res.status(404).json({success: false, error: "Applicant not found"}).send(err);
+    kafka.make_request('logs_topic',{"path":"getProfileViewCount", "id":req.params.applicantId}, function(err,result){
+        if(err){
+            res.status(404).json({success:false,  error: "Applicant not found"}).send(err);
         }
         else
-            console.log("applicant log profile view count", result);
-        {
-            if (result.status) {
-                res.status(200)
-                res.send(result);
-            } else {
-                res.status(400)
-                    .json({success: false})
-            }
+        console.log("applicant log profile view count", result);
+        { if(result.status){
+            res.status(200)
+            res.send(result);
+        }else{
+            res.status(400)
+            .json({success: false})
+        }
         }
     });
-});
+    });
+
+//applicant Applies for new job
+router.post('/:applicantId/jobs/:jobId',function(req,res){
+    //Update the corresponding JobId with this info into job application object ($addToSet)
+    //Increment noOfViews +1
+    // add jobId into applicant Collection as appliedJobs
+    //
+
+    kafka.make_request('applicant_topic', {"path": "jobApply","applicantId":req.params.applicantId , "jobId":req.params.jobId, "data" : req.body }, function(err,results){
+        if(err){
+            throw err;
+            done(err,{});
+            }
+        else{
+            if(results.code == 200){
+                return res.status(200).json(results.value);;
+            }else{
+                return res.status(500).json(results.value);;
+            }
+            }
+        });
+    });
 
 
+//applicant Saves job
+router.post('/:applicantId/jobs/:jobId/save',function(req,res){
+    //Update applicant schema ADD jobid into savedJobs
+    //store applicant id in savedJobs of Jobs
+    kafka.make_request('applicant_topic', {"path": "jobSave", "applicantId":req.params.applicantId , "jobId":req.params.jobId, "data" : req.body }, function(err,results){
+        if(err){
+            throw err;
+            done(err,{});
+            }
+        else{
+            if(results.code == 200){
+                return res.status(200).json(results.value);;
+            }else{
+                return res.status(500).json(results.value);;
+            }
+            }
+        });
+    });
+      
+    
 module.exports = router;

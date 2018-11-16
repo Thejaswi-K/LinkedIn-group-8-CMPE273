@@ -5,7 +5,7 @@ function ConnectionProvider() {
     this.getConsumer = function(topic_name) {
         // if (!this.kafkaConsumerConnection) {
 
-            this.client = new kafka.Client("localhost:2181");
+            this.client = new kafka.Client("localhost:2183");
             /*this.client.refreshMetadata([{topic: topic_name}], (err) => {
                 if (err) {
                     console.warn('Error refreshing kafka metadata', err);
@@ -21,7 +21,7 @@ function ConnectionProvider() {
     this.getProducer = function() {
 
         if (!this.kafkaProducerConnection) {
-            this.client = new kafka.Client("localhost:2181");
+            this.client = new kafka.Client("localhost:2183");
             /*this.client.refreshMetadata([{topic: topic_name}], (err) => {
                 if (err) {
                     console.warn('Error refreshing kafka metadata', err);

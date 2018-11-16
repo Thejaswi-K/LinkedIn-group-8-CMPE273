@@ -86,7 +86,7 @@ var applicantSchema = new mongoose.Schema({
     required: false,
     default: ""
   },
-  profileimage: {
+  profileImage: {
     type: String,
     required: false,
     default: ""
@@ -113,22 +113,31 @@ var applicantSchema = new mongoose.Schema({
   },
 
   //job id is saved
-  savedJobs: [
+  savedJobs: 
     {
-      type: Schema.Types.ObjectId,
-      ref: "Jobs"
+      type: Array,
+    required: false,
+    default: []
     }
-  ],
-  
-  connectionsRequests : {
+  ,
+  //job id is saved
+  appliedJobs: 
+    {
+      type: Array,
+    required: false,
+    default: []
+    }
+  ,
+
+  connectionsRequests: {
     type: Array,
-    required : false, 
-    defuaut: []
+    required: false,
+    default: []
   },
   connections: {
     type: Array,
     required: false,
-    defuaut: []
+    default: []
   }
 });
 
