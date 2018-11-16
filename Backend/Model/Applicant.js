@@ -113,32 +113,27 @@ var applicantSchema = new mongoose.Schema({
   },
 
   //job id is saved
-  savedJobs: 
+  savedJobs: [
     {
-      type: Array,
-    required: false,
-    default: []
+      type: Schema.Types.ObjectId,
+      ref: "Jobs"
     }
-  ,
-  //job id is saved
-  appliedJobs: 
-    {
-      type: Array,
-    required: false,
-    default: []
-    }
-  ,
+  ],
 
-  connectionsRequests: {
-    type: Array,
-    required: false,
-    default: []
-  },
-  connections: {
-    type: Array,
-    required: false,
-    default: []
-  }
+  connectionsRequests: [
+    {
+      requestFrom: { type: String, required: false, default: "" },
+      requestTo: { type: String, required: false, default: "" },
+      isAccepted: { type: Boolean, required: false, default: "" }
+    }
+  ],
+  connections: [
+    {
+      accptedFrom: { type: String, required: false, default: "" },
+      acceptedTo: { type: String, required: false, default: "" },
+      isAccepted: { type: Boolean, required: false, default: "" }
+    }
+  ]
 });
 
 module.exports = mongoose.model("Applicants", applicantSchema);

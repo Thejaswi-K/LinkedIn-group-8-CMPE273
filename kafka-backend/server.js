@@ -53,7 +53,7 @@ handleTopicRequest("applicant_login", ApplicantLogin);
 handleTopicRequest("applicant_signup", ApplicantSignup);
 handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
 handleTopicRequest("applicant_delete", ApplicantDelete);
-
-
 handleTopicRequest("applicant_topic",Applicant);
+// handleTopicRequest("recruiter_JobView",RecruiterJobView);
+// handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
 
