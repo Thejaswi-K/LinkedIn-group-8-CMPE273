@@ -52,19 +52,19 @@ function handleTopicRequest(topic_name, fname) {
 //first argument is topic name
 //second argument is a function that will handle this topic request
 
-handleTopicRequest("logs_topic", Log);
+// handleTopicRequest("logs_topic", Log);
 handleTopicRequest("jobs_topic", Job);
-handleTopicRequest("applicant_details", ApplicantDetails);
-handleTopicRequest("recruiter_details", RecruiterDetails);
-handleTopicRequest("applicant_login", ApplicantLogin);
-handleTopicRequest("recruiter_login", RecruiterLogin);
-handleTopicRequest("applicant_signup", ApplicantSignup);
-handleTopicRequest("recruiter_signup", RecruiterSignup);
-handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
-handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
-handleTopicRequest("applicant_delete", ApplicantDelete);
-handleTopicRequest("recruiter_delete", RecruiterDelete);
-handleTopicRequest("applicant_topic",Applicant);
+// handleTopicRequest("applicant_details", ApplicantDetails);
+// handleTopicRequest("recruiter_details", RecruiterDetails);
+// handleTopicRequest("applicant_login", ApplicantLogin);
+// handleTopicRequest("recruiter_login", RecruiterLogin);
+// handleTopicRequest("applicant_signup", ApplicantSignup);
+// handleTopicRequest("recruiter_signup", RecruiterSignup);
+// handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
+// handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
+// handleTopicRequest("applicant_delete", ApplicantDelete);
+// handleTopicRequest("recruiter_delete", RecruiterDelete);
+// handleTopicRequest("applicant_topic",Applicant);
 // handleTopicRequest("recruiter_JobView",RecruiterJobView);
 // handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
 

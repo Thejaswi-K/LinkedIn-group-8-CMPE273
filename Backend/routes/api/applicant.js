@@ -163,6 +163,7 @@ router.delete('/:applicant_id',
     });
 
 
+    //Get Profile view count of particular applicant
 router.get("/:applicantId/logs/profile-view-count", function(req, res) {
   console.log("inside backend profile-view-count");
 
