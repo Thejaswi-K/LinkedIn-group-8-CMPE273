@@ -6,6 +6,7 @@ var { mongoose } = require("./mongo");
 // var Job = require('./services/jobs.js');
 // var Applicant = require('./services/applicants/applicants.js')
 var sendMessage = require("./services/applicants/sendMessage");
+var receiveMessage = require("./services/applicants/receiveMessage");
 
 function handleTopicRequest(topic_name, fname) {
   var consumer = connection.getConsumer(topic_name);
@@ -47,3 +48,4 @@ function handleTopicRequest(topic_name, fname) {
 // handleTopicRequest("jobs_topic",Job);
 // handleTopicRequest("applicant_topic",Applicant);
 handleTopicRequest("send_message", sendMessage);
+handleTopicRequest("receive_message", receiveMessage);

@@ -8,7 +8,7 @@ function handle_request(msg, callback) {
   var members = [msg.from_email, msg.to_email];
 
   Messages.findOne({
-    messageMembers: members
+    messageMembers: { $in: [msg.from_email, msg.to_email] }
   }).then(user => {
     if (!user) {
       console.log("In from and to empty");
@@ -40,7 +40,7 @@ function handle_request(msg, callback) {
       );
     } else {
       Messages.findOneAndUpdate(
-        { messageMembers: members },
+        { messageMembers: { $in: [msg.from_email, msg.to_email] } },
         {
           $push: {
             authorMessage: [

@@ -143,4 +143,24 @@ router.post("/sendMessage", (req, res) => {
   });
 });
 
+/****************Receiving Messages *************** */
+router.get("/receiveMessage", (req, res) => {
+  console.log("Inside getting messages conversation");
+  console.log(req.query.from_email);
+  console.log(req.query.to_email);
+  kafka.make_request("receive_message", req.query, function(err, results) {
+    console.log("In message conversation result call");
+    console.log(results);
+    if (err) {
+      console.log("Inside err");
+      return res.status(400).json({
+        message: "Getting message conversation Failed"
+      });
+    } else {
+      console.log("Inside getting message conversation Success");
+      return res.status(200).json(results);
+    }
+  });
+});
+
 module.exports = router;
