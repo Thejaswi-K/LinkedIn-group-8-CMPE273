@@ -75,11 +75,8 @@ router.post('/', (req, res) => {
                     error: results.err
                 })
             }
-
-
             res.end();
         }
-
     });
 });
 
@@ -87,9 +84,8 @@ router.post('/', (req, res) => {
 router.put('/:applicant_id',
     passport.authenticate('jwt', {session: false}),
     (req, res) => {
-
         const errors = {};
-        kafka.make_request('update_applicant', req.body, function (err, results) {
+        kafka.make_request('applicant_update_profile', req.body, function (err, results) {
             console.log('in result');
             console.log(results);
             if (err) {
@@ -108,15 +104,12 @@ router.put('/:applicant_id',
 
                 res.end();
             }
-
-
         });
 
     });
 
 
-
-
+//Get Applicant details
 router.get('/:applicant_id', passport.authenticate('jwt', {session: false}),
     (req, res) => {
 
@@ -137,15 +130,10 @@ router.get('/:applicant_id', passport.authenticate('jwt', {session: false}),
                 } else {
                     res.status(results.code).json(results.message);
                 }
-
-
                 res.end();
             }
-
-
         });
     });
-
 
 //delete applicant
 router.delete('/:applicant_id',
@@ -169,13 +157,9 @@ router.delete('/:applicant_id',
                 } else {
                     res.status(results.code).json(results.errorMessage);
                 }
-
                 res.end();
             }
-
-
         });
-
     });
 
 
