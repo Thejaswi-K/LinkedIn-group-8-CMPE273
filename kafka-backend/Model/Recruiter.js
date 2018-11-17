@@ -63,7 +63,7 @@ var recruiterSchema = new mongoose.Schema({
     required: false,
     default: ""
   },
-  profileimage: {
+  profileImage: {
     type: String,
     required: false,
     default: ""
