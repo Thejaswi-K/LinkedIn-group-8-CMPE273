@@ -14,6 +14,10 @@ exports.handlerService = function handlerService(msg, callback) {
   }
 };
 
+
+
+
+
 function postJobSave(msg, callback) {
   //Update applicant schema ADD jobid into savedJobs
   //store applicant id in savedJobs of Jobs

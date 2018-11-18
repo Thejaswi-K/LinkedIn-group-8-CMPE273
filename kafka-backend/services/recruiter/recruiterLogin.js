@@ -10,12 +10,9 @@ function handle_request(msg, callback) {
     var res = {};
     const email = msg.email;
     const password = msg.password;
-
     var sql = "SELECT EXISTS (" +
         "SELECT * FROM applicant WHERE email" + " = " + mysql.escape(email) + " AND password = " + mysql.escape(password) + ")"
-
     pool.getConnection(function (err, con) {
-
         if (err) {
             res.writeHead(400, {
                 'Content-Type': 'text/plain'
@@ -58,13 +55,8 @@ function handle_request(msg, callback) {
                 }
             });
         }
-
-
     });
-
-
     console.log("after callback" + this.res);
 };
-
 
 exports.handle_request = handle_request;

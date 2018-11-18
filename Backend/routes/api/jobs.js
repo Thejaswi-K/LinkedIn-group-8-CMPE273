@@ -4,6 +4,7 @@ const router = express.Router();
 
 var kafka = require("../../kafka/client");
 
+//SEARCH jobs based on title and location
 router.get("/:title&:location", function(req, res) {
   console.log("inside backend /jobs/:title&:location");
 
@@ -33,6 +34,8 @@ router.get("/:title&:location", function(req, res) {
   );
 });
 
+
+//GET details of particular job
 router.get("/:jobId", function(req, res) {
   console.log("inside backend get jobs details");
 
@@ -58,6 +61,8 @@ router.get("/:jobId", function(req, res) {
   );
 });
 
+
+//Get Number of saved jobs for each job of recruiter
 router.get("/recruiters/:recruiterId/jobs/logs/saved-job-count", function(req, res){
   console.log("inside backend get number of saved jobs");
   kafka.make_request(

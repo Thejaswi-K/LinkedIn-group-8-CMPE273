@@ -5,6 +5,159 @@ var express = require("express");
 const router = express.Router();
 
 
+//Recruiter login
+router.post('/login', (req, res) => {
+    kafka.make_request('recruiter_login', req.body, function (err, results) {
+        console.log('in result');
+        console.log(results);
+        if (err) {
+            console.log("Inside err");
+            res.json({
+                status: "error",
+                msg: "System Error, Try Again."
+            })
+        } else {
+            console.log("Inside else", results);
+            if (results.code === 200) {
+                res.status(results.code).json({
+                    success: true,
+                    token: 'Bearer ' + results.token
+                });
+            } else {
+                res.status(results.code).json({
+                    error: results.err
+                })
+            }
+            res.end();
+        }
+    });
+});
+
+//Recruiter Signup
+router.post('/', (req, res) => {
+    kafka.make_request('recruiter_signup', req.body, function (err, results) {
+        console.log('in result');
+        console.log(results);
+        if (err) {
+            console.log("Inside err");
+            res.json({
+                status: "error",
+                msg: "System Error, Try Again."
+            })
+        } else {
+            if (results.code === 201) {
+                res.status(results.code).json({
+                    success: true,
+                    token: 'Bearer ' + results.token
+                });
+            } else {
+                res.status(results.code).json({
+                    error: results.err
+                })
+            }
+            res.end();
+        }
+    });
+});
+
+//update Recruiter profile
+router.put('/:recruiter_id',
+    passport.authenticate('jwt', {session: false}),
+    (req, res) => {
+        const errors = {};
+        kafka.make_request('recruiter_update_profile', req.body, function (err, results) {
+            console.log('in result');
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                })
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+                res.end();
+            }
+        });
+    });
+
+//Get Recruiter details
+router.get('/:recruiter_id', passport.authenticate('jwt', {session: false}),
+    (req, res) => {
+
+        const errors = {};
+        kafka.make_request('recruiter_details', req.params, function (err, results) {
+            console.log('in result');
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                })
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 200) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.message);
+                }
+                res.end();
+            }
+        });
+    });
+
+//delete Recruiter
+router.delete('/:recruiter_id',
+passport.authenticate('jwt', {session: false}),
+(req, res) => {
+
+    const errors = {};
+    kafka.make_request('recruiter_delete', req.body, function (err, results) {
+        console.log('in result');
+        console.log(results);
+        if (err) {
+            console.log("Inside err");
+            res.json({
+                status: "error",
+                msg: "System Error, Try Again."
+            })
+        } else {
+            console.log("Inside else", results);
+            if (results.code === 202) {
+                res.status(results.code).json(results.message);
+            } else {
+                res.status(results.code).json(results.errorMessage);
+            }
+            res.end();
+        }
+    });
+});
+
+
+//GET LOGS of top ten jobs of recruiter he/she has posted 
+//Returns : 
+/*
+{
+    Jobs: [
+           {job_id: "1", number_of_applicants: 800}, 
+           {job_id: "2", number_of_applicants: 600}, 
+           {job_id: "3", number_of_applicants: 700}, 
+           {job_id: "4", number_of_applicants: 650}, 
+           {job_id: "5", number_of_applicants: 900}, 
+           {job_id: "6", number_of_applicants: 200}, 
+           {job_id: "7", number_of_applicants: 300}, 
+           {job_id: "8", number_of_applicants: 350}, 
+           {job_id: "9", number_of_applicants: 100}, 
+           {job_id: "10", number_of_applicants: 1000}
+          ]
+}
+*/
 router.get('/recruiters/:recruiterId/jobs/top-ten', function (req, res) {
     console.log("inside backend jobs/top-ten")
   
@@ -25,47 +178,50 @@ router.get('/recruiters/:recruiterId/jobs/top-ten', function (req, res) {
     });
   });
 
-  app.get('/recruiters/recruiter_id/jobs/job_id', function(req, res){
 
-    kafka.make_request('recruiter_JobView',req.body.job_id, function(err,results){
-        console.log('in result');
-        console.log(results);
-        if (err){
-            console.log("Inside err");
+// Recruiter can view job details 
+app.get('/recruiters/recruiter_id/jobs/job_id', function(req, res){
+
+kafka.make_request('recruiter_JobView',req.body.job_id, function(err,results){
+    console.log('in result');
+    console.log(results);
+    if (err){
+        console.log("Inside err");
+        res.json({
+            status:"error",
+            msg:"Unable to fetch Job."
+        })
+    }else{
+        console.log("Inside else");
             res.json({
-                status:"error",
-                msg:"Unable to fetch Job."
-            })
-        }else{
-            console.log("Inside else");
-                res.json({
-                    fetchedJob:results
-                });
+                fetchedJob:results
+            });
 
-                res.end();
-            }
-    });
+            res.end();
+        }
+});
 });
 
+//Recruiter updates job details
 app.put('/recruiters/recruiter_id/jobs/job_id', function(req, res){
-  kafka.make_request('recruiter_JobUpdate',{"id":req.body.job_id, "body":req.body}, function(err,results){
-      console.log('in result');
-      console.log(results);
-      if (err){
-          console.log("Inside err");
-          res.json({
-              status:"error",
-              msg:"Unable to Update Job."
-          })
-      }else{
-          console.log("Inside else");
-              res.json({
-                  UpdatedJob:results
-              });
+kafka.make_request('recruiter_JobUpdate',{"id":req.body.job_id, "body":req.body}, function(err,results){
+    console.log('in result');
+    console.log(results);
+    if (err){
+        console.log("Inside err");
+        res.json({
+            status:"error",
+            msg:"Unable to Update Job."
+        })
+    }else{
+        console.log("Inside else");
+            res.json({
+                UpdatedJob:results
+            });
 
-              res.end();
-          }
-  });
+            res.end();
+        }
 });
-  
+});
+
   module.exports = router;
