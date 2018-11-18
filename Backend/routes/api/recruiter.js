@@ -1,6 +1,6 @@
 // Hello world
 var kafka = require("../../kafka/client");
-
+var passport = require('passport');
 var express = require("express");
 const router = express.Router();
 

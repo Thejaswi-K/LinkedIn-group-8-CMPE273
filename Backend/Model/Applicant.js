@@ -115,8 +115,9 @@ var applicantSchema = new mongoose.Schema({
   //job id is saved
   savedJobs: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Jobs"
+      type: String,
+      required: false,
+      default: ""
     }
   ],
 

@@ -6,10 +6,10 @@ const JobApplicationModel = require("../../Model/JobApplication");
 exports.handlerService = function handlerService(msg, callback) {
   switch (msg.path) {
     case "jobSave":
-      postJobSave(msg, callback);
+      JobSaveApplicant(msg, callback);
       break;
     case "jobApply":
-      postJobApply(msg, callback);
+      JobApplyApplicant(msg, callback);
       break;
   }
 };
@@ -18,7 +18,7 @@ exports.handlerService = function handlerService(msg, callback) {
 
 
 
-function postJobSave(msg, callback) {
+function JobSaveApplicant(msg, callback) {
   //Update applicant schema ADD jobid into savedJobs
   //store applicant id in savedJobs of Jobs
   console.log("In handle request Save Jobs:" + JSON.stringify(msg));
@@ -55,7 +55,7 @@ function postJobSave(msg, callback) {
   );
 }
 
-function postJobApply(msg, callback) {
+function JobApplyApplicant(msg, callback) {
   var newJobApplication = new JobApplicationModel(); //intialize the subdocument
 
   console.log("In handle request Apply Jobs:" + JSON.stringify(msg));
