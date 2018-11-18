@@ -180,48 +180,48 @@ router.get('/recruiters/:recruiterId/jobs/top-ten', function (req, res) {
 
 
 // Recruiter can view job details 
-app.get('/recruiters/recruiter_id/jobs/job_id', function(req, res){
-
-kafka.make_request('recruiter_JobView',req.body.job_id, function(err,results){
-    console.log('in result');
-    console.log(results);
-    if (err){
-        console.log("Inside err");
-        res.json({
-            status:"error",
-            msg:"Unable to fetch Job."
-        })
-    }else{
-        console.log("Inside else");
-            res.json({
-                fetchedJob:results
-            });
-
-            res.end();
-        }
-});
-});
+router.get('/recruiters/:recruiter_id/jobs/:job_id', function(req, res){
+    console.log("Backend Recruiter Job View")
+     kafka.make_request('recruiter_JobView', {job_id:req.params.job_id} , function(err,results){
+         console.log('in result');
+         console.log(results);
+         if (err){
+             console.log("Inside err");
+             res.json({
+                 status:"error",
+                 msg:"Unable to fetch Job."
+             })
+         }else{
+             console.log("Inside else");
+                 res.json({
+                     fetchedJob:results
+                 });
+     
+                 res.end();
+             }
+     });
+     });
 
 //Recruiter updates job details
-app.put('/recruiters/recruiter_id/jobs/job_id', function(req, res){
-kafka.make_request('recruiter_JobUpdate',{"id":req.body.job_id, "body":req.body}, function(err,results){
-    console.log('in result');
-    console.log(results);
-    if (err){
-        console.log("Inside err");
-        res.json({
-            status:"error",
-            msg:"Unable to Update Job."
-        })
-    }else{
-        console.log("Inside else");
+router.put('/recruiters/:recruiter_id/jobs/:job_id', function(req, res){
+    kafka.make_request('recruiter_JobUpdate',{"job_id":req.params.job_id, "body":req.body}, function(err,results){
+        console.log('in result');
+        console.log(results);
+        if (err){
+            console.log("Inside err");
             res.json({
-                UpdatedJob:results
-            });
-
-            res.end();
-        }
-});
+                status:"error",
+                msg:"Unable to Update Job."
+            })
+        }else{
+            console.log("Inside else");
+                res.json({
+                    UpdatedJob:results
+                });
+    
+                res.end();
+            }
+    });
 });
 
   module.exports = router;

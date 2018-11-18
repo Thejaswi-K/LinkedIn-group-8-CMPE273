@@ -1,5 +1,5 @@
 // Load Property model
-const Job = require('../../Model/Jobs');
+const Jobs = require('../../Model/Jobs');
 
 function handle_request(msg, callback) {
     console.log("KAFKA : viewRecruiterJobById --> ", msg.job_id);
@@ -27,5 +27,6 @@ function handle_request(msg, callback) {
 
     console.log("after callback" + res);
 };
+
 
 exports.handle_request = handle_request;

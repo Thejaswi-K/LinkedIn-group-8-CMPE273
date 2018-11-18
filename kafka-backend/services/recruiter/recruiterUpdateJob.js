@@ -2,10 +2,10 @@
 const Jobs = require('../../Model/Jobs');
 
 function handle_request(msg, callback) {
-    console.log("KAFKA : updateRecruiterJobById --> ", msg.id, msg.body);
+    console.log("KAFKA : updateRecruiterJobById --> ", msg.job_id, msg.body);
     var res = {};
     
-  Jobs.findByIdAndUpdate(msg.id, msg.body)
+  Jobs.findByIdAndUpdate(msg.job_id, msg.body)
   .then(job => {
     res.code = 202 ;
     res.message = "job updated successfully" ;
@@ -20,5 +20,6 @@ function handle_request(msg, callback) {
 
     console.log("after callback" + res);
 };
+
 
 exports.handle_request = handle_request;

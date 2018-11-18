@@ -17,6 +17,8 @@ var ApplicantDelete = require('./services/applicants/applicantDelete');
 var RecruiterDelete = require('./services/recruiter/recruiterDelete');
 var Job = require('./services/jobs.js');
 var Applicant = require('./services/applicants/applicants.js');
+var RecruiterJobView = require('./services/recruiter/recruiterViewJobById');
+var RecruiterJobUpdate = require('./services/recruiter/recruiterUpdateJob');
 
 function handleTopicRequest(topic_name, fname) {
     //var topic_name = 'root_topic';
@@ -65,6 +67,6 @@ handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
 handleTopicRequest("applicant_delete", ApplicantDelete);
 handleTopicRequest("recruiter_delete", RecruiterDelete);
 handleTopicRequest("applicant_topic",Applicant);
-// handleTopicRequest("recruiter_JobView",RecruiterJobView);
-// handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
+handleTopicRequest("recruiter_JobView",RecruiterJobView);
+handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
 
