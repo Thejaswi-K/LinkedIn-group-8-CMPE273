@@ -66,6 +66,11 @@ var jobSchema = new mongoose.Schema({
     required: false,
     default: ""
   },
+  easyApply{
+    type: :Boolean,
+    required: true,
+    default : false
+  }
 
   // stores the applicant ID who have saved this
   savedBy: {
