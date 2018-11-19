@@ -13,7 +13,7 @@ var mongoURL = "mongodb://mithun:password273@ds121753.mlab.com:21753/linkedin";
 var ObjectId = require("mongodb").ObjectID;
 require("dotenv").config();
 
-exports.handlerService = function handlerService(msg, callback) {
+exports.handle_request = function handle_request(msg, callback) {
   switch (msg.path) {
     case "getJobsTitleLocation":
       getJobsTitleLocation(msg, callback);
@@ -39,70 +39,39 @@ function getSavedJobsNumber(msg, callback) {
   });
 }
 
-
+//Search Job based on title and location
 function getJobsTitleLocation(msg, callback) {
   console.log("KAFKA : getJobsTitleLocation --> ", msg.title, msg.location);
 
-  mongo.connect(
-    mongoURL,
-    function(err, db) {
-      if (err) console.log("Mongo connection error", err);
-      else {
-        console.log("connected to mongo client");
-        var result = db
-          .collection("jobs")
-          .find({ title: msg.title, location: msg.location });
-        result
-          .then(doc => {
-            console.log("obtained results from mongo", doc);
-
-            console.log("Fetch  success, callback happening");
-            callback(null, {
-              success: true,
-              status: "Fetched jobs success",
-              jobs: doc
-            });
-          })
-          .catch(error => {
-            console.log("Job Fetch error ", error);
-            callback(null, { success: false, status: "Job Fetch failed" });
-          });
-      }
+//not working with array? ? ? 
+  jobsModel.find({$or:[{title:msg.title},{location: msg.location}]})
+  .then(job => {
+    console.log("result of jobs", job);
+    if(!job.length){
+      callback(null, {success: false, status : "Job doesnt exist in getJobsTitleLocation"});
     }
-  );
+    callback(null, {success: true, status : "Job fetched Success", data: job});
+  })
+  .catch(error =>{
+    console.log("Error at connecting to Jobs");
+    callback(error, {success: false, status: "Failed connecting to Mongo in getJobsTitleLocation"});
+  })
+
 }
 
+//GET jobs details based on job_id
 function getJobsDetail(msg, callback) {
   console.log("KAFKA : getJobsDetail --> ", msg.id);
-
-  mongo.connect(
-    mongoURL,
-    function(err, db) {
-      if (err) console.log("Mongo connection error", err);
-      else {
-        console.log("connected to mongo client");
-        var result = db.collection("jobs").findOne({ _id: ObjectId(msg.id) });
-        result
-          .then(doc => {
-            if (doc != null) {
-              console.log("obtained results from mongo", doc);
-
-              console.log("Fetch  success, callback happening");
-              callback(null, {
-                success: true,
-                status: "Fetched jobs success",
-                jobs: doc
-              });
-            } else {
-              console.log("Job Detail Fetch error ", error);
-              callback(null, { success: false, status: "Job Detail Fetch failed" });
-            }
-          })
-          .catch(error => {
-            console.log("Job Fetch error ", error);
-            callback(null, { success: false, status: "Job Detail Fetch failed" });
-          });
-      }
+  jobsModel.find({_id: msg.id})
+  .then(job => {
+    if(!job){
+      callback(null, {success: false, status : "Job doesnt exist"});
     }
-  );
+    callback(null, {success: true, status : "Job fetched Success", data: job});
+  })
+  .catch(error =>{
+    console.log("Error at connecting to Jobs");
+    callback(error, {success: false, status: "Failed connecting to mongo"});
+  })
+
 }
