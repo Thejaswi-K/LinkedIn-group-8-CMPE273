@@ -60,3 +60,7 @@ typings/
 
 # next.js build output
 .next
+
+
+/Backend/kafka/connection.js
+/kafka-backend/kafka/Connection.js

@@ -6,22 +6,22 @@ function handle_request(msg, callback) {
 
     var res = {};
 
-    ApplicantUser.find({_id: msg.applicant_id})
+    ApplicantUser.findOneAndRemove({email: msg.applicant_id})
         .then(profile => {
             if (!profile) {
-                res.code = 404 ;
-                res.message = "User not found" ;
+                res.code = 401 ;
+                res.errorMessage = "User not found" ;
                 callback(null,res);
 
             }
 
             res.code = 200 ;
-            res.message = profile ;
+            res.message = "Record deleted successfully" ;
             callback(null,res);
         })
         .catch(function (err) {
-            res.message = err;
-            res.code = 400;
+            res.errorMessage = err;
+            res.code = 401;
             callback(null, res);
         });
 

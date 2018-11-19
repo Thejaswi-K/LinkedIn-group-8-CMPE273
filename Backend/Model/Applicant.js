@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var utility = require("../utility");
 
 var applicantSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+  // _id: mongoose.Schema.Types.ObjectId,
   firstName: {
     type: String,
     required: true,
@@ -86,7 +86,7 @@ var applicantSchema = new mongoose.Schema({
     required: false,
     default: ""
   },
-  profileimage: {
+  profileImage: {
     type: String,
     required: false,
     default: ""
@@ -119,7 +119,7 @@ var applicantSchema = new mongoose.Schema({
       ref: "Jobs"
     }
   ],
-  
+
   connectionsRequests: [
     {
       requestFrom: { type: String, required: false, default: "" },
