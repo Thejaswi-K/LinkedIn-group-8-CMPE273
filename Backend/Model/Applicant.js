@@ -2,7 +2,6 @@ var mongoose = require("mongoose");
 var utility = require("../utility");
 
 var applicantSchema = new mongoose.Schema({
-
   firstName: {
     type: String,
     required: true,

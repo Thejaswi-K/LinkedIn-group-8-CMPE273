@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var utility = require("../utility");
 
 var recruiterSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+  // _id: mongoose.Schema.Types.ObjectId,
   firstName: {
     type: String,
     required: true,
@@ -57,7 +57,7 @@ var recruiterSchema = new mongoose.Schema({
     get: v => Math.round(v),
     default: ""
   },
-  
+
   companyName: {
     type: String,
     required: false,
@@ -82,14 +82,14 @@ var recruiterSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
-  connectionsRequests : {
+  connectionsRequests: {
     type: Array,
-    required : false, 
+    required: false,
     defuaut: []
   },
-  connections : {
+  connections: {
     type: Array,
-    required : false, 
+    required: false,
     defuaut: []
   }
 });
