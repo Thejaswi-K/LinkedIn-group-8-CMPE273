@@ -12,7 +12,7 @@ require("dotenv").config();
 
 
 
-exports.handlerService = function handlerService(msg, callback) {
+exports.handle_request = function handle_request(msg, callback) {
     switch (msg.path) {
       case "getProfileViewCount":
         getProfileViewCount(msg, callback);

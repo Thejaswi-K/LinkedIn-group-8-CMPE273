@@ -3,7 +3,7 @@ const ApplicantUser = require("../../Model/Applicant");
 const JobsModel = require("../../Model/Jobs");
 const JobApplicationModel = require("../../Model/JobApplication");
 
-exports.handlerService = function handlerService(msg, callback) {
+exports.handle_request = function handle_request(msg, callback) {
   switch (msg.path) {
     case "jobSave":
       JobSaveApplicant(msg, callback);

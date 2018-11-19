@@ -77,21 +77,23 @@ handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
 
 Run the topics using
 
-(bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic logs_topic; 
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic jobs_topic; 
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic applicant_details;
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic recruiter_details;
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic applicant_login;
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic recruiter_login;
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic applicant_signup; 
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic recruiter_signup;
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic applicant_update_profile;
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic recruiter_update_profile;
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic applicant_delete;
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic recruiter_delete;
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic applicant_topic;
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic recruiter_JobView;
-bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic recruiter_JobUpdate;) &
+//Change port between 2181(default) / 2183 depending on compatability 
+
+(bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic logs_topic; 
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic jobs_topic; 
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_details;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_details;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_login;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_login;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_signup; 
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_signup;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_update_profile;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_update_profile;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_delete;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_delete;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_topic;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_JobView;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_JobUpdate;) &
 
 
 
