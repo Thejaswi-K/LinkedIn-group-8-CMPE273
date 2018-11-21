@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import LoginNavbar from "../../Navbar/loginNavbar";
+import Experience from "./experience";
+import Education from "./education";
+import Summary from "./summary";
+
 
 class ApplicantProfileView extends Component {
 
@@ -11,7 +14,24 @@ class ApplicantProfileView extends Component {
 
     render() {
         return (
-            <LoginNavbar/>
+            <div>
+                <Summary/>
+
+                <br/><br/>
+
+                <Experience/>
+
+                <br/><br/>
+
+                <Education/>
+
+            </div>
+
+
+
+
+
+
         )
 
     }

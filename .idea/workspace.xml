@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d87f5a7b-090d-4a5c-95b4-2efa63d029d9" name="Default Changelist" comment="Adding front end directory structure.">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/ApplicantProfileView.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Navbar/loginNavbar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/reducers/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/store.js" afterDir="false" />
+    <list default="true" id="d87f5a7b-090d-4a5c-95b4-2efa63d029d9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/education.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/summary.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/images/cover.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/images/profile.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Applicant/viewApplicantProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/experience.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/ApplicantProfileView.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/ApplicantProfileView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/experience.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/experience.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +42,7 @@
           <entry key="css" value="3" />
           <entry key="gitignore" value="2" />
           <entry key="html" value="4" />
-          <entry key="js" value="19" />
+          <entry key="js" value="25" />
           <entry key="json" value="1" />
           <entry key="less" value="1" />
         </counts>
@@ -57,7 +53,7 @@
           <entry key="Git file" value="2" />
           <entry key="HTML" value="4" />
           <entry key="JSON" value="1" />
-          <entry key="JavaScript" value="19" />
+          <entry key="JavaScript" value="25" />
           <entry key="Less" value="1" />
         </counts>
       </usages-collector>
@@ -65,9 +61,9 @@
         <counts>
           <entry key="css" value="19" />
           <entry key="html" value="16" />
-          <entry key="js" value="776" />
+          <entry key="js" value="1837" />
           <entry key="json" value="7" />
-          <entry key="txt" value="40" />
+          <entry key="txt" value="78" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -75,8 +71,8 @@
           <entry key="CSS" value="19" />
           <entry key="HTML" value="16" />
           <entry key="JSON" value="7" />
-          <entry key="JavaScript" value="776" />
-          <entry key="PLAIN_TEXT" value="40" />
+          <entry key="JavaScript" value="1837" />
+          <entry key="PLAIN_TEXT" value="78" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
@@ -102,8 +98,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/ApplicantProfileView.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="19" lean-forward="true" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+            <state relative-caret-position="240">
+              <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/Navbar/loginNavbar.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -114,26 +122,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/experience.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+            <state relative-caret-position="360">
+              <caret line="65" selection-start-line="65" selection-end-line="65" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Backend/config/passport.js">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/education.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="49" lean-forward="true" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/components/Navbar/loginNavbar.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="85" column="46" selection-start-line="85" selection-start-column="46" selection-end-line="85" selection-end-column="46" />
+            <state relative-caret-position="190">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -141,20 +143,32 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/frontend/src/App.css">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Backend/Model/Applicant.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="34" column="56" selection-start-line="34" selection-start-column="56" selection-end-line="34" selection-end-column="56" />
+            <state relative-caret-position="240">
+              <caret line="16" column="10" lean-forward="true" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/package.json">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/summary.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="31" column="35" selection-start-line="31" selection-start-column="35" selection-end-line="31" selection-end-column="35" />
+            <state relative-caret-position="471">
+              <caret line="44" column="47" selection-start-line="44" selection-start-column="47" selection-end-line="44" selection-end-column="47" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/kafka-backend/Model/Applicant.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="780">
+              <caret line="83" column="16" selection-start-line="83" selection-start-column="2" selection-end-line="83" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -167,15 +181,6 @@
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/store.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -217,11 +222,13 @@
         <option value="$PROJECT_DIR$/frontend/src/components/Main.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfileView.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/Experience.js" />
-        <option value="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/experience.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/Navbar.js" />
-        <option value="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/ApplicantProfileView.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/Navbar/loginNavbar.js" />
         <option value="$PROJECT_DIR$/frontend/src/App.css" />
+        <option value="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/ApplicantProfileView.js" />
+        <option value="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/experience.js" />
+        <option value="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/education.js" />
+        <option value="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/summary.js" />
       </list>
     </option>
   </component>
@@ -788,7 +795,7 @@
       <path value="$PROJECT_DIR$/kafka-backend/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="708" />
@@ -868,8 +875,7 @@
               <item name="LinkedIn-group-8-CMPE273" type="462c0819:PsiDirectoryNode" />
               <item name="frontend" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -884,12 +890,13 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/src" />
       <recent name="$PROJECT_DIR$/frontend/src/components/common" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/images" />
+      <recent name="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -915,7 +922,7 @@
       <option name="presentableId" value="Default" />
       <updated>1542514920162</updated>
       <workItem from="1542514939726" duration="162000" />
-      <workItem from="1542756865550" duration="7897000" />
+      <workItem from="1542756865550" duration="18323000" />
     </task>
     <task id="LOCAL-00001" summary="Adding front end directory structure.">
       <created>1542602178084</created>
@@ -931,19 +938,25 @@
       <option name="project" value="LOCAL" />
       <updated>1542602296760</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Push for main.js.">
+      <created>1542774085244</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1542774085245</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15424000" />
+    <option name="totallyTimeSpent" value="25850000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1280" height="708" extended-state="0" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="2" weight="0.24543288" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.24543288" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3291815" />
@@ -952,8 +965,8 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3291815" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.25068492" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32876712" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -996,7 +1009,8 @@
     <MESSAGE value="Deleted applicant model id from backend." />
     <MESSAGE value="untracked files" />
     <MESSAGE value="Adding front end directory structure." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding front end directory structure." />
+    <MESSAGE value="Push for main.js." />
+    <option name="LAST_COMMIT_MESSAGE" value="Push for main.js." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Backend/index.js">
@@ -1059,13 +1073,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Backend/Model/Applicant.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -1118,37 +1125,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/experience.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/components/Navbar.js">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Backend/config/passport.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="49" lean-forward="true" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/components/Main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="54" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="54" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/ApplicantProfileView.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="19" lean-forward="true" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -1176,20 +1159,88 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/App.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="3" lean-forward="true" selection-start-line="27" selection-start-column="3" selection-end-line="27" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Backend/config/passport.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="49" lean-forward="true" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/components/Navbar/loginNavbar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="85" column="46" selection-start-line="85" selection-start-column="46" selection-end-line="85" selection-end-column="46" />
+        <state relative-caret-position="75">
+          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/App.css">
+    <entry file="file://$PROJECT_DIR$/Backend/Model/Applicant.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="34" column="56" selection-start-line="34" selection-start-column="56" selection-end-line="34" selection-end-column="56" />
+        <state relative-caret-position="240">
+          <caret line="16" column="10" lean-forward="true" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/node_modules/react-bootstrap/es/Image.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="16" column="2" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/education.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/ApplicantProfileView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/experience.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="65" selection-start-line="65" selection-end-line="65" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/summary.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="471">
+          <caret line="44" column="47" selection-start-line="44" selection-start-column="47" selection-end-line="44" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kafka-backend/Model/Applicant.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="83" column="16" selection-start-line="83" selection-start-column="2" selection-end-line="83" selection-end-column="16" />
         </state>
       </provider>
     </entry>
