@@ -30,3 +30,24 @@
     transform: rotate(360deg);
   }
 }
+
+.navbar {
+  background: linear-gradient(to right, #32404b, #32404b);
+  border-radius: 0px;
+  margin-bottom: 0px;
+}
+
+.navbar-icon {
+  color: white;
+}
+
+
+
+.navbar-default .navbar-nav>li>a {
+  color: white;
+}
+
+.navbar-brand{
+  padding-top: 8px;
+}
+
