@@ -59,6 +59,36 @@ export const applicantSignup = (userData, history) => dispatch => {
         );
 };
 
+//applicant login
+export const applicantLogin = (userData) => dispatch => {
+    axios.defaults.withCredentials = true;
+    axios.post(`${ROOT_URL}/applicants/login`, userData)
+        .then(res => {
+            // Save to localStorage
+
+            if (res.status === 200) {
+                const {token} = res.data;
+                //set token to local storage
+                localStorage.setItem('applicantToken', token);
+                setAuthToken(token);
+                // Decode token to get user data
+                const decoded = jwt_decode(token);
+                // Set current user
+                dispatch(setCurrentUser(decoded));
+            } else {
+                dispatchApplicantSignupError(res.data);
+            }
+
+
+        })
+        .catch(err =>
+            dispatch({
+                type: APPLICANT_SIGNUP_ERROR_REDUCER,
+                payload: err.message
+            })
+        );
+};
+
 //get applicant bookings
 export const applicantDetails = (applicantEmail) => dispatch => {
     axios.defaults.withCredentials = true;
@@ -74,7 +104,7 @@ export const applicantDetails = (applicantEmail) => dispatch => {
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,
-                payload: err.response.data
+                payload: err.response
             })
         );
 };
