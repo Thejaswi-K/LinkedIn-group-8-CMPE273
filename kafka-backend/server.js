@@ -1,15 +1,9 @@
 var connection = new require("./kafka/Connection");
 var { mongoose } = require("./db/mongo");
 //topics files
-<<<<<<< HEAD
-
-var connection = new require("./kafka/Connection");
-var { mongoose } = require("./db/mongo");
-=======
 //var signin = require('./services/signin.js');
 
 var receiveMessage = require("./services/applicants/receiveMessage");
->>>>>>> aceb65aa09f91cb27dbffa41b4dfcdc674a66605
 
 //topics files
 //var signin = require('./services/signin.js');
@@ -30,11 +24,8 @@ var Applicant = require("./services/applicants/applicants.js");
 var RecruiterJobView = require("./services/recruiter/recruiterViewJobById");
 var RecruiterJobUpdate = require("./services/recruiter/recruiterUpdateJob");
 var sendMessage = require("./services/applicants/sendMessage");
-<<<<<<< HEAD
 var receiveMessage = require("./services/applicants/receiveMessage");
 var applicantMessages = require("./services/applicants/applicantMessages");
-=======
->>>>>>> aceb65aa09f91cb27dbffa41b4dfcdc674a66605
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -90,9 +81,14 @@ handleTopicRequest("recruiter_delete", RecruiterDelete);
 handleTopicRequest("recruiter_JobView", RecruiterJobView);
 handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
 handleTopicRequest("applicant_messages", applicantMessages);
+/* ****************************************************
+please  UPDATE  below code before adding new topics
+*/ 
+
+
+
 
 /*
-
 Run the topics using
 
 //Change port between 2181(default) / 2183 depending on compatability 
@@ -111,8 +107,11 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_delete;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_topic;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_JobView;
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_JobUpdate;) &
-
-
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_JobUpdate;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic send_message;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic receive_message;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_messages;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_signup_mongo;
+) &
 
 */
