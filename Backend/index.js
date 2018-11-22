@@ -25,7 +25,7 @@ mongoose
   .then(() => console.log("MongoDB Connected!!"))
   .catch(err => console.log(err));
 
-app.use(cors({ origin: "localhost:3000", credentials: true }));
+app.use(cors({origin: 'http://localhost:3000', credentials: true}));
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
