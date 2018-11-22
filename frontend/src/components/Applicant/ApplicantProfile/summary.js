@@ -2,7 +2,6 @@ import {Component} from "react";
 import Image from "react-bootstrap/es/Image";
 import Profile from "../../../images/profile.jpg"
 import Card from "@material-ui/core/Card/Card";
-import Label from "react-bootstrap/es/Label";
 
 var React = require('react');
 
@@ -43,7 +42,6 @@ class Summary extends Component {
                     <hr/>
 
                     <h5 className="ml-4">Yo yo </h5>
-
 
 
                 </div>

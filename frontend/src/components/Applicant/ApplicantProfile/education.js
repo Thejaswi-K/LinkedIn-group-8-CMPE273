@@ -32,11 +32,11 @@ class Education extends Component {
                     Education
                 </div>
                 <ul className="list-group list-group-flush">
-                    <div>
+                    <div className="mt-4">
                         {this.exp.map((experience, index) => (
                             <li key={index} className="ml-5">
                                 <h4><strong>{experience.employer}</strong>
-                                    <button className="btn btn-default">
+                                    <button className="btn btn-default ml-5">
                                         <span className="glyphicon glyphicon-pencil" title="Edit Experience"></span>
                                     </button>
                                 </h4>
@@ -44,7 +44,7 @@ class Education extends Component {
                                 <h6>{experience.startDate} - {experience.endDate}</h6>
                                 <h6>
                                 <pre style={{
-                                    margin: "-10px 0px 0px -10px",
+                                    margin: "5px 0px 0px 0px",
                                     fontFamily: "helvetica",
                                     border: "none",
                                     width: "100%",

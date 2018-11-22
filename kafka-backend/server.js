@@ -2,19 +2,8 @@ var connection = new require("./kafka/Connection");
 var { mongoose } = require("./db/mongo");
 //topics files
 //var signin = require('./services/signin.js');
-var Log = require("./services/logs.js");
-var Job = require("./services/jobs.js");
-var ApplicantDetails = require("./services/applicants/applicantViewProfile");
-var ApplicantLogin = require("./services/applicants/applicantLogin");
-var ApplicantSignup = require("./services/applicants/applicantSignup");
-var ApplicantUpdateProfile = require("./services/applicants/applicantUpdateProfile");
-var ApplicantDelete = require("./services/applicants/applicantDelete");
-var Job = require("./services/jobs.js");
-var Applicant = require("./services/applicants/applicants.js");
-var sendMessage = require("./services/applicants/sendMessage");
+
 var receiveMessage = require("./services/applicants/receiveMessage");
-var connection = new require("./kafka/Connection");
-var { mongoose } = require("./db/mongo");
 
 //topics files
 //var signin = require('./services/signin.js');
@@ -25,15 +14,16 @@ var RecruiterDetails = require("./services/recruiter/recruiterViewProfile");
 var ApplicantLogin = require("./services/applicants/applicantLogin");
 var RecruiterLogin = require("./services/recruiter/recruiterLogin");
 var ApplicantSignup = require("./services/applicants/applicantSignup");
+var ApplicantSignupMongo = require("./services/applicants/applicantSignupMongo");
 var RecruiterSignup = require("./services/recruiter/recruiterSignup");
 var ApplicantUpdateProfile = require("./services/applicants/applicantUpdateProfile");
 var RecruiterUpdateProfile = require("./services/recruiter/recruiterUpdateProfile");
 var ApplicantDelete = require("./services/applicants/applicantDelete");
 var RecruiterDelete = require("./services/recruiter/recruiterDelete");
-var Job = require("./services/jobs.js");
 var Applicant = require("./services/applicants/applicants.js");
 var RecruiterJobView = require("./services/recruiter/recruiterViewJobById");
 var RecruiterJobUpdate = require("./services/recruiter/recruiterUpdateJob");
+var sendMessage = require("./services/applicants/sendMessage");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -75,6 +65,7 @@ handleTopicRequest("recruiter_details", RecruiterDetails);
 handleTopicRequest("applicant_login", ApplicantLogin);
 handleTopicRequest("recruiter_login", RecruiterLogin);
 handleTopicRequest("applicant_signup", ApplicantSignup);
+handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
 handleTopicRequest("recruiter_signup", RecruiterSignup);
 handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
 handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
@@ -85,7 +76,6 @@ handleTopicRequest("receive_message", receiveMessage);
 // handleTopicRequest("recruiter_JobView",RecruiterJobView);
 // handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
 handleTopicRequest("recruiter_delete", RecruiterDelete);
-handleTopicRequest("applicant_topic", Applicant);
 handleTopicRequest("recruiter_JobView", RecruiterJobView);
 handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
 
