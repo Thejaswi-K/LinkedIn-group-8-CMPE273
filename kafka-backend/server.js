@@ -1,18 +1,7 @@
 var connection = new require("./kafka/Connection");
 var { mongoose } = require("./db/mongo");
 //topics files
-//var signin = require('./services/signin.js');
-var Log = require("./services/logs.js");
-var Job = require("./services/jobs.js");
-var ApplicantDetails = require("./services/applicants/applicantViewProfile");
-var ApplicantLogin = require("./services/applicants/applicantLogin");
-var ApplicantSignup = require("./services/applicants/applicantSignup");
-var ApplicantUpdateProfile = require("./services/applicants/applicantUpdateProfile");
-var ApplicantDelete = require("./services/applicants/applicantDelete");
-var Job = require("./services/jobs.js");
-var Applicant = require("./services/applicants/applicants.js");
-var sendMessage = require("./services/applicants/sendMessage");
-var receiveMessage = require("./services/applicants/receiveMessage");
+
 var connection = new require("./kafka/Connection");
 var { mongoose } = require("./db/mongo");
 
@@ -30,10 +19,12 @@ var ApplicantUpdateProfile = require("./services/applicants/applicantUpdateProfi
 var RecruiterUpdateProfile = require("./services/recruiter/recruiterUpdateProfile");
 var ApplicantDelete = require("./services/applicants/applicantDelete");
 var RecruiterDelete = require("./services/recruiter/recruiterDelete");
-var Job = require("./services/jobs.js");
 var Applicant = require("./services/applicants/applicants.js");
 var RecruiterJobView = require("./services/recruiter/recruiterViewJobById");
 var RecruiterJobUpdate = require("./services/recruiter/recruiterUpdateJob");
+var sendMessage = require("./services/applicants/sendMessage");
+var receiveMessage = require("./services/applicants/receiveMessage");
+var applicantMessages = require("./services/applicants/applicantMessages");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -88,6 +79,7 @@ handleTopicRequest("recruiter_delete", RecruiterDelete);
 handleTopicRequest("applicant_topic", Applicant);
 handleTopicRequest("recruiter_JobView", RecruiterJobView);
 handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
+handleTopicRequest("applicant_messages", applicantMessages);
 
 /*
 
