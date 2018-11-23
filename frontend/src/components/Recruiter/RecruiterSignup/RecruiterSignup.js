@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import RecruiterLoginNavbar from '../../Navbar/RecruiterLoginNavbar';
 import Loginfooter from '../../Applicant/ApplicantSignup/FooterSignup';
 
-class ApplicantSignup extends Component {
+class RecruiterSignup extends Component {
     render() {
         return(
             <div>
@@ -44,4 +44,4 @@ class ApplicantSignup extends Component {
     }
 }
 
-export default ApplicantSignup;
+export default RecruiterSignup;
