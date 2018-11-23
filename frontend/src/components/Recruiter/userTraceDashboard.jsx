@@ -71,7 +71,7 @@ const options = {
   }
 
 }
-export default class GraphDashboard extends Component {
+export default class UserTraceDashboard extends Component {
   constructor(props) {
     super(props);
 
@@ -119,6 +119,18 @@ export default class GraphDashboard extends Component {
           }}
         >
           <h4 style={{ textAlign: "center" }}>User Trace Diagram</h4>
+          <form>
+                    <div className="form-group col-2">
+                        <label for="exampleFormControlInput1">Enter User Name:</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter User Name" ref="applicant_name" />
+                       
+                    </div>
+                    <div className="form-group">
+                    <button class="btn btn-warning" onClick={()=>this.usernameSubmitHandler(this.refs)} >Save</button>
+                    </div>
+
+                    
+          </form>
           <Line data={this.state.chartData} options={options}/>
         </div>
       </div>
