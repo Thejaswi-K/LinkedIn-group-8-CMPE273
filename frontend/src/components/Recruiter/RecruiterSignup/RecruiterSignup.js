@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import RecruiterLoginNavbar from '../Navbar/RecruiterLoginNavbar';
-import Loginfooter from '../ApplicantSignup/FooterSignup';
+import RecruiterLoginNavbar from '../../Navbar/RecruiterLoginNavbar';
+import Loginfooter from '../../Applicant/ApplicantSignup/FooterSignup';
 
 class ApplicantSignup extends Component {
     render() {

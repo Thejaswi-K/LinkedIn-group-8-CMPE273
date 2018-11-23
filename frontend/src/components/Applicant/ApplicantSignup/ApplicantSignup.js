@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ApplicantLoginNavbar from '../Navbar/ApplicantLoginNavbar';
+import ApplicantLoginNavbar from '.././../Navbar/ApplicantLoginNavbar';
 import Loginfooter from './FooterSignup';
 
 class ApplicantSignup extends Component {

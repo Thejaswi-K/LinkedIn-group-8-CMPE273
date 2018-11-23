@@ -4,10 +4,10 @@ import {Route} from 'react-router-dom';
 //Import Components
 // import RecruiterLoginNavbar from './Navbar/RecruiterLoginNavbar';
 import ApplicantLoginNavbar from './Navbar/ApplicantLoginNavbar';
-import ApplicantSignup from './ApplicantSignup/ApplicantSignup';
-import RecruiterSignup from './RecruiterSignup/RecruiterSignup';
-// import OwnerSignup from './OwnerSignup/OwnerSignup';
-// import TravelerLogin from './TravelerLogin/TravelerLogin';
+import ApplicantSignup from './Applicant/ApplicantSignup/ApplicantSignup';
+import RecruiterSignup from './Recruiter/RecruiterSignup/RecruiterSignup';
+import UserNavbar from './Navbar/UserNavbar';
+import JobNavbar from './Navbar/JobNavbar';
 // import TravelerSignup from './TravelerSignup/TravelerSignup';
 // import PostProperty from './PostProperty/PostProperty';
 // import SearchProperty from './SearchProperty/SearchProperty';
@@ -25,8 +25,8 @@ class Main extends Component {
                 <Route exact path="/" component={ApplicantLoginNavbar}/>
                 <Route path="/applicantsignup" component={ApplicantSignup}/>
                 <Route path="/recruitersignup" component={RecruiterSignup}/>
-                {/* <Route path="/travelerlogin" component={TravelerLogin}/> */}
-                {/* <Route path="/ownerlogin" component={OwnerLogin}/> */}
+                <Route path="/profile" component={UserNavbar}/>
+                <Route path="/job" component={JobNavbar}/>
                 {/* <Route path="/editprofile" component={EditProfile}/> */}
                 {/* <Route path="/postproperty" component={PostProperty}/> */}
                 {/* <Route path="/searchproperty" component={SearchProperty}/> */}
