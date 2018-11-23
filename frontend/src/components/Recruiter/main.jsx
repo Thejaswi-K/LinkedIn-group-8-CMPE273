@@ -32,7 +32,10 @@ export default class MainRecruiterDashboard extends Component {
         }}
       >
         {/* {redirectVar} */}
+
         <jobNavbar />
+
+       
         <div className="row">
           
           <div className="col-4">
