@@ -4,6 +4,8 @@ var passport = require('passport');
 var express = require("express");
 const router = express.Router();
 
+const Recruiters = require('../../Model/Recruiter');
+
 
 //Recruiter login
 router.post('/login', (req, res) => {
