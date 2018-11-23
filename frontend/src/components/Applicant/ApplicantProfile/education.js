@@ -1,13 +1,8 @@
-import {Component} from "react";
+import React, {Component} from 'react';
 import Paper from "@material-ui/core/Paper/Paper";
 import Card from "@material-ui/core/Card/Card";
 
-var React = require('react');
-var Link = require('react-router').Link;
-var hashHistory = require('react-router').hashHistory;
-
-class Experience extends Component {
-
+class Education extends Component {
     constructor(props) {
         super(props);
     }
@@ -33,16 +28,15 @@ class Experience extends Component {
 
         return (
             <Card className="w-75 p-3 ml-5">
-
                 <div className="card-header">
-                    Experience
+                    Education
                 </div>
                 <ul className="list-group list-group-flush">
                     <div className="mt-4">
                         {this.exp.map((experience, index) => (
                             <li key={index} className="ml-5">
                                 <h4><strong>{experience.employer}</strong>
-                                    <button className="btn btn-default ml-4">
+                                    <button className="btn btn-default ml-5">
                                         <span className="glyphicon glyphicon-pencil" title="Edit Experience"></span>
                                     </button>
                                 </h4>
@@ -63,12 +57,11 @@ class Experience extends Component {
                         ))}
                     </div>
                 </ul>
-
             </Card>
         )
     }
 
+
 }
 
-
-export default Experience;
+export default Education

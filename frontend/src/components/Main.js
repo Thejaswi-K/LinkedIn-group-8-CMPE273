@@ -8,6 +8,13 @@ import ApplicantSignup from './Applicant/ApplicantSignup/ApplicantSignup';
 import RecruiterSignup from './Recruiter/RecruiterSignup/RecruiterSignup';
 import UserNavbar from './Navbar/UserNavbar';
 import JobNavbar from './Navbar/JobNavbar';
+import ApplicantSignup from './ApplicantSignup/ApplicantSignup';
+import RecruiterSignup from './RecruiterSignup/RecruiterSignup';
+import ApplicantProfileView from "./Applicant/ApplicantProfile/ApplicantProfileView";
+import Provider from "react-redux/es/components/Provider";
+import store from "../store";
+// import OwnerSignup from './OwnerSignup/OwnerSignup';
+// import TravelerLogin from './TravelerLogin/TravelerLogin';
 // import TravelerSignup from './TravelerSignup/TravelerSignup';
 // import PostProperty from './PostProperty/PostProperty';
 // import SearchProperty from './SearchProperty/SearchProperty';
@@ -35,8 +42,28 @@ class Main extends Component {
                 {/* <Route path="/ownerpostings" component={OwnerPostedProperties}/> */}
                 {/* <Route path="/inbox" component={Inbox}/> */}
             </div>
+    render() {
+        return (
+            <Provider store={store}>
+                <div>
+                    {/*Render Different Component based on Route*/}
+                    <Route exact path="/" component={ApplicantLoginNavbar}/>
+                    <Route path="/applicantsignup" component={ApplicantSignup}/>
+                    <Route path="/recruitersignup" component={RecruiterSignup}/>
+                    <Route path="/applicantprofileview" component={ApplicantProfileView}/>
+                    {/* <Route path="/ownerlogin" component={OwnerLogin}/> */}
+                    {/* <Route path="/editprofile" component={EditProfile}/> */}
+                    {/* <Route path="/postproperty" component={PostProperty}/> */}
+                    {/* <Route path="/searchproperty" component={SearchProperty}/> */}
+                    {/* <Route path="/propertydetail" component={PropertyDetail}/> */}
+                    {/* <Route path="/travelertrips" component={TravelerBookedProperties}/> */}
+                    {/* <Route path="/ownerpostings" component={OwnerPostedProperties}/> */}
+                    {/* <Route path="/inbox" component={Inbox}/> */}
+                </div>
+            </Provider>
         )
     }
 }
+
 //Export The Main Component
 export default Main;

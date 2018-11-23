@@ -19,7 +19,7 @@ bin/kafka-server-start.sh config/server.properties
 ## register new topic
 
 ```
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic login_topic
+bin/kafka-topics.sh --create --zookeeper localhost:2183 --replication-factor 1 --partitions 1 --topic login_topic
 
 ```
 

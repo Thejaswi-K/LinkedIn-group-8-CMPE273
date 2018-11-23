@@ -2,8 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const keys = require('../../config/keys');
 var mysql = require('mysql');
-var pool = require('../../db/mysql');
-
+var pool = require('../../db/pool');
 
 
 function handle_request(msg, callback) {
@@ -11,8 +10,8 @@ function handle_request(msg, callback) {
     const email = msg.email;
     const password = msg.password;
 
-    var sql = "SELECT EXISTS (" +
-        "SELECT * FROM applicant WHERE email" + " = " + mysql.escape(email) + " AND password = " + mysql.escape(password) + ")"
+    var sql =
+        "SELECT * FROM APPLICANT WHERE EMAIL" + " = " + mysql.escape(email);
 
     pool.getConnection(function (err, con) {
 
@@ -29,31 +28,41 @@ function handle_request(msg, callback) {
                     });
                     res.end("Could Not Get Connection Object");
                 } else {
-                    bcrypt.compare(password, user.password).then(isMatch => {
-                        if (isMatch) {
-                            // User Matched
-                            const payload = {
-                                email: email,
-                                isRecruiter: false
-                            }; // Create JWT Payload
+                    if (user.length > 0) {
+                        bcrypt.compare(password, user[0].PASSWORD).then(isMatch => {
+                            if (isMatch) {
+                                // User Matched
+                                const payload = {
+                                    email: email,
+                                    isRecruiter: false
+                                }; // Create JWT Payload
 
-                            // Sign Token
-                            jwt.sign(
-                                payload,
-                                keys.secretOrKey,
-                                {expiresIn: 3600},
-                                (err, token) => {
-                                    res.code = 200;
-                                    res.token = token;
-                                    callback(err, res);
-                                }
-                            );
-                        } else {
-                            res.err = 'Incorrect password';
+                                // Sign Token
+                                jwt.sign(
+                                    payload,
+                                    keys.secretOrKey,
+                                    {expiresIn: 3600},
+                                    (err, token) => {
+                                        res.code = 200;
+                                        res.token = token;
+                                        callback(err, res);
+                                    }
+                                )
+                            } else {
+                                res.err = 'Incorrect password';
+                                res.code = 401;
+                                callback(null, res);
+                            }
+                        }).catch(function (err) {
+                            res.err = err;
                             res.code = 401;
                             callback(null, res);
-                        }
-                    });
+                        });
+                    } else {
+                        res.err = 'Incorrect username';
+                        res.code = 401;
+                        callback(null, res);
+                    }
 
                 }
             });
