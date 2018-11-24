@@ -24,9 +24,8 @@ var recruiterSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    required: false
   },
-
   phoneNumber: {
     type: Number,
     required: false,
@@ -57,7 +56,6 @@ var recruiterSchema = new mongoose.Schema({
     get: v => Math.round(v),
     default: ""
   },
-  
   companyName: {
     type: String,
     required: false,
@@ -85,12 +83,12 @@ var recruiterSchema = new mongoose.Schema({
   connectionsRequests : {
     type: Array,
     required : false, 
-    defuaut: []
+    default: []
   },
   connections : {
     type: Array,
     required : false, 
-    defuaut: []
+    default: []
   }
 });
 

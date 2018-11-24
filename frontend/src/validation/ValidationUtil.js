@@ -5,19 +5,19 @@ export const signupValidations = (data) => {
     const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z@]{8,}$/;
 
     if(data.firstName ==='' || data.lastName ==='' || data.email ==='' || data.password ===''){
-        msg = "All fields are mandatory. Please fill all details";
+        msg = "All fields are mandatory";
         return msg;
     }
     if (!(namePattern.test(data.firstName))) {
-        msg = "Please enter valid First Name";
+        msg = "Enter valid First Name";
         return msg;
     }
     if(!(namePattern.test(data.lastName))){
-        msg = "Please enter valid Last Name";
+        msg = "Enter valid Last Name";
         return msg;
     }
     if (!(emailPattern.test(data.email))) {
-        msg = "Please enter valid Email Address";
+        msg = "Enter valid Email Address";
         return msg;
     }
     if (data.password.length<4 || data.password.length>14) {

@@ -18,7 +18,6 @@ class ApplicantLoginNavbar extends Component {
             isLoggedIn: false,
             messageDiv: "",
             success: false,
-            userExists: false
         };
     }
 

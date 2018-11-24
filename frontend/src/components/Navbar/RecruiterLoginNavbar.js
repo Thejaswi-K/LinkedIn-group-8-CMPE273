@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import connect from "react-redux/es/connect/connect";
 import {CONSTANTS} from '../../Constants';
+import {recruiterLogin} from "../../actions/recruiterActions";
+import * as Validation from "../../validation/ValidationUtil";
+import Redirect from "react-router/es/Redirect";
 
 class RecruiterLoginNavbar extends Component {
     constructor(props) {
@@ -9,16 +13,13 @@ class RecruiterLoginNavbar extends Component {
             email: "",
             password: "",
             isRecruiter: true,
-            userExists: false
+            userExists: false,
+            isLoggedIn: false,
+            messageDiv: "",
+            success: false,
         }
-
         // Bind the handlers to this class
-        // this.closeDialogHandler = this.closeDialogHandler.bind(this);
-        // this.searchStartDateChangeHandler = this.searchStartDateChangeHandler.bind(this);
-        // this.searchEndDateChangeHandler = this.searchEndDateChangeHandler.bind(this);
-        // this.searchHeadCountChangeHandler = this.searchHeadCountChangeHandler.bind(this);
-        // this.searchHandler = this.searchHandler.bind(this);
-        // this.notOwnerHandler = this.notOwnerHandler.bind(this);
+        this.doLogin = this.doLogin.bind(this);
     }
 
     componentDidMount = () => {
@@ -29,7 +30,57 @@ class RecruiterLoginNavbar extends Component {
         });
     }
 
+    componentWillReceiveProps(nextProps) {
+        $(document).ready(function () {
+            $('#cl').on('click', function () {
+                $('#login-callout').addClass('hidden');
+            });
+        });
+        if (nextProps.recruiterProfile.recruiterUser !== "") {
+            this.setState({
+                ...this.state,
+                success: true
+            })
+        } else if (nextProps.recruiterErrorReducer.error !== "") {
+            alert(nextProps.recruiterErrorReducer.error);
+        }
+    }
+
+    doLogin = (event) => {
+        event.preventDefault();
+        let valid = Validation.loginValidations(this.state);
+        if (valid === '') {
+            const data = {
+                password: this.state.password,
+                email: this.state.email
+            }
+            this.props.recruiterLogin(data, this.props.history);
+        } else {
+            this.setState({
+                ...this.state,
+                messageDiv: valid
+            })
+        }
+
+    };
+
     render() {
+        if (this.state.success) {
+            return <Redirect to="/applicantprofileview"/>
+        }
+
+        let message = null;
+        if (this.state.messageDiv !== '') {
+            message = (
+                <div className="clearfix">
+                    <div className="alert alert-info text-center" role="alert">{this.state.messageDiv}</div>
+                </div>
+            );
+        } else {
+            message = (
+                <div></div>
+            );
+        }
         return(
             <div>
                 <div className="header">
@@ -37,15 +88,22 @@ class RecruiterLoginNavbar extends Component {
                         <h1>
                             <img className="lazy-loaded" alt="LinkedIn" src="https://static.licdn.com/sc/h/95o6rrc5ws6mlw6wqzy0xgj7y" />
                         </h1>
-                        <form className="login-form" action="https://www.linkedin.com/uas/login-submit?loginSubmitSource=GUEST_HOME"
-                            method="POST">
+                        <form className="login-form"action="https://www.linkedin.com/uas/login-submit?loginSubmitSource=GUEST_HOME"
+                              method="POST">
                             <label for="login-email">Email</label>
-                            <input type="text" name="session_key" className="login-email"
-                                autocapitalize="off" tabindex="1" id="login-email" placeholder="Email" autofocus="autofocus" dir="ltr" />
+                            <input type="text" name="email" className="login-email"
+                                autocapitalize="off" tabindex="1" id="login-email" placeholder="Email" 
+                                autofocus="autofocus" dir="ltr" onChange={(e) => {
+                                    this.setState({[e.target.name]: e.target.value})
+                                }}/>
                             <label for="login-password">Password</label>
-                        <input type="password" name="session_password" className="login-password"
-                            id="login-password" aria-required="true" tabindex="1" placeholder="Password" dir="ltr" />
-                        <input tabindex="1" id="login-submit" className="login submit-button" type="submit" value="Sign in" />
+                        <input type="password" name="password" className="login-password"
+                            id="login-password" aria-required="true" tabindex="1" placeholder="Password" 
+                            dir="ltr" onChange={(e) => {
+                                this.setState({[e.target.name]: e.target.value})
+                            }}/>
+                        <input tabindex="1" id="login-submit" className="login submit-button" type="submit" value="Sign in" 
+                            onClick={this.doLogin.bind(this)}/>
                         {(!this.state.isRecruiter) ?
                             <a className="link-forgot-password" tabindex="1" href={CONSTANTS.ROOTURL+"/RecruiterSignup"}>Recruiter?</a>
                             :
@@ -76,4 +134,8 @@ class RecruiterLoginNavbar extends Component {
     }
 }
 
-export default RecruiterLoginNavbar;
+const mapStateToProps = (state) => ({
+    recruiterErrorReducer: state.recruiterErrorReducer,
+    recruiterProfile: state.recruiterProfile
+});
+export default connect(mapStateToProps, {recruiterLogin})(RecruiterLoginNavbar);
