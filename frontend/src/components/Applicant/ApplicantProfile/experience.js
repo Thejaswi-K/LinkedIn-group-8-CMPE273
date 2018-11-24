@@ -117,7 +117,7 @@ class Experience extends Component {
     }
 
     editingExperience() {
-         var indexedExperience = this.exp[this.state.indexToEdit];
+        var indexedExperience = this.exp[this.state.indexToEdit];
 
         return (
             <Card className="w-75 p-3 ml-5">
@@ -130,36 +130,27 @@ class Experience extends Component {
                         </button>
                     </div>
                     <div className="col-md-8">
-                        <input type="text" name="title" className="form-control"
+                        <input type="text" ref="title" className="form-control"
                                defaultValue={indexedExperience.title}
-                               onChange={(e) => {
-                                   this.setState({[e.target.name]: e.target.value})
-                               }}/><br/>
-                        <input type="text" name="company" className="form-control"
-                               defaultValue={indexedExperience.company} onChange={(e) => {
-                            this.setState({[e.target.name]: e.target.value})
-                        }}/><br/>
+                        /><br/>
+                        <input type="text" ref="company" className="form-control"
+                               defaultValue={indexedExperience.company}
+                        /><br/>
                         <div className="input-group">
-                            <input type="year" name="from" className="form-control"
-                                   defaultValue={moment(indexedExperience.from).format("YYYY")} onChange={(e) => {
-                                this.setState({[e.target.name]: e.target.value})
-                            }}/>
+                            <input type="year" ref="from" className="form-control" defaultValue={moment(indexedExperience.from).format("YYYY")}
+                                  />
                             <span className="input-group-addon">-</span>
-                            <input type="year" name="to" className="form-control"
-                                   defaultValue={moment(indexedExperience.to).format("YYYY")} onChange={(e) => {
-                                this.setState({[e.target.name]: e.target.value})
-                            }}/>
+                            <input type="year" ref="to" className="form-control" defaultValue={moment(indexedExperience.to).format("YYYY")}
+                            />
                         </div>
                         <br/>
-                        <input type="text" name="location" className="form-control"
+                        <input type="text" ref="location" className="form-control"
                                defaultValue={indexedExperience.location}
                                onChange={(e) => {
                                    this.setState({[e.target.name]: e.target.value})
                                }}/><br/>
-                        <textarea className="form-control" rows="6" style={{width: '100%'}} name="description"
-                                  defaultValue={indexedExperience.description} onChange={(e) => {
-                            this.setState({[e.target.name]: e.target.value})
-                        }}/><br/>
+                        <textarea className="form-control" rows="6" style={{width: '100%'}} ref="description"
+                                  defaultValue={indexedExperience.description}/><br/>
 
                         <center>
                             <div className="btn btn-toolbar">
@@ -239,12 +230,12 @@ class Experience extends Component {
 
     handleClickSaveEdit() {
         var experience = {
-            title: this.state.title,
-            company: this.state.company,
-            location: this.state.location,
-            description: this.state.description,
-            from: this.state.from,
-            to: this.state.to
+            title: this.refs.title.value,
+            company: this.refs.company.value,
+            location: this.refs.location.value,
+            description: this.refs.description.value,
+            from: this.refs.from.value,
+            to: this.refs.to.value
         };
 
         this.exp[this.state.indexToEdit] = experience;
