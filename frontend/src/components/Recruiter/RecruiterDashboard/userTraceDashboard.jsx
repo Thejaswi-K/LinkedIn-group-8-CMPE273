@@ -106,7 +106,20 @@ export default class UserTraceDashboard extends Component {
         ]
       }
     }
+    this.usernameSubmitHandler = this.usernameSubmitHandler.bind(this);
+    this.valueChangeHandler= this.valueChangeHandler.bind(this);
   }
+  usernameSubmitHandler(userInput){
+    console.log("Username of applicant ", userInput.applicant_name.value);
+
+  
+
+  }
+  valueChangeHandler = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+    console.log(this.state);
+  };
+
 
   render() {
     return (
@@ -122,7 +135,13 @@ export default class UserTraceDashboard extends Component {
           <form>
                     <div className="form-group col-2">
                         <label for="exampleFormControlInput1">Enter User Name:</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter User Name" ref="applicant_name" />
+                        <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Username"
+                      name="recruiter"
+                      onChange={this.valueChangeHandler}
+                    />
                        
                     </div>
                     <div className="form-group">
@@ -131,7 +150,7 @@ export default class UserTraceDashboard extends Component {
 
                     
           </form>
-          <Line data={this.state.chartData} options={options}/>
+          <Line data={this.state.chartData} options={options} height={80}/>
         </div>
       </div>
     );

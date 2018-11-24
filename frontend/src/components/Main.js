@@ -11,7 +11,7 @@ import RecruiterSignup from './Recruiter/RecruiterSignup/RecruiterSignup';
 import ApplicantProfileView from "./Applicant/ApplicantProfile/ApplicantProfileView";
 import Provider from "react-redux/es/components/Provider";
 import store from "../store";
-import MainRecruiterDashboard from "./Recruiter/main";
+import MainRecruiterDashboard from "./Recruiter/RecruiterDashboard/main";
 // import OwnerSignup from './OwnerSignup/OwnerSignup';
 // import TravelerLogin from './TravelerLogin/TravelerLogin';
 // import TravelerSignup from './TravelerSignup/TravelerSignup';

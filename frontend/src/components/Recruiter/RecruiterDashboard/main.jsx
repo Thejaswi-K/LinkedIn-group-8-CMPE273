@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 
 import RightRailComponent from "./rightrail";
 import  UserTraceDashboard from "./userTraceDashboard";
-import jobNavbar from "../Navbar/JobNavbar";
+import jobNavbar from "../../Navbar/JobNavbar";
 import GraphDashboardMain from "./graphDashboard";
 export default class MainRecruiterDashboard extends Component {
   constructor(props) {
@@ -46,7 +46,7 @@ export default class MainRecruiterDashboard extends Component {
             <RightRailComponent />
           </div>
         </div>
-        <div className="row">
+        <div className="row" >
           <div className="col-9">
             <UserTraceDashboard />
           </div>
