@@ -128,14 +128,14 @@ var applicantSchema = new mongoose.Schema({
     {
       requestFrom: { type: String, required: false, default: "" },
       requestTo: { type: String, required: false, default: "" },
-      isAccepted: { type: Boolean, required: false, default: "" }
+      isAccepted: { type: Boolean, required: false, default: false }
     }
   ],
   connections: [
     {
       accptedFrom: { type: String, required: false, default: "" },
       acceptedTo: { type: String, required: false, default: "" },
-      isAccepted: { type: Boolean, required: false, default: "" }
+      isAccepted: { type: Boolean, required: false, default: false }
     }
   ]
 });
