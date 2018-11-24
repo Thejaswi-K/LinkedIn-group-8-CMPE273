@@ -3,8 +3,9 @@ import { Redirect } from "react-router";
 import jwtDecode from "jwt-decode";
 
 import RightRailComponent from "./rightrail";
-import GraphDashboard from "./centerDashboard";
-
+import  UserTraceDashboard from "./userTraceDashboard";
+import jobNavbar from "../../Navbar/JobNavbar";
+import GraphDashboardMain from "./graphDashboard";
 export default class MainRecruiterDashboard extends Component {
   constructor(props) {
     super(props);
@@ -32,18 +33,25 @@ export default class MainRecruiterDashboard extends Component {
         }}
       >
         {/* {redirectVar} */}
-        {/* <Navbar
-          username={this.state.username}
-          propertyListHandler={this.propertyListHandler}
-        /> */}
+
+        <jobNavbar />
+
+       
         <div className="row">
-          <div className="col-9">
-            <GraphDashboard />
+        <div className="col-9">
+            <GraphDashboardMain />
           </div>
+          
           <div className="col-3" style={{position: "fixed", right:"20px"}}>
             <RightRailComponent />
           </div>
         </div>
+        <div className="row" >
+          <div className="col-9">
+            <UserTraceDashboard />
+          </div>
+        </div>
+
       </div>
     );
   }

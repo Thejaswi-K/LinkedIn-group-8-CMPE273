@@ -11,6 +11,7 @@ import RecruiterSignup from './Recruiter/RecruiterSignup/RecruiterSignup';
 import ApplicantProfileView from "./Applicant/ApplicantProfile/ApplicantProfileView";
 import Provider from "react-redux/es/components/Provider";
 import store from "../store";
+import MainRecruiterDashboard from "./Recruiter/RecruiterDashboard/main";
 // import OwnerSignup from './OwnerSignup/OwnerSignup';
 // import TravelerLogin from './TravelerLogin/TravelerLogin';
 // import TravelerSignup from './TravelerSignup/TravelerSignup';
@@ -34,6 +35,7 @@ class Main extends Component {
                     <Route path="/profile" component={UserNavbar} />
                     <Route path="/job" component={JobNavbar} />
                     <Route path="/applicantprofileview" component={ApplicantProfileView} />
+                    <Route path="/recruiterDashboard" component={MainRecruiterDashboard} />
                     {/* <Route path="/editprofile" component={EditProfile}/> */}
                     {/* <Route path="/postproperty" component={PostProperty}/> */}
                     {/* <Route path="/searchproperty" component={SearchProperty}/> */}
