@@ -26,6 +26,9 @@ var RecruiterJobUpdate = require("./services/recruiter/recruiterUpdateJob");
 var sendMessage = require("./services/applicants/sendMessage");
 var receiveMessage = require("./services/applicants/receiveMessage");
 var applicantMessages = require("./services/applicants/applicantMessages");
+var ApplicantViewConnections = require("./services/applicants/ApplicantViewConnections")
+var ApplicantSendConnections = require("./services/applicants/ApplicantConnectionSend")
+
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -64,9 +67,9 @@ function handleTopicRequest(topic_name, fname) {
 // handleTopicRequest("jobs_topic", Job);
 // handleTopicRequest("applicant_details", ApplicantDetails);
 // handleTopicRequest("recruiter_details", RecruiterDetails);
-handleTopicRequest("applicant_login", ApplicantLogin);
+//handleTopicRequest("applicant_login", ApplicantLogin);
 // handleTopicRequest("recruiter_login", RecruiterLogin);
-handleTopicRequest("applicant_signup", ApplicantSignup);
+//handleTopicRequest("applicant_signup", ApplicantSignup);
 // handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
 // handleTopicRequest("recruiter_signup", RecruiterSignup);
 // handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
@@ -78,9 +81,11 @@ handleTopicRequest("applicant_signup", ApplicantSignup);
 // handleTopicRequest("recruiter_JobView",RecruiterJobView);
 // handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
 // handleTopicRequest("recruiter_delete", RecruiterDelete);
-// handleTopicRequest("recruiter_JobView", RecruiterJobView);
-// handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
+handleTopicRequest("recruiter_JobView", RecruiterJobView);
+handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
 // handleTopicRequest("applicant_messages", applicantMessages);
+handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
+handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */ 
@@ -112,6 +117,8 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic receive_message;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_messages;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_signup_mongo;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_ViewConnection;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_SendConnection;
 ) &
 
 */

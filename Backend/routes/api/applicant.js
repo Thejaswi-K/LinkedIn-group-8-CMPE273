@@ -366,4 +366,50 @@ router.get("/applicantMessages", (req, res) => {
   });
 });
 
+/****************Applicant View All Connections*********************/
+router.get('/viewconnections/:applicant_id', function(req, res){
+  console.log("Backend Applicant View Connections")
+   kafka.make_request('applicant_ViewConnection', {applicant_id:req.params.applicant_id} , function(err,results){
+       console.log('in result');
+       console.log(results);
+       if (err){
+           console.log("Inside err");
+           res.json({
+               status:"error",
+               msg:"Unable to fetch Connections."
+           })
+       }else{
+           console.log("Inside else");
+               res.json({
+                   fetchedConnections:results
+               });
+               res.end();
+           }
+   });
+});
+
+/****************Applicant Send Connection*********************/
+router.post('/connections/:applicant_id', function(req, res){
+  console.log("Backend Applicant Send Connection")
+   kafka.make_request('applicant_SendConnection', {applicant_id:req.params.applicant_id, "body":req.body} , function(err,results){
+       console.log('in result');
+       console.log(results);
+       if (err){
+           console.log("Inside err");
+           res.json({
+               status:"error",
+               msg:"Unable to Send Connection."
+           })
+       }else{
+           console.log("Inside else");
+               res.json({
+                   SendConnections:results
+               });
+   
+               res.end();
+           }
+   });
+});
+
+
 module.exports = router;
