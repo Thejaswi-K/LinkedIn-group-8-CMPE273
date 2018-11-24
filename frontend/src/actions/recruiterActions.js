@@ -1,119 +1,112 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-
+import {CONSTANTS} from '../Constants';
 
 import {
-    APPLICANT_PROFILE,
-    GET_ERRORS,
-    SET_APPLICANT_CURRENT_USER,
-    APPLICANT_SIGNUP_ERROR_REDUCER
+    RECRUITER_PROFILE,
+    RECRUITER_GET_ERRORS,
+    SET_RECRUITER_CURRENT_USER,
+    RECRUITER_SIGNUP_ERROR_REDUCER
 
 } from './types';
 
 import setAuthToken from "../utils/setAuthToken";
 
-const ROOT_URL = "http://localhost:3001";
-
-//const ROOT_URL = "http://100.25.240.95:3001";
-
-
-//applicant signup
-export const applicantSignup = (userData, history) => dispatch => {
+//Recruiter signup
+export const recruiterSignup = (userData, history) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.post(`${ROOT_URL}/applicants/`, userData)
+    axios.post(`${CONSTANTS.BACKEND_URL}/recruiters/`, userData)
         .then(res => {
             // Save to localStorage
-
-            if (res.status === 200) {
-
+            if (res.status === 201) {
                 axios.defaults.withCredentials = true;
-                axios.post(`${ROOT_URL}/applicants/mongo`, userData)
+                axios.post(`${CONSTANTS.BACKEND_URL}/recruiters/mongo`, userData)
                     .then(res => {
-                        if(res.status === 200) {
+                        if(res.status === 201) {
                             const {token} = res.data;
                             //set token to local storage
-                            localStorage.setItem('applicantToken', token);
+                            localStorage.setItem('recruiterToken', token);
                             setAuthToken(token);
                             // Decode token to get user data
                             const decoded = jwt_decode(token);
                             // Set current user
                             dispatch(setCurrentUser(decoded));
-                            history.push("/applicantsignup")
+                            history.push("/recruitersignup");
+                            alert("Recruiter created successfully.");
                         }
                     })
                     .catch(err =>
                         dispatch({
-                            type: APPLICANT_SIGNUP_ERROR_REDUCER,
+                            type: RECRUITER_SIGNUP_ERROR_REDUCER,
                             payload: err.response
                         })
                     );
-
-
             } else {
-                dispatchApplicantSignupError(res.data);
+                dispatchRecruiterSignupError(res.data);
             }
         })
         .catch(err =>
             dispatch({
-                type: APPLICANT_SIGNUP_ERROR_REDUCER,
-                payload: err.response
+                type: RECRUITER_SIGNUP_ERROR_REDUCER,
+                payload: err.response.data.message
             })
         );
 };
 
-//applicant login
-export const applicantLogin = (userData) => dispatch => {
+
+//Recruiter login
+export const recruiterLogin = (userData) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.post(`${ROOT_URL}/applicants/login`, userData)
+    axios.post(`${CONSTANTS.BACKEND_URL}/recruiters/login`, userData)
         .then(res => {
             // Save to localStorage
 
             if (res.status === 200) {
                 const {token} = res.data;
                 //set token to local storage
-                localStorage.setItem('applicantToken', token);
+                localStorage.setItem('recruiterToken', token);
                 setAuthToken(token);
                 // Decode token to get user data
                 const decoded = jwt_decode(token);
                 // Set current user
                 dispatch(setCurrentUser(decoded));
             } else {
-                dispatchApplicantSignupError(res.data);
+                dispatchRecruiterSignupError(res.data);
             }
-
 
         })
         .catch(err =>
             dispatch({
-                type: APPLICANT_SIGNUP_ERROR_REDUCER,
+                type: RECRUITER_SIGNUP_ERROR_REDUCER,
                 payload: err.message
             })
         );
 };
 
-//get applicant bookings
-export const applicantDetails = (applicantEmail) => dispatch => {
+
+//get Recruiter details
+export const recruiterDetails = (recruiterEmail) => dispatch => {
     axios.defaults.withCredentials = true;
-    setAuthToken(localStorage.getItem("applicantToken"));
+    setAuthToken(localStorage.getItem("recruiterToken"));
 
 
-    axios.get(`${ROOT_URL}/applicants/${applicantEmail}`)
+    axios.get(`${CONSTANTS.BACKEND_URL}/recruiters/${recruiterEmail}`)
         .then(res => {
 
-            dispatch(currentApplicantProfile(res.data));
+            dispatch(currentRecruiterProfile(res.data));
 
         })
         .catch(err =>
             dispatch({
-                type: GET_ERRORS,
+                type: RECRUITER_GET_ERRORS,
                 payload: err.response
             })
         );
 };
 
-export const currentApplicantProfile = decoded => {
+export const currentRecruiterProfile = decoded => {
     return {
-        type: APPLICANT_PROFILE,
+        type: RECRUITER_PROFILE,
         payload: decoded
     };
 };
@@ -121,14 +114,14 @@ export const currentApplicantProfile = decoded => {
 // Set logged in user
 export const setCurrentUser = decoded => {
     return {
-        type: SET_APPLICANT_CURRENT_USER,
+        type: SET_RECRUITER_CURRENT_USER,
         payload: decoded
     };
 };
 
-export const dispatchApplicantSignupError = decoded => {
+export const dispatchRecruiterSignupError = decoded => {
     return {
-        type: APPLICANT_SIGNUP_ERROR_REDUCER,
+        type: RECRUITER_SIGNUP_ERROR_REDUCER,
         payload: decoded
     };
 };
