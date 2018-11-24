@@ -42,6 +42,21 @@ export default class GraphClicksPerJobComponent extends Component {
           data={this.state.chartData}
           width={100}
           height={100}
+          options={
+            {
+          legend: {
+              display: false
+           },
+           scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+          }
+        }
+
 
         />
         </div>

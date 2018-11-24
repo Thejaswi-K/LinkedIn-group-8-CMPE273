@@ -110,6 +110,7 @@ export default class UserTraceDashboard extends Component {
     this.valueChangeHandler= this.valueChangeHandler.bind(this);
   }
   usernameSubmitHandler(userInput){
+    // userInput.preventDefault();
     console.log("Username of applicant ", userInput.applicant_name.value);
 
   
