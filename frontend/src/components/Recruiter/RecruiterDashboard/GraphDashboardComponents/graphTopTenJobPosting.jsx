@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Bar } from "react-chartjs-2";
 
-export default class GraphClicksPerJobComponent extends Component {
+export default class GraphTopTenJobPostingComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -17,7 +17,7 @@ export default class GraphClicksPerJobComponent extends Component {
             borderWidth: 1,
             hoverBackgroundColor: 'rgba(255,99,132,0.4)',
             hoverBorderColor: 'rgba(255,99,132,1)',
-            data: [65, 59, 80, 81, 56, 55, 40, 22]
+            data: [5, 5, 8, 1, 5, 15, 40, 2]
           }
         ]
       }
@@ -36,7 +36,7 @@ export default class GraphClicksPerJobComponent extends Component {
             margin: "5px"
           }}
         >
-          <h4 style={{ textAlign: "center" }}>Clicks Per Job posting</h4>
+          <h4 style={{ textAlign: "center" }}>Top 10 Job Posting</h4>
 
           <Bar
           data={this.state.chartData}
