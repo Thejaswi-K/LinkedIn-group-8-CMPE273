@@ -11,7 +11,7 @@ export default class GraphNumberofSavedJobComponent extends Component {
         labels: ['Job 1', 'Job 2', 'Job 7', 'Job 9', 'Job 22', 'Job 40', 'Job 41'],
         datasets: [
           {
-            label: 'My First dataset',
+            
             backgroundColor: 'rgba(255,99,132,0.2)',
             borderColor: 'rgba(255,99,132,1)',
             borderWidth: 1,
