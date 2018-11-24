@@ -95,7 +95,7 @@ export const applicantLogin = (userData) => dispatch => {
 //add experience
 export const addExperience = (experience) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.put(`${ROOT_URL}/applicants/experience/`, experience)
+    axios.put(`${ROOT_URL}/applicants/experience/add`, experience)
         .then(res => {
             // Save to localStorage
 
@@ -122,6 +122,41 @@ export const addExperience = (experience) => dispatch => {
         );
 
 };
+
+//edit experience
+//add experience
+export const editExperience = (experience) => dispatch => {
+    axios.defaults.withCredentials = true;
+    axios.put(`${ROOT_URL}/applicants/experience/edit`, experience)
+        .then(res => {
+            // Save to localStorage
+
+            if (res.status === 202) {
+
+                dispatch({
+                    type: ADD_EXPERIENCE,
+                    payload: res.data
+                })
+            } else {
+                dispatch({
+                    type: UPDATE_PROFILE_ERROR,
+                    payload: res.data
+                })
+            }
+
+
+        })
+        .catch(err =>
+            dispatch({
+                type: UPDATE_PROFILE_ERROR,
+                payload: err.message
+            })
+        );
+
+};
+
+
+
 
 //get applicant bookings
 export const applicantDetails = (applicantEmail) => dispatch => {

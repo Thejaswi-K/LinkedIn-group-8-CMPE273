@@ -115,8 +115,8 @@ router.post('/mongo', (req, res) => {
     });
 });
 
-//update applicant profile
-router.put('/experience/',
+//add applicant profile experience
+router.put('/experience/add',
     passport.authenticate('jwt', {session: false}),
     (req, res) => {
         const errors = {};
@@ -142,6 +142,35 @@ router.put('/experience/',
         });
 
     });
+
+//edit applicant profile experience
+router.put('/experience/edit',
+    passport.authenticate('jwt', {session: false}),
+    (req, res) => {
+        const errors = {};
+        kafka.make_request('edit_experience', req.body, function (err, results) {
+            console.log('in result');
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                })
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+
+                res.end();
+            }
+        });
+
+    });
+
 
 
 //Get Applicant details

@@ -2,7 +2,7 @@ import Card from "@material-ui/core/Card/Card";
 import moment from "moment";
 import {Component} from "react";
 import connect from "react-redux/es/connect/connect";
-import {addExperience} from "../../../actions/applicantActions";
+import {addExperience, editExperience} from "../../../actions/applicantActions";
 
 var React = require('react');
 var Link = require('react-router').Link;
@@ -24,6 +24,7 @@ class Experience extends Component {
             description: "",
             from: "",
             to: "",
+            indexToEdit: 0
 
         }
     }
@@ -35,7 +36,7 @@ class Experience extends Component {
         if (this.state.adding) {
             show = this.addingExperience();
         } else if (this.state.editing) {
-            // show = this.editingExperience();
+            show = this.editingExperience();
         } else {
             show = this.defaultExperience();
         }
@@ -87,7 +88,8 @@ class Experience extends Component {
                         {this.exp.map((experience, index) => (
                             <li key={index} className="ml-5">
                                 <h4><strong>{experience.title}</strong>
-                                    <button className="btn btn-default ml-4">
+                                    <button className="btn btn-default ml-4"
+                                            onClick={this.handleClickEdit.bind(this, index)}>
                                         <span className="glyphicon glyphicon-pencil" title="Edit Experience"></span>
                                     </button>
                                 </h4>
@@ -114,6 +116,72 @@ class Experience extends Component {
 
     }
 
+    editingExperience() {
+         var indexedExperience = this.exp[this.state.indexToEdit];
+
+        return (
+            <Card className="w-75 p-3 ml-5">
+                <div className="col-md-12">
+                    <div className="card-header">
+                        Experience
+                        <button className="btn btn-default" onClick={this.handleClickAdd.bind(this)}><span
+                            className="glyphicon glyphicon-plus" title="Add Experience">
+			                </span>
+                        </button>
+                    </div>
+                    <div className="col-md-8">
+                        <input type="text" name="title" className="form-control"
+                               defaultValue={indexedExperience.title}
+                               onChange={(e) => {
+                                   this.setState({[e.target.name]: e.target.value})
+                               }}/><br/>
+                        <input type="text" name="company" className="form-control"
+                               defaultValue={indexedExperience.company} onChange={(e) => {
+                            this.setState({[e.target.name]: e.target.value})
+                        }}/><br/>
+                        <div className="input-group">
+                            <input type="year" name="from" className="form-control"
+                                   defaultValue={moment(indexedExperience.from).format("YYYY")} onChange={(e) => {
+                                this.setState({[e.target.name]: e.target.value})
+                            }}/>
+                            <span className="input-group-addon">-</span>
+                            <input type="year" name="to" className="form-control"
+                                   defaultValue={moment(indexedExperience.to).format("YYYY")} onChange={(e) => {
+                                this.setState({[e.target.name]: e.target.value})
+                            }}/>
+                        </div>
+                        <br/>
+                        <input type="text" name="location" className="form-control"
+                               defaultValue={indexedExperience.location}
+                               onChange={(e) => {
+                                   this.setState({[e.target.name]: e.target.value})
+                               }}/><br/>
+                        <textarea className="form-control" rows="6" style={{width: '100%'}} name="description"
+                                  defaultValue={indexedExperience.description} onChange={(e) => {
+                            this.setState({[e.target.name]: e.target.value})
+                        }}/><br/>
+
+                        <center>
+                            <div className="btn btn-toolbar">
+                                <button className="btn btn-primary" onClick={this.handleClickSaveEdit.bind(this)}>Save
+                                </button>
+                                <button className="btn btn-default"
+                                        onClick={this.handleClickCancel.bind(this)}>Cancel
+                                </button>
+
+                            </div>
+                        </center>
+                        <br/>
+                    </div>
+                </div>
+            </Card>
+        )
+    }
+
+    handleClickEdit(index) {
+        this.setState({editing: true, indexToEdit: index});
+    }
+
 
     addingExperience() {
         return (
@@ -124,7 +192,7 @@ class Experience extends Component {
                         Experience
                         <button className="btn btn-default" onClick={this.handleClickAdd.bind(this)}><span
                             className="glyphicon glyphicon-plus" title="Add Experience">
-			</span>
+        </span>
                         </button>
                     </div>
 
@@ -169,6 +237,27 @@ class Experience extends Component {
         )
     }
 
+    handleClickSaveEdit() {
+        var experience = {
+            title: this.state.title,
+            company: this.state.company,
+            location: this.state.location,
+            description: this.state.description,
+            from: this.state.from,
+            to: this.state.to
+        };
+
+        this.exp[this.state.indexToEdit] = experience;
+
+        var body = {
+            experience: this.exp,
+            email: this.props.applicantEmail
+        };
+
+        this.props.editExperience(body);
+
+    }
+
 
     handleClickSave() {
         var experience = {
@@ -202,4 +291,4 @@ const mapStateToProps = (state) => ({
     applicantProfile: state.applicantProfile
 });
 
-export default connect(mapStateToProps, {addExperience})(Experience);
+export default connect(mapStateToProps, {addExperience, editExperience})(Experience);
