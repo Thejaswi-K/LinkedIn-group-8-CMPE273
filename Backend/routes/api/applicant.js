@@ -171,6 +171,150 @@ router.put('/experience/edit',
 
     });
 
+//edit applicant profile education
+router.put('/education/edit',
+    passport.authenticate('jwt', {session: false}),
+    (req, res) => {
+        const errors = {};
+        kafka.make_request('edit_education', req.body, function (err, results) {
+            console.log('in result');
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                })
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+
+                res.end();
+            }
+        });
+
+    });
+
+//to add education
+router.put('/education/add',
+    passport.authenticate('jwt', {session: false}),
+    (req, res) => {
+        const errors = {};
+        kafka.make_request('add_education', req.body, function (err, results) {
+            console.log('in result');
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                })
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+
+                res.end();
+            }
+        });
+
+    });
+
+
+//to edit skills
+router.put('/skills/edit',
+    passport.authenticate('jwt', {session: false}),
+    (req, res) => {
+        const errors = {};
+        kafka.make_request('edit_skill', req.body, function (err, results) {
+            console.log('in result');
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                })
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+
+                res.end();
+            }
+        });
+
+    });
+
+//to add skills
+router.put('/skills/add',
+    passport.authenticate('jwt', {session: false}),
+    (req, res) => {
+        const errors = {};
+        kafka.make_request('add_skill', req.body, function (err, results) {
+            console.log('in result');
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                })
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+
+                res.end();
+            }
+        });
+
+    });
+
+//to edit summary
+router.put('/summary/edit',
+    passport.authenticate('jwt', {session: false}),
+    (req, res) => {
+        const errors = {};
+        kafka.make_request('edit_summary', req.body, function (err, results) {
+            console.log('in result');
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                })
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+
+                res.end();
+            }
+        });
+
+    });
+
+
+
+
 
 
 //Get Applicant details

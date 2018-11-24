@@ -77,11 +77,11 @@ class ApplicantProfileView extends Component {
 
                 <br/>
 
-                <Education education={this.state.education}/>
+                <Education education={this.state.education} applicantEmail={this.email}/>
 
                 <br/>
 
-                <Skills skills={this.state.skills}/>
+                <Skills skills={this.state.skills} applicantEmail={this.email}/>
 
                 <br/>
 

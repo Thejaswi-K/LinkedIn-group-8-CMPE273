@@ -8,7 +8,10 @@ import {
     SET_APPLICANT_CURRENT_USER,
     APPLICANT_SIGNUP_ERROR_REDUCER,
     ADD_EXPERIENCE,
-    UPDATE_PROFILE_ERROR
+    UPDATE_PROFILE_ERROR,
+    ADD_SKILLS,
+    ADD_EDUCATION,
+    EDIT_SUMMARY
 
 } from './types';
 
@@ -124,7 +127,6 @@ export const addExperience = (experience) => dispatch => {
 };
 
 //edit experience
-//add experience
 export const editExperience = (experience) => dispatch => {
     axios.defaults.withCredentials = true;
     axios.put(`${ROOT_URL}/applicants/experience/edit`, experience)
@@ -155,6 +157,161 @@ export const editExperience = (experience) => dispatch => {
 
 };
 
+
+//add education
+export const addEducation = (education) => dispatch => {
+    axios.defaults.withCredentials = true;
+    axios.put(`${ROOT_URL}/applicants/education/add`, education)
+        .then(res => {
+            // Save to localStorage
+
+            if (res.status === 202) {
+
+                dispatch({
+                    type: ADD_EDUCATION,
+                    payload: res.data
+                })
+            } else {
+                dispatch({
+                    type: UPDATE_PROFILE_ERROR,
+                    payload: res.data
+                })
+            }
+
+
+        })
+        .catch(err =>
+            dispatch({
+                type: UPDATE_PROFILE_ERROR,
+                payload: err.message
+            })
+        );
+
+};
+
+//edit education
+export const editEducation = (education) => dispatch => {
+    axios.defaults.withCredentials = true;
+    axios.put(`${ROOT_URL}/applicants/education/edit`, education)
+        .then(res => {
+            // Save to localStorage
+
+            if (res.status === 202) {
+
+                dispatch({
+                    type: ADD_EDUCATION,
+                    payload: res.data
+                })
+            } else {
+                dispatch({
+                    type: UPDATE_PROFILE_ERROR,
+                    payload: res.data
+                })
+            }
+
+
+        })
+        .catch(err =>
+            dispatch({
+                type: UPDATE_PROFILE_ERROR,
+                payload: err.message
+            })
+        );
+
+};
+
+//edit skills
+export const editSkills = (skills) => dispatch => {
+    axios.defaults.withCredentials = true;
+    axios.put(`${ROOT_URL}/applicants/skills/edit`, skills)
+        .then(res => {
+            // Save to localStorage
+
+            if (res.status === 202) {
+
+                dispatch({
+                    type: ADD_SKILLS,
+                    payload: res.data
+                })
+            } else {
+                dispatch({
+                    type: UPDATE_PROFILE_ERROR,
+                    payload: res.data
+                })
+            }
+
+
+        })
+        .catch(err =>
+            dispatch({
+                type: UPDATE_PROFILE_ERROR,
+                payload: err.message
+            })
+        );
+
+};
+
+//add skills
+export const addSkills = (skills) => dispatch => {
+    axios.defaults.withCredentials = true;
+    axios.put(`${ROOT_URL}/applicants/skills/add`, skills)
+        .then(res => {
+            // Save to localStorage
+
+            if (res.status === 202) {
+
+                dispatch({
+                    type: ADD_SKILLS,
+                    payload: res.data
+                })
+            } else {
+                dispatch({
+                    type: UPDATE_PROFILE_ERROR,
+                    payload: res.data
+                })
+            }
+
+
+        })
+        .catch(err =>
+            dispatch({
+                type: UPDATE_PROFILE_ERROR,
+                payload: err.message
+            })
+        );
+
+};
+
+//edit summary
+export const editSummary = (summary) => dispatch => {
+    axios.defaults.withCredentials = true;
+    axios.put(`${ROOT_URL}/applicants/summary/edit`, summary)
+        .then(res => {
+            // Save to localStorage
+
+            if (res.status === 202) {
+
+                dispatch({
+                    type: EDIT_SUMMARY,
+                    payload: res.data
+                })
+            } else {
+                dispatch({
+                    type: UPDATE_PROFILE_ERROR,
+                    payload: res.data
+                })
+            }
+
+
+        })
+        .catch(err =>
+            dispatch({
+                type: UPDATE_PROFILE_ERROR,
+                payload: err.message
+            })
+        );
+
+};
 
 
 

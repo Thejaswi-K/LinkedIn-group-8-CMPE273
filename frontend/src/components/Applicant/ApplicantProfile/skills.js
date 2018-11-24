@@ -16,7 +16,8 @@ function Skills(props) {
             </div>
             <ul className="list-group list-group-flush">
                 <div className="mt-4">
-                    {list.map((experience, index) => (
+                    {
+                        list.map((experience, index) => (
                         <li key={index} className="ml-5">
                             <h4><strong>{experience}</strong>
                             </h4>
