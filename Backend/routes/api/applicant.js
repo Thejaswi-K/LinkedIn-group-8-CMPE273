@@ -116,11 +116,11 @@ router.post('/mongo', (req, res) => {
 });
 
 //update applicant profile
-router.put('/:applicant_id',
+router.put('/experience/',
     passport.authenticate('jwt', {session: false}),
     (req, res) => {
         const errors = {};
-        kafka.make_request('applicant_update_profile', req.body, function (err, results) {
+        kafka.make_request('add_experience', req.body, function (err, results) {
             console.log('in result');
             console.log(results);
             if (err) {

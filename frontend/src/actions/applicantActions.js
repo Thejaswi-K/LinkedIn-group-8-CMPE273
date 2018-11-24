@@ -6,7 +6,9 @@ import {
     APPLICANT_PROFILE,
     GET_ERRORS,
     SET_APPLICANT_CURRENT_USER,
-    APPLICANT_SIGNUP_ERROR_REDUCER
+    APPLICANT_SIGNUP_ERROR_REDUCER,
+    ADD_EXPERIENCE,
+    UPDATE_PROFILE_ERROR
 
 } from './types';
 
@@ -87,6 +89,38 @@ export const applicantLogin = (userData) => dispatch => {
                 payload: err.message
             })
         );
+};
+
+
+//add experience
+export const addExperience = (experience) => dispatch => {
+    axios.defaults.withCredentials = true;
+    axios.put(`${ROOT_URL}/applicants/experience/`, experience)
+        .then(res => {
+            // Save to localStorage
+
+            if (res.status === 202) {
+
+                dispatch({
+                    type: ADD_EXPERIENCE,
+                    payload: res.data
+                })
+            } else {
+                dispatch({
+                    type: UPDATE_PROFILE_ERROR,
+                    payload: res.data
+                })
+            }
+
+
+        })
+        .catch(err =>
+            dispatch({
+                type: UPDATE_PROFILE_ERROR,
+                payload: err.message
+            })
+        );
+
 };
 
 //get applicant bookings

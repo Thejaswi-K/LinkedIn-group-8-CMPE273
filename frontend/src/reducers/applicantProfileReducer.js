@@ -1,8 +1,9 @@
-import {APPLICANT_PROFILE, SET_APPLICANT_CURRENT_USER} from '../actions/types';
+import {APPLICANT_PROFILE, SET_APPLICANT_CURRENT_USER,ADD_EXPERIENCE} from '../actions/types';
 
 const initialState = {
     applicantProfile: {},
-    applicantUser:{}
+    applicantUser:{},
+    experience:[]
 };
 
 export default function (state = initialState, action) {
@@ -16,6 +17,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 applicantProfile: action.payload
+            };
+        case ADD_EXPERIENCE:
+            return {
+                ...state,
+                experience: action.payload
             };
         default:
             return state;

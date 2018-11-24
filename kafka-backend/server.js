@@ -24,6 +24,7 @@ var Applicant = require("./services/applicants/applicants.js");
 var RecruiterJobView = require("./services/recruiter/recruiterViewJobById");
 var RecruiterJobUpdate = require("./services/recruiter/recruiterUpdateJob");
 var sendMessage = require("./services/applicants/sendMessage");
+var AddApplicantExperience = require("./services/profile/applicant/addExperience");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -78,6 +79,7 @@ handleTopicRequest("receive_message", receiveMessage);
 handleTopicRequest("recruiter_delete", RecruiterDelete);
 handleTopicRequest("recruiter_JobView", RecruiterJobView);
 handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
+handleTopicRequest("add_experience", AddApplicantExperience);
 
 /*
 

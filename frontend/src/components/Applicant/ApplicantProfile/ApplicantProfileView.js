@@ -73,7 +73,7 @@ class ApplicantProfileView extends Component {
 
                 <br/>
 
-                <Experience experience={this.state.experience}/>
+                <Experience experience={this.state.experience} applicantEmail={this.email}/>
 
                 <br/>
 
