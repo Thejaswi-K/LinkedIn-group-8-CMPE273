@@ -5,7 +5,7 @@ import {Route} from 'react-router-dom';
 // import RecruiterLoginNavbar from './Navbar/RecruiterLoginNavbar';
 import ApplicantLoginNavbar from './Navbar/ApplicantLoginNavbar';
 import UserNavbar from './Navbar/UserNavbar';
-import JobNavbar from './Navbar/JobNavbar';
+import PostJob from './Job/jobPost';
 import ApplicantSignup from './Applicant/ApplicantSignup/ApplicantSignup';
 import RecruiterSignup from './Recruiter/RecruiterSignup/RecruiterSignup';
 import ApplicantProfileView from "./Applicant/ApplicantProfile/ApplicantProfileView";
@@ -33,7 +33,7 @@ class Main extends Component {
                     <Route path="/applicantsignup" component={ApplicantSignup} />
                     <Route path="/recruitersignup" component={RecruiterSignup} />
                     <Route path="/profile" component={UserNavbar} />
-                    <Route path="/job" component={JobNavbar} />
+                    <Route path="/job" component={PostJob} />
                     <Route path="/applicantprofileview" component={ApplicantProfileView} />
                     <Route path="/recruiterDashboard" component={MainRecruiterDashboard} />
                     {/* <Route path="/editprofile" component={EditProfile}/> */}

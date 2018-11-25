@@ -83,11 +83,11 @@ function handleTopicRequest(topic_name, fname) {
 // handleTopicRequest("recruiter_JobView",RecruiterJobView);
 // handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
 // handleTopicRequest("recruiter_delete", RecruiterDelete);
-handleTopicRequest("recruiter_JobView", RecruiterJobView);
-handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
+// handleTopicRequest("recruiter_JobView", RecruiterJobView);
+// handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
 // handleTopicRequest("applicant_messages", applicantMessages);
-handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
-handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
+// handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
+// handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */ 
