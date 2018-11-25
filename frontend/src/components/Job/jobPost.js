@@ -4,7 +4,7 @@ import axios from 'axios';
 import './jopost.css';
 import $ from 'jquery';
 import Welcome from './Welocome';
-// import Details from './Details';
+import Details from './Details';
 import Photos from './Photos';
 import JobNavbar from '../Navbar/JobNavbar';
 import * as Validate from '../../validation/ValidationUtil';
@@ -18,7 +18,7 @@ class PostJob extends Component {
     constructor(props) {
         super(props);
         this.state = {
-                email: jwtDecode(localStorage.getItem('recruiterToken')).email,
+                // email: jwtDecode(localStorage.getItem('recruiterToken')).email,
                 jobCompany: "",
                 jobTitle: "",
                 jobLocation: "",
@@ -55,23 +55,23 @@ class PostJob extends Component {
             $('#continueNext').on('click', function() {
                 $('#wc').removeClass('active');
                 $('#wc a').attr("aria-expanded","false");
-                $('#lc').addClass('active');
-                $('#lc a').attr("aria-expanded","true");
-            });
-            //Next-Location button handle
-            $('#next-lc').on('click', function() {
-                $('#lc').removeClass('active');
-                $('#lc a').attr("aria-expanded","false");
                 $('#de').addClass('active');
                 $('#de a').attr("aria-expanded","true");
             });
+            // //Next-Location button handle
+            // $('#next-lc').on('click', function() {
+            //     $('#lc').removeClass('active');
+            //     $('#lc a').attr("aria-expanded","false");
+            //     $('#de').addClass('active');
+            //     $('#de a').attr("aria-expanded","true");
+            // });
             //Back-Location button handle
-            $('#back-lc').on('click', function() {
-                $('#lc').removeClass('active');
-                $('#lc a').attr("aria-expanded","false");
-                $('#wc').addClass('active');
-                $('#wc a').attr("aria-expanded","true");
-            });
+            // $('#back-lc').on('click', function() {
+            //     $('#lc').removeClass('active');
+            //     $('#lc a').attr("aria-expanded","false");
+            //     $('#wc').addClass('active');
+            //     $('#wc a').attr("aria-expanded","true");
+            // });
             //Next-Details button handle
             $('#next-de').on('click', function() {
                 $('#de').removeClass('active');
@@ -83,16 +83,16 @@ class PostJob extends Component {
             $('#back-de').on('click', function() {
                 $('#de').removeClass('active');
                 $('#de a').attr("aria-expanded","false");
-                $('#lc').addClass('active');
-                $('#lc a').attr("aria-expanded","true");
+                $('#wc').addClass('active');
+                $('#wc a').attr("aria-expanded","true");
             });
-            //Next-Photo button handle
-            $('#next-ph').on('click', function() {
-                $('#ph').removeClass('active');
-                $('#ph a').attr("aria-expanded","false");
-                $('#av').addClass('active');
-                $('#av a').attr("aria-expanded","true");
-            });
+            // //Next-Photo button handle
+            // $('#next-ph').on('click', function() {
+            //     $('#ph').removeClass('active');
+            //     $('#ph a').attr("aria-expanded","false");
+            //     $('#av').addClass('active');
+            //     $('#av a').attr("aria-expanded","true");
+            // });
             //Back-Photo button handle
             $('#back-ph').on('click', function() {
                 $('#ph').removeClass('active');
@@ -100,27 +100,27 @@ class PostJob extends Component {
                 $('#de').addClass('active');
                 $('#de a').attr("aria-expanded","true");
             });
-            //Next-Availability button handle
-            $('#next-av').on('click', function() {
-                $('#av').removeClass('active');
-                $('#av a').attr("aria-expanded","false");
-                $('#pr').addClass('active');
-                $('#pr a').attr("aria-expanded","true");
-            });
-            //Back-Availability button handle
-            $('#back-av').on('click', function() {
-                $('#av').removeClass('active');
-                $('#av a').attr("aria-expanded","false");
-                $('#ph').addClass('active');
-                $('#ph a').attr("aria-expanded","true");
-            });
-            //Back-Pricing button handle
-            $('#back-pr').on('click', function() {
-                $('#pr').removeClass('active');
-                $('#pr a').attr("aria-expanded","false");
-                $('#av').addClass('active');
-                $('#av a').attr("aria-expanded","true");
-            });
+            // //Next-Availability button handle
+            // $('#next-av').on('click', function() {
+            //     $('#av').removeClass('active');
+            //     $('#av a').attr("aria-expanded","false");
+            //     $('#pr').addClass('active');
+            //     $('#pr a').attr("aria-expanded","true");
+            // });
+            // //Back-Availability button handle
+            // $('#back-av').on('click', function() {
+            //     $('#av').removeClass('active');
+            //     $('#av a').attr("aria-expanded","false");
+            //     $('#ph').addClass('active');
+            //     $('#ph a').attr("aria-expanded","true");
+            // });
+            // //Back-Pricing button handle
+            // $('#back-pr').on('click', function() {
+            //     $('#pr').removeClass('active');
+            //     $('#pr a').attr("aria-expanded","false");
+            //     $('#av').addClass('active');
+            //     $('#av a').attr("aria-expanded","true");
+            // });
         });
     }
 
@@ -241,17 +241,17 @@ class PostJob extends Component {
             const jobData = {
                         ...this.state
                 }
-            this.props.postjobData( jobData,false);
+            this.props.postJobData( jobData,false);
             //Post Call to post Property Details in DB
             //set the with credentials to true
             axios.defaults.withCredentials = true;
             //make a post request with the user data
-            axios.post(`${CONSTANTS.BACKEND_URL}/postproperty`,
+            axios.post(`${CONSTANTS.BACKEND_URL}/postjob`,
             jobData,{
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': localStorage.getItem('token')
+                'Authorization': localStorage.getItem('recruiterToken')
             },
             })
             .then(response => {
@@ -261,7 +261,7 @@ class PostJob extends Component {
                         ...this.state,
                         jobIsPosted : true
                     })
-                    this.props.postjobData(jobData,true);
+                    this.props.postJobData(jobData,true);
                     console.log("message:", response.data.message);
                     alert("Your job was successfully posted.");
                 }else{
@@ -269,7 +269,7 @@ class PostJob extends Component {
                         ...this.state,
                         jobIsPosted : false
                     })
-                    this.props.postPropertyData(jobData,false);
+                    this.props.postJobData(jobData,false);
                     alert("Your job was not successfully posted.");
                 }
             })
@@ -316,32 +316,32 @@ class PostJob extends Component {
                     <div className="wrapper">
                         <nav id="sidebar">
                             <div id = "sidebarCollapse" className="sidebar-header" style={{paddingTop:"50px", paddingBottom: "0px"}}>
-                                <h3 style= {{fontSize: "25px"}}>Job Details</h3>
+                                <h3 style= {{fontSize: "30px", fontWeight: '550'}}>Job Details</h3>
                                 <strong>JD</strong>
                             </div>
-                            <ul className="list-unstyled components">
-                                <li id = "wc" className= "active">
-                                    <a href="#welcome" data-toggle="tab" aria-expanded = "false">
+                            <ul className="nav list-unstyled components flex-column">
+                                <li className = "nav-item active" id = "wc">
+                                    <a className = "nav-link" href="#welcome" data-toggle="tab" aria-expanded = "false">
                                         <i className="fa fas fa-home"></i>
                                         Welcome
                                     </a>
                                 </li>
-                                <li id = "lc">
+                                {/* <li id = "lc">
                                     <a href="#location" data-toggle="tab" aria-expanded = "false" >
                                     <i class="fa fas fa-location-arrow"></i>
                                         Location
                                      </a>
-                                </li>
-                                <li id = "de">    
-                                    <a href="#details" data-toggle="tab" aria-expanded = "false">
+                                </li> */}
+                                <li id = "de" className = "nav-item">    
+                                    <a className = "nav-link" href="#details" data-toggle="tab" aria-expanded = "false">
                                         <i className="fa fas fa-copy"></i>
                                         Details
                                     </a>
                                 </li>
-                                <li id = "ph">
-                                    <a href="#photos" data-toggle="tab" aria-expanded = "false">
+                                <li id = "ph" className = "nav-item">
+                                    <a className = "nav-link" href="#photos" data-toggle="tab" aria-expanded = "false">
                                         <i className="fa fas fa-image"></i>
-                                        Photos
+                                        Company Logo
                                     </a>
                                 </li>
                                 {/* <li id = "av">
@@ -364,14 +364,14 @@ class PostJob extends Component {
                                     <Welcome />
                                 </div>
                                 <div id="details" className="tab-pane fade">
-                                    {/* <Details 
-                                    headlineChange = {this.propHeadlineChangeHandler}
-                                    descriptionChange = {this.propDescriptionChangeHandler}
-                                    typeChange = {this.propTypeChangeHandler}
-                                    bedroomsChange = {this.propBedroomChangeHandler}
-                                    guestCountChange = {this.propGuestCountChangeHandler}
-                                    bathroomsChange = {this.propBathroomsChangeHandler}
-                                    /> */}
+                                    <Details 
+                                    // headlineChange = {this.propHeadlineChangeHandler}
+                                    // descriptionChange = {this.propDescriptionChangeHandler}
+                                    // typeChange = {this.propTypeChangeHandler}
+                                    // bedroomsChange = {this.propBedroomChangeHandler}
+                                    // guestCountChange = {this.propGuestCountChangeHandler}
+                                    // bathroomsChange = {this.propBathroomsChangeHandler}
+                                    />
                                 </div>
                                 <div id="photos" className="tab-pane fade" >
                                     <Photos 

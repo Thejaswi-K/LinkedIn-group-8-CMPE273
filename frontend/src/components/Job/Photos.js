@@ -5,7 +5,8 @@ import Dropzone from 'react-dropzone';
 const photos =(props)=> {
     return (
         <div className="col-md-7 content-panel-container ">
-            <div className="panel panel-default">
+        <h1>Hello Photos here!</h1>
+            {/* <div className="panel panel-default">
                 <div className="panel-body">
                     <div className="checklist-header-container">
                         <div className="le-nav-header">
@@ -53,7 +54,7 @@ const photos =(props)=> {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

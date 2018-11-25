@@ -4,6 +4,36 @@ const router = express.Router();
 
 var kafka = require("../../kafka/client");
 
+//Post a Job
+router.post("/", function (req, res) {
+  console.log("Inside backend--> Job Post route");
+  kafka.make_request("post_job", req.body, function (err, results) {
+    console.log("in result");
+    console.log(results);
+    if (err) {
+      console.log("Inside err");
+      res.json({
+        status: "error",
+        msg: "System Error, Try Again."
+      });
+    } else {
+      console.log("Inside else", results);
+      if (results.code === 201) {
+        console.log("Job Posted successfully");
+        res.status(results.code).json({
+          result: results.result
+        });
+      } else {
+        console.log(`Post Job-->Unable to Post Job. Error-->${results.err}`);
+        res.status(results.code).json({
+          error: results.err
+        });
+      }
+      res.end();
+    }
+  });
+});
+
 //SEARCH jobs based on title and location
 router.get("/:title/:location", function(req, res) {
   console.log("inside backend /jobs/:title&:location");
@@ -34,7 +64,6 @@ router.get("/:title/:location", function(req, res) {
   );
 });
 
-
 //GET details of particular job
 router.get("/:jobId", function(req, res) {
   console.log("inside backend get jobs details");
@@ -60,6 +89,5 @@ router.get("/:jobId", function(req, res) {
     }
   );
 });
-
 
 module.exports = router;

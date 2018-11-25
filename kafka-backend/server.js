@@ -36,6 +36,7 @@ var EditApplicantEducation = require("./services/profile/applicant/editEducation
 var AddApplicantSkill = require("./services/profile/applicant/addSkill");
 var EditApplicantSkill = require("./services/profile/applicant/editSkill");
 var EditApplicantSummary = require("./services/profile/applicant/editSummary");
+var JobPost = require("./services/Jobs/postJob");
 
 function handleTopicRequest(topic_name, fname) {
     //var topic_name = 'root_topic';
@@ -71,21 +72,23 @@ function handleTopicRequest(topic_name, fname) {
 //first argument is topic name
 //second argument is a function that will handle this topic request
 
-/*handleTopicRequest("logs_topic", Log);
-handleTopicRequest("jobs_topic", Job);
-handleTopicRequest("applicant_details", ApplicantDetails);
-handleTopicRequest("recruiter_details", RecruiterDetails);
-handleTopicRequest("applicant_login", ApplicantLogin);
-handleTopicRequest("recruiter_login", RecruiterLogin);
-handleTopicRequest("applicant_signup", ApplicantSignup);
-handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
-handleTopicRequest("recruiter_signup", RecruiterSignup);
-handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
-handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
-handleTopicRequest("applicant_delete", ApplicantDelete);
-handleTopicRequest("applicant_topic", Applicant);
-handleTopicRequest("send_message", sendMessage);
-handleTopicRequest("receive_message", receiveMessage);
+// handleTopicRequest("logs_topic", Log);
+// handleTopicRequest("jobs_topic", Job);
+// handleTopicRequest("applicant_details", ApplicantDetails);
+// handleTopicRequest("recruiter_details", RecruiterDetails);
+// handleTopicRequest("applicant_login", ApplicantLogin);
+// handleTopicRequest("recruiter_login", RecruiterLogin);
+// handleTopicRequest("applicant_signup", ApplicantSignup);
+// handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
+// handleTopicRequest("recruiter_signup", RecruiterSignup);
+// handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
+// handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
+// handleTopicRequest("applicant_delete", ApplicantDelete);
+// handleTopicRequest("applicant_topic", Applicant);
+// handleTopicRequest("send_message", sendMessage);
+// handleTopicRequest("receive_message", receiveMessage);
+handleTopicRequest("post_job", JobPost);
+
 // handleTopicRequest("logs_topic", Log);
 // handleTopicRequest("jobs_topic", Job);
 // handleTopicRequest("applicant_details", ApplicantDetails);
@@ -104,17 +107,17 @@ handleTopicRequest("receive_message", receiveMessage);
 // handleTopicRequest("receive_message", receiveMessage);
 // handleTopicRequest("recruiter_JobView",RecruiterJobView);
 // handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
-handleTopicRequest("recruiter_delete", RecruiterDelete);
-handleTopicRequest("recruiter_JobView", RecruiterJobView);
-handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
-handleTopicRequest("add_experience", AddApplicantExperience);
-handleTopicRequest("edit_experience", EditApplicantExperience);
+// handleTopicRequest("recruiter_delete", RecruiterDelete);
+// handleTopicRequest("recruiter_JobView", RecruiterJobView);
+// handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
+// handleTopicRequest("add_experience", AddApplicantExperience);
+// handleTopicRequest("edit_experience", EditApplicantExperience);
 
-handleTopicRequest("edit_education", EditApplicantEducation);
-handleTopicRequest("add_education", AddApplicantEducation);
-handleTopicRequest("add_skill", AddApplicantSkill);
-handleTopicRequest("edit_skill", EditApplicantSkill);
-handleTopicRequest("edit_summary", EditApplicantSummary);*/
+// handleTopicRequest("edit_education", EditApplicantEducation);
+// handleTopicRequest("add_education", AddApplicantEducation);
+// handleTopicRequest("add_skill", AddApplicantSkill);
+// handleTopicRequest("edit_skill", EditApplicantSkill);
+// handleTopicRequest("edit_summary", EditApplicantSummary);
 // handleTopicRequest("recruiter_delete", RecruiterDelete);
 // handleTopicRequest("recruiter_JobView", RecruiterJobView);
 // handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
