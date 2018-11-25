@@ -1,6 +1,5 @@
 var mongoose = require("mongoose");
 
-
 var jobApplication = new mongoose.Schema({
     applicant_id: {
         type: String,
