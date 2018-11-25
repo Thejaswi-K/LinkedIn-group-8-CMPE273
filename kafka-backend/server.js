@@ -27,9 +27,8 @@ var RecruiterJobUpdate = require("./services/recruiter/recruiterUpdateJob");
 var sendMessage = require("./services/applicants/sendMessage");
 var receiveMessage = require("./services/applicants/receiveMessage");
 var applicantMessages = require("./services/applicants/applicantMessages");
-var ApplicantViewConnections = require("./services/applicants/ApplicantViewConnections")
-var ApplicantSendConnections = require("./services/applicants/ApplicantConnectionSend")
-
+var ApplicantViewConnections = require("./services/applicants/ApplicantViewConnections");
+var ApplicantSendConnections = require("./services/applicants/ApplicantConnectionSend");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -90,10 +89,7 @@ function handleTopicRequest(topic_name, fname) {
 // handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
 /* ****************************************************
 please  UPDATE  below code before adding new topics
-*/ 
-
-
-
+*/
 
 /*
 Run the topics using
