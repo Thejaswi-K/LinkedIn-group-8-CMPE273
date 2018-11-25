@@ -24,11 +24,12 @@ function handle_request(msg, callback) {
 
             }
 
-            profile.firstName = msg.summary.experience;
-            profile.lastName = msg.summary.experience;
-            profile.city = msg.summary.experience;
-            profile.state = msg.summary.experience;
+            profile.firstName = msg.summary.firstName;
+            profile.lastName = msg.summary.lastName;
+            profile.city = msg.summary.city;
+            profile.state = msg.summary.state;
             profile.profileSummary = msg.summary.profileSummary;
+            profile.profileImage = msg.summary.profileImage;
             profile.save()
                 .then(profile => {
                     res.code = 202;
@@ -37,7 +38,8 @@ function handle_request(msg, callback) {
                         lastName: profile.lastName,
                         city: profile.city,
                         state: profile.state,
-                        profileSummary: profile.profileSummary
+                        profileSummary: profile.profileSummary,
+                        profileImage:profile.profileImage
                     };
                     res.message = summary;
                     callback(null, res);

@@ -22,6 +22,7 @@ class ApplicantProfileView extends Component {
             city: "",
             state: "",
             profileSummary: "",
+            profileImage:"",
             experience: [],
             education: [],
             skills: []
@@ -48,7 +49,8 @@ class ApplicantProfileView extends Component {
                 profileSummary: this.applicantProfile.profileSummary,
                 experience: this.applicantProfile.experience,
                 education: this.applicantProfile.education,
-                skills: this.applicantProfile.skills
+                skills: this.applicantProfile.skills,
+                profileImage:this.applicantProfile.profileImage
             })
         }
     }
@@ -70,13 +72,12 @@ class ApplicantProfileView extends Component {
 
                 <Summary firstName={this.state.firstName} lastName={this.state.lastName}
                          city={this.state.city} state={this.state.state}
-                         profileSummmary={this.state.profileSummary}/>
+                         profileSummary={this.state.profileSummary} applicantEmail={this.email} profileImage={this.state.profileImage}/>
 
                 <br/>
 
                 <Experience experience={this.state.experience} applicantEmail={this.email}/>
 
-        <Education />
 
                 <Education education={this.state.education} applicantEmail={this.email}/>
 

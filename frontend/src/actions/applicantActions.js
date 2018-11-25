@@ -16,6 +16,7 @@ import {
 } from './types';
 
 import setAuthToken from "../utils/setAuthToken";
+import {CONSTANTS} from "../Constants";
 
 const ROOT_URL = "http://localhost:3001";
 
@@ -25,14 +26,14 @@ const ROOT_URL = "http://localhost:3001";
 //applicant signup
 export const applicantSignup = (userData, history) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.post(`${ROOT_URL}/applicants/`, userData)
+    axios.post(`${CONSTANTS.BACKEND_URL}/applicants/`, userData)
         .then(res => {
             // Save to localStorage
 
             if (res.status === 200) {
 
                 axios.defaults.withCredentials = true;
-                axios.post(`${ROOT_URL}/applicants/mongo`, userData)
+                axios.post(`${CONSTANTS.BACKEND_URL}/applicants/mongo`, userData)
                     .then(res => {
                         if(res.status === 200) {
                             const {token} = res.data;
@@ -69,7 +70,7 @@ export const applicantSignup = (userData, history) => dispatch => {
 //applicant login
 export const applicantLogin = (userData) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.post(`${ROOT_URL}/applicants/login`, userData)
+    axios.post(`${CONSTANTS.BACKEND_URL}/applicants/login`, userData)
         .then(res => {
             // Save to localStorage
 
@@ -100,7 +101,7 @@ export const applicantLogin = (userData) => dispatch => {
 //add experience
 export const addExperience = (experience) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.put(`${ROOT_URL}/applicants/experience/add`, experience)
+    axios.put(`${CONSTANTS.BACKEND_URL}/applicants/experience/add`, experience)
         .then(res => {
             // Save to localStorage
 
@@ -131,7 +132,7 @@ export const addExperience = (experience) => dispatch => {
 //edit experience
 export const editExperience = (experience) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.put(`${ROOT_URL}/applicants/experience/edit`, experience)
+    axios.put(`${CONSTANTS.BACKEND_URL}/applicants/experience/edit`, experience)
         .then(res => {
             // Save to localStorage
 
@@ -163,7 +164,7 @@ export const editExperience = (experience) => dispatch => {
 //add education
 export const addEducation = (education) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.put(`${ROOT_URL}/applicants/education/add`, education)
+    axios.put(`${CONSTANTS.BACKEND_URL}/applicants/education/add`, education)
         .then(res => {
             // Save to localStorage
 
@@ -194,7 +195,7 @@ export const addEducation = (education) => dispatch => {
 //edit education
 export const editEducation = (education) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.put(`${ROOT_URL}/applicants/education/edit`, education)
+    axios.put(`${CONSTANTS.BACKEND_URL}/applicants/education/edit`, education)
         .then(res => {
             // Save to localStorage
 
@@ -225,7 +226,7 @@ export const editEducation = (education) => dispatch => {
 //edit skills
 export const editSkills = (skills) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.put(`${ROOT_URL}/applicants/skills/edit`, skills)
+    axios.put(`${CONSTANTS.BACKEND_URL}/applicants/skills/edit`, skills)
         .then(res => {
             // Save to localStorage
 
@@ -256,7 +257,7 @@ export const editSkills = (skills) => dispatch => {
 //add skills
 export const addSkills = (skills) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.put(`${ROOT_URL}/applicants/skills/add`, skills)
+    axios.put(`${CONSTANTS.BACKEND_URL}/applicants/skills/add`, skills)
         .then(res => {
             // Save to localStorage
 
@@ -287,7 +288,7 @@ export const addSkills = (skills) => dispatch => {
 //edit summary
 export const editSummary = (summary) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.put(`${ROOT_URL}/applicants/summary/edit`, summary)
+    axios.put(`${CONSTANTS.BACKEND_URL}/applicants/summary/edit`, summary)
         .then(res => {
             // Save to localStorage
 
@@ -323,7 +324,7 @@ export const applicantDetails = (applicantEmail) => dispatch => {
     setAuthToken(localStorage.getItem("applicantToken"));
 
 
-    axios.get(`${ROOT_URL}/applicants/${applicantEmail}`)
+    axios.get(`${CONSTANTS.BACKEND_URL}/applicants/${applicantEmail}`)
         .then(res => {
 
             dispatch(currentApplicantProfile(res.data));
