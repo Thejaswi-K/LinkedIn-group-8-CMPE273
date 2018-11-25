@@ -34,6 +34,37 @@ router.post("/", function (req, res) {
   });
 });
 
+//Recruiter -- View Posted Jobs
+router.get("/", function (req, res) {
+  console.log("Inside backend--> Job Post route");
+  kafka.make_request("rec_get_jobs", req.query, function (err, results) {
+    console.log("in result");
+    console.log(results);
+    if (err) {
+      console.log("Inside err");
+      res.json({
+        status: "error",
+        msg: "System Error, Try Again."
+      });
+    } else {
+      console.log("Inside else", results);
+      if (results.code === 200) {
+        console.log("Jobs fetched successfully");
+        res.status(results.code).json({
+          result: results.result
+        });
+      } else {
+        console.log(`Post Job-->Unable to fetch Jobs Error-->${results.err}`);
+        res.status(results.code).json({
+          error: results.err
+        });
+      }
+      res.end();
+    }
+  });
+});
+
+
 //SEARCH jobs based on title and location
 router.get("/:title/:location", function(req, res) {
   console.log("inside backend /jobs/:title&:location");
