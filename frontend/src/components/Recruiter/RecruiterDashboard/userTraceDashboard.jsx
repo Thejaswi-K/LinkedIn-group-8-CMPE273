@@ -77,12 +77,12 @@ export default class UserTraceDashboard extends Component {
 
     this.state = {
       // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "",
+      recruiter: "ag@gmail.com",
       chartData: {
-        labels: ["2018-11-23 02:05", "2018-11-23 02:06", "2018-11-23 02:06", "2018-11-23 02:07", "2018-11-23 02:08", "2018-11-23 02:08", "2018-11-23 02:09"],
+        labels: ["2018-11-23 02:05:00", "2018-11-23 02:06:00", "2018-11-23 02:06:30", "2018-11-23 02:07", "2018-11-23 02:08:22", "2018-11-23 02:08:30", "2018-11-23 02:09:30"],
         datasets: [
           {
-            label:"",
+            label:"ag@gmail.com",
             fill: false,
             lineTension: 0.5,
             backgroundColor: "rgba(75,192,192,0.4)",

@@ -29,7 +29,7 @@ class JobNavbar extends Component {
                 <div className="dropdown-menu" aria-labelledby="site-header__login">
                     <ul style= {{padding: "0px"}}>
                         <li class="dropdown-item"><Link to="/inbox"><span className="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;Inbox </Link></li>
-                        <li class="dropdown-item"><Link to="/travelertrips"><span className="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;My Dashboard</Link></li>
+                        <li class="dropdown-item"><Link to="/recruiterDashboard"><span className="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;My Dashboard</Link></li>
                         <li class="dropdown-item"><Link to="/editprofile"><span className="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;My profile</Link></li>
                         <li class="dropdown-item"><Link to="/RecruiterSignup" onClick = {this.handleLogout}><span className="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;&nbsp;Logout</Link></li>
                     </ul>
