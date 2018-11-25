@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
-import MessageList from "./Applicant/Messages/messageList";
-import MessageView from "./Applicant/Messages/messageView";
 
 //Import Components
 // import RecruiterLoginNavbar from './Navbar/RecruiterLoginNavbar';

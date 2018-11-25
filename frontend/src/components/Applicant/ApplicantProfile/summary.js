@@ -4,7 +4,7 @@ import Card from "@material-ui/core/Card/Card";
 import {Component} from "react";
 import moment from "moment";
 import connect from "react-redux/es/connect/connect";
-import {addExperience, editExperience, editSummary} from "../../../actions/applicantActions";
+import { editSummary} from "../../../actions/applicantActions";
 
 var React = require('react');
 
