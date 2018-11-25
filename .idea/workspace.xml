@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d87f5a7b-090d-4a5c-95b4-2efa63d029d9" name="Default Changelist" comment="Applicant login working.">
+    <list default="true" id="d87f5a7b-090d-4a5c-95b4-2efa63d029d9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/kafka/connection.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/kafka/connection.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/summary.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/summary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka-backend/kafka/Connection.js" beforeDir="false" afterPath="$PROJECT_DIR$/kafka-backend/kafka/Connection.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka-backend/services/profile/applicant/editSummary.js" beforeDir="false" afterPath="$PROJECT_DIR$/kafka-backend/services/profile/applicant/editSummary.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +33,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/summary.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1859">
@@ -45,6 +41,24 @@
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/kafka-backend/kafka/Connection.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="58" selection-start-line="16" selection-start-column="58" selection-end-line="16" selection-end-column="58" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Backend/kafka/connection.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -72,15 +86,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="157">
               <caret line="83" column="16" selection-start-line="83" selection-start-column="2" selection-end-line="83" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/actions/types.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -152,8 +157,6 @@
         <option value="$PROJECT_DIR$/kafka-backend/Model/Applicant.js" />
         <option value="$PROJECT_DIR$/kafka-backend/services/applicants/applicantLogin.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/Navbar/ApplicantLoginNavbar.js" />
-        <option value="$PROJECT_DIR$/kafka-backend/kafka/Connection.js" />
-        <option value="$PROJECT_DIR$/Backend/kafka/connection.js" />
         <option value="$PROJECT_DIR$/Backend/Model/Applicant.js" />
         <option value="$PROJECT_DIR$/Backend/Model/Recruiter.js" />
         <option value="$PROJECT_DIR$/Backend/routes/api/recruiter.js" />
@@ -180,6 +183,8 @@
         <option value="$PROJECT_DIR$/kafka-backend/services/profile/applicant/editSummary.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/experience.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/summary.js" />
+        <option value="$PROJECT_DIR$/kafka-backend/kafka/Connection.js" />
+        <option value="$PROJECT_DIR$/Backend/kafka/connection.js" />
       </list>
     </option>
   </component>
@@ -221,6 +226,12 @@
               <item name="LinkedIn-group-8-CMPE273" type="b2602c69:ProjectViewProjectNode" />
               <item name="LinkedIn-group-8-CMPE273" type="462c0819:PsiDirectoryNode" />
               <item name="Backend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LinkedIn-group-8-CMPE273" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LinkedIn-group-8-CMPE273" type="462c0819:PsiDirectoryNode" />
+              <item name="Backend" type="462c0819:PsiDirectoryNode" />
+              <item name="kafka" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="LinkedIn-group-8-CMPE273" type="b2602c69:ProjectViewProjectNode" />
@@ -404,7 +415,7 @@
       <workItem from="1542911028740" duration="8826000" />
       <workItem from="1542959337734" duration="5460000" />
       <workItem from="1543005819828" duration="7459000" />
-      <workItem from="1543024654016" duration="29614000" />
+      <workItem from="1543024654016" duration="29926000" />
     </task>
     <task id="LOCAL-00001" summary="Adding front end directory structure.">
       <created>1542602178084</created>
@@ -490,19 +501,25 @@
       <option name="project" value="LOCAL" />
       <updated>1543085306400</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Applicant profile summary working.">
+      <created>1543104325475</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1543104325475</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="104250000" />
+    <option name="totallyTimeSpent" value="104562000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="708" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.24543288" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.24543288" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32954547" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32792208" />
@@ -562,7 +579,8 @@
     <MESSAGE value="Edit experience working." />
     <MESSAGE value="Applicant profile, education editing and adding working." />
     <MESSAGE value="Applicant profile skills edit and add working." />
-    <option name="LAST_COMMIT_MESSAGE" value="Applicant profile skills edit and add working." />
+    <MESSAGE value="Applicant profile summary working." />
+    <option name="LAST_COMMIT_MESSAGE" value="Applicant profile summary working." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -697,20 +715,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
           <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kafka-backend/kafka/Connection.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="58" lean-forward="true" selection-start-line="5" selection-start-column="58" selection-end-line="5" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Backend/kafka/connection.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
         </state>
       </provider>
     </entry>
@@ -997,6 +1001,20 @@
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kafka-backend/kafka/Connection.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="58" selection-start-line="16" selection-start-column="58" selection-end-line="16" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Backend/kafka/connection.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
         </state>
       </provider>
     </entry>
