@@ -25,9 +25,6 @@ var Applicant = require("./services/applicants/applicants.js");
 var RecruiterJobView = require("./services/recruiter/recruiterViewJobById");
 var RecruiterJobUpdate = require("./services/recruiter/recruiterUpdateJob");
 var sendMessage = require("./services/applicants/sendMessage");
-<<<<<<< HEAD
-var applicantMessages = require("./services/applicants/applicantMessages");
-=======
 var receiveMessage = require("./services/applicants/receiveMessage");
 var applicantMessages = require("./services/applicants/applicantMessages");
 var ApplicantViewConnections = require("./services/applicants/ApplicantViewConnections");
@@ -39,7 +36,6 @@ var EditApplicantEducation = require("./services/profile/applicant/editEducation
 var AddApplicantSkill = require("./services/profile/applicant/addSkill");
 var EditApplicantSkill = require("./services/profile/applicant/editSkill");
 var EditApplicantSummary = require("./services/profile/applicant/editSummary");
->>>>>>> f4800e38abfed8968f833f14f90aba4ca84ff7c3
 
 function handleTopicRequest(topic_name, fname) {
     //var topic_name = 'root_topic';
@@ -111,12 +107,8 @@ handleTopicRequest("receive_message", receiveMessage);
 handleTopicRequest("recruiter_delete", RecruiterDelete);
 handleTopicRequest("recruiter_JobView", RecruiterJobView);
 handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
-<<<<<<< HEAD
-handleTopicRequest("applicant_messages", applicantMessages);
-=======
 handleTopicRequest("add_experience", AddApplicantExperience);
 handleTopicRequest("edit_experience", EditApplicantExperience);
->>>>>>> f4800e38abfed8968f833f14f90aba4ca84ff7c3
 
 handleTopicRequest("edit_education", EditApplicantEducation);
 handleTopicRequest("add_education", AddApplicantEducation);
