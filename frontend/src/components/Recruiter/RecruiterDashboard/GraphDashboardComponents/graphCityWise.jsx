@@ -8,7 +8,7 @@ export default class GraphCityWiseComponent extends Component {
     this.state = {
       // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
       chartData: {
-        labels: ['Job 1', 'Job 2', 'Job 7', 'Job 9', 'Job 22', 'Job 40', 'Job 41'],
+        labels: ['January', 'February', 'March', 'April', 'May','June','July', 'August', 'September','October', 'November', 'December'],
         datasets: [
           {
             
@@ -17,7 +17,7 @@ export default class GraphCityWiseComponent extends Component {
             borderWidth: 1,
             hoverBackgroundColor: 'rgba(255,99,132,0.4)',
             hoverBorderColor: 'rgba(255,99,132,1)',
-            data: [5, 5, 8, 1, 5, 15, 40, 2]
+            data: [5, 5, 8, 1, 5, 15, 40, 2,10,2,12,55]
           }
         ]
       }
@@ -48,9 +48,15 @@ export default class GraphCityWiseComponent extends Component {
               display: false
            },
            scales: {
+             xAxes:[{
+               ticks:{
+                autoSkip:false
+               }
+             }],
               yAxes: [{
                   ticks: {
-                      beginAtZero:true
+                      beginAtZero:true,
+
                   }
               }]
           }
