@@ -66,7 +66,7 @@ function handleTopicRequest(topic_name, fname) {
 //first argument is topic name
 //second argument is a function that will handle this topic request
 
-handleTopicRequest("logs_topic", Log);
+/*handleTopicRequest("logs_topic", Log);
 handleTopicRequest("jobs_topic", Job);
 handleTopicRequest("applicant_details", ApplicantDetails);
 handleTopicRequest("recruiter_details", RecruiterDetails);
@@ -93,7 +93,7 @@ handleTopicRequest("edit_education", EditApplicantEducation);
 handleTopicRequest("add_education", AddApplicantEducation);
 handleTopicRequest("add_skill", AddApplicantSkill);
 handleTopicRequest("edit_skill", EditApplicantSkill);
-handleTopicRequest("edit_summary", EditApplicantSummary);
+handleTopicRequest("edit_summary", EditApplicantSummary);*/
 
 /*
 
