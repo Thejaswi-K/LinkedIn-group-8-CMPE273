@@ -1,7 +1,9 @@
-import {APPLICANT_SIGNUP_ERROR_REDUCER} from '../actions/types';
+import {APPLICANT_SIGNUP_ERROR_REDUCER,UPDATE_PROFILE_ERROR} from '../actions/types';
 
 const initialState = {
-    error: ""
+    error: "",
+    updateProfileError:""
+
 };
 
 export default function (state = initialState, action) {
@@ -10,6 +12,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 error: action.payload
+            };
+            case UPDATE_PROFILE_ERROR:
+            return {
+                ...state,
+                updateProfileError: action.payload
             };
         default:
             return state;

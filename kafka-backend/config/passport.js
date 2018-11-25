@@ -13,7 +13,7 @@ module.exports = passport => {
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
       if (jwt_payload.isRecruiter === true) {
-        Recruiter.findOne({ email: jwt_payload.email })
+        Recruiter.find({ email: jwt_payload.email })
           .then(user => {
             if (user) {
               return done(null, user);
@@ -22,7 +22,7 @@ module.exports = passport => {
           })
           .catch(err => console.log(err));
       } else {
-        Applicant.findOne({ email: jwt_payload.email })
+        Applicant.find({ email: jwt_payload.email })
           .then(user => {
             if (user) {
               return done(null, user);
