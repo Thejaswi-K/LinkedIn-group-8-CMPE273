@@ -4,6 +4,15 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import MessageView from "./messageView";
 
+// REDUX functionality
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+
+// import Pagination from "../common/pagination";
+// import { paginate } from "../../utils/paginate";
+import { messageListFunc, messageID } from "../../../actions/messageActions";
+
 class messageList extends Component {
   lookprop = [];
   constructor(props) {
@@ -15,6 +24,7 @@ class messageList extends Component {
   }
 
   redirectDetails = members => {
+    this.props.messageID(members);
     this.setState({
       ...this.state,
       isClicked: true
@@ -25,28 +35,8 @@ class messageList extends Component {
     var data = {
       from_email: "apurav@gmail.com"
     };
-
-    axios
-      .get("http://localhost:3001/applicants/applicantMessages", {
-        params: data
-      })
-      .then(response => {
-        console.log("Status Code : ", response.status);
-        if (response.status === 200) {
-          console.log(response.data);
-
-          this.lookprop = response.data;
-          this.setState({
-            ...this.state,
-            authflag: true
-          });
-        } else {
-          this.setState({
-            ...this.state,
-            authflag: false
-          });
-        }
-      });
+    // setAuthToken(localStorage.getItem("applicantToken"));
+    this.props.messageListFunc(data.from_email);
   }
 
   render() {
@@ -60,7 +50,7 @@ class messageList extends Component {
           <div class="panel panel-default">
             <div className="col-sm-3">
               <ul className="nav nav-navs" id="myTab" role="tablist">
-                {this.lookprop.map((propval, place) => (
+                {this.props.messageReducer.messageList.map((propval, place) => (
                   <li className="nav-item">
                     <a data-toggle="tab" href="#location">
                       <div className="ml-5 mt-2">
@@ -93,4 +83,17 @@ class messageList extends Component {
   }
 }
 
-export default messageList;
+messageList.propTypes = {
+  messageListFunc: PropTypes.func.isRequired,
+  messageID: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  messageReducer: state.messageReducer
+});
+
+export default connect(
+  mapStateToProps,
+  { messageListFunc, messageID }
+)(withRouter(messageList));

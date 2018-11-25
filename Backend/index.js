@@ -25,9 +25,15 @@ mongoose
   .then(() => console.log("MongoDB Connected!!"))
   .catch(err => console.log(err));
 
-app.use(cors({origin: 'http://localhost:3000', credentials: true}));
+<<<<<<< HEAD
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+=======
 
-app.use(bodyParser.urlencoded({extended: false}));
+
+app.use(cors({origin: 'http://localhost:3000', credentials: true}));
+>>>>>>> f4800e38abfed8968f833f14f90aba4ca84ff7c3
+
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Allow Access Control
@@ -63,6 +69,18 @@ app.get("/healthcheck", (req, res) => {
   res.status(200);
   res.send();
 });
+
+<<<<<<< HEAD
+app.use(passport.initialize());
+
+require("./config/passport")(passport);
+=======
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport Config
+require('./config/passport')(passport);
+>>>>>>> f4800e38abfed8968f833f14f90aba4ca84ff7c3
 
 app.listen(3001);
 console.log("Server Listening on port 3001");

@@ -3,7 +3,12 @@ const Messages = require("../../Model/Messages");
 
 function handle_request(msg, callback) {
   var res = {};
+<<<<<<< HEAD
+  //   console.log("In handle request:" + JSON.stringify(msg));
+  console.log(msg.from_email);
+=======
   console.log("In handle request:" + JSON.stringify(msg));
+>>>>>>> f4800e38abfed8968f833f14f90aba4ca84ff7c3
 
   Messages.find({ messageMembers: msg.from_email })
     .then(messages => {

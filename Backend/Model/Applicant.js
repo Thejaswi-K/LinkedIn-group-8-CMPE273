@@ -136,4 +136,4 @@ var applicantSchema = new mongoose.Schema({
   ]
 });
 
-module.exports = mongoose.model("Applicants", applicantSchema);
+module.exports = mongoose.model('Applicants', applicantSchema);

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
+import MessageList from "./Applicant/Messages/messageList";
+import MessageView from "./Applicant/Messages/messageView";
 
 //Import Components
 // import RecruiterLoginNavbar from './Navbar/RecruiterLoginNavbar';
@@ -29,6 +31,15 @@ class Main extends Component {
             <Provider store={store}>
                 <div>
                     {/*Render Different Component based on Route*/}
+<<<<<<< HEAD
+                    <Route exact path="/" component={ApplicantLoginNavbar}/>
+                    <Route path="/applicantsignup" component={ApplicantSignup}/>
+                    <Route path="/recruitersignup" component={RecruiterSignup}/>
+                    <Route path="/applicantprofileview" component={ApplicantProfileView}/>
+                    <Route path="/applicants/applicantMessages" component={MessageList} />
+        <Route path="/applicantMessageView" component={MessageView} />
+                    {/* <Route path="/ownerlogin" component={OwnerLogin}/> */}
+=======
                     <Route exact path="/" component={ApplicantLoginNavbar} />
                     <Route path="/applicantsignup" component={ApplicantSignup} />
                     <Route path="/recruitersignup" component={RecruiterSignup} />
@@ -36,6 +47,7 @@ class Main extends Component {
                     <Route path="/job" component={PostJob} />
                     <Route path="/applicantprofileview" component={ApplicantProfileView} />
                     <Route path="/recruiterDashboard" component={MainRecruiterDashboard} />
+>>>>>>> f4800e38abfed8968f833f14f90aba4ca84ff7c3
                     {/* <Route path="/editprofile" component={EditProfile}/> */}
                     {/* <Route path="/postproperty" component={PostProperty}/> */}
                     {/* <Route path="/searchproperty" component={SearchProperty}/> */}

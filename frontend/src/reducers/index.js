@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+import { combineReducers } from "redux";
+import applicantProfile from "./applicantProfileReducer";
+import applicantErrorReducer from "./applicantErrorReducer";
+import messageReducer from "./messagesReducer";
+
+export default combineReducers({
+  applicantProfile: applicantProfile,
+  applicantErrorReducer: applicantErrorReducer,
+  messageReducer: messageReducer
+});
+=======
 import {combineReducers} from 'redux';
 import applicantProfile from './applicantProfileReducer';
 import recruiterProfile from './recruiterProfileReducer';
@@ -12,3 +24,4 @@ export default combineReducers({
     recruiterErrorReducer:recruiterErrorReducer
 
 });
+>>>>>>> f4800e38abfed8968f833f14f90aba4ca84ff7c3

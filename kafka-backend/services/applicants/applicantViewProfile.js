@@ -6,7 +6,7 @@ function handle_request(msg, callback) {
 
     var res = {};
 
-    ApplicantUser.find({_id: msg.applicant_id})
+    ApplicantUser.findOne({email: msg.applicant_id})
         .then(profile => {
             if (!profile) {
                 res.code = 404 ;

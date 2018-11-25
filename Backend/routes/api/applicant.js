@@ -15,90 +15,67 @@ handle cases for double url paramters like /applicants/{applicant_id}/jobs/{job_
 */
 
 //applicant login
-router.post('/login', (req, res) => {
-    kafka.make_request('applicant_login', req.body, function (err, results) {
-        console.log('in result');
-        console.log(results);
-        if (err) {
-            console.log("Inside err");
-            res.json({
-                status: "error",
-                msg: "System Error, Try Again."
-            })
-        } else {
-            console.log("Inside else", results);
-            if (results.code === 200) {
-                res.status(results.code).json({
-                    success: true,
-                    token: 'Bearer ' + results.token
-                });
-            } else {
-                res.status(results.code).json({
-                    error: results.err
-                })
-            }
+router.post("/login", (req, res) => {
+  kafka.make_request("applicant_login", req.body, function(err, results) {
+    console.log("in result");
+    console.log(results);
+    if (err) {
+      console.log("Inside err");
+      res.json({
+        status: "error",
+        msg: "System Error, Try Again."
+      });
+    } else {
+      console.log("Inside else", results);
+      if (results.code === 200) {
+        res.status(results.code).json({
+          success: true,
+          token: "Bearer " + results.token
+        });
+      } else {
+        res.status(results.code).json({
+          error: results.err
+        });
+      }
 
-            res.end();
-        }
-
-    });
+      res.end();
+    }
+  });
 });
 
 //applicant signup
-router.post('/', (req, res) => {
-    // const { errors, isValid } = validateRegisterInput(req.body);
+router.post("/", (req, res) => {
+  // const { errors, isValid } = validateRegisterInput(req.body);
 
-    // Check Validation
-    /* if (!isValid) {
+  // Check Validation
+  /* if (!isValid) {
          return res.status(400).json(errors);
      }*/
 
-    kafka.make_request('applicant_signup', req.body, function (err, results) {
-        console.log('in result');
-        console.log(results);
-        if (err) {
-            console.log("Inside err");
-            res.json({
-                status: "error",
-                msg: "System Error, Try Again."
-            })
-        } else {
-            if (results.code === 200) {
-                res.status(results.code).json({
-                    success: true,
-                    token: 'Bearer ' + results.token
-                });
-            } else {
-                res.status(results.code).json({
-                    error: results.err
-                })
-            }
-            res.end();
-        }
-    });
+  kafka.make_request("applicant_signup", req.body, function(err, results) {
+    console.log("in result");
+    console.log(results);
+    if (err) {
+      console.log("Inside err");
+      res.json({
+        status: "error",
+        msg: "System Error, Try Again."
+      });
+    } else {
+      if (results.code === 200) {
+        res.status(results.code).json({
+          success: true,
+          token: "Bearer " + results.token
+        });
+      } else {
+        res.status(results.code).json({
+          error: results.err
+        });
+      }
+      res.end();
+    }
+  });
 });
-
-// //update applicant profile
-// router.put('/:applicant_id',
-//     passport.authenticate('jwt', {session: false}),
-//     (req, res) => {
-//         const errors = {};
-//         kafka.make_request('applicant_update_profile', req.body, function (err, results) {
-//             console.log('in result');
-//             console.log(results);
-//             if (err) {
-//                 console.log("Inside err");
-//                 res.json({
-//                     status: "error",
-//                     msg: "System Error, Try Again."
-//                 })
-//             } else {
-//                 console.log("Inside else", results);
-//                 if (results.code === 202) {
-//                     res.status(results.code).json(results.message);
-//                 } else {
-//                     res.status(results.code).json(results.errorMessage);
-//                 }
 
 //applicant signup call for mongodb
 router.post("/mongo", (req, res) => {
@@ -137,6 +114,209 @@ router.post("/mongo", (req, res) => {
   });
 });
 
+//add applicant profile experience
+router.put(
+  "/experience/add",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("add_experience", req.body, function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        });
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 202) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.errorMessage);
+        }
+
+        res.end();
+      }
+    });
+  }
+);
+
+//edit applicant profile experience
+router.put(
+  "/experience/edit",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("edit_experience", req.body, function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        });
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 202) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.errorMessage);
+        }
+
+        res.end();
+      }
+    });
+  }
+);
+
+//edit applicant profile education
+router.put(
+  "/education/edit",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("edit_education", req.body, function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        });
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 202) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.errorMessage);
+        }
+
+        res.end();
+      }
+    });
+  }
+);
+
+//to add education
+router.put(
+  "/education/add",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("add_education", req.body, function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        });
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 202) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.errorMessage);
+        }
+
+        res.end();
+      }
+    });
+  }
+);
+
+//to edit skills
+router.put(
+  "/skills/edit",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("edit_skill", req.body, function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        });
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 202) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.errorMessage);
+        }
+
+        res.end();
+      }
+    });
+  }
+);
+
+//to add skills
+router.put(
+  "/skills/add",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("add_skill", req.body, function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        });
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 202) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.errorMessage);
+        }
+
+        res.end();
+      }
+    });
+  }
+);
+
+//to edit summary
+router.put(
+  "/summary/edit",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("edit_summary", req.body, function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        });
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 202) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.errorMessage);
+        }
+
+        res.end();
+      }
+    });
+  }
+);
+
 //update applicant profile
 router.put(
   "/:applicant_id",
@@ -162,6 +342,34 @@ router.put(
         } else {
           res.status(results.code).json(results.errorMessage);
         }
+      }
+    });
+  }
+);
+
+//Get Applicant details
+router.get(
+  "/:applicant_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("applicant_details", req.params, function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        });
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 200) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.message);
+        }
+        res.end();
       }
     });
   }
@@ -367,49 +575,56 @@ router.get("/applicantMessages", (req, res) => {
 });
 
 /****************Applicant View All Connections*********************/
-router.get('/viewconnections/:applicant_id', function(req, res){
-  console.log("Backend Applicant View Connections")
-   kafka.make_request('applicant_ViewConnection', {applicant_id:req.params.applicant_id} , function(err,results){
-       console.log('in result');
-       console.log(results);
-       if (err){
-           console.log("Inside err");
-           res.json({
-               status:"error",
-               msg:"Unable to fetch Connections."
-           })
-       }else{
-           console.log("Inside else");
-               res.json({
-                   fetchedConnections:results
-               });
-               res.end();
-           }
-   });
+router.get("/viewconnections/:applicant_id", function(req, res) {
+  console.log("Backend Applicant View Connections");
+  kafka.make_request(
+    "applicant_ViewConnection",
+    { applicant_id: req.params.applicant_id },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to fetch Connections."
+        });
+      } else {
+        console.log("Inside else");
+        res.json({
+          fetchedConnections: results
+        });
+        res.end();
+      }
+    }
+  );
 });
 
 /****************Applicant Send Connection*********************/
-router.post('/connections/:applicant_id', function(req, res){
-  console.log("Backend Applicant Send Connection")
-   kafka.make_request('applicant_SendConnection', {applicant_id:req.params.applicant_id, "body":req.body} , function(err,results){
-       console.log('in result');
-       console.log(results);
-       if (err){
-           console.log("Inside err");
-           res.json({
-               status:"error",
-               msg:"Unable to Send Connection."
-           })
-       }else{
-           console.log("Inside else");
-               res.json({
-                   SendConnections:results
-               });
-   
-               res.end();
-           }
-   });
-});
+router.post("/connections/:applicant_id", function(req, res) {
+  console.log("Backend Applicant Send Connection");
+  kafka.make_request(
+    "applicant_SendConnection",
+    { applicant_id: req.params.applicant_id, body: req.body },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to Send Connection."
+        });
+      } else {
+        console.log("Inside else");
+        res.json({
+          SendConnections: results
+        });
 
+        res.end();
+      }
+    }
+  );
+});
 
 module.exports = router;

@@ -94,4 +94,4 @@ var recruiterSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("Recruiters", recruiterSchema);
+module.exports = mongoose.model('Recruiters', recruiterSchema);
