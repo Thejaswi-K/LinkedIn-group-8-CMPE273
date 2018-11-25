@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var utility = require("../utility");
 
 var applicantSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+
   firstName: {
     type: String,
     required: true,
@@ -24,7 +24,7 @@ var applicantSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    required: false
   },
 
   phoneNumber: {
@@ -86,7 +86,7 @@ var applicantSchema = new mongoose.Schema({
     required: false,
     default: ""
   },
-  profileimage: {
+  profileImage: {
     type: String,
     required: false,
     default: ""
@@ -113,23 +113,31 @@ var applicantSchema = new mongoose.Schema({
   },
 
   //job id is saved
-  savedJobs: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Jobs"
-    }
-  ],
-  
-  connectionsRequests : {
-    type: Array,
-    required : false, 
-    defuaut: []
-  },
-  connections: {
+  savedJobs: {
     type: Array,
     required: false,
-    defuaut: []
-  }
+    default: []
+  },
+  //job id is saved
+  appliedJobs: {
+    type: Array,
+    required: false,
+    default: []
+  },
+  connectionsRequests: [
+    {
+      requestFrom: { type: String, required: false, default: "" },
+      requestTo: { type: String, required: false, default: "" },
+      isAccepted: { type: Boolean, required: false, default: false }
+    }
+  ],
+  connections: [
+    {
+      accptedFrom: { type: String, required: false, default: "" },
+      acceptedTo: { type: String, required: false, default: "" },
+      isAccepted: { type: Boolean, required: false, default: false }
+    }
+  ]
 });
 
 module.exports = mongoose.model("Applicants", applicantSchema);

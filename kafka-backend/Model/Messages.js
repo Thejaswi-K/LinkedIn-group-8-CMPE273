@@ -1,29 +1,30 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var messageSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
-  fromEmail: {
-    type: String,
-    required: true,
-    lowercase: true,
-    default: ""
-  },
-  toEmail: {
-    type: String,
-    lowercase: true,
-    required: true,
-    default: ""
-  },
-  fromMessage: {
-    type: String,
+const messageSchema = new Schema({
+  messageMembers: {
+    type: Array,
     required: false,
-    default: ""
+    lowercase: true,
+    default: []
   },
-  toMessage: {
-    type: String,
-    required: false,
-    default: ""
-  }
+
+  authorMessage: [
+    {
+      author: {
+        type: String,
+        required: false,
+        lowercase: true,
+        default: ""
+      },
+      message: {
+        type: String,
+        required: false,
+        lowercase: true,
+        default: ""
+      }
+    }
+  ]
 });
 
 module.exports = mongoose.model("Messages", messageSchema);

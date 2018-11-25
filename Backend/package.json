@@ -4,7 +4,8 @@
   "description": "Backend NodeJS handling request",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "mysql": "^2.16.0",
     "passport": "0.4.0",
     "passport-jwt": "^4.0.0",
+    "bcryptjs": "^2.4.3",
     "sanitize": "^2.1.0"
   }
 }

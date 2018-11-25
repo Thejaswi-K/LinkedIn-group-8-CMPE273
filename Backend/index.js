@@ -3,19 +3,34 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
 var cors = require("cors");
 app.use(require("sanitize").middleware);
-
 var mysql = require("mysql");
-var pool = require("./pool");
-
 var jwt = require("jsonwebtoken");
 var passport = require("passport");
-
-var crypt = require("./db/crypt");
 var kafka = require("./kafka/client");
 
-app.use(cors({ origin: "localhost:3000", credentials: true }));
+// Body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+//MONGODB Config
+
+const dbkey = require("./config/keys").mongoURI;
+
+// Connect to Mongo Db
+mongoose
+  .connect(dbkey)
+  .then(() => console.log("MongoDB Connected!!"))
+  .catch(err => console.log(err));
+
+
+
+app.use(cors({origin: 'http://localhost:3000', credentials: true}));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 //Allow Access Control
 app.use(function(req, res, next) {
@@ -33,65 +48,29 @@ app.use(function(req, res, next) {
   next();
 });
 
+//index.js stores the homepage
+var index = require("./routes/api/index");
+var applicant = require("./routes/api/applicant");
+var jobs = require("./routes/api/jobs");
+var recruiter = require("./routes/api/recruiter");
 
+//app.use('/', index);
+app.use("/jobs", jobs);
+app.use("/applicants", applicant);
+app.use("/recruiters", recruiter);
+app.use;
 
+app.get("/healthcheck", (req, res) => {
+  console.log("health check success");
+  res.status(200);
+  res.send();
+});
 
+// Passport middleware
+app.use(passport.initialize());
 
-
-
-app.get('/applicants/:applicant_id/logs/profile-view-count', function (req, res) {
-    console.log("inside backend profile-view-count")
-  
-    kafka.make_request('logs_topic',{"path":"getProfileViewCount", "id":req.params.applicant_id}, function(err,result){
-        if(err){
-            res.status(404).json({success:false,  error: "Applicant not found"}).send(err);
-        }
-        else
-        console.log("applicant log profile view count", result);
-        { if(result.status){
-          res.status(200)
-          res.send(result);
-        }else{ 
-          res.status(400)
-          .json({success: false})
-        }
-        }
-    });
-  });
-  
-
-
-
-
-app.get('/recruiters/:recruiter_id/jobs/top-ten', function (req, res) {
-    console.log("inside backend jobs/top-ten")
-  
-    kafka.make_request('logs_topic',{"path":"getJobsTopTen", "id":req.params.recruiter_id}, function(err,result){
-        if(err){
-            res.status(404).json({success:false,  error: "Recruiter not found"}).send(err);
-        }
-        else
-        console.log("Recruiter log Top Ten Jobs", result);
-        { if(result.status){
-          res.status(200)
-          res.send(result);
-        }else{ 
-          res.status(400)
-          .json({success: false})
-        }
-        }
-    });
-  });
-  
-
-app.get('/healthcheck', (req,res) =>{
-    console.log("health check success")
-    res.status(200)
-    res.send();
-    
-  })
+// Passport Config
+require('./config/passport')(passport);
 
 app.listen(3001);
 console.log("Server Listening on port 3001");
-
-
