@@ -34,15 +34,17 @@ export const applicantSignup = (userData, history) => dispatch => {
                 axios.defaults.withCredentials = true;
                 axios.post(`${ROOT_URL}/applicants/mongo`, userData)
                     .then(res => {
-                        const {token} = res.data;
-                        //set token to local storage
-                        localStorage.setItem('applicantToken', token);
-                        setAuthToken(token);
-                        // Decode token to get user data
-                        const decoded = jwt_decode(token);
-                        // Set current user
-                        dispatch(setCurrentUser(decoded));
-                        history.push("/applicantprofileview")
+                        if(res.status === 200) {
+                            const {token} = res.data;
+                            //set token to local storage
+                            localStorage.setItem('applicantToken', token);
+                            setAuthToken(token);
+                            // Decode token to get user data
+                            const decoded = jwt_decode(token);
+                            // Set current user
+                            dispatch(setCurrentUser(decoded));
+                            history.push("/applicantsignup")
+                        }
                     })
                     .catch(err =>
                         dispatch({

@@ -1,4 +1,3 @@
-// Hello world
 var kafka = require("../../kafka/client");
 var passport = require('passport');
 var express = require("express");
@@ -7,8 +6,12 @@ const router = express.Router();
 const Recruiters = require('../../Model/Recruiter');
 
 
-//Recruiter login
+/*  Recruiter --> Login
+    Login is facilitated by MYSQL DB
+ */
+
 router.post('/login', (req, res) => {
+    console.log("Inside Recruiter login backend");
     kafka.make_request('recruiter_login', req.body, function (err, results) {
         console.log('in result');
         console.log(results);
@@ -21,11 +24,13 @@ router.post('/login', (req, res) => {
         } else {
             console.log("Inside else", results);
             if (results.code === 200) {
+                console.log("Recruiter logged in successfully");
                 res.status(results.code).json({
                     success: true,
                     token: 'Bearer ' + results.token
                 });
             } else {
+                console.log(`Recruiter-->Unable to Login. Error-->${results.err}`);
                 res.status(results.code).json({
                     error: results.err
                 })
@@ -35,8 +40,15 @@ router.post('/login', (req, res) => {
     });
 });
 
-//Recruiter Signup
+/*  Recruiter --> Signup request with SQL and Mongo DB
+    SQL DB --   stores recruiter email and password
+    Mongo DB -- stores recruiter entire details (firstName, lastName, email and password)
+                in recruiter schema.
+*/
+
+//Recruiter Signup MYSQL
 router.post('/', (req, res) => {
+    console.log("Inside Recruiter signup(MYSQL) backend");
     kafka.make_request('recruiter_signup', req.body, function (err, results) {
         console.log('in result');
         console.log(results);
@@ -48,11 +60,18 @@ router.post('/', (req, res) => {
             })
         } else {
             if (results.code === 201) {
+                console.log("Recruiter record in MYSQL created successfully");
                 res.status(results.code).json({
                     success: true,
                     token: 'Bearer ' + results.token
                 });
+            } else if(results.code === 409) {
+                console.log("User already exists in MYSQL");
+                res.status(results.code).json({
+                    message: 'User already exists'
+                });
             } else {
+                console.log("Unable to create recruiter record in MYSQL");
                 res.status(results.code).json({
                     error: results.err
                 })
@@ -62,7 +81,41 @@ router.post('/', (req, res) => {
     });
 });
 
-//update Recruiter profile
+//Recruiter signup call for MongoDB
+router.post("/mongo", (req, res) => {
+    console.log("Inside Recruiter signup(MongoDB) backend");
+    kafka.make_request("recruiter_signup_mongo", req.body, function (err,results) {
+        console.log("in result");
+        console.log(results);
+        if (err) {
+            console.log("Inside err");
+            res.json({
+                status: "error",
+                msg: "System Error, Try Again."
+            });
+        } else {
+            if (results.code === 201) {
+                console.log("Recruiter record in MongoDB created successfully");
+                res.status(results.code).json({
+                    success: true,
+                    token: "Bearer " + results.token
+                });
+            } else {
+                console.log("Unable to create recruiter record in MongoDB");
+                res.status(results.code).json({
+                    error: results.err
+                });
+            }
+            res.end();
+        }
+    });
+});
+
+/*  Recruiter --> Update Profile 
+    @param -- recruiterEmail
+    @params --  recruiterDetails (could be first name, last name, city and others)
+*/
+
 router.put('/:recruiter_id',
     passport.authenticate('jwt', {session: false}),
     (req, res) => {

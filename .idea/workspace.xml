@@ -1,8 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d87f5a7b-090d-4a5c-95b4-2efa63d029d9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="d87f5a7b-090d-4a5c-95b4-2efa63d029d9" name="Default Changelist" comment="commit server.js topics">
+      <change afterPath="$PROJECT_DIR$/Backend/routes/api/applicant_BACKUP_33176.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/routes/api/applicant_BASE_33176.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/routes/api/applicant_LOCAL_33176.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/routes/api/applicant_REMOTE_33176.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/.vscode/launch.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/LinkedInJobs.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/profile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/actions/recruiterActions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Applicant/Messages/Messages.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Applicant/Messages/messageList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Applicant/Messages/messageView.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Navbar/JobNavbar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Navbar/UserNavbar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Navbar/usernavbar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Private/PrivateRoute.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Recruiter/RecruiterDashboard/GraphDashboardComponents/graphBottomFiveJobPosting.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Recruiter/RecruiterDashboard/GraphDashboardComponents/graphCityWise.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Recruiter/RecruiterDashboard/GraphDashboardComponents/graphClicksPerJob.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Recruiter/RecruiterDashboard/GraphDashboardComponents/graphNumberOfSavedJob.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Recruiter/RecruiterDashboard/GraphDashboardComponents/graphTopTenJobPosting.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Recruiter/RecruiterDashboard/graphDashboard.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Recruiter/RecruiterDashboard/main.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Recruiter/RecruiterDashboard/rightrail.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Recruiter/RecruiterDashboard/userTraceDashboard.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Recruiter/RecruiterSignup/RecruiterSignup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/common/Main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/reducers/recruiterErrorReducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/reducers/recruiterProfileReducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/test2.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-backend/services/applicants/ApplicantConnectionSend.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-backend/services/applicants/ApplicantViewConnections.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-backend/services/applicants/applicantMessages.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-backend/services/recruiter/recruiterSignupMongo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/routes/api/applicant.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/routes/api/applicant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/routes/api/recruiter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/routes/api/recruiter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/actions/applicantActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/actions/applicantActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/actions/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/actions/types.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ApplicantSignup/ApplicantSignup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantSignup/ApplicantSignup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ApplicantSignup/FooterSignup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantSignup/FooterSignup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navbar/ApplicantLoginNavbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navbar/ApplicantLoginNavbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navbar/RecruiterLoginNavbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navbar/RecruiterLoginNavbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/RecruiterSignup/RecruiterSignup.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/validation/ValidationUtil.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/validation/ValidationUtil.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-backend/Model/Applicant.js" beforeDir="false" afterPath="$PROJECT_DIR$/kafka-backend/Model/Applicant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-backend/Model/Recruiter.js" beforeDir="false" afterPath="$PROJECT_DIR$/kafka-backend/Model/Recruiter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-backend/mongo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/kafka-backend/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-backend/services/applicants/receiveMessage.js" beforeDir="false" afterPath="$PROJECT_DIR$/kafka-backend/services/applicants/receiveMessage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-backend/services/applicants/sendMessage.js" beforeDir="false" afterPath="$PROJECT_DIR$/kafka-backend/services/applicants/sendMessage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-backend/services/jobs.js" beforeDir="false" afterPath="$PROJECT_DIR$/kafka-backend/services/jobs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-backend/services/recruiter/recruiterLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/kafka-backend/services/recruiter/recruiterLogin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-backend/services/recruiter/recruiterSignup.js" beforeDir="false" afterPath="$PROJECT_DIR$/kafka-backend/services/recruiter/recruiterSignup.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,11 +95,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/summary.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1859">
+            <state relative-caret-position="1710">
               <caret line="161" column="27" selection-start-line="161" selection-start-column="27" selection-end-line="161" selection-end-column="27" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/kafka-backend/server.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1755">
+              <caret line="117" selection-start-line="117" selection-end-line="117" />
             </state>
           </provider>
         </entry>
@@ -54,7 +122,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Backend/kafka/connection.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="345">
@@ -67,7 +135,7 @@
         <entry file="file://$PROJECT_DIR$/kafka-backend/services/profile/applicant/editSummary.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="299">
-              <caret line="46" column="10" lean-forward="true" selection-start-line="46" selection-start-column="10" selection-end-line="46" selection-end-column="10" />
+              <caret line="46" column="10" selection-start-line="46" selection-start-column="10" selection-end-line="46" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -75,8 +143,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Backend/routes/api/applicant.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1637">
-              <caret line="178" column="42" selection-start-line="178" selection-start-column="42" selection-end-line="178" selection-end-column="42" />
+            <state relative-caret-position="-2522">
+              <caret line="121" column="33" selection-start-line="121" selection-start-column="33" selection-end-line="121" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -91,19 +159,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/education.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2339">
-              <caret line="184" column="101" selection-start-line="184" selection-start-column="101" selection-end-line="184" selection-end-column="101" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/experience.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="278">
-              <caret line="129" column="33" lean-forward="true" selection-start-line="126" selection-start-column="24" selection-end-line="129" selection-end-column="33" />
+              <caret line="129" column="33" selection-start-line="126" selection-start-column="24" selection-end-line="129" selection-end-column="33" />
               <folding>
                 <element signature="e#0#47#0" expanded="true" />
               </folding>
@@ -168,7 +227,6 @@
         <option value="$PROJECT_DIR$/frontend/src/reducers/applicantErrorReducer.js" />
         <option value="$PROJECT_DIR$/kafka-backend/services/profile/applicant/addExperience.js" />
         <option value="$PROJECT_DIR$/kafka-backend/services/profile/applicant/editExperience.js" />
-        <option value="$PROJECT_DIR$/kafka-backend/server.js" />
         <option value="$PROJECT_DIR$/kafka-backend/services/profile/applicant/addEducation.js" />
         <option value="$PROJECT_DIR$/kafka-backend/services/profile/applicant/editEducation.js" />
         <option value="$PROJECT_DIR$/kafka-backend/services/profile/applicant/editSkill.js" />
@@ -185,6 +243,7 @@
         <option value="$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/summary.js" />
         <option value="$PROJECT_DIR$/kafka-backend/kafka/Connection.js" />
         <option value="$PROJECT_DIR$/Backend/kafka/connection.js" />
+        <option value="$PROJECT_DIR$/kafka-backend/server.js" />
       </list>
     </option>
   </component>
@@ -287,14 +346,6 @@
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="Applicant" type="462c0819:PsiDirectoryNode" />
               <item name="ApplicantProfile" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="LinkedIn-group-8-CMPE273" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LinkedIn-group-8-CMPE273" type="462c0819:PsiDirectoryNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="ApplicantSignup" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="LinkedIn-group-8-CMPE273" type="b2602c69:ProjectViewProjectNode" />
@@ -415,7 +466,7 @@
       <workItem from="1542911028740" duration="8826000" />
       <workItem from="1542959337734" duration="5460000" />
       <workItem from="1543005819828" duration="7459000" />
-      <workItem from="1543024654016" duration="29926000" />
+      <workItem from="1543024654016" duration="30500000" />
     </task>
     <task id="LOCAL-00001" summary="Adding front end directory structure.">
       <created>1542602178084</created>
@@ -508,18 +559,32 @@
       <option name="project" value="LOCAL" />
       <updated>1543104325475</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Applicant profile summary working.">
+      <created>1543104486837</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1543104486837</updated>
+    </task>
+    <task id="LOCAL-00015" summary="commit server.js topics">
+      <created>1543104539223</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1543104539223</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="104562000" />
+    <option name="totallyTimeSpent" value="105136000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="708" extended-state="0" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.24543288" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.24543288" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32954547" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32792208" />
@@ -528,7 +593,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32792208" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="8" visible="true" weight="0.32792208" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49960285" weight="0.25" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50039715" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -580,7 +645,8 @@
     <MESSAGE value="Applicant profile, education editing and adding working." />
     <MESSAGE value="Applicant profile skills edit and add working." />
     <MESSAGE value="Applicant profile summary working." />
-    <option name="LAST_COMMIT_MESSAGE" value="Applicant profile summary working." />
+    <MESSAGE value="commit server.js topics" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit server.js topics" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -884,13 +950,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/kafka-backend/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="91" column="34" selection-start-line="91" selection-start-column="20" selection-end-line="91" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/reducers/applicantProfileReducer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="585">
@@ -941,8 +1000,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Backend/routes/api/applicant.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1637">
-          <caret line="178" column="42" selection-start-line="178" selection-start-column="42" selection-end-line="178" selection-end-column="42" />
+        <state relative-caret-position="-2522">
+          <caret line="121" column="33" selection-start-line="121" selection-start-column="33" selection-end-line="121" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -956,7 +1015,7 @@
     <entry file="file://$PROJECT_DIR$/kafka-backend/services/profile/applicant/editSummary.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
-          <caret line="46" column="10" lean-forward="true" selection-start-line="46" selection-start-column="10" selection-end-line="46" selection-end-column="10" />
+          <caret line="46" column="10" selection-start-line="46" selection-start-column="10" selection-end-line="46" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -987,19 +1046,9 @@
     <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/experience.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="278">
-          <caret line="129" column="33" lean-forward="true" selection-start-line="126" selection-start-column="24" selection-end-line="129" selection-end-column="33" />
+          <caret line="129" column="33" selection-start-line="126" selection-start-column="24" selection-end-line="129" selection-end-column="33" />
           <folding>
             <element signature="e#0#47#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/summary.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1859">
-          <caret line="161" column="27" selection-start-line="161" selection-start-column="27" selection-end-line="161" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1015,6 +1064,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/Applicant/ApplicantProfile/summary.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1710">
+          <caret line="161" column="27" selection-start-line="161" selection-start-column="27" selection-end-line="161" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kafka-backend/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1755">
+          <caret line="117" selection-start-line="117" selection-end-line="117" />
         </state>
       </provider>
     </entry>

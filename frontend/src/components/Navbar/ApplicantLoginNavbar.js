@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import connect from "react-redux/es/connect/connect";
+import $ from 'jquery';
 import * as Validation from "../../validation/ValidationUtil";
 import {applicantLogin} from "../../actions/applicantActions";
 import Redirect from "react-router/es/Redirect";
+import {CONSTANTS} from '../../Constants';
 
 class ApplicantLoginNavbar extends Component {
 
@@ -15,13 +17,16 @@ class ApplicantLoginNavbar extends Component {
             userExists: false,
             isLoggedIn: false,
             messageDiv: "",
-            success: false
+            success: false,
         };
-
-
     }
 
     componentWillReceiveProps(nextProps) {
+        $(document).ready(function () {
+            $('#cl').on('click', function () {
+                $('#login-callout').addClass('hidden');
+            });
+        });
         if (nextProps.applicantProfile.applicantUser !== "") {
             this.setState({
                 ...this.state,
@@ -95,9 +100,28 @@ class ApplicantLoginNavbar extends Component {
                             }}/>
                             <input tabindex="1" id="login-submit" className="login submit-button" type="submit"
                                    value="Sign in" onClick={this.doLogin.bind(this)}/>
-
+                            {(!this.state.isRecruiter) ?
+                            <a className="link-forgot-password" tabindex="1" href={CONSTANTS.ROOTURL+"/RecruiterSignup"}>Recruiter?</a>
+                            :
+                            <a className="link-forgot-password" tabindex="1" href={CONSTANTS.ROOTURL+"/ApplicantSignup"}>Applicant?</a>
+                            }
+                            {(this.state.userExists) ?
+                            <div id="login-callout" className="hopscotch-bubble animated hopscotch-callout no-number" tabindex="-1"
+                                role="alert" aria-live="polite">
+                                <div className="hopscotch-bubble-container">
+                                    <div className="hopscotch-bubble-content">
+                                        <h3 className="hopscotch-title">Trying to sign in?</h3>
+                                        <div className="hopscotch-content">
+                                            Someone's already using that email. If that’s you, enter your
+                                            Email and password here to sign in.
+                                        </div>
+                                    </div>
+                                    <a id ="cl" title="Close" href="#" className="hopscotch-bubble-close hopscotch-close">Close</a>
+                                </div>
+                                <div className="hopscotch-bubble-arrow-container hopscotch-arrow up"></div>
+                            </div> :
                             <div></div>
-
+                            }
                         </form>
                     </div>
                 </div>

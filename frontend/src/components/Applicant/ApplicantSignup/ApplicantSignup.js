@@ -1,14 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import ApplicantLoginNavbar from '.././../Navbar/ApplicantLoginNavbar';
 import axios from "axios";
 import connect from "react-redux/es/connect/connect";
-import ApplicantLoginNavbar from '../Navbar/ApplicantLoginNavbar';
 import Loginfooter from './FooterSignup';
-import * as Validation from "../../validation/ValidationUtil";
-import {applicantSignup} from "../../actions/applicantActions";
+import * as Validation from "../../../validation/ValidationUtil";
+import {applicantSignup} from "../../../actions/applicantActions";
 import {isEmpty} from "lodash";
 
 class ApplicantSignup extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
