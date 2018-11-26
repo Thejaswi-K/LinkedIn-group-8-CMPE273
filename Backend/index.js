@@ -10,6 +10,7 @@ var mysql = require("mysql");
 var jwt = require("jsonwebtoken");
 var passport = require("passport");
 var kafka = require("./kafka/client");
+const photos = require('./routes/api/photos');
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -54,10 +55,12 @@ var applicant = require("./routes/api/applicant");
 var jobs = require("./routes/api/jobs");
 var recruiter = require("./routes/api/recruiter");
 
+
 //app.use('/', index);
 app.use("/jobs", jobs);
 app.use("/applicants", applicant);
 app.use("/recruiters", recruiter);
+app.use('/api/photos', photos);
 app.use;
 
 app.get("/healthcheck", (req, res) => {
