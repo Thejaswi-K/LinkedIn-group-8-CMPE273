@@ -10,7 +10,7 @@ var mysql = require("mysql");
 var jwt = require("jsonwebtoken");
 var passport = require("passport");
 var kafka = require("./kafka/client");
-const photos = require('./routes/api/photos');
+const photos = require("./routes/api/photos");
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,16 +26,23 @@ mongoose
   .then(() => console.log("MongoDB Connected!!"))
   .catch(err => console.log(err));
 
-
-
-app.use(cors({origin: 'http://localhost:3000', credentials: true}));
+app.use(
+  cors({
+    origin:
+      "http://LinkedIn-Backend-1636541959.us-west-1.elb.amazonaws.com:3000",
+    credentials: true
+  })
+);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Allow Access Control
 app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "http://LinkedIn-Backend-1636541959.us-west-1.elb.amazonaws.com:3000"
+  );
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -55,12 +62,11 @@ var applicant = require("./routes/api/applicant");
 var jobs = require("./routes/api/jobs");
 var recruiter = require("./routes/api/recruiter");
 
-
 //app.use('/', index);
 app.use("/jobs", jobs);
 app.use("/applicants", applicant);
 app.use("/recruiters", recruiter);
-app.use('/api/photos', photos);
+app.use("/api/photos", photos);
 app.use;
 
 app.get("/healthcheck", (req, res) => {
@@ -73,7 +79,7 @@ app.get("/healthcheck", (req, res) => {
 app.use(passport.initialize());
 
 // Passport Config
-require('./config/passport')(passport);
+require("./config/passport")(passport);
 
 app.listen(3001);
 console.log("Server Listening on port 3001");

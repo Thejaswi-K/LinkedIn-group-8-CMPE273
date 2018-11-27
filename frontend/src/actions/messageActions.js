@@ -7,7 +7,7 @@ import {
   MESSAGE_VIEW
 } from "./types";
 
-const ROOT_URL = "http://localhost:3001";
+const ROOT_URL = "http://LinkedIn-Backend-1636541959.us-west-1.elb.amazonaws.com:3001";
 
 export const messageListFunc = applicantEmail => dispatch => {
   axios.defaults.withCredentials = true;
