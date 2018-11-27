@@ -104,7 +104,7 @@ handleTopicRequest("applicant_messages", applicantMessages);
 handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
 handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
 */
-handleTopicRequest("post_job", JobPost);
+// handleTopicRequest("post_job", JobPost);
 // handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 
 /* ****************************************************

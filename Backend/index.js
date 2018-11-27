@@ -29,7 +29,7 @@ mongoose
 app.use(
   cors({
     origin:
-      "http://LinkedIn-Backend-1636541959.us-west-1.elb.amazonaws.com:3000",
+      "http://linkedinfrontewndelb-1812843532.us-west-1.elb.amazonaws.com",
     credentials: true
   })
 );
@@ -41,7 +41,7 @@ app.use(bodyParser.json());
 app.use(function(req, res, next) {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "http://LinkedIn-Backend-1636541959.us-west-1.elb.amazonaws.com:3000"
+    "http://linkedinfrontewndelb-1812843532.us-west-1.elb.amazonaws.com"
   );
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
