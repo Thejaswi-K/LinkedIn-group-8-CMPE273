@@ -22,7 +22,7 @@ class Main extends Component {
             <Provider store={store}>
                 <div>
                     {/*Render Different Component based on Route*/}
-                    <Route exact path="/" component={ApplicantLoginNavbar}/>
+                    <Route exact path="/" component={ApplicantSignup}/>
                     <Route path="/applicantsignup" component={ApplicantSignup}/>
                     <Route path="/recruitersignup" component={RecruiterSignup}/>
                     <Route
