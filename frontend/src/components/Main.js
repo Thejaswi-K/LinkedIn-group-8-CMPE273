@@ -14,6 +14,8 @@ import ApplicantProfileView from "./Applicant/ApplicantProfile/ApplicantProfileV
 import Provider from "react-redux/es/components/Provider";
 import store from "../store";
 import MainRecruiterDashboard from "./Recruiter/RecruiterDashboard/main";
+import ViewConnections from './Connections/ViewConnections';
+import ViewPendingRequests from './Connections/ViewPendingRequests'
 
 // Create a Main Component
 class Main extends Component {
@@ -38,6 +40,8 @@ class Main extends Component {
                         path="/recruiterDashboard"
                         component={MainRecruiterDashboard}
                     />
+                    <Route path="/viewConnections" component={ViewConnections}/>
+                    <Route path="/viewPendingRequests" component={ViewPendingRequests}/>
                 </div>
             </Provider>
         );
