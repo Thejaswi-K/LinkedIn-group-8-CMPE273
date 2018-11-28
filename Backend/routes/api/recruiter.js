@@ -312,8 +312,8 @@ router.get("/:recruiterId/jobs/logs/saved-job-count", function(req, res) {
           .status(404)
           .json({ success: false, error: "Jobs empty" })
           .send(err);
-      } else console.log("Jobs saved number", result);
-      {
+      } else 
+      {console.log("Jobs saved number", result);
         if (result.status) {
           res.status(200);
           res.send(result);
@@ -325,4 +325,77 @@ router.get("/:recruiterId/jobs/logs/saved-job-count", function(req, res) {
   );
 });
 
+
+//Add Tracking details of a user by id
+router.post("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
+  console.log("inside backend post track user by id");
+  kafka.make_request(
+    "logs_topic",
+    { path: "createTrackUserById", id: req.params.applicantId, body  : req.body },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "User create track record failed" })
+          .send(err);
+      } else
+      { console.log("User create track record ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+//Update Tracking details of a user by id with existing page
+router.put("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
+  console.log("inside backend update track user by id");
+  kafka.make_request(
+    "logs_topic",
+    { path: "updateTrackUserById", id: req.params.applicantId, body  : req.body  },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "User update track record failed" })
+          .send(err);
+      } else
+      { console.log("User update track record ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+//Get Tracking details of a user by id
+router.get("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
+  console.log("inside backend get track user by id");
+  kafka.make_request(
+    "logs_topic",
+    { path: "trackUserById", id: req.params.applicantId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "User track record failed" })
+          .send(err);
+      } else
+      { console.log("User track record ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
 module.exports = router;

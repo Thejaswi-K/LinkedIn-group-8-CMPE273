@@ -2,7 +2,6 @@ var mongoose = require("mongoose");
 var utility = require("../utility");
 
 var applicantSchema = new mongoose.Schema({
-
   firstName: {
     type: String,
     required: true,
@@ -136,6 +135,12 @@ var applicantSchema = new mongoose.Schema({
       acceptedFrom: { type: String, required: false, default: "" },
       acceptedTo: { type: String, required: false, default: "" },
       isAccepted: { type: Boolean, required: false, default: true }
+    }
+  ],
+  profileViewCount: [
+    {
+      date: { type: Date },
+      count: { type: Number, required: false, default: 0 }
     }
   ]
 });
