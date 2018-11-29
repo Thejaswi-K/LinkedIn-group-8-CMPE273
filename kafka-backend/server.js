@@ -72,7 +72,7 @@ function handleTopicRequest(topic_name, fname) {
 // Add your TOPICs here
 //first argument is topic name
 //second argument is a function that will handle this topic request
-handleTopicRequest("logs_topic", Log);
+/*handleTopicRequest("logs_topic", Log);
 handleTopicRequest("jobs_topic", Job);
 handleTopicRequest("applicant_details", ApplicantDetails);
 handleTopicRequest("recruiter_details", RecruiterDetails);
@@ -107,7 +107,7 @@ handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
 
 handleTopicRequest("post_job", JobPost);
 handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
-handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
+handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);*/
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */
