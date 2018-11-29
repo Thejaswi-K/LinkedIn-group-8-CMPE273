@@ -26,16 +26,31 @@ exports.handle_request = function handle_request(msg, callback) {
 
 
 
-//jobModel.aggregate([{$match: {recruiterId: msg.recruiterId}}, {$project: {savedBy: {$size: '$savedBy'}}}])
 function getSavedJobsNumber(msg, callback) {
-  jobsModel.find({ recruiterId: msg.recruiterId }, function(err, jobs) {
-    if (err) {
-      callback(err, null);
-    } else {
-      if (jobs) {
-        callback(null, JSON.stringify({ _id, savedBy }));
+  console.log("KAFKA: getSavedJobsNumber --->", msg.recruiterId);
+  jobsModel.aggregate([{$match: {recruiterId: msg.recruiterId}},{$project: {title: "$title", savedBy: {$size: "$savedBy" }}}])
+  .then(savedJobsCount=>{
+      console.log("result of saved job count", savedJobsCount);
+      if(!savedJobsCount){
+        console.log("inside if");
+        callback(null,{
+          success: false,
+          status: "no results found"
+        });
       }
-    }
+      console.log("suc");
+      callback(null,{
+        success: true,
+        status: "results found",
+        data: savedJobsCount
+      });
+  })
+  .catch(error=>{
+    console.log("Error at connecting to saved jobs");
+    callback(error, {
+      success: false,
+      status: "failed connecting to DB at getSavedJobsNumber"
+    })
   });
 }
 
@@ -54,6 +69,7 @@ function getJobsTitleLocation(msg, callback) {
           status: "Job doesnt exist in getJobsTitleLocation"
         });
       }
+      console.log("suc");
       callback(null, {
         success: true,
         status: "Job fetched Success",
