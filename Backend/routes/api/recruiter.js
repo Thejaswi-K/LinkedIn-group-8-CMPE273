@@ -488,4 +488,32 @@ router.put("/jobs/logs/click-count", function(req, res) {
   );
 });
 
+
+
+//Route to get the Bottom 5 job posting of a recruiter
+router.get("/:recruiterId/last-five", function(req, res) {
+  console.log("inside backend Find last 5 jobs");
+  kafka.make_request(
+    "logs_topic",
+    { path: "lastFive", id: req.params.recruiterId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Get Bottom 5 job posting failed" })
+          .send(err);
+      } else
+      { console.log("bottom 5 jobs  are", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+
 module.exports = router;
