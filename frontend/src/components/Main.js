@@ -16,6 +16,8 @@ import store from "../store";
 import MainRecruiterDashboard from "./Recruiter/RecruiterDashboard/main";
 import ViewConnections from './Connections/ViewConnections';
 import ViewPendingRequests from './Connections/ViewPendingRequests'
+import JobDetails from './Job/Details';
+import JobApply from './Job/jobapply';
 
 // Create a Main Component
 class Main extends Component {
@@ -36,7 +38,9 @@ class Main extends Component {
                     {/* <Route path="/ownerlogin" component={OwnerLogin}/> */}
                     <Route path="/profile" component={UserNavbar}/>
                     <Route path="/job" component={PostJob}/>
-                    <Route path="/jobDetails" component={}/>
+                    <Route path="/jobDetails" component={JobDetails}/>
+                    <Route path="/jobApply" component={JobApply}/>
+                    
                     <Route
                         path="/recruiterDashboard"
                         component={MainRecruiterDashboard}
