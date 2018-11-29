@@ -15,7 +15,7 @@ const welcome = () => {
                 </div><br/>
                 <div>
                     <div id = "continueNext" className="checklist-buttons">
-                        <div><a className = "nav-link" href = "#details" data-toggle="tab" ref= {nextTab => this.nextTab = nextTab}></a>
+                        <div><a  href = "#details" data-toggle="tab" ref= {nextTab => this.nextTab = nextTab}></a>
                         <button onClick={()=> this.nextTab.click()} className="btn btn-primary continue-button"><span>Continue</span></button></div>
                     </div>
                 </div>
