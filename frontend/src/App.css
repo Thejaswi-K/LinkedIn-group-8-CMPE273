@@ -2100,3 +2100,11 @@ div.hopscotch-bubble .hopscotch-actions {
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
 }
+
+.navbar {
+  background: linear-gradient(to right, #32404B, #32404B);
+  border-radius: 0px;
+  margin-bottom: 0px;
+}
+
+.text-white { color: #FFF; }

@@ -11,6 +11,7 @@ import PostJob from "./Job/jobPost";
 import ApplicantSignup from "./Applicant/ApplicantSignup/ApplicantSignup";
 import RecruiterSignup from "./Recruiter/RecruiterSignup/RecruiterSignup";
 import ApplicantProfileView from "./Applicant/ApplicantProfile/ApplicantProfileView";
+import RecruiterProfileView from "./Recruiter/RecruiterProfile/RecruiterProfileView";
 import Provider from "react-redux/es/components/Provider";
 import store from "../store";
 import MainRecruiterDashboard from "./Recruiter/RecruiterDashboard/main";
@@ -30,6 +31,10 @@ class Main extends Component {
                     <Route
                         path="/applicantprofileview"
                         component={ApplicantProfileView}
+                    />
+                    <Route
+                        path="/recruiterprofileview"
+                        component={RecruiterProfileView}
                     />
                     <Route path="/applicants/applicantMessages" component={MessageList}/>
                     <Route path="/applicantMessageView" component={MessageView}/>

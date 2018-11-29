@@ -3,7 +3,7 @@ import '../../App.css';
 import {Link} from "react-router-dom";
 
 
-class loginNavbar extends Component {
+class applicantNavbar extends Component {
 
     render() {
         var loginOrOut;
@@ -14,8 +14,9 @@ class loginNavbar extends Component {
         var connections;
         var home;
         var search;
-
+        var jobs;
         var navClassName;
+        var messaging;
 
         var div;
 
@@ -40,13 +41,18 @@ class loginNavbar extends Component {
         </li>;
 
 
-        accountSettings = <li>
-            <Link to="/" className="navbar-brand">
+        accountSettings = <li className="dropdown">
+            <a className="navbar-brand text-center text-white ">
                 <span
                     className="glyphicon glyphicon-cog navbar-icon" title="Settings">
 
                 </span>
-            </Link>
+                <div className="text-white">Settings</div>
+            </a>
+            <ul className="dropdown-menu">
+                <li><a href="#">Yes</a></li>
+                <li><a href="#">No</a></li>
+            </ul>
         </li>;
 
         requests =
@@ -58,19 +64,33 @@ class loginNavbar extends Component {
             </li>;
 
         connections = <li>
-            <Link to="/" className="navbar-brand connections-icon">
-                <span className='glyphicon glyphicon-apple' title="Connections">
+
+            <Link to="/" className="navbar-brand connections-icon text-center text-white">
+                <span className='glyphicon glyphicon-globe ' title="Connections">
                 </span>
+                <div className="text-white">My Network</div>
             </Link>
         </li>;
 
-        home = <li> <Link to="/" className="navbar-brand ">
-            <span className='glyphicon glyphicon-home navbar-icon' title="Home"/>
-            <span className="w-50 my-text">Music</span>
+        home = <li><Link to="/" className="navbar-brand text-center text-white">
+            <span className='glyphicon glyphicon-home navbar-icon'/>
+            <div className="text-white">Home</div>
         </Link></li>;
 
-        search = <input className="form-control mr-sm-1" type="search" placeholder="Search" aria-label="Search"
-                        style={{width: 120}}/>
+        search = <input className="form-control mr-sm-1 " type="search" placeholder="Search" aria-label="Search"
+                        style={{width: 120}}/>;
+
+        jobs = <Link to="/" className="navbar-brand connections-icon text-center text-white">
+                <span className='glyphicon glyphicon-briefcase '>
+                </span>
+            <div className="text-white">Jobs</div>
+        </Link>;
+
+        messaging = <Link to="/" className="navbar-brand connections-icon text-center text-white">
+                <span className='glyphicon glyphicon-comment '>
+                </span>
+            <div className="text-white">Messaging</div>
+        </Link>;
 
 
         navClassName = "navbar navbar-default navbar-static-top";
@@ -88,6 +108,7 @@ class loginNavbar extends Component {
                                 <img src="https://static.licdn.com/sc/h/95o6rrc5ws6mlw6wqzy0xgj7y" alt="logo"
                                 />
                             </Link>
+
                             {search}
                         </div>
 
@@ -96,21 +117,20 @@ class loginNavbar extends Component {
                                 <li className="nav-item active">
                                     {home}
                                 </li>
-                                <li className="nav-item active">
-                                    {profile}
-                                </li>
-                                <li className="nav-item">
-                                    {requests}
-                                </li>
                                 <li className="nav-item">
                                     {connections}
                                 </li>
                                 <li className="nav-item">
-                                    {accountSettings}
+                                    {jobs}
                                 </li>
                                 <li className="nav-item">
-                                    {loginOrOut}
+                                    {messaging}
                                 </li>
+
+                                <li className="nav-item">
+                                    {accountSettings}
+                                </li>
+
                             </ul>
                         </div>
                     </nav>
@@ -124,4 +144,4 @@ class loginNavbar extends Component {
 
 }
 
-export default loginNavbar;
+export default applicantNavbar;
