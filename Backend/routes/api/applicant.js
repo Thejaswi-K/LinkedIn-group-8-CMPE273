@@ -471,141 +471,144 @@ router.get(
   }
 );
 
-// //Get Applicant details
-// router.get('/:applicant_id', passport.authenticate('jwt', {session: false}),
-//     (req, res) => {
+//Get Applicant details
+router.get(
+  "/:applicant_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("applicant_details", req.params, function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        });
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 200) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.message);
+        }
+        res.end();
+      }
+    });
+  }
+);
 
-//         const errors = {};
-//         kafka.make_request('applicant_details', req.params, function (err, results) {
-//             console.log('in result');
-//             console.log(results);
-//             if (err) {
-//                 console.log("Inside err");
-//                 res.json({
-//                     status: "error",
-//                     msg: "System Error, Try Again."
-//                 })
-//             } else {
-//                 console.log("Inside else", results);
-//                 if (results.code === 200) {
-//                     res.status(results.code).json(results.message);
-//                 } else {
-//                     res.status(results.code).json(results.message);
-//                 }
-//                 res.end();
-//             }
-//         });
-//     });
+//delete applicant
+router.delete(
+  "/:applicant_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("applicant_delete", req.body, function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        });
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 202) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.errorMessage);
+        }
+        res.end();
+      }
+    });
+  }
+);
 
-// //delete applicant
-// router.delete('/:applicant_id',
-//     passport.authenticate('jwt', {session: false}),
-//     (req, res) => {
+//Get Profile view count of particular applicant
+router.get("/:applicantId/logs/profile-view-count", function(req, res) {
+  console.log("inside backend profile-view-count");
 
-//         const errors = {};
-//         kafka.make_request('applicant_delete', req.body, function (err, results) {
-//             console.log('in result');
-//             console.log(results);
-//             if (err) {
-//                 console.log("Inside err");
-//                 res.json({
-//                     status: "error",
-//                     msg: "System Error, Try Again."
-//                 })
-//             } else {
-//                 console.log("Inside else", results);
-//                 if (results.code === 202) {
-//                     res.status(results.code).json(results.message);
-//                 } else {
-//                     res.status(results.code).json(results.errorMessage);
-//                 }
-//                 res.end();
-//             }
-//         });
-//     });
+  kafka.make_request(
+    "logs_topic",
+    { path: "getProfileViewCount", id: req.params.applicantId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Applicant not found" })
+          .send(err);
+      } else console.log("applicant log profile view count", result);
+      {
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
 
-//     //Get Profile view count of particular applicant
-// router.get("/:applicantId/logs/profile-view-count", function(req, res) {
-//   console.log("inside backend profile-view-count");
+//applicant Applies for new job
+router.post("/:applicantId/jobs/:jobId", function(req, res) {
+  //Update the corresponding JobId with this info into job application object ($addToSet)
+  //Increment noOfViews +1
+  // add jobId into applicant Collection as appliedJobs
+  //
 
-//   kafka.make_request(
-//     "logs_topic",
-//     { path: "getProfileViewCount", id: req.params.applicantId },
-//     function(err, result) {
-//       if (err) {
-//         res
-//           .status(404)
-//           .json({ success: false, error: "Applicant not found" })
-//           .send(err);
-//       } else console.log("applicant log profile view count", result);
-//       {
-//         if (result.status) {
-//           res.status(200);
-//           res.send(result);
-//         } else {
-//           res.status(400).json({ success: false });
-//         }
-//       }
-//     }
-//   );
-// });
+  kafka.make_request(
+    "applicant_topic",
+    {
+      path: "jobApply",
+      applicantId: req.params.applicantId,
+      jobId: req.params.jobId,
+      data: req.body
+    },
+    function(err, results) {
+      if (err) {
+        throw err;
+        done(err, {});
+      } else {
+        if (results.code == 200) {
+          return res.status(200).json(results.value);
+        } else {
+          return res.status(500).json(results.value);
+        }
+      }
+    }
+  );
+});
 
-// //applicant Applies for new job
-// router.post("/:applicantId/jobs/:jobId", function(req, res) {
-//   //Update the corresponding JobId with this info into job application object ($addToSet)
-//   //Increment noOfViews +1
-//   // add jobId into applicant Collection as appliedJobs
-//   //
-
-//   kafka.make_request(
-//     "applicant_topic",
-//     {
-//       path: "jobApply",
-//       applicantId: req.params.applicantId,
-//       jobId: req.params.jobId,
-//       data: req.body
-//     },
-//     function(err, results) {
-//       if (err) {
-//         throw err;
-//         done(err, {});
-//       } else {
-//         if (results.code == 200) {
-//           return res.status(200).json(results.value);
-//         } else {
-//           return res.status(500).json(results.value);
-//         }
-//       }
-//     }
-//   );
-// });
-
-// //applicant Saves job
-// router.post("/:applicantId/jobs/:jobId/save", function(req, res) {
-//   //Update applicant schema ADD jobid into savedJobs
-//   //store applicant id in savedJobs of Jobs
-//   kafka.make_request(
-//     "applicant_topic",
-//     {
-//       path: "jobSave",
-//       applicantId: req.params.applicantId,
-//       jobId: req.params.jobId,
-//       data: req.body
-//     },
-//     function(err, results) {
-//       if (err) {
-//         throw err;
-//         done(err, {});
-//       } else {
-//         if (results.code == 200) {
-//           return res.status(200).json(results.value);
-//         } else {
-//           return res.status(500).json(results.value);
-//         }
-//       }
-//     }
-//   );
-// });
+//applicant Saves job
+router.post("/:applicantId/jobs/:jobId/save", function(req, res) {
+  //Update applicant schema ADD jobid into savedJobs
+  //store applicant id in savedJobs of Jobs
+  kafka.make_request(
+    "applicant_topic",
+    {
+      path: "jobSave",
+      applicantId: req.params.applicantId,
+      jobId: req.params.jobId,
+      data: req.body
+    },
+    function(err, results) {
+      if (err) {
+        throw err;
+        done(err, {});
+      } else {
+        if (results.code == 200) {
+          return res.status(200).json(results.value);
+        } else {
+          return res.status(500).json(results.value);
+        }
+      }
+    }
+  );
+});
 
 /**************** Applicant Sending Message ********** */
 

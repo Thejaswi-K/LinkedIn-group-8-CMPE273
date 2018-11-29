@@ -28,8 +28,7 @@ mongoose
 
 app.use(
   cors({
-    origin:
-      "http://localhost:3000",
+    origin: "http://localhost:3000",
     credentials: true
   })
 );
@@ -39,10 +38,7 @@ app.use(bodyParser.json());
 
 //Allow Access Control
 app.use(function(req, res, next) {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "http://localhost:3000"
-  );
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Methods",
