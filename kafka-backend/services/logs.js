@@ -33,7 +33,10 @@ exports.handle_request = function handle_request(msg, callback) {
       clickCount(msg, callback);
       break;
     case "updateClickCount":
-      clickCountIncrementer(msg,callback);
+      clickCountIncrementer(msg, callback);
+      break;
+    case "lastFive":
+      lastFiveJobs(msg, callback);
       break;
   }
 };
@@ -216,7 +219,7 @@ function clickCount(msg, callback) {
 
   console.log("In handle request:" + JSON.stringify(msg));
   jobsModel
-    .find({ recruiterId: msg.id, noOfViews: {$gt:0} },'title noOfViews')
+    .find({ recruiterId: msg.id, noOfViews: { $gt: 0 } }, "title noOfViews")
     .then(clickCount => {
       if (!clickCount) {
         callback(null, {
@@ -250,7 +253,7 @@ function clickCountIncrementer(msg, callback) {
 
   console.log("In handle request:" + JSON.stringify(msg));
   jobsModel
-    .findOneAndUpdate({ _id: msg.id},{$inc : {'noOfViews' : 1}})
+    .findOneAndUpdate({ _id: msg.id }, { $inc: { noOfViews: 1 } })
     .then(clickCount => {
       if (!clickCount) {
         callback(null, {
@@ -266,6 +269,47 @@ function clickCountIncrementer(msg, callback) {
       }
     })
     .catch(function(err) {
-      callback(null, { success: false, status: "error for clickCountIncrementer" });
+      callback(null, {
+        success: false,
+        status: "error for clickCountIncrementer"
+      });
+    });
+}
+
+//Get request to fetch Bottom 5 jobs of a recruiter (least number of applications)
+function lastFiveJobs(msg, callback) {
+  console.log("KAFKA : Last five jobs  of  --> ", msg.id);
+
+  console.log("In handle request:" + JSON.stringify(msg));
+  jobsModel
+    .aggregate([
+      { $match: { recruiterId: msg.id } },
+      {
+        $project: {
+          jobTitle: 1,
+          jobApplicationssize: {$size: { "$ifNull": [ "$jobApplications", [] ] } }
+        }
+      },
+      // {$pull : {jobApplicationssize:{$lt:1}}},
+      { $sort: { "jobApplicationssize": -1 } },
+      { $limit: 5 }
+    ])
+
+    .then(jobs => {
+      if (!jobs) {
+        callback(null, {
+          success: false,
+          status: "No jobs found for user"
+        });
+      } else {
+        callback(null, {
+          success: true,
+          status: "jobs found",
+          data: jobs
+        });
+      }
+    })
+    .catch(function(err) {
+      callback(null, { success: false, status: "error for jobs" });
     });
 }
