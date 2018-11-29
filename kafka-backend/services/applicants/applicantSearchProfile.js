@@ -3,20 +3,18 @@ const Applicants = require('../../Model/Applicant');
 
 
 function handle_request(msg, callback) {
-    console.log("KAFKA : viewApplicantConnections --> ", msg.applicant_id);
+    console.log("KAFKA : search Profile --> ", msg.body);
     var res = {};
     
-    Applicants.findById({_id:msg.applicant_id},
-        { 'connections':['requestFrom'] }
-  )
-  .then(job => {
-    if (!job) {
+    Applicants.find({email:msg.email})
+  .then(profile => {
+    if (!profile) {
         res.code = 404 ;
-        res.message = "Applicant Connections not found" ;
+        res.message = "No Profile found" ;
         callback(null,res);
     }
     
-    callback(null,job);
+    callback(null,profile);
 })
 .catch(function (err) {
     res.message = err;

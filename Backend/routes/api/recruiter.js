@@ -312,8 +312,171 @@ router.get("/:recruiterId/jobs/logs/saved-job-count", function(req, res) {
           .status(404)
           .json({ success: false, error: "Jobs empty" })
           .send(err);
-      } else console.log("Jobs saved number", result);
-      {
+      } else 
+      {console.log("Jobs saved number", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+
+//Add Tracking details of a user by id
+/*
+Tested and working
+*************************
+pass user to be tracked email as param
+pass location of user as Body    -->  {"location": "San Jose" }
+*************************
+*/
+router.post("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
+  console.log("inside backend post track user by id");
+  kafka.make_request(
+    "logs_topic",
+    { path: "createTrackUserById", id: req.params.applicantId, body  : req.body },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "User create track record failed" })
+          .send(err);
+      } else
+      { console.log("User create track record ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+
+//Update Tracking details of a user by id with existing page
+/*
+Tested and working
+*************************
+pass user to be tracked email as param
+pass page user has visited as Body    -->  {"page": "User Login" }
+*************************
+*/
+router.put("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
+  console.log("inside backend update track user by id");
+  kafka.make_request(
+    "logs_topic",
+    { path: "updateTrackUserById", id: req.params.applicantId, body  : req.body  },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "User update track record failed" })
+          .send(err);
+      } else
+      { console.log("User update track record ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+
+//Get Tracking details of a user by id
+/*
+Tested and working
+*************************
+pass user to be fetched  email as param
+:applicantId  = goel1@gmail.com
+*************************
+*/
+router.get("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
+  console.log("inside backend get track user by id");
+  kafka.make_request(
+    "logs_topic",
+    { path: "trackUserById", id: req.params.applicantId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "User track record failed" })
+          .send(err);
+      } else
+      { console.log("User track record ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+
+//Route to get the Number of clicks for job (click per job posting graph in recruiter dashboard)
+router.get("/:recruiterId/jobs/logs/click-count", function(req, res) {
+  console.log("inside backend get click count");
+  kafka.make_request(
+    "logs_topic",
+    { path: "getClickCount", id: req.params.recruiterId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Get click count failed" })
+          .send(err);
+      } else
+      { console.log("Click count Result ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+
+
+
+
+// To increment the number of clicks in job schema
+/*
+Include this call in every route to a job details page
+http://localhost:3001/recruiters/recruiter1@gmail.com/jobs/logs/click-count
+BODY:
+{
+	"jobid":"5bfc781ce8df91050d1b484f"
+}
+
+*/
+router.put("/jobs/logs/click-count", function(req, res) {
+  console.log("inside backend update Click count for job", req.body.jobid);
+  kafka.make_request(
+    "logs_topic",
+    { path: "updateClickCount", id: req.body.jobid },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Update click count failed" })
+          .send(err);
+      } else
+      { console.log("Update click count success ", result);
         if (result.status) {
           res.status(200);
           res.send(result);

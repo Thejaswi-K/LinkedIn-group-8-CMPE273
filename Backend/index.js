@@ -10,6 +10,7 @@ var mysql = require("mysql");
 var jwt = require("jsonwebtoken");
 var passport = require("passport");
 var kafka = require("./kafka/client");
+const photos = require("./routes/api/photos");
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -25,7 +26,12 @@ mongoose
   .then(() => console.log("MongoDB Connected!!"))
   .catch(err => console.log(err));
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true
+  })
+);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -56,6 +62,7 @@ var recruiter = require("./routes/api/recruiter");
 app.use("/jobs", jobs);
 app.use("/applicants", applicant);
 app.use("/recruiters", recruiter);
+app.use("/api/photos", photos);
 app.use;
 
 app.get("/healthcheck", (req, res) => {

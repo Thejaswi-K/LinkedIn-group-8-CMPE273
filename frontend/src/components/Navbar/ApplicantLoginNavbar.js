@@ -5,6 +5,7 @@ import * as Validation from "../../validation/ValidationUtil";
 import {applicantLogin} from "../../actions/applicantActions";
 import Redirect from "react-router/es/Redirect";
 import {CONSTANTS} from '../../Constants';
+import {isEmpty} from "lodash";
 
 class ApplicantLoginNavbar extends Component {
 
@@ -27,7 +28,7 @@ class ApplicantLoginNavbar extends Component {
                 $('#login-callout').addClass('hidden');
             });
         });
-        if (nextProps.applicantProfile.applicantUser !== "") {
+        if (!isEmpty(nextProps.applicantProfile.applicantUser)) {
             this.setState({
                 ...this.state,
                 success: true

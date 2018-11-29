@@ -24,6 +24,9 @@ exports.handle_request = function handle_request(msg, callback) {
   }
 };
 
+
+
+//jobModel.aggregate([{$match: {recruiterId: msg.recruiterId}}, {$project: {savedBy: {$size: '$savedBy'}}}])
 function getSavedJobsNumber(msg, callback) {
   jobsModel.find({ recruiterId: msg.recruiterId }, function(err, jobs) {
     if (err) {

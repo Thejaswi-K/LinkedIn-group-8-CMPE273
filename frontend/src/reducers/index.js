@@ -5,6 +5,8 @@ import applicantProfile from './applicantProfileReducer';
 import recruiterProfile from './recruiterProfileReducer';
 import applicantErrorReducer from './applicantErrorReducer';
 import recruiterErrorReducer from './recruiterErrorReducer';
+import photosReducer from './photosReducer';
+import connection from './connectionReducer'
 
 
 export default combineReducers({
@@ -12,6 +14,8 @@ export default combineReducers({
     recruiterProfile: recruiterProfile,
     applicantErrorReducer:applicantErrorReducer,
     recruiterErrorReducer:recruiterErrorReducer,
-    messageReducer: messageReducer
+    photos: photosReducer,
+    messageReducer: messageReducer,
+    connection: connection
 
 });

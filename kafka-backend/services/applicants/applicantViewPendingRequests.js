@@ -1,13 +1,11 @@
 // Load Property model
 const Applicants = require('../../Model/Applicant');
 
-
 function handle_request(msg, callback) {
-    console.log("KAFKA : viewApplicantConnections --> ", msg.applicant_id);
+    console.log("KAFKA : viewApplicantPendingRequests --> ", msg.applicant_id);
     var res = {};
-    
     Applicants.findById({_id:msg.applicant_id},
-        { 'connections':['requestFrom'] }
+        { 'connectionsRequests':['requestFrom'] }
   )
   .then(job => {
     if (!job) {
@@ -25,6 +23,6 @@ function handle_request(msg, callback) {
 });
    console.log("after callback" + res);
 };
-
+/*---*/
 
 exports.handle_request = handle_request;

@@ -3,8 +3,6 @@ var { mongoose } = require("./db/mongo");
 //topics files
 //var signin = require('./services/signin.js');
 
-var receiveMessage = require("./services/applicants/receiveMessage");
-
 //topics files
 //var signin = require('./services/signin.js');
 var Log = require("./services/logs.js");
@@ -36,6 +34,10 @@ var EditApplicantEducation = require("./services/profile/applicant/editEducation
 var AddApplicantSkill = require("./services/profile/applicant/addSkill");
 var EditApplicantSkill = require("./services/profile/applicant/editSkill");
 var EditApplicantSummary = require("./services/profile/applicant/editSummary");
+var JobPost = require("./services/Jobs/postJob");
+var RecruiterGetJobs = require("./services/Jobs/recruiterGetJobs");
+var ApplicantViewPendingRequests = require("./services/applicants/applicantViewPendingRequests");
+var ApplicantSearchProfile = require("./services/applicants/applicantSearchProfile");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -70,57 +72,41 @@ function handleTopicRequest(topic_name, fname) {
 // Add your TOPICs here
 //first argument is topic name
 //second argument is a function that will handle this topic request
-
-// handleTopicRequest("logs_topic", Log);
-// handleTopicRequest("jobs_topic", Job);
-// handleTopicRequest("applicant_details", ApplicantDetails);
-// handleTopicRequest("recruiter_details", RecruiterDetails);
-// handleTopicRequest("applicant_login", ApplicantLogin);
-// handleTopicRequest("recruiter_login", RecruiterLogin);
-// handleTopicRequest("applicant_signup", ApplicantSignup);
-// handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
-// handleTopicRequest("recruiter_signup", RecruiterSignup);
-// handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
-// handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
-// handleTopicRequest("applicant_delete", ApplicantDelete);
-// handleTopicRequest("applicant_topic", Applicant);
+/*handleTopicRequest("logs_topic", Log);
+handleTopicRequest("jobs_topic", Job);
+handleTopicRequest("applicant_details", ApplicantDetails);
+handleTopicRequest("recruiter_details", RecruiterDetails);
+handleTopicRequest("applicant_login", ApplicantLogin);
+handleTopicRequest("recruiter_login", RecruiterLogin);
+handleTopicRequest("applicant_signup", ApplicantSignup);
+handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
+handleTopicRequest("recruiter_signup", RecruiterSignup);
+handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
+handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
+handleTopicRequest("applicant_delete", ApplicantDelete);
+handleTopicRequest("applicant_topic", Applicant);
 handleTopicRequest("send_message", sendMessage);
 handleTopicRequest("receive_message", receiveMessage);
-// handleTopicRequest("logs_topic", Log);
-// handleTopicRequest("jobs_topic", Job);
-// handleTopicRequest("applicant_details", ApplicantDetails);
-// handleTopicRequest("recruiter_details", RecruiterDetails);
-// handleTopicRequest("applicant_login", ApplicantLogin);
-// handleTopicRequest("recruiter_login", RecruiterLogin);
-// handleTopicRequest("applicant_signup", ApplicantSignup);
-// handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
-handleTopicRequest("recruiter_signup_mongo", RecruiterSignupMongo);
-// handleTopicRequest("recruiter_signup", RecruiterSignup);
-// handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
-// handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
-// handleTopicRequest("applicant_delete", ApplicantDelete);
-// handleTopicRequest("applicant_topic", Applicant);
-// handleTopicRequest("send_message", sendMessage);
-// handleTopicRequest("receive_message", receiveMessage);
-// handleTopicRequest("recruiter_JobView",RecruiterJobView);
-// handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
-// handleTopicRequest("recruiter_delete", RecruiterDelete);
-// handleTopicRequest("recruiter_JobView", RecruiterJobView);
-// handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
-// handleTopicRequest("add_experience", AddApplicantExperience);
-// handleTopicRequest("edit_experience", EditApplicantExperience);
 
-// handleTopicRequest("edit_education", EditApplicantEducation);
-// handleTopicRequest("add_education", AddApplicantEducation);
-// handleTopicRequest("add_skill", AddApplicantSkill);
-// handleTopicRequest("edit_skill", EditApplicantSkill);
-// handleTopicRequest("edit_summary", EditApplicantSummary);
-// handleTopicRequest("recruiter_delete", RecruiterDelete);
-// handleTopicRequest("recruiter_JobView", RecruiterJobView);
-// handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
+handleTopicRequest("recruiter_delete", RecruiterDelete);
+handleTopicRequest("recruiter_JobView", RecruiterJobView);
+handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
+handleTopicRequest("add_experience", AddApplicantExperience);
+handleTopicRequest("edit_experience", EditApplicantExperience);
+
+handleTopicRequest("edit_education", EditApplicantEducation);
+handleTopicRequest("add_education", AddApplicantEducation);
+handleTopicRequest("add_skill", AddApplicantSkill);
+handleTopicRequest("edit_skill", EditApplicantSkill);
+handleTopicRequest("edit_summary", EditApplicantSummary);
+
 handleTopicRequest("applicant_messages", applicantMessages);
-// handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
-// handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
+handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
+handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
+
+handleTopicRequest("post_job", JobPost);
+handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
+handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);*/
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */
@@ -130,7 +116,7 @@ Run the topics using
 
 //Change port between 2181(default) / 2183 depending on compatability 
 
-(bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic logs_topic; 
+(bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic logs_topic;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic jobs_topic; 
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_details;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_details;
@@ -153,6 +139,17 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_signup_mongo;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_ViewConnection;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_SendConnection;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic rec_get_jobs;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic post_job;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic add_experience;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_experience;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_education;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic add_education;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic add_skill;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_skill;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_summary;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_PendingRequests;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_SearchProfile;
 ) &
 
 */
