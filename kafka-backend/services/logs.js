@@ -277,6 +277,7 @@ function clickCountIncrementer(msg, callback) {
 }
 
 //Get request to fetch Bottom 5 jobs of a recruiter (least number of applications)
+// https://stackoverflow.com/questions/9040161/mongo-order-by-length-of-array 
 function lastFiveJobs(msg, callback) {
   console.log("KAFKA : Last five jobs  of  --> ", msg.id);
 

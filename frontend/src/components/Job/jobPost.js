@@ -46,83 +46,9 @@ class PostJob extends Component {
         this.jobCompanyLogoDrop = this.jobCompanyLogoDrop.bind(this);
     }
 
-    componentDidMount = () => {
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-            //Continue button handle
-            $('#continueNext').on('click', function() {
-                $('#wc').removeClass('active');
-                $('#wc a').attr("aria-expanded","false");
-                $('#de').addClass('active');
-                $('#de a').attr("aria-expanded","true");
-            });
-            // //Next-Location button handle
-            // $('#next-lc').on('click', function() {
-            //     $('#lc').removeClass('active');
-            //     $('#lc a').attr("aria-expanded","false");
-            //     $('#de').addClass('active');
-            //     $('#de a').attr("aria-expanded","true");
-            // });
-            //Back-Location button handle
-            // $('#back-lc').on('click', function() {
-            //     $('#lc').removeClass('active');
-            //     $('#lc a').attr("aria-expanded","false");
-            //     $('#wc').addClass('active');
-            //     $('#wc a').attr("aria-expanded","true");
-            // });
-            //Next-Details button handle
-            $('#next-de').on('click', function() {
-                $('#de').removeClass('active');
-                $('#de a').attr("aria-expanded","false");
-                $('#ph').addClass('active');
-                $('#ph a').attr("aria-expanded","true");
-            });
-            //Back-Details button handle
-            $('#back-de').on('click', function() {
-                $('#de').removeClass('active');
-                $('#de a').attr("aria-expanded","false");
-                $('#wc').addClass('active');
-                $('#wc a').attr("aria-expanded","true");
-            });
-            // //Next-Photo button handle
-            // $('#next-ph').on('click', function() {
-            //     $('#ph').removeClass('active');
-            //     $('#ph a').attr("aria-expanded","false");
-            //     $('#av').addClass('active');
-            //     $('#av a').attr("aria-expanded","true");
-            // });
-            //Back-Photo button handle
-            $('#back-ph').on('click', function() {
-                $('#ph').removeClass('active');
-                $('#ph a').attr("aria-expanded","false");
-                $('#de').addClass('active');
-                $('#de a').attr("aria-expanded","true");
-            });
-            // //Next-Availability button handle
-            // $('#next-av').on('click', function() {
-            //     $('#av').removeClass('active');
-            //     $('#av a').attr("aria-expanded","false");
-            //     $('#pr').addClass('active');
-            //     $('#pr a').attr("aria-expanded","true");
-            // });
-            // //Back-Availability button handle
-            // $('#back-av').on('click', function() {
-            //     $('#av').removeClass('active');
-            //     $('#av a').attr("aria-expanded","false");
-            //     $('#ph').addClass('active');
-            //     $('#ph a').attr("aria-expanded","true");
-            // });
-            // //Back-Pricing button handle
-            // $('#back-pr').on('click', function() {
-            //     $('#pr').removeClass('active');
-            //     $('#pr a').attr("aria-expanded","false");
-            //     $('#av').addClass('active');
-            //     $('#av a').attr("aria-expanded","true");
-            // });
-        });
-    }
+    // componentDidMount = () => {
+
+    // }
 
     //Company change handler to update state variable with the text entered by the user
     jobCompanyChangeHandler = (e) => {
@@ -319,8 +245,8 @@ class PostJob extends Component {
                                 <h3 style= {{fontSize: "30px", fontWeight: '550'}}>Job Details</h3>
                                 <strong>JD</strong>
                             </div>
-                            <ul className="nav list-unstyled components flex-column">
-                                <li className = "nav-item active" id = "wc">
+                            <ul className="list-unstyled components flex-column">
+                                <li className = "active" id = "wc">
                                     <a className = "nav-link" href="#welcome" data-toggle="tab" aria-expanded = "false">
                                         <i className="fa fas fa-home"></i>
                                         Welcome
