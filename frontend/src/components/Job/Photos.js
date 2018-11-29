@@ -4,14 +4,16 @@ import Dropzone from 'react-dropzone';
 
 const photos =(props)=> {
     return (
-        <div className="col-md-7 content-panel-container ">
-        <h1>Hello Photos here!</h1>
-            {/* <div className="panel panel-default">
+        <div className="container ">
+            <div className="panel panel-default" style = {{backgroundColor: '#f8f9fa', paddingTop: '55px'}}>
+            <h1 data-test-post-page-title="" className="jobs__main-title">
+                <b>Step 2:</b> Add Company Logo and Job feature
+            </h1>
                 <div className="panel-body">
                     <div className="checklist-header-container">
                         <div className="le-nav-header">
                             <div style={{ paddingTop: '25px', textAlign: 'center' }} className="le-nav-header">
-                                <h2 className="nav-header-text">Add up to 5 photos of your property</h2>
+                                <h2 className="nav-header-text">Add your company logo</h2>
                             </div>
                             <hr></hr>
                         </div>
@@ -19,26 +21,43 @@ const photos =(props)=> {
                             <div className="pyl-photos-content">
                                 <div className="pyl-photos-photo-drop">
                                     <div id="inside-upload-area">
-                                        <div style={{ textAlign: 'center' }} className="pyl-photos-photo-drop-inside">
-                                            <div style={{ border: "2px dashed #C0C0C0", margin: "15px" }}>
+                                        <div  className="pyl-photos-photo-drop-inside">
+                                            {/* <div style={{ border: "2px dashed #C0C0C0", margin: "15px" }}>
                                                 <h2 className="photo-drop-title text-muted">Drop photos here</h2>
                                                 <h2 className="photo-drop-OR text-muted">or</h2>
-                                                <h2 className="photo-drop-error text-muted">Only JPEG images are supported</h2>
-                                                <Dropzone onDrop={props.photoOneChange}
-                                                        multiple
+                                                <h2 className="photo-drop-error text-muted">Only JPEG images are supported</h2> */}
+                                                <div style = {{}}>
+                                                <Dropzone 
+                                                        multiple = {false}
                                                         accept="image/*"
-                                                        type="file">
-                                                    <div>Drop files to upload.</div>
+                                                        type="file"
+                                                        style={{"width" : "150px", "height" : "150px", "border" : "2px dashed black", "marginLeft": "465px", }}>
+                                                    <div style = {{ textAlign: 'center' , paddingTop : '50px'}}>Drop company logo to upload.</div>
                                                 </Dropzone>
-                                            </div><br />
+                                                </div>
+                                            {/* </div> */}
+                                            <br />
                                             <div>
-                                                <label style={{ textAlign: 'center' }} for="uploadPhotoInput" className="photo-drop-button btn btn-primary btn-rounded btn-sm">SELECT PHOTOS</label>
-                                                <input style={{ display: 'none' }} onChange= {props.photoOneChange}  type="file" id="uploadPhotoInput" multiple="" />
-                                            </div><hr />
+                                                <label style={{ textAlign: 'center', marginLeft: "480px"}} for="uploadPhotoInput" className="photo-drop-button btn btn-primary btn-rounded btn-sm">SELECT PHOTOS</label>
+                                                <input style={{ display: 'none', marginLeft: "480px" }}   type="file" id="uploadPhotoInput" multiple="" />
+                                            </div>
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
+                                                <label className="form-check-label label-job-checkbox" for="defaultCheck1">
+                                                    Enable the Easy apply job feature for this job.
+                                                </label>
+                                            </div>
+                                            <hr />
                                         </div>
                                     </div>
                                 </div>
-                                <div style={{ paddingTop: '10px', paddingBottom: '25px', textAlign: 'center' }} className="panel-control step-footer-wrapper">
+                                <div>
+                                    <div className="checklist-buttons" style = {{float: 'right'}}>
+                                        {/* <div><a href="#details" data-toggle="tab" ref={nextTab => this.nextTab = nextTab}></a> */}
+                                            <div><button className="btn btn-primary continue-button"><span>Post Job</span></button></div>
+                                    </div>
+                                </div>
+                                {/* <div style={{ paddingTop: '10px', paddingBottom: '25px', textAlign: 'center' }} className="panel-control step-footer-wrapper">
                                     <div className="row">
                                         <div id="back-ph" className="col-xs-6">
                                         <a className="btn btn-default btn-rounded btn-sm" label="Back" data-toggle="tab" href="#details"
@@ -49,12 +68,12 @@ const photos =(props)=> {
                                             type="button"><span className="btn__label">Next</span></a>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> */}
+            </div>
         </div>
     )
 }

@@ -9,6 +9,14 @@ body {
     color: rgba(0,0,0,.9);
     margin: 12px 0 3px;
 }
+.label-job-checkbox {
+    font-size: 1.6rem;
+    line-height: 1.42857;
+    font-weight: 600;
+    color: rgba(0,0,0,.9);
+    padding-left: 22px;
+}
+
 label.required:after {
     content: '*';
     color: #0073b1;
