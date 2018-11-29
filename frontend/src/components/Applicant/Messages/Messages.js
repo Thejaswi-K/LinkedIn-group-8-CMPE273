@@ -36,7 +36,7 @@ function messageCard(props) {
             <Grid item xs container direction="column" spacing={16}>
               <Grid item xs>
                 <Typography gutterBottom variant="heading">
-                  {`${props.membername}`}
+                  {/* {`${props.membername}`} */}
                   <br />
                   {`${props.from_email}`}
                 </Typography>

@@ -11,11 +11,14 @@ import PostJob from "./Job/jobPost";
 import ApplicantSignup from "./Applicant/ApplicantSignup/ApplicantSignup";
 import RecruiterSignup from "./Recruiter/RecruiterSignup/RecruiterSignup";
 import ApplicantProfileView from "./Applicant/ApplicantProfile/ApplicantProfileView";
+import RecruiterProfileView from "./Recruiter/RecruiterProfile/RecruiterProfileView";
 import Provider from "react-redux/es/components/Provider";
 import store from "../store";
 import MainRecruiterDashboard from "./Recruiter/RecruiterDashboard/main";
 import ViewConnections from './Connections/ViewConnections';
 import ViewPendingRequests from './Connections/ViewPendingRequests'
+import JobDetails from './Job/Details';
+import JobApply from './Job/jobapply';
 
 // Create a Main Component
 class Main extends Component {
@@ -31,11 +34,18 @@ class Main extends Component {
                         path="/applicantprofileview"
                         component={ApplicantProfileView}
                     />
+                    <Route
+                        path="/recruiterprofileview"
+                        component={RecruiterProfileView}
+                    />
                     <Route path="/applicants/applicantMessages" component={MessageList}/>
                     <Route path="/applicantMessageView" component={MessageView}/>
                     {/* <Route path="/ownerlogin" component={OwnerLogin}/> */}
                     <Route path="/profile" component={UserNavbar}/>
                     <Route path="/job" component={PostJob}/>
+                    <Route path="/jobDetails" component={JobDetails}/>
+                    <Route path="/jobApply" component={JobApply}/>
+                    
                     <Route
                         path="/recruiterDashboard"
                         component={MainRecruiterDashboard}

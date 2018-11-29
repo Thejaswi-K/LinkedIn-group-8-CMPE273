@@ -11,7 +11,11 @@ import { withRouter } from "react-router-dom";
 
 // import Pagination from "../common/pagination";
 // import { paginate } from "../../utils/paginate";
-import { messageListFunc, messageID } from "../../../actions/messageActions";
+import {
+  messageListFunc,
+  messageID,
+  messageViewFunc
+} from "../../../actions/messageActions";
 
 class messageList extends Component {
   lookprop = [];
@@ -24,17 +28,26 @@ class messageList extends Component {
   }
 
   redirectDetails = members => {
-    this.props.messageID(members);
+    //this.props.messageID(members);
+    var data = {
+      from_email: members[0],
+      to_email: members[1]
+    };
+    this.props.messageViewFunc(data);
     this.setState({
       ...this.state,
       isClicked: true
     });
+    this.props.messageID(members);
   };
 
   componentDidMount() {
     var data = {
-      from_email: "apurav@gmail.com"
+      from_email: "infosys@gmail.com"
     };
+    var author = "infosys@gmail.com";
+    sessionStorage.setItem("author", author);
+
     // setAuthToken(localStorage.getItem("applicantToken"));
     this.props.messageListFunc(data.from_email);
   }
@@ -85,6 +98,7 @@ class messageList extends Component {
 
 messageList.propTypes = {
   messageListFunc: PropTypes.func.isRequired,
+  messageViewFunc: PropTypes.func.isRequired,
   messageID: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -95,5 +109,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { messageListFunc, messageID }
+  { messageListFunc, messageID, messageViewFunc }
 )(withRouter(messageList));

@@ -7,6 +7,7 @@ import Skills from "./skills";
 import jwt_decode from "jwt-decode";
 import {applicantDetails} from "../../../actions/applicantActions";
 import Redirect from "react-router/es/Redirect";
+import ProfileNavbar from "../../Navbar/applicantNavbar"
 
 
 class ApplicantProfileView extends Component {
@@ -67,6 +68,8 @@ class ApplicantProfileView extends Component {
 
         return (
             <div>
+
+                <ProfileNavbar/>
 
                 <br/>
 
