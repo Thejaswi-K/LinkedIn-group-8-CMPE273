@@ -34,9 +34,28 @@ exports.handle_request = function handle_request(msg, callback) {
   };
 
 
-
+//profile view count for 30 days
+/*
+https://stackoverflow.com/questions/5168904/group-by-dates-in-mongodb
+https://stackoverflow.com/questions/23116330/mongodb-select-count-group-by 
+*/
 function getProfileViewCount(msg,callback){
     console.log("KAFKA : getProfileViewCount --> ", msg.id);
+    applicantModel.aggregate(
+      [
+        { $match: {email :msg.id }},
+        { $group : {_id:{ $dateToString : {format:"%Y-%m-%d", date : "$date"}},count : { $sum : 1 } } },
+        { $sort: {_id: 1} },
+        { $limit : 30 }
+      ]
+    ).then(count =>{
+      console.log("Result in get profile view count is ", count);
+      callback(null, {success:true, status: "Profile View Count Success" , data : count})
+    })
+    .catch(err => {
+      console.log("Profile view count aggregation failed", err);
+      callback(null, {success:false, status: "Profile view count fetch failed"});
+    })
 
 }
 
@@ -65,7 +84,9 @@ function trackUserId(msg,callback){
   
 }
 
+/*
 
+*/
 function createTrackUserId(msg,callback){
   console.log("KAFKA : create trackuser by ID  --> ", msg.id)
   
@@ -98,11 +119,26 @@ function createTrackUserId(msg,callback){
   
 }
 
-
+//pass the page as req.body.page
 function updateTrackUserId(msg,callback){
   console.log("KAFKA : update trackuser by ID  --> ", msg.id , msg.body)
   
   console.log("In handle request:"+ JSON.stringify(msg));
-  
+  userTrackerModel.findOneAndUpdate(
+    { username : msg.id },
+    { $push : {
+      tracker:{
+        page: req.body.page
+      }
+    }}
+  ).then(user=> {
+    console.log("Find and update successful " , user);
+    callback(null, {success: true, status: "page added to user tracker"});
+
+  })
+  .catch(err=>{
+    console.log("Find and update error in tracker ", err);
+    callback(null, {success:false, status: " Page tracking failed "})
+  })
   
 }
