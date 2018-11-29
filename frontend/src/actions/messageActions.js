@@ -1,10 +1,12 @@
 import setAuthToken from "../utils/setAuthToken";
 import axios from "axios";
+import { CONSTANTS } from "../Constants";
 import {
   MESSAGE_LIST,
   GET_MESSAGE_ERRORS,
   MESSAGE_DETAILS_BY_ID,
-  MESSAGE_VIEW
+  MESSAGE_VIEW,
+  SEND_MESSAGE
 } from "./types";
 
 const ROOT_URL = "http://localhost:3001";
@@ -57,6 +59,27 @@ export const messageViewFunc = receiverDetails => dispatch => {
       dispatch({
         type: MESSAGE_VIEW,
         payload: res.data.authorMessage
+      })
+    )
+    .catch(errors =>
+      dispatch({
+        type: GET_MESSAGE_ERRORS,
+        payload: errors
+      })
+    );
+};
+
+/*********Sending messsages between the people ********** */
+
+export const sendMessageFunc = sendMessageDetails => dispatch => {
+  axios.defaults.withCredentials = true;
+  //   setAuthToken(localStorage.getItem("applicantToken"));
+  axios
+    .post(`${ROOT_URL}/applicants/sendMessage`, sendMessageDetails)
+    .then(res =>
+      dispatch({
+        type: SEND_MESSAGE,
+        payload: res.data
       })
     )
     .catch(errors =>

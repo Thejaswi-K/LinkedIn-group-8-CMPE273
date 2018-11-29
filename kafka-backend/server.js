@@ -1,5 +1,5 @@
 var connection = new require("./kafka/Connection");
-var {mongoose} = require("./db/mongo");
+var { mongoose } = require("./db/mongo");
 //topics files
 //var signin = require('./services/signin.js');
 
@@ -38,52 +38,52 @@ var EditApplicantSkill = require("./services/profile/applicant/editSkill");
 var EditApplicantSummary = require("./services/profile/applicant/editSummary");
 
 function handleTopicRequest(topic_name, fname) {
-    //var topic_name = 'root_topic';
-    var consumer = connection.getConsumer(topic_name);
-    var producer = connection.getProducer();
-    console.log("server is running ");
-    consumer.on("message", function (message) {
-        console.log("message received for " + topic_name + " ", fname);
-        console.log(JSON.stringify(message.value));
-        var data = JSON.parse(message.value);
+  //var topic_name = 'root_topic';
+  var consumer = connection.getConsumer(topic_name);
+  var producer = connection.getProducer();
+  console.log("server is running ");
+  consumer.on("message", function(message) {
+    console.log("message received for " + topic_name + " ", fname);
+    console.log(JSON.stringify(message.value));
+    var data = JSON.parse(message.value);
 
-        fname.handle_request(data.data, function (err, res) {
-            console.log("after handle" + res);
-            var payloads = [
-                {
-                    topic: data.replyTo,
-                    messages: JSON.stringify({
-                        correlationId: data.correlationId,
-                        data: res
-                    }),
-                    partition: 0
-                }
-            ];
-            producer.send(payloads, function (err, data) {
-                console.log(data);
-            });
-            return;
-        });
+    fname.handle_request(data.data, function(err, res) {
+      console.log("after handle" + res);
+      var payloads = [
+        {
+          topic: data.replyTo,
+          messages: JSON.stringify({
+            correlationId: data.correlationId,
+            data: res
+          }),
+          partition: 0
+        }
+      ];
+      producer.send(payloads, function(err, data) {
+        console.log(data);
+      });
+      return;
     });
+  });
 }
 
 // Add your TOPICs here
 //first argument is topic name
 //second argument is a function that will handle this topic request
 
-/*handleTopicRequest("logs_topic", Log);
-handleTopicRequest("jobs_topic", Job);
-handleTopicRequest("applicant_details", ApplicantDetails);
-handleTopicRequest("recruiter_details", RecruiterDetails);
-handleTopicRequest("applicant_login", ApplicantLogin);
-handleTopicRequest("recruiter_login", RecruiterLogin);
-handleTopicRequest("applicant_signup", ApplicantSignup);
-handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
-handleTopicRequest("recruiter_signup", RecruiterSignup);
-handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
-handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
-handleTopicRequest("applicant_delete", ApplicantDelete);
-handleTopicRequest("applicant_topic", Applicant);
+// handleTopicRequest("logs_topic", Log);
+// handleTopicRequest("jobs_topic", Job);
+// handleTopicRequest("applicant_details", ApplicantDetails);
+// handleTopicRequest("recruiter_details", RecruiterDetails);
+// handleTopicRequest("applicant_login", ApplicantLogin);
+// handleTopicRequest("recruiter_login", RecruiterLogin);
+// handleTopicRequest("applicant_signup", ApplicantSignup);
+// handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
+// handleTopicRequest("recruiter_signup", RecruiterSignup);
+// handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
+// handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
+// handleTopicRequest("applicant_delete", ApplicantDelete);
+// handleTopicRequest("applicant_topic", Applicant);
 handleTopicRequest("send_message", sendMessage);
 handleTopicRequest("receive_message", receiveMessage);
 // handleTopicRequest("logs_topic", Log);
@@ -94,7 +94,7 @@ handleTopicRequest("receive_message", receiveMessage);
 // handleTopicRequest("recruiter_login", RecruiterLogin);
 // handleTopicRequest("applicant_signup", ApplicantSignup);
 // handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
-// handleTopicRequest("recruiter_signup_mongo", RecruiterSignupMongo);
+handleTopicRequest("recruiter_signup_mongo", RecruiterSignupMongo);
 // handleTopicRequest("recruiter_signup", RecruiterSignup);
 // handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
 // handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
@@ -104,21 +104,21 @@ handleTopicRequest("receive_message", receiveMessage);
 // handleTopicRequest("receive_message", receiveMessage);
 // handleTopicRequest("recruiter_JobView",RecruiterJobView);
 // handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
-handleTopicRequest("recruiter_delete", RecruiterDelete);
-handleTopicRequest("recruiter_JobView", RecruiterJobView);
-handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
-handleTopicRequest("add_experience", AddApplicantExperience);
-handleTopicRequest("edit_experience", EditApplicantExperience);
-
-handleTopicRequest("edit_education", EditApplicantEducation);
-handleTopicRequest("add_education", AddApplicantEducation);
-handleTopicRequest("add_skill", AddApplicantSkill);
-handleTopicRequest("edit_skill", EditApplicantSkill);
-handleTopicRequest("edit_summary", EditApplicantSummary);*/
 // handleTopicRequest("recruiter_delete", RecruiterDelete);
 // handleTopicRequest("recruiter_JobView", RecruiterJobView);
 // handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
-// handleTopicRequest("applicant_messages", applicantMessages);
+// handleTopicRequest("add_experience", AddApplicantExperience);
+// handleTopicRequest("edit_experience", EditApplicantExperience);
+
+// handleTopicRequest("edit_education", EditApplicantEducation);
+// handleTopicRequest("add_education", AddApplicantEducation);
+// handleTopicRequest("add_skill", AddApplicantSkill);
+// handleTopicRequest("edit_skill", EditApplicantSkill);
+// handleTopicRequest("edit_summary", EditApplicantSummary);
+// handleTopicRequest("recruiter_delete", RecruiterDelete);
+// handleTopicRequest("recruiter_JobView", RecruiterJobView);
+// handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
+handleTopicRequest("applicant_messages", applicantMessages);
 // handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
 // handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
 /* ****************************************************

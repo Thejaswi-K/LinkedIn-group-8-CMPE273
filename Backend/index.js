@@ -25,9 +25,7 @@ mongoose
   .then(() => console.log("MongoDB Connected!!"))
   .catch(err => console.log(err));
 
-
-
-app.use(cors({origin: 'http://localhost:3000', credentials: true}));
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -70,7 +68,7 @@ app.get("/healthcheck", (req, res) => {
 app.use(passport.initialize());
 
 // Passport Config
-require('./config/passport')(passport);
+require("./config/passport")(passport);
 
 app.listen(3001);
 console.log("Server Listening on port 3001");

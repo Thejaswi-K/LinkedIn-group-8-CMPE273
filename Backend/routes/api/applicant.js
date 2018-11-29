@@ -14,366 +14,366 @@ handle cases for double url paramters like /applicants/{applicant_id}/jobs/{job_
 ********************************************************************************************************
 */
 
-//applicant login
-router.post("/login", (req, res) => {
-  kafka.make_request("applicant_login", req.body, function(err, results) {
-    console.log("in result");
-    console.log(results);
-    if (err) {
-      console.log("Inside err");
-      res.json({
-        status: "error",
-        msg: "System Error, Try Again."
-      });
-    } else {
-      console.log("Inside else", results);
-      if (results.code === 200) {
-        res.status(results.code).json({
-          success: true,
-          token: "Bearer " + results.token
-        });
-      } else {
-        res.status(results.code).json({
-          error: results.err
-        });
-      }
+// //applicant login
+// router.post("/login", (req, res) => {
+//   kafka.make_request("applicant_login", req.body, function(err, results) {
+//     console.log("in result");
+//     console.log(results);
+//     if (err) {
+//       console.log("Inside err");
+//       res.json({
+//         status: "error",
+//         msg: "System Error, Try Again."
+//       });
+//     } else {
+//       console.log("Inside else", results);
+//       if (results.code === 200) {
+//         res.status(results.code).json({
+//           success: true,
+//           token: "Bearer " + results.token
+//         });
+//       } else {
+//         res.status(results.code).json({
+//           error: results.err
+//         });
+//       }
 
-      res.end();
-    }
-  });
-});
+//       res.end();
+//     }
+//   });
+// });
 
-//applicant signup
-router.post("/", (req, res) => {
-  // const { errors, isValid } = validateRegisterInput(req.body);
+// //applicant signup
+// router.post("/", (req, res) => {
+//   // const { errors, isValid } = validateRegisterInput(req.body);
 
-  // Check Validation
-  /* if (!isValid) {
-         return res.status(400).json(errors);
-     }*/
+//   // Check Validation
+//   /* if (!isValid) {
+//          return res.status(400).json(errors);
+//      }*/
 
-  kafka.make_request("applicant_signup", req.body, function(err, results) {
-    console.log("in result");
-    console.log(results);
-    if (err) {
-      console.log("Inside err");
-      res.json({
-        status: "error",
-        msg: "System Error, Try Again."
-      });
-    } else {
-      if (results.code === 200) {
-        res.status(results.code).json({
-          success: true,
-          token: "Bearer " + results.token
-        });
-      } else {
-        res.status(results.code).json({
-          error: results.err
-        });
-      }
-      res.end();
-    }
-  });
-});
+//   kafka.make_request("applicant_signup", req.body, function(err, results) {
+//     console.log("in result");
+//     console.log(results);
+//     if (err) {
+//       console.log("Inside err");
+//       res.json({
+//         status: "error",
+//         msg: "System Error, Try Again."
+//       });
+//     } else {
+//       if (results.code === 200) {
+//         res.status(results.code).json({
+//           success: true,
+//           token: "Bearer " + results.token
+//         });
+//       } else {
+//         res.status(results.code).json({
+//           error: results.err
+//         });
+//       }
+//       res.end();
+//     }
+//   });
+// });
 
-//applicant signup call for mongodb
-router.post("/mongo", (req, res) => {
-  // const { errors, isValid } = validateRegisterInput(req.body);
+// //applicant signup call for mongodb
+// router.post("/mongo", (req, res) => {
+//   // const { errors, isValid } = validateRegisterInput(req.body);
 
-  // Check Validation
-  /* if (!isValid) {
-         return res.status(400).json(errors);
-     }*/
+//   // Check Validation
+//   /* if (!isValid) {
+//          return res.status(400).json(errors);
+//      }*/
 
-  kafka.make_request("applicant_signup_mongo", req.body, function(
-    err,
-    results
-  ) {
-    console.log("in result");
-    console.log(results);
-    if (err) {
-      console.log("Inside err");
-      res.json({
-        status: "error",
-        msg: "System Error, Try Again."
-      });
-    } else {
-      if (results.code === 200) {
-        res.status(results.code).json({
-          success: true,
-          token: "Bearer " + results.token
-        });
-      } else {
-        res.status(results.code).json({
-          error: results.err
-        });
-      }
-      res.end();
-    }
-  });
-});
+//   kafka.make_request("applicant_signup_mongo", req.body, function(
+//     err,
+//     results
+//   ) {
+//     console.log("in result");
+//     console.log(results);
+//     if (err) {
+//       console.log("Inside err");
+//       res.json({
+//         status: "error",
+//         msg: "System Error, Try Again."
+//       });
+//     } else {
+//       if (results.code === 200) {
+//         res.status(results.code).json({
+//           success: true,
+//           token: "Bearer " + results.token
+//         });
+//       } else {
+//         res.status(results.code).json({
+//           error: results.err
+//         });
+//       }
+//       res.end();
+//     }
+//   });
+// });
 
-//add applicant profile experience
-router.put(
-  "/experience/add",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const errors = {};
-    kafka.make_request("add_experience", req.body, function(err, results) {
-      console.log("in result");
-      console.log(results);
-      if (err) {
-        console.log("Inside err");
-        res.json({
-          status: "error",
-          msg: "System Error, Try Again."
-        });
-      } else {
-        console.log("Inside else", results);
-        if (results.code === 202) {
-          res.status(results.code).json(results.message);
-        } else {
-          res.status(results.code).json(results.errorMessage);
-        }
+// //add applicant profile experience
+// router.put(
+//   "/experience/add",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const errors = {};
+//     kafka.make_request("add_experience", req.body, function(err, results) {
+//       console.log("in result");
+//       console.log(results);
+//       if (err) {
+//         console.log("Inside err");
+//         res.json({
+//           status: "error",
+//           msg: "System Error, Try Again."
+//         });
+//       } else {
+//         console.log("Inside else", results);
+//         if (results.code === 202) {
+//           res.status(results.code).json(results.message);
+//         } else {
+//           res.status(results.code).json(results.errorMessage);
+//         }
 
-        res.end();
-      }
-    });
-  }
-);
+//         res.end();
+//       }
+//     });
+//   }
+// );
 
-//edit applicant profile experience
-router.put(
-  "/experience/edit",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const errors = {};
-    kafka.make_request("edit_experience", req.body, function(err, results) {
-      console.log("in result");
-      console.log(results);
-      if (err) {
-        console.log("Inside err");
-        res.json({
-          status: "error",
-          msg: "System Error, Try Again."
-        });
-      } else {
-        console.log("Inside else", results);
-        if (results.code === 202) {
-          res.status(results.code).json(results.message);
-        } else {
-          res.status(results.code).json(results.errorMessage);
-        }
+// //edit applicant profile experience
+// router.put(
+//   "/experience/edit",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const errors = {};
+//     kafka.make_request("edit_experience", req.body, function(err, results) {
+//       console.log("in result");
+//       console.log(results);
+//       if (err) {
+//         console.log("Inside err");
+//         res.json({
+//           status: "error",
+//           msg: "System Error, Try Again."
+//         });
+//       } else {
+//         console.log("Inside else", results);
+//         if (results.code === 202) {
+//           res.status(results.code).json(results.message);
+//         } else {
+//           res.status(results.code).json(results.errorMessage);
+//         }
 
-        res.end();
-      }
-    });
-  }
-);
+//         res.end();
+//       }
+//     });
+//   }
+// );
 
-//edit applicant profile education
-router.put(
-  "/education/edit",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const errors = {};
-    kafka.make_request("edit_education", req.body, function(err, results) {
-      console.log("in result");
-      console.log(results);
-      if (err) {
-        console.log("Inside err");
-        res.json({
-          status: "error",
-          msg: "System Error, Try Again."
-        });
-      } else {
-        console.log("Inside else", results);
-        if (results.code === 202) {
-          res.status(results.code).json(results.message);
-        } else {
-          res.status(results.code).json(results.errorMessage);
-        }
+// //edit applicant profile education
+// router.put(
+//   "/education/edit",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const errors = {};
+//     kafka.make_request("edit_education", req.body, function(err, results) {
+//       console.log("in result");
+//       console.log(results);
+//       if (err) {
+//         console.log("Inside err");
+//         res.json({
+//           status: "error",
+//           msg: "System Error, Try Again."
+//         });
+//       } else {
+//         console.log("Inside else", results);
+//         if (results.code === 202) {
+//           res.status(results.code).json(results.message);
+//         } else {
+//           res.status(results.code).json(results.errorMessage);
+//         }
 
-        res.end();
-      }
-    });
-  }
-);
+//         res.end();
+//       }
+//     });
+//   }
+// );
 
-//to add education
-router.put(
-  "/education/add",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const errors = {};
-    kafka.make_request("add_education", req.body, function(err, results) {
-      console.log("in result");
-      console.log(results);
-      if (err) {
-        console.log("Inside err");
-        res.json({
-          status: "error",
-          msg: "System Error, Try Again."
-        });
-      } else {
-        console.log("Inside else", results);
-        if (results.code === 202) {
-          res.status(results.code).json(results.message);
-        } else {
-          res.status(results.code).json(results.errorMessage);
-        }
+// //to add education
+// router.put(
+//   "/education/add",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const errors = {};
+//     kafka.make_request("add_education", req.body, function(err, results) {
+//       console.log("in result");
+//       console.log(results);
+//       if (err) {
+//         console.log("Inside err");
+//         res.json({
+//           status: "error",
+//           msg: "System Error, Try Again."
+//         });
+//       } else {
+//         console.log("Inside else", results);
+//         if (results.code === 202) {
+//           res.status(results.code).json(results.message);
+//         } else {
+//           res.status(results.code).json(results.errorMessage);
+//         }
 
-        res.end();
-      }
-    });
-  }
-);
+//         res.end();
+//       }
+//     });
+//   }
+// );
 
-//to edit skills
-router.put(
-  "/skills/edit",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const errors = {};
-    kafka.make_request("edit_skill", req.body, function(err, results) {
-      console.log("in result");
-      console.log(results);
-      if (err) {
-        console.log("Inside err");
-        res.json({
-          status: "error",
-          msg: "System Error, Try Again."
-        });
-      } else {
-        console.log("Inside else", results);
-        if (results.code === 202) {
-          res.status(results.code).json(results.message);
-        } else {
-          res.status(results.code).json(results.errorMessage);
-        }
+// //to edit skills
+// router.put(
+//   "/skills/edit",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const errors = {};
+//     kafka.make_request("edit_skill", req.body, function(err, results) {
+//       console.log("in result");
+//       console.log(results);
+//       if (err) {
+//         console.log("Inside err");
+//         res.json({
+//           status: "error",
+//           msg: "System Error, Try Again."
+//         });
+//       } else {
+//         console.log("Inside else", results);
+//         if (results.code === 202) {
+//           res.status(results.code).json(results.message);
+//         } else {
+//           res.status(results.code).json(results.errorMessage);
+//         }
 
-        res.end();
-      }
-    });
-  }
-);
+//         res.end();
+//       }
+//     });
+//   }
+// );
 
-//to add skills
-router.put(
-  "/skills/add",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const errors = {};
-    kafka.make_request("add_skill", req.body, function(err, results) {
-      console.log("in result");
-      console.log(results);
-      if (err) {
-        console.log("Inside err");
-        res.json({
-          status: "error",
-          msg: "System Error, Try Again."
-        });
-      } else {
-        console.log("Inside else", results);
-        if (results.code === 202) {
-          res.status(results.code).json(results.message);
-        } else {
-          res.status(results.code).json(results.errorMessage);
-        }
+// //to add skills
+// router.put(
+//   "/skills/add",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const errors = {};
+//     kafka.make_request("add_skill", req.body, function(err, results) {
+//       console.log("in result");
+//       console.log(results);
+//       if (err) {
+//         console.log("Inside err");
+//         res.json({
+//           status: "error",
+//           msg: "System Error, Try Again."
+//         });
+//       } else {
+//         console.log("Inside else", results);
+//         if (results.code === 202) {
+//           res.status(results.code).json(results.message);
+//         } else {
+//           res.status(results.code).json(results.errorMessage);
+//         }
 
-        res.end();
-      }
-    });
-  }
-);
+//         res.end();
+//       }
+//     });
+//   }
+// );
 
-//to edit summary
-router.put(
-  "/summary/edit",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const errors = {};
-    kafka.make_request("edit_summary", req.body, function(err, results) {
-      console.log("in result");
-      console.log(results);
-      if (err) {
-        console.log("Inside err");
-        res.json({
-          status: "error",
-          msg: "System Error, Try Again."
-        });
-      } else {
-        console.log("Inside else", results);
-        if (results.code === 202) {
-          res.status(results.code).json(results.message);
-        } else {
-          res.status(results.code).json(results.errorMessage);
-        }
+// //to edit summary
+// router.put(
+//   "/summary/edit",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const errors = {};
+//     kafka.make_request("edit_summary", req.body, function(err, results) {
+//       console.log("in result");
+//       console.log(results);
+//       if (err) {
+//         console.log("Inside err");
+//         res.json({
+//           status: "error",
+//           msg: "System Error, Try Again."
+//         });
+//       } else {
+//         console.log("Inside else", results);
+//         if (results.code === 202) {
+//           res.status(results.code).json(results.message);
+//         } else {
+//           res.status(results.code).json(results.errorMessage);
+//         }
 
-        res.end();
-      }
-    });
-  }
-);
+//         res.end();
+//       }
+//     });
+//   }
+// );
 
-//update applicant profile
-router.put(
-  "/:applicant_id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const errors = {};
-    kafka.make_request("applicant_update_profile", req.body, function(
-      err,
-      results
-    ) {
-      console.log("in result");
-      console.log(results);
-      if (err) {
-        console.log("Inside err");
-        res.json({
-          status: "error",
-          msg: "System Error, Try Again."
-        });
-      } else {
-        console.log("Inside else", results);
-        if (results.code === 202) {
-          res.status(results.code).json(results.message);
-        } else {
-          res.status(results.code).json(results.errorMessage);
-        }
-      }
-    });
-  }
-);
+// //update applicant profile
+// router.put(
+//   "/:applicant_id",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const errors = {};
+//     kafka.make_request("applicant_update_profile", req.body, function(
+//       err,
+//       results
+//     ) {
+//       console.log("in result");
+//       console.log(results);
+//       if (err) {
+//         console.log("Inside err");
+//         res.json({
+//           status: "error",
+//           msg: "System Error, Try Again."
+//         });
+//       } else {
+//         console.log("Inside else", results);
+//         if (results.code === 202) {
+//           res.status(results.code).json(results.message);
+//         } else {
+//           res.status(results.code).json(results.errorMessage);
+//         }
+//       }
+//     });
+//   }
+// );
 
-//Get Applicant details
-router.get(
-  "/:applicant_id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const errors = {};
-    kafka.make_request("applicant_details", req.params, function(err, results) {
-      console.log("in result");
-      console.log(results);
-      if (err) {
-        console.log("Inside err");
-        res.json({
-          status: "error",
-          msg: "System Error, Try Again."
-        });
-      } else {
-        console.log("Inside else", results);
-        if (results.code === 200) {
-          res.status(results.code).json(results.message);
-        } else {
-          res.status(results.code).json(results.message);
-        }
-        res.end();
-      }
-    });
-  }
-);
+// //Get Applicant details
+// router.get(
+//   "/:applicant_id",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const errors = {};
+//     kafka.make_request("applicant_details", req.params, function(err, results) {
+//       console.log("in result");
+//       console.log(results);
+//       if (err) {
+//         console.log("Inside err");
+//         res.json({
+//           status: "error",
+//           msg: "System Error, Try Again."
+//         });
+//       } else {
+//         console.log("Inside else", results);
+//         if (results.code === 200) {
+//           res.status(results.code).json(results.message);
+//         } else {
+//           res.status(results.code).json(results.message);
+//         }
+//         res.end();
+//       }
+//     });
+//   }
+// );
 
 // //Get Applicant details
 // router.get('/:applicant_id', passport.authenticate('jwt', {session: false}),
