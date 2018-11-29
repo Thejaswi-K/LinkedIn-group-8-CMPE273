@@ -742,5 +742,32 @@ router.post("/connections/:applicant_id", function (req, res) {
     );
 });
 
+/****************Search Profile*********************/
+router.post("/searchprofile", function (req, res) {
+  console.log("Backend Search Profile");
+  kafka.make_request(
+      "applicant_SearchProfile",
+      {email:req.body.email},
+      function (err, results) {
+          console.log("in result");
+          console.log(results);
+          if (err) {
+              console.log("Inside err");
+              res.json({
+                  status: "error",
+                  msg: "Unable to Search Profile."
+              });
+          } else {
+              console.log("Inside else");
+              res.json({
+                  SearchedProfile: results
+              });
+
+              res.end();
+          }
+      }
+  );
+});
+
 
 module.exports = router;
