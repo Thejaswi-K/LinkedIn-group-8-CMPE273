@@ -139,7 +139,7 @@ var applicantSchema = new mongoose.Schema({
   ],
   profileViewCount: [
     {
-      date: { type: Date, required : false }
+      date: { type: Date, required : false , default : Date.now}
       
     }
   ]

@@ -799,7 +799,7 @@ router.get("/:applicantId/logs/profile-view-count", function(req, res) {
 
 //Update Profile view count of particular applicant
 router.put("/:applicantId/logs/profile-view-count", function(req, res) {
-  console.log("inside backend profile-view-count");
+  console.log("inside backend update profile-view-count");
 
   kafka.make_request(
     "logs_topic",
