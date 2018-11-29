@@ -770,4 +770,57 @@ router.post("/searchprofile", function (req, res) {
 });
 
 
+//Get Profile view count of particular applicant
+router.get("/:applicantId/logs/profile-view-count", function(req, res) {
+  console.log("inside backend profile-view-count");
+
+  kafka.make_request(
+    "logs_topic",
+    { path: "getProfileViewCount", id: req.params.applicantId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Applicant not found" })
+          .send(err);
+      } else {
+        console.log("applicant log profile view count", result);
+        if (result.success) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+
+//Update Profile view count of particular applicant
+router.put("/:applicantId/logs/profile-view-count", function(req, res) {
+  console.log("inside backend profile-view-count");
+
+  kafka.make_request(
+    "logs_topic",
+    { path: "updateProfileViewCount", id: req.params.applicantId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Applicant not found" })
+          .send(err);
+      } else {
+        console.log("applicant log profile view count updated", result);
+        if (result.success) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
 module.exports = router;
