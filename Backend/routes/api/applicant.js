@@ -377,6 +377,55 @@ router.put(
     });
   }
 );
+
+//Get Applicant details without and redis.
+router.get(
+    "/wok/:applicant_id",
+    passport.authenticate("jwt", {session: false}),
+    (req, res) => {
+        const errors = {};
+        var responseRadis = {};
+        var resP = {};
+        var responseRadis = {};
+        var redisKey = 'applicantViewProfilewok' + req.params.applicant_id;
+        redis.get(redisKey, function (err, reply) {
+            if (reply == null) {
+                Applicants.findOne({email: req.params.applicant_id})
+                    .then(profile => {
+                        if (!profile) {
+                            resP.code = 404;
+                            resP.message = "User not found";
+                            res.status(resP.code).json(resP.message);
+                            res.end();
+                        }
+
+                        resP.code = 200;
+                        resP.message = profile;
+                        res.status(resP.code).json(resP.message);
+
+                        responseRadis.code = resP.code;
+                        responseRadis.message = resP.message;
+                        redis.set(redisKey, JSON.stringify(responseRadis));
+                        redis.expire(redisKey, 60);
+                        console.log("wokk");
+                        res.end();
+
+                    })
+                    .catch(function (err) {
+                        resP.message = err;
+                        resP.code = 400;
+                        res.status(resP.code).json(resP.message);
+                        res.end();
+                    });
+
+            } else {
+                res.status(JSON.parse(reply).code).json(JSON.parse(reply).message);
+                console.log("wok");
+                res.end();
+            }
+        });
+    });
+
 //implemented redis
 //Get Applicant details
 router.get(
