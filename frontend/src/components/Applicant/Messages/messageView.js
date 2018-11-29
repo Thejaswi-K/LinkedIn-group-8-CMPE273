@@ -8,34 +8,61 @@ import { withRouter } from "react-router-dom";
 
 // import Pagination from "../common/pagination";
 // import { paginate } from "../../utils/paginate";
-import { messageViewFunc } from "../../../actions/messageActions";
+import {
+  messageViewFunc,
+  sendMessageFunc
+} from "../../../actions/messageActions";
 
 class messageView extends Component {
   lookprop = [];
   constructor(props) {
     super(props);
     this.state = {
+      messageSent: "",
       authflag: false
     };
+    this.changeMessage = this.changeMessage.bind(this);
+    this.handleMessage = this.handleMessage.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.messageReducer.message_byID !== []) {
-      var data = {
-        from_email: this.props.messageReducer.message_byID[0],
-        to_email: this.props.messageReducer.message_byID[1]
-      };
-      this.props.messageViewFunc(data);
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.messageReducer.message_byID !== []) {
+  //     var data = {
+  //       from_email: this.props.messageReducer.message_byID[0],
+  //       to_email: this.props.messageReducer.message_byID[1]
+  //     };
+  //     this.props.messageViewFunc(data);
+  //   }
+  // }
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   var data = {
+  //     from_email: this.props.messageReducer.message_byID[0],
+  //     to_email: this.props.messageReducer.message_byID[1]
+  //   };
+  //   this.props.messageViewFunc(data);
+  // }
+
+  handleMessage = e => {
+    e.preventDefault();
     var data = {
       from_email: this.props.messageReducer.message_byID[0],
-      to_email: this.props.messageReducer.message_byID[1]
+      to_email: this.props.messageReducer.message_byID[1],
+      author: sessionStorage.getItem("author"),
+      messageSent: this.state.messageSent
     };
-    this.props.messageViewFunc(data);
-  }
+    this.props.sendMessageFunc(data);
+    this.setState({
+      messageSent: ""
+    });
+    this.props.history.push("/applicants/applicantMessages");
+  };
+
+  changeMessage = e => {
+    this.setState({
+      messageSent: e.target.value
+    });
+  };
 
   render() {
     return (
@@ -56,7 +83,7 @@ class messageView extends Component {
               <div
                 style={{
                   height: "400px",
-                  width: "1000px",
+                  width: "960px",
                   border: "1px",
                   overflow: "auto"
                 }}
@@ -71,8 +98,6 @@ class messageView extends Component {
                     <hr />
                   </div>
                 ))}
-
-                <br />
               </div>
             </div>
             <br />
@@ -81,14 +106,29 @@ class messageView extends Component {
                 <textarea
                   placeholder="Write Something ... !!"
                   style={{
-                    width: "1000px",
+                    width: "960px",
                     height: "100px",
                     marginLeft: "10px"
                   }}
+                  onChange={this.changeMessage}
+                  value={this.state.message}
                 />
               </h6>
               <br />
-              <button class="btn btn-lg btn-primary "> Send</button>
+              <button
+                class="btn btn-lg btn-primary "
+                type="submit"
+                value="Save"
+                onClick={this.handleMessage}
+                style={{
+                  marginLeft: "10px"
+                }}
+              >
+                {" "}
+                Send Message
+              </button>
+
+              <br />
             </div>
           </div>
         </ul>
@@ -99,6 +139,7 @@ class messageView extends Component {
 
 messageView.propTypes = {
   messageViewFunc: PropTypes.func.isRequired,
+  sendMessageFunc: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
 
@@ -108,5 +149,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { messageViewFunc }
+  { messageViewFunc, sendMessageFunc }
 )(withRouter(messageView));
