@@ -6,16 +6,16 @@ class JobDetails extends Component {
     state = {  }
     render() { 
         return ( 
-            <div>
+            <div style={{margin:"10px"}}>
                 {/* <UserNavbar/> */}
                 <Card className="w-75 p-3 ml-5">
                     <div className="card-body" display="inline-block">
-                        <div className="container" display="inline">
+                        <div className="container left" display="inline">
                             <a>
                                 <img className="img-thumbnail" src="//vignette.wikia.nocookie.net/bungostraydogs/images/1/1e/Profile-icon-9.png/revision/latest?cb=20171030104015" />
                             </a>
                         </div>
-                        <div className="container" display="inline">
+                        <div className="container right" display="inline">
                             <div className="card-title">Job Title</div>
                             <div className="container">
                                 <span className="card-subtitle md-2 text-muted">Company name . Job location</span>
@@ -29,7 +29,17 @@ class JobDetails extends Component {
                             <div className="btn-toolbar">
                                 <button type="button" className="btn btn-default" name="btn_save" text-color="blue">save</button>
                                 <div className="btn btn-primary">Easy Apply</div>
+                                <div className="btn btn-info">Apply</div>
                             </div>
+                            
+                        </div>
+                    </div>
+                </Card>
+                <Card className="w-75 p-3 ml-5">
+                    <div className="card-body">
+                        <div className="card-title">Job Description</div>
+                        <div className="">
+                            <span className="card-subtitle md-2 text-muted">description</span>
                         </div>
                     </div>
                 </Card>
