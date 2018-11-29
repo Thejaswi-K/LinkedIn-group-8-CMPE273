@@ -4,17 +4,18 @@ const details = (props) => {
     return(
         <div>
             <div className = "container">
+            <div className = "panel panel-default container" style = {{backgroundColor: '#f8f9fa', paddingTop: '55px'}}>
             <h1 data-test-post-page-title="" className="jobs__main-title">
                 <b>Step 1:</b> What job do you want to post?
             </h1>
-            <form style ={{margin: '0 auto;', width:'250px;'}}>
+            <form >
                 <div className="form-row">
                     <div className="col-md-3">
                         <label className = "label-job required" for="validationDefault01">Company</label>
                         <input type="text" className=" form-control input-fields" id="validationDefault01" placeholder="Company"
                             required />
                     </div>
-                    <div className="col-md-3 mb-3">
+                    <div className="col-md-3 ">
                         <label className = "label-job required" for="validationDefault02">Job title</label>
                         <input type="text" className="form-control input-fields" id="validationDefault02" placeholder="Job title" 
                             required />
@@ -24,7 +25,7 @@ const details = (props) => {
                         <input type="text" className="form-control input-fields" id="validationDefault02" placeholder="Location" 
                             required />
                     </div>
-                </div><br/>
+                </div>
                 <div className="form-row">
                     <div className="col-md-6 mb-3">
                         <label className = "label-job required" for="validationDefault03">Job function (Select up to 3) </label><br></br>
@@ -99,11 +100,11 @@ const details = (props) => {
                 <div className="row" >
                     <div id = "back-de" className="col-xs-4">
                         <a style = {{backgroundColor: "0073b1"}} className="btn btn-primary" data-toggle="tab" label="Back" href="#location"
-                        type="button"><span >Back</span></a>
-                        <div style ={{paddingLeft: '40px'}}>
+                        type="button"><span >Continue</span></a>
+                        {/* <div style ={{paddingLeft: '40px'}}>
                         <a  className="btn btn-default" data-toggle="tab" label="Back" href="#photos"
                         type="button"><span >Next</span></a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 {/* <div style ={{paddingTop: '10px', paddingBottom: '25px' , textAlign: 'center'}} >
@@ -119,6 +120,7 @@ const details = (props) => {
                 </div> */}
                 {/* <button className="btn btn-primary" type="submit">Submit form</button> */}
             </form>
+            </div>
             </div>
         </div>
     )
