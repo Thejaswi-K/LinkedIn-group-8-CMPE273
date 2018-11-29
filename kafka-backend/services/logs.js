@@ -210,7 +210,7 @@ function updateTrackUserId(msg, callback) {
     });
 }
 
-//Get request to fetch particular user track history
+//Get request to fetch particular recrtuier click count for job (Clicks per job posting)
 function clickCount(msg, callback) {
   console.log("KAFKA : job ClickCount  of  --> ", msg.id);
 
@@ -233,5 +233,39 @@ function clickCount(msg, callback) {
     })
     .catch(function(err) {
       callback(null, { success: false, status: "error for clickCount" });
+    });
+}
+
+// To increment the number of clicks in job schema
+/*
+Include this call in every route to a job details page
+BODY:
+{
+	"jobid":"5bfc781ce8df91050d1b484f"
+}
+
+*/
+function clickCountIncrementer(msg, callback) {
+  console.log("KAFKA : job clickCountIncrementer  of  --> ", msg.id);
+
+  console.log("In handle request:" + JSON.stringify(msg));
+  jobsModel
+    .findOneAndUpdate({ _id: msg.id},{$inc : {'noOfViews' : 1}})
+    .then(clickCount => {
+      if (!clickCount) {
+        callback(null, {
+          success: false,
+          status: "No clickCounts increment for user"
+        });
+      } else {
+        callback(null, {
+          success: true,
+          status: "clickCount incremented",
+          data: clickCount
+        });
+      }
+    })
+    .catch(function(err) {
+      callback(null, { success: false, status: "error for clickCountIncrementer" });
     });
 }

@@ -424,6 +424,8 @@ router.get("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
   );
 });
 
+
+//Route to get the Number of clicks for job (click per job posting graph in recruiter dashboard)
 router.get("/:recruiterId/jobs/logs/click-count", function(req, res) {
   console.log("inside backend get click count");
   kafka.make_request(
@@ -447,4 +449,43 @@ router.get("/:recruiterId/jobs/logs/click-count", function(req, res) {
     }
   );
 });
+
+
+
+
+
+// To increment the number of clicks in job schema
+/*
+Include this call in every route to a job details page
+http://localhost:3001/recruiters/recruiter1@gmail.com/jobs/logs/click-count
+BODY:
+{
+	"jobid":"5bfc781ce8df91050d1b484f"
+}
+
+*/
+router.put("/jobs/logs/click-count", function(req, res) {
+  console.log("inside backend update Click count for job", req.body.jobid);
+  kafka.make_request(
+    "logs_topic",
+    { path: "updateClickCount", id: req.body.jobid },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Update click count failed" })
+          .send(err);
+      } else
+      { console.log("Update click count success ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
 module.exports = router;
