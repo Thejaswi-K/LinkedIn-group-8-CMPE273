@@ -23,71 +23,76 @@ exports.handle_request = function handle_request(msg, callback) {
       getSavedJobsNumber(msg, callback);
       break;
     case "listOfJobs":
-      getListOfJobs(msg,callback);
+      getListOfJobs(msg, callback);
       break;
   }
 };
 
-
-
+//jobModel.aggregate([{$match: {recruiterId: msg.recruiterId}}, {$project: {savedBy: {$size: '$savedBy'}}}])
 function getSavedJobsNumber(msg, callback) {
   console.log("KAFKA: getSavedJobsNumber --->", msg.recruiterId);
-  jobsModel.aggregate([{$match: {recruiterId: msg.recruiterId}},{$project: {title: "$title", savedBy: {$size: "$savedBy" }}}])
-  .then(savedJobsCount=>{
+  jobsModel
+    .aggregate([
+      { $match: { recruiterId: msg.recruiterId } },
+      { $project: { title: "$title", savedBy: { $size: "$savedBy" } } }
+    ])
+    .then(savedJobsCount => {
       console.log("result of saved job count", savedJobsCount);
-      if(!savedJobsCount){
+      if (!savedJobsCount) {
         console.log("inside if");
-        callback(null,{
+        callback(null, {
           success: false,
           status: "no results found"
         });
       }
       console.log("suc");
-      callback(null,{
+      callback(null, {
         success: true,
         status: "results found",
         data: savedJobsCount
       });
-  })
-  .catch(error=>{
-    console.log("Error at connecting to saved jobs");
-    callback(error, {
-      success: false,
-      status: "failed connecting to DB at getSavedJobsNumber"
-    })
-  });
-}
-
-//Search Job based on title and location
-function getJobsTitleLocation(msg, callback) {
-  console.log("KAFKA : getJobsTitleLocation --> ", msg.title, msg.location);
-
-  //not working with array? ? ?
-  jobsModel
-    .find({ $or: [{ title: msg.title }, { location: msg.location }] })
-    .then(job => {
-      console.log("result of jobs", job);
-      if (!job) {
-        callback(null, {
-          success: false,
-          status: "Job doesnt exist in getJobsTitleLocation"
-        });
-      }
-      console.log("suc");
-      callback(null, {
-        success: true,
-        status: "Job fetched Success",
-        data: job
-      });
     })
     .catch(error => {
-      console.log("Error at connecting to Jobs");
+      console.log("Error at connecting to saved jobs");
       callback(error, {
         success: false,
-        status: "Failed connecting to Mongo in getJobsTitleLocation"
+        status: "failed connecting to DB at getSavedJobsNumber"
       });
     });
 }
+
+//Search Job based on title and location
+// function getJobsTitleLocation(msg, callback) {
+//   // console.log("KAFKA : getJobsTitleLocation --> ", msg.title, msg.location);
+//   console.log("In handle request:" + JSON.stringify(msg));
+//   var title = msg.jobname;
+//   var location = msg.joblocation;
+
+//   //not working with array? ? ?
+//   jobsModel
+//     .find({ $or: [{ title: title }, { location: location }] })
+//     .then(job => {
+//       console.log("result of jobs", job);
+//       if (!job) {
+//         callback(null, {
+//           success: false,
+//           status: "Job doesnt exist in getJobsTitleLocation"
+//         });
+//       }
+//       callback(null, {
+//         success: true,
+//         status: "Job fetched Success",
+//         data: job
+//       });
+//     })
+//     .catch(error => {
+//       console.log("Error at connecting to Jobs");
+//       callback(error, {
+//         success: false,
+//         status: "Failed connecting to Mongo in getJobsTitleLocation"
+//       });
+//     });
+// }
 
 //GET jobs details based on job_id
 function getJobsDetail(msg, callback) {
@@ -110,7 +115,6 @@ function getJobsDetail(msg, callback) {
     });
 }
 
-
 //GET jobs details based on job_id
 function getListOfJobs(msg, callback) {
   console.log("KAFKA : getListOfJobs --> ", msg.id);
@@ -120,15 +124,15 @@ function getListOfJobs(msg, callback) {
       {
         $project: {
           title: 1,
-          description : 1,
-          industry :1,
-          location : 1,
+          description: 1,
+          industry: 1,
+          location: 1,
           companyLogo: 1,
-          noOfApplicants: { $size: { "$ifNull": ["$jobApplications", []] } }
+          noOfApplicants: { $size: { $ifNull: ["$jobApplications", []] } }
         }
       },
       // {$pull : {jobApplicationssize:{$lt:1}}},
-      { $sort: { "noOfApplicants": -1 } },
+      { $sort: { noOfApplicants: -1 } }
     ])
     .then(job => {
       if (!job) {
