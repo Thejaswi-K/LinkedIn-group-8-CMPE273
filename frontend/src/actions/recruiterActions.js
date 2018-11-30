@@ -38,7 +38,7 @@ export const recruiterSignup = (userData, history) => dispatch => {
                     .catch(err =>
                         dispatch({
                             type: RECRUITER_SIGNUP_ERROR_REDUCER,
-                            payload: err.response
+                            payload: err.response.data.message
                         })
                     );
             } else {
@@ -78,7 +78,7 @@ export const recruiterLogin = (userData) => dispatch => {
         .catch(err =>
             dispatch({
                 type: RECRUITER_SIGNUP_ERROR_REDUCER,
-                payload: err.message
+                payload: err.response.data.error
             })
         );
 };

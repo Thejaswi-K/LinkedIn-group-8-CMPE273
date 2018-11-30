@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router';
+// import {Redirect} from 'react-router';
 import axios from 'axios';
 import '../jopost.css';
 import $ from 'jquery';
@@ -18,8 +18,8 @@ class PostJob extends Component {
     constructor(props) {
         super(props);
         this.state = {
-                // email: jwtDecode(localStorage.getItem('recruiterToken')).email,
-                email: "testrecruiter2@gmail.com",
+                email: jwtDecode(localStorage.getItem('recruiterToken')).email,
+                // email: "testrecruiter2@gmail.com",
                 jobCompany: "",
                 jobTitle: "",
                 jobLocation: "",

@@ -288,7 +288,7 @@ export const editSummary = summary => dispatch => {
     );
 };
 
-//get applicant bookings
+//get applicant profile
 export const applicantDetails = applicantEmail => dispatch => {
   axios.defaults.withCredentials = true;
   setAuthToken(localStorage.getItem("applicantToken"));

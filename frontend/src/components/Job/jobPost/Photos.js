@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 const photos =(props)=> {
     return (
         <div className="container ">
-            <div className="panel panel-default" style = {{backgroundColor: '#f8f9fa', paddingTop: '55px'}}>
+            <div className="panel panel-default container" style = {{backgroundColor: '#f8f9fa', paddingTop: '55px'}}>
             <h1 data-test-post-page-title="" className="jobs__main-title">
                 <b>Step 2:</b> Add Company Logo and Job feature
             </h1>
@@ -55,7 +55,7 @@ const photos =(props)=> {
                                 <div>
                                     <div className="checklist-buttons" style = {{float: 'right'}}>
                                         {/* <div><a href="#details" data-toggle="tab" ref={nextTab => this.nextTab = nextTab}></a> */}
-                                            <div><button onClick ={props.submitClick} className="btn btn-primary continue-button"><span>Post Job</span></button></div>
+                                            <div><button onClick ={props.submitClick} className="btn btn-primary continue-button" type="submit"><span>Post Job</span></button></div>
                                     </div>
                                 </div>
                                 {/* <div style={{ paddingTop: '10px', paddingBottom: '25px', textAlign: 'center' }} className="panel-control step-footer-wrapper">

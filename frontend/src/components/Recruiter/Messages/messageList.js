@@ -44,9 +44,9 @@ class messageList extends Component {
 
   componentDidMount() {
     var data = {
-      from_email: this.props.applicantProfile.applicantProfile.email
+      from_email: "infosys@gmail.com"
     };
-    var author = this.props.applicantProfile.applicantProfile.email;
+    var author = "infosys@gmail.com";
     sessionStorage.setItem("author", author);
 
     // setAuthToken(localStorage.getItem("applicantToken"));
@@ -70,13 +70,7 @@ class messageList extends Component {
                     <a data-toggle="tab" href="#location">
                       <div className="ml-5 mt-2">
                         <Messages
-                          // membername={propval.messageMembers[1]}
-                          membername={
-                            propval.messageMembers[1] ===
-                            this.props.applicantProfile.applicantProfile.email
-                              ? propval.messageMembers[1]
-                              : propval.messageMembers[0]
-                          }
+                          membername={propval.messageMembers[1]}
                           from_email={propval.authorMessage[place].author}
                           onClick={() =>
                             this.redirectDetails(propval.messageMembers)
@@ -112,8 +106,7 @@ messageList.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  messageReducer: state.messageReducer,
-  applicantProfile: state.applicantProfile
+  messageReducer: state.messageReducer
 });
 
 export default connect(

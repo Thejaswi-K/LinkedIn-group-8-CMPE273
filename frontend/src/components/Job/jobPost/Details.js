@@ -8,7 +8,7 @@ const details = (props) => {
             <h1 data-test-post-page-title="" className="jobs__main-title">
                 <b>Step 1:</b> What job do you want to post?
             </h1>
-            <form >
+            <form className = "needs-validation" novalidate>
                 <div className="form-row">
                     <div className="col-md-3">
                         <label className = "label-job required" for="validationDefault01">Company</label>
@@ -61,33 +61,6 @@ const details = (props) => {
                         <label className = "label-job required" for="validationDefault03">Company industry (Select up to 3) </label><br></br>
                         <input type="text" onChange ={props.industryChange} className="form-control input-fields" id="validationDefault03" placeholder="Enter Company industry" required />
                     </div>
-                    {/* <div className="col-md-3 mb-3">
-                        <label className = "label-job required" for="validationDefault04">Seniority level</label><br></br>
-                        <select id="select-input-ember1718" required="" aria-describedby="select-input-error-text-ember1718" data-test-select="" className="form-control select-input__select">
-                            <option value="" data-test-select-option="">Choose one…</option>
-                            <option value="FULL_TIME" data-test-select-option="">
-                                Mid-Senior level
-                            </option>
-                            <option value="PART_TIME" data-test-select-option="">
-                                Internship
-                            </option>
-                            <option value="CONTRACT" data-test-select-option="">
-                                Associate
-                            </option>
-                            <option value="CONTRACT" data-test-select-option="">
-                                Entry level
-                            </option>
-                            <option value="TEMPORARY" data-test-select-option="">
-                                Director
-                            </option>
-                            <option value="VOLUNTEER" data-test-select-option="">
-                                Executive
-                            </option>
-                            <option value="INTERNSHIP" data-test-select-option="">
-                                Not Applicable
-                            </option>
-                        </select>
-                    </div> */}
                 </div>
                 <div className="form-row">
                     <div className="col-md-9">
