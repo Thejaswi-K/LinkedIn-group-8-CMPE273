@@ -88,23 +88,19 @@ handleTopicRequest("applicant_delete", ApplicantDelete);
 handleTopicRequest("applicant_topic", Applicant);
 handleTopicRequest("send_message", sendMessage);
 handleTopicRequest("receive_message", receiveMessage);
-
 handleTopicRequest("recruiter_delete", RecruiterDelete);
 handleTopicRequest("recruiter_JobView", RecruiterJobView);
 handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
 handleTopicRequest("add_experience", AddApplicantExperience);
 handleTopicRequest("edit_experience", EditApplicantExperience);
-
 handleTopicRequest("edit_education", EditApplicantEducation);
 handleTopicRequest("add_education", AddApplicantEducation);
 handleTopicRequest("add_skill", AddApplicantSkill);
 handleTopicRequest("edit_skill", EditApplicantSkill);
 handleTopicRequest("edit_summary", EditApplicantSummary);
-
 handleTopicRequest("applicant_messages", applicantMessages);
 handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
 handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
-
 handleTopicRequest("post_job", JobPost);
 handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);*/
@@ -114,9 +110,7 @@ please  UPDATE  below code before adding new topics
 
 /*
 Run the topics using
-
 //Change port between 2181(default) / 2183 depending on compatability 
-
 (bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic logs_topic;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic jobs_topic; 
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_details;
@@ -152,5 +146,4 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_PendingRequests;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_SearchProfile;
 ) &
-
 */

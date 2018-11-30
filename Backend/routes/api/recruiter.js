@@ -313,7 +313,7 @@ router.get("/:recruiterId/jobs/logs/saved-job-count", function(req, res) {
           .json({ success: false, error: "Jobs empty" })
           .send(err);
       } else 
-      {console.log("Jobs saved number", result);
+      {console.log("result", result);
         if (result.status) {
           res.status(200);
           res.send(result);
