@@ -18,7 +18,7 @@ function handle_request(msg, callback) {
         messageMembers: members,
         authorMessage: [
           {
-            author: msg.author,
+            author: msg.from_email,
             message: msg.messageSent
           }
         ]

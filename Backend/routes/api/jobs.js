@@ -5,9 +5,9 @@ const router = express.Router();
 var kafka = require("../../kafka/client");
 
 //Post a Job
-router.post("/", function (req, res) {
+router.post("/", function(req, res) {
   console.log("Inside backend--> Job Post route");
-  kafka.make_request("post_job", req.body, function (err, results) {
+  kafka.make_request("post_job", req.body, function(err, results) {
     console.log("in result");
     console.log(results);
     if (err) {
@@ -35,9 +35,9 @@ router.post("/", function (req, res) {
 });
 
 //Recruiter -- View Posted Jobs
-router.get("/", function (req, res) {
+router.get("/", function(req, res) {
   console.log("Inside backend--> Job Post route");
-  kafka.make_request("rec_get_jobs", req.query, function (err, results) {
+  kafka.make_request("rec_get_jobs", req.query, function(err, results) {
     console.log("in result");
     console.log(results);
     if (err) {
@@ -64,63 +64,27 @@ router.get("/", function (req, res) {
   });
 });
 
-router.post("/save", function(req, res){
-  console.log("Inside backend--> Job Post route");
-  kafka.make_request("jobs_topic", req.body, function (err, results) {
-    console.log("in result");
-    console.log(results);
-    if (err) {
-      console.log("Inside err");
-      res.json({
-        status: "error",
-        msg: "System Error, Try Again."
-      });
-    } else {
       console.log("Inside else", results);
-      if (results.code === 201) {
-        console.log("Job Saved successfully");
-        res.status(results.code).json({
-          result: results.result
-        });
-      } else {
-        console.log(`Save Job-->Unable to Save Job. Error-->${results.err}`);
-        res.status(results.code).json({
-          error: results.err
-        });
-      }
-      res.end();
-    }
-  });
-});
-
 //SEARCH jobs based on title and location
-router.get("/:title/:location", function(req, res) {
+router.get("/jobSearch", function(req, res) {
   console.log("inside backend /jobs/:title&:location");
 
-  kafka.make_request(
-    "jobs_topic",
+  kafka.make_request("jobs_topic", req.query, function(err, result) {
+    if (err) {
+      res
+        .status(404)
+        .json({ success: false, error: "Job not found" })
+        .send(err);
+    } else console.log("Job search", result);
     {
-      path: "getJobsTitleLocation",
-      title: req.params.title,
-      location: req.params.location
-    },
-    function(err, result) {
-      if (err) {
-        res
-          .status(404)
-          .json({ success: false, error: "Job not found" })
-          .send(err);
-      } else console.log("Job search", result);
-      {
-        if (result.status) {
-          res.status(200);
-          res.send(result);
-        } else {
-          res.status(400).json({ success: false });
-        }
+      if (result.status) {
+        res.status(200);
+        res.send(result);
+      } else {
+        res.status(400).json({ success: false });
       }
     }
-  );
+  });
 });
 
 //GET details of particular job
