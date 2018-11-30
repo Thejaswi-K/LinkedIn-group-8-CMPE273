@@ -24,8 +24,6 @@ exports.handle_request = function handle_request(msg, callback) {
   }
 };
 
-
-
 //jobModel.aggregate([{$match: {recruiterId: msg.recruiterId}}, {$project: {savedBy: {$size: '$savedBy'}}}])
 function getSavedJobsNumber(msg, callback) {
   jobsModel.find({ recruiterId: msg.recruiterId }, function(err, jobs) {
@@ -40,34 +38,37 @@ function getSavedJobsNumber(msg, callback) {
 }
 
 //Search Job based on title and location
-function getJobsTitleLocation(msg, callback) {
-  console.log("KAFKA : getJobsTitleLocation --> ", msg.title, msg.location);
+// function getJobsTitleLocation(msg, callback) {
+//   // console.log("KAFKA : getJobsTitleLocation --> ", msg.title, msg.location);
+//   console.log("In handle request:" + JSON.stringify(msg));
+//   var title = msg.jobname;
+//   var location = msg.joblocation;
 
-  //not working with array? ? ?
-  jobsModel
-    .find({ $or: [{ title: msg.title }, { location: msg.location }] })
-    .then(job => {
-      console.log("result of jobs", job);
-      if (!job) {
-        callback(null, {
-          success: false,
-          status: "Job doesnt exist in getJobsTitleLocation"
-        });
-      }
-      callback(null, {
-        success: true,
-        status: "Job fetched Success",
-        data: job
-      });
-    })
-    .catch(error => {
-      console.log("Error at connecting to Jobs");
-      callback(error, {
-        success: false,
-        status: "Failed connecting to Mongo in getJobsTitleLocation"
-      });
-    });
-}
+//   //not working with array? ? ?
+//   jobsModel
+//     .find({ $or: [{ title: title }, { location: location }] })
+//     .then(job => {
+//       console.log("result of jobs", job);
+//       if (!job) {
+//         callback(null, {
+//           success: false,
+//           status: "Job doesnt exist in getJobsTitleLocation"
+//         });
+//       }
+//       callback(null, {
+//         success: true,
+//         status: "Job fetched Success",
+//         data: job
+//       });
+//     })
+//     .catch(error => {
+//       console.log("Error at connecting to Jobs");
+//       callback(error, {
+//         success: false,
+//         status: "Failed connecting to Mongo in getJobsTitleLocation"
+//       });
+//     });
+// }
 
 //GET jobs details based on job_id
 function getJobsDetail(msg, callback) {
