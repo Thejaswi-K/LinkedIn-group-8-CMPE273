@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 const photos =(props)=> {
     return (
         <div className="container ">
-            <div className="panel panel-default" style = {{backgroundColor: '#f8f9fa', paddingTop: '55px'}}>
+            <div className="panel panel-default container" style = {{backgroundColor: '#f8f9fa', paddingTop: '55px'}}>
             <h1 data-test-post-page-title="" className="jobs__main-title">
                 <b>Step 2:</b> Add Company Logo and Job feature
             </h1>

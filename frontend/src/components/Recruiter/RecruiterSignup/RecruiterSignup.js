@@ -25,7 +25,7 @@ class RecruiterSignup extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.recruiterErrorReducer.error !== "") {
-            alert(`Error:${nextProps.recruiterErrorReducer.error}`);
+            // alert(`Error:${nextProps.recruiterErrorReducer.error}`);
             this.setState({
                 ...this.state,
                 signupFlag: true,

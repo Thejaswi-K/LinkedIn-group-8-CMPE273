@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {CONSTANTS} from '../../Constants';
+import {extractNameFromEmail,capitalizeFirstLetter} from '../../utility';
 import {Link} from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 
@@ -24,7 +25,7 @@ class JobNavbar extends Component {
                 <button style= {{background: "#006097", fontSize: "1.6rem", color: "#fff", border: "none", paddingBottom: "18px", fontWeight: "600"}} aria-haspopup="true" aria-expanded="false" className="site-header-nav__toggle Dropdown__toggle" id="dropdownMenuButton"
                     label="Login" data-toggle="dropdown">
                     {/* {this.props.userData.loginData.userFirstName.toUpperCase()}<span aria-hidden="true" className="caret"></span> */}
-                    Recruiter's Name&nbsp;<span aria-hidden="true" className="caret"></span>
+                    {capitalizeFirstLetter(extractNameFromEmail(jwtDecode(localStorage.getItem('recruiterToken')).email))}&nbsp;<span aria-hidden="true" className="caret"></span>
                 </button>
                 <div className="dropdown-menu" aria-labelledby="site-header__login">
                     <ul style= {{padding: "0px"}}>
@@ -56,7 +57,7 @@ class JobNavbar extends Component {
             <div>
                 <div className="header-job global-nav">
                     <h1>
-                        <img className="" alt="LinkedIn" src="/LinkedInJobs.png" />
+                        <img className="" alt="LinkedIn" src="/LinkedInJobs.png"/>
                         <div className="wrapper-job">
                             <nav data-test-product-dropdowns-nav >
                                 <div className="centerList">
@@ -65,7 +66,7 @@ class JobNavbar extends Component {
                                             <div className="ts-nav-dropdown">
                                                 <div className="ts-nav-dropdown__trigger">
                                                     <h4 id="ember779" aria-expanded="false" className="ts-nav-dropdown__header">
-                                                        <a href="/talent/hire" id="ember780" className="ts-nav-dropdown__primary-link ts-nav-dropdown__sublink--internal ember-view">Home</a>
+                                                        <a href= {CONSTANTS.ROOTURL+"/"} id="ember780" className="ts-nav-dropdown__primary-link ts-nav-dropdown__sublink--internal ember-view">Home</a>
                                                     </h4>
                                                 </div>
                                             </div>
@@ -74,7 +75,7 @@ class JobNavbar extends Component {
                                             <div className="ts-nav-dropdown">
                                                 <div className="ts-nav-dropdown__trigger">
                                                     <h4 aria-expanded="false" className="ts-nav-dropdown__header ">
-                                                        <a href="https://www.linkedin.com/mjobs/jobPosting/learnMore?trk=v5nav_cap_jobs_post" data-control-name="jobsMenuPostAJob"
+                                                        <a href={CONSTANTS.ROOTURL+"/job"} data-control-name="jobsMenuPostAJob"
                                                             data-test-external-link="" data-test-ts-nav-link="jobsMenuPostAJob" className="ts-nav-dropdown__primary-link">
                                                             Post a Job
                                                         </a>
@@ -86,7 +87,7 @@ class JobNavbar extends Component {
                                             <div className="ts-nav-dropdown">
                                                 <div className="ts-nav-dropdown__trigger">
                                                     <h4 aria-expanded="false" className="ts-nav-dropdown__header">
-                                                        <a href="https://www.linkedin.com" data-control-name="linkedinHomeMenu" data-test-external-link=""
+                                                        <a href={CONSTANTS.ROOTURL+"/"} data-control-name="linkedinHomeMenu" data-test-external-link=""
                                                             data-test-ts-nav-link="linkedinHomeMenu" className="ts-nav-dropdown__primary-link">
                                                             LinkedIn.com
                                                         </a>
