@@ -21,20 +21,44 @@ exports.handle_request = function handle_request(msg, callback) {
       break;
     case "getSavedJobsNumber":
       getSavedJobsNumber(msg, callback);
+      break;
+    case "listOfJobs":
+      getListOfJobs(msg, callback);
+      break;
   }
 };
 
 //jobModel.aggregate([{$match: {recruiterId: msg.recruiterId}}, {$project: {savedBy: {$size: '$savedBy'}}}])
 function getSavedJobsNumber(msg, callback) {
-  jobsModel.find({ recruiterId: msg.recruiterId }, function(err, jobs) {
-    if (err) {
-      callback(err, null);
-    } else {
-      if (jobs) {
-        callback(null, JSON.stringify({ _id, savedBy }));
+  console.log("KAFKA: getSavedJobsNumber --->", msg.recruiterId);
+  jobsModel
+    .aggregate([
+      { $match: { recruiterId: msg.recruiterId } },
+      { $project: { title: "$title", savedBy: { $size: "$savedBy" } } }
+    ])
+    .then(savedJobsCount => {
+      console.log("result of saved job count", savedJobsCount);
+      if (!savedJobsCount) {
+        console.log("inside if");
+        callback(null, {
+          success: false,
+          status: "no results found"
+        });
       }
-    }
-  });
+      console.log("suc");
+      callback(null, {
+        success: true,
+        status: "results found",
+        data: savedJobsCount
+      });
+    })
+    .catch(error => {
+      console.log("Error at connecting to saved jobs");
+      callback(error, {
+        success: false,
+        status: "failed connecting to DB at getSavedJobsNumber"
+      });
+    });
 }
 
 //Search Job based on title and location
@@ -82,6 +106,41 @@ function getJobsDetail(msg, callback) {
       callback(null, {
         success: true,
         status: "Job fetched Success",
+        data: job
+      });
+    })
+    .catch(error => {
+      console.log("Error at connecting to Jobs");
+      callback(error, { success: false, status: "Failed connecting to mongo" });
+    });
+}
+
+//GET jobs details based on job_id
+function getListOfJobs(msg, callback) {
+  console.log("KAFKA : getListOfJobs --> ", msg.id);
+  jobsModel
+    .aggregate([
+      { $match: { recruiterId: msg.id } },
+      {
+        $project: {
+          title: 1,
+          description: 1,
+          industry: 1,
+          location: 1,
+          companyLogo: 1,
+          noOfApplicants: { $size: { $ifNull: ["$jobApplications", []] } }
+        }
+      },
+      // {$pull : {jobApplicationssize:{$lt:1}}},
+      { $sort: { noOfApplicants: -1 } }
+    ])
+    .then(job => {
+      if (!job) {
+        callback(null, { success: false, status: "Job list Fetch  failed" });
+      }
+      callback(null, {
+        success: true,
+        status: "Job List fetched Success",
         data: job
       });
     })

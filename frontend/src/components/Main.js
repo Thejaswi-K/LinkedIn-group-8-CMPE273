@@ -7,7 +7,7 @@ import MessageView from "./Applicant/Messages/messageView";
 // import RecruiterLoginNavbar from './Navbar/RecruiterLoginNavbar';
 import ApplicantLoginNavbar from "./Navbar/ApplicantLoginNavbar";
 import UserNavbar from "./Navbar/UserNavbar";
-import PostJob from "./Job/jobPost";
+import PostJob from "./Job/jobPost/jobPost";
 import ApplicantSignup from "./Applicant/ApplicantSignup/ApplicantSignup";
 import RecruiterSignup from "./Recruiter/RecruiterSignup/RecruiterSignup";
 import ApplicantProfileView from "./Applicant/ApplicantProfile/ApplicantProfileView";

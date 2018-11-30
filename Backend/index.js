@@ -11,13 +11,16 @@ var jwt = require("jsonwebtoken");
 var passport = require("passport");
 var kafka = require("./kafka/client");
 const photos = require("./routes/api/photos");
+const morgan = require('morgan');
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// //Use morgan 
+app.use(morgan('dev'));
+
 
 //MONGODB Config
-
 const dbkey = require("./config/keys").mongoURI;
 
 // Connect to Mongo Db
