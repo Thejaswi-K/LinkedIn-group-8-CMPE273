@@ -34,7 +34,7 @@ export default class MainRecruiterJobListing extends Component {
       >
         {/* {redirectVar} */}
 
-        <JobNavbar />
+        {/* <JobNavbar /> */}
 
        
         <div className="row">
