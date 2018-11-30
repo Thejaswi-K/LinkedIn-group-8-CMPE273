@@ -22,6 +22,7 @@ import JobApply from "./Job/jobapply";
 import JobSearch from "./Job/jobSearch";
 import JobList from "./Job/jobList";
 import MainRecruiterJobListing from './Recruiter/RecruiterJobListing/main';
+import ProfileSearch from './SearchProfile/ProfileSearch'
 // Create a Main Component
 class Main extends Component {
   render() {
@@ -60,6 +61,7 @@ class Main extends Component {
           <Route path="/viewPendingRequests" component={ViewPendingRequests} />
           <Route path="/jobSearch" component={JobSearch} />
           <Route path="/jobList" component={JobList} />
+          <Route path="/searchProfile" component={ProfileSearch}/>
         </div>
       </Provider>
     );
