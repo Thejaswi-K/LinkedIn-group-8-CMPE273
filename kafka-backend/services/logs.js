@@ -47,15 +47,6 @@ function getProfileViewCount(msg, callback) {
 https://stackoverflow.com/questions/5168904/group-by-dates-in-mongodb
 https://stackoverflow.com/questions/23116330/mongodb-select-count-group-by 
 */
-
-  /*
-      [
-      { $match: { email: msg.id } },
-      { $group: { _id: { profileViewCount : {date : "$Date"} }, count: { $sum: 1 } } },
-      { $sort: { _id: 1 } },
-      { $limit: 30 }
-    ]
-*/
   console.log("KAFKA : getProfileViewCount --> ", msg.id);
   applicantModel
     .aggregate([
