@@ -43,7 +43,7 @@ class Main extends Component {
                     {/* <Route path="/ownerlogin" component={OwnerLogin}/> */}
                     <Route path="/profile" component={UserNavbar}/>
                     <Route path="/job" component={PostJob}/>
-                    {/* <Route path="/jobDetails" component={JobDetails}/> */}
+                    <Route path="/jobDetails" component={JobDetails}/>
                     <Route path="/jobApply" component={JobApply}/>
                     
                     <Route

@@ -1,6 +1,7 @@
 import React from 'react';
 import '../jopost.css';
 import Dropzone from 'react-dropzone';
+import { PropTypes } from 'prop-types';
 
 const photos =(props)=> {
     return (
@@ -27,7 +28,7 @@ const photos =(props)=> {
                                                 <h2 className="photo-drop-OR text-muted">or</h2>
                                                 <h2 className="photo-drop-error text-muted">Only JPEG images are supported</h2> */}
                                                 <div style = {{}}>
-                                                <Dropzone 
+                                                <Dropzone onDrop={props.companyLogoChange}
                                                         multiple = {false}
                                                         accept="image/*"
                                                         type="file"
@@ -39,10 +40,10 @@ const photos =(props)=> {
                                             <br />
                                             <div>
                                                 <label style={{ textAlign: 'center', marginLeft: "480px"}} for="uploadPhotoInput" className="photo-drop-button btn btn-primary btn-rounded btn-sm">SELECT PHOTOS</label>
-                                                <input style={{ display: 'none', marginLeft: "480px" }}   type="file" id="uploadPhotoInput" multiple="" />
+                                                <input style={{ display: 'none', marginLeft: "480px" }}   onChange={props.companyLogoChange} type="file" id="uploadPhotoInput" multiple="" />
                                             </div>
                                             <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
+                                                <input onChange ={props.easyApplyChange} className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
                                                 <label className="form-check-label label-job-checkbox" for="defaultCheck1">
                                                     Enable the Easy apply job feature for this job.
                                                 </label>
@@ -54,7 +55,7 @@ const photos =(props)=> {
                                 <div>
                                     <div className="checklist-buttons" style = {{float: 'right'}}>
                                         {/* <div><a href="#details" data-toggle="tab" ref={nextTab => this.nextTab = nextTab}></a> */}
-                                            <div><button className="btn btn-primary continue-button"><span>Post Job</span></button></div>
+                                            <div><button onClick ={props.submitClick} className="btn btn-primary continue-button"><span>Post Job</span></button></div>
                                     </div>
                                 </div>
                                 {/* <div style={{ paddingTop: '10px', paddingBottom: '25px', textAlign: 'center' }} className="panel-control step-footer-wrapper">

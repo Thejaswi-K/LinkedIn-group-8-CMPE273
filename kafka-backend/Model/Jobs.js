@@ -22,10 +22,12 @@ var jobSchema = new mongoose.Schema({
     // set: utility.toLower,
     lowercase: true,
     required: true,
+    set: utility.capitalizeFirstLetter,
     default: ""
   },
   employmentType: {
     type: String,
+    set: utility.capitalizeFirstLetter,
     required: true
   },
   location: {
@@ -49,6 +51,7 @@ var jobSchema = new mongoose.Schema({
   companyName: {
     type: String,
     required: false,
+    set: utility.capitalizeFirstLetter,
     default: ""
   },
   companyLogo: {
