@@ -17,7 +17,7 @@ import store from "../store";
 import MainRecruiterDashboard from "./Recruiter/RecruiterDashboard/main";
 import ViewConnections from "./Connections/ViewConnections";
 import ViewPendingRequests from "./Connections/ViewPendingRequests";
-import JobDetails from "./Job/Details";
+import JobDetails from "./Job/jobDetails";
 import JobApply from "./Job/jobapply";
 import JobSearch from "./Job/jobSearch";
 import JobList from "./Job/jobList";
