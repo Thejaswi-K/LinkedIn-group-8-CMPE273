@@ -275,7 +275,7 @@ router.get("/:recruiter_id/jobs/:job_id", function(req, res) {
 });
 
 // Recruiter gets list of all their job posting
-router.get("/:recruiter_id/jobs/", function(req, res) {
+router.get("/:recruiter_id/jobs", function(req, res) {
   console.log("Backend Recruiter Job List ");
   kafka.make_request(
     "jobs_topic",

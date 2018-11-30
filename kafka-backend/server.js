@@ -6,8 +6,8 @@ var { mongoose } = require("./db/mongo");
 //topics files
 //var signin = require('./services/signin.js');
 var Log = require("./services/logs.js");
-// var Job = require("./services/jobs.js");
-var Job = require("./services/Jobs/jobSearch");
+var Job = require("./services/jobs.js");
+var JobSearch = require("./services/Jobs/jobSearch"); 
 var ApplicantDetails = require("./services/applicants/applicantViewProfile");
 var RecruiterDetails = require("./services/recruiter/recruiterViewProfile");
 var ApplicantLogin = require("./services/applicants/applicantLogin");
@@ -103,7 +103,7 @@ function handleTopicRequest(topic_name, fname) {
 // handleTopicRequest("applicant_messages", applicantMessages);
 // handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
 // handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
-
+//handleTopicRequest("search_job", JobSearch);
 // handleTopicRequest("post_job", JobPost);
 // handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 // handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
@@ -139,6 +139,7 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_SendConnection;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic rec_get_jobs;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic post_job;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic search_job;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic add_experience;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_experience;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_education;
