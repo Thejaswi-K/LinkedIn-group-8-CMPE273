@@ -13,7 +13,18 @@ class JobNavbar extends Component {
             // isTraveler: jwtDecode(localStorage.getItem('token')).isTraveler
         }
         // this.notOwnerHandler = this.notOwnerHandler.bind(this);
-        // this.handleLogout = this.handleLogout.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
+    }
+
+    //handle logout to destroy the cookie
+    handleLogout = () => {
+        let loggedInUser = capitalizeFirstLetter(extractNameFromEmail(jwtDecode(localStorage.getItem('recruiterToken')).email));
+        localStorage.removeItem('recruiterToken');
+        // let user = {}
+        // this.props.logoutData(false, user, true);
+        this.props.history.push('/');
+        alert(`${loggedInUser} logged out successfully.`);
+        console.log("User logged out Successfully.");
     }
 
     render() {
@@ -29,7 +40,7 @@ class JobNavbar extends Component {
                 </button>
                 <div className="dropdown-menu" aria-labelledby="site-header__login">
                     <ul style= {{padding: "0px"}}>
-                        <li class="dropdown-item"><Link to="/applicants/applicantMessages"><span className="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;Inbox </Link></li>
+                        <li class="dropdown-item"><Link to="/messages"><span className="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;Inbox </Link></li>
                         <li class="dropdown-item"><Link to="/recruiterDashboard"><span className="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;My Dashboard</Link></li>
                         <li class="dropdown-item"><Link to="/recruiterprofileview"><span className="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;My profile</Link></li>
                         <li class="dropdown-item"><Link to="/recruiterSignup" onClick = {this.handleLogout}><span className="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;&nbsp;Logout</Link></li>
@@ -87,9 +98,9 @@ class JobNavbar extends Component {
                                             <div className="ts-nav-dropdown">
                                                 <div className="ts-nav-dropdown__trigger">
                                                     <h4 aria-expanded="false" className="ts-nav-dropdown__header">
-                                                        <a href={CONSTANTS.ROOTURL+"/"} data-control-name="linkedinHomeMenu" data-test-external-link=""
+                                                        <a href={CONSTANTS.ROOTURL+"/recruiterjoblisting"} data-control-name="linkedinHomeMenu" data-test-external-link=""
                                                             data-test-ts-nav-link="linkedinHomeMenu" className="ts-nav-dropdown__primary-link">
-                                                            LinkedIn.com
+                                                            My Jobs
                                                         </a>
                                                     </h4>
                                                 </div>
