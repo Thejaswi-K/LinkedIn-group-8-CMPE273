@@ -21,7 +21,7 @@ import JobDetails from "./Job/jobDetails";
 import JobApply from "./Job/jobapply";
 import JobSearch from "./Job/jobSearch";
 import JobList from "./Job/jobList";
-
+import MainRecruiterJobListing from './Recruiter/RecruiterJobListing/main';
 // Create a Main Component
 class Main extends Component {
   render() {
@@ -52,6 +52,10 @@ class Main extends Component {
             path="/recruiterDashboard"
             component={MainRecruiterDashboard}
           />
+           <Route
+                        path="/recruiterJobListing"
+                        component={MainRecruiterJobListing}
+                    />
           <Route path="/viewConnections" component={ViewConnections} />
           <Route path="/viewPendingRequests" component={ViewPendingRequests} />
           <Route path="/jobSearch" component={JobSearch} />

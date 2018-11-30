@@ -115,7 +115,8 @@ function getJobsDetail(msg, callback) {
     });
 }
 
-//GET jobs details based on job_id
+
+//GET List of recruiter posted jobs
 function getListOfJobs(msg, callback) {
   console.log("KAFKA : getListOfJobs --> ", msg.id);
   jobsModel

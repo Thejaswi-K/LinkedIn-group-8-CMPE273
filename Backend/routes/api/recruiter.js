@@ -274,11 +274,8 @@ router.get("/:recruiter_id/jobs/:job_id", function(req, res) {
   );
 });
 
-
-
-
-// Recruiter gets list of all their job posting 
-router.get("/:recruiter_id/jobs/", function(req, res) {
+// Recruiter gets list of all their job posting
+router.get("/:recruiter_id/jobs", function(req, res) {
   console.log("Backend Recruiter Job List ");
   kafka.make_request(
     "jobs_topic",
@@ -292,13 +289,21 @@ router.get("/:recruiter_id/jobs/", function(req, res) {
           status: "error",
           msg: "Unable to fetch list of Jobs."
         });
-      } else {
-        console.log("Inside else");
-        res.json({
-          jobsList: results
-        });
-
         res.end();
+      } else {
+        if (results.success) {
+          console.log("Inside else");
+          res.json({
+            jobsList: results
+          });
+          res.end();
+        } else {
+          res.json({
+            status: "error",
+            msg: "Job list empty"
+          });
+          res.end();
+        }
       }
     }
   );
@@ -342,8 +347,8 @@ router.get("/:recruiterId/jobs/logs/saved-job-count", function(req, res) {
           .status(404)
           .json({ success: false, error: "Jobs empty" })
           .send(err);
-      } else 
-      {console.log("result", result);
+      } else {
+        console.log("result", result);
         if (result.status) {
           res.status(200);
           res.send(result);
@@ -354,7 +359,6 @@ router.get("/:recruiterId/jobs/logs/saved-job-count", function(req, res) {
     }
   );
 });
-
 
 //Add Tracking details of a user by id
 /*
@@ -368,15 +372,15 @@ router.post("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
   console.log("inside backend post track user by id");
   kafka.make_request(
     "logs_topic",
-    { path: "createTrackUserById", id: req.params.applicantId, body  : req.body },
+    { path: "createTrackUserById", id: req.params.applicantId, body: req.body },
     function(err, result) {
       if (err) {
         res
           .status(404)
           .json({ success: false, error: "User create track record failed" })
           .send(err);
-      } else
-      { console.log("User create track record ", result);
+      } else {
+        console.log("User create track record ", result);
         if (result.status) {
           res.status(200);
           res.send(result);
@@ -387,7 +391,6 @@ router.post("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
     }
   );
 });
-
 
 //Update Tracking details of a user by id with existing page
 /*
@@ -401,15 +404,15 @@ router.put("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
   console.log("inside backend update track user by id");
   kafka.make_request(
     "logs_topic",
-    { path: "updateTrackUserById", id: req.params.applicantId, body  : req.body  },
+    { path: "updateTrackUserById", id: req.params.applicantId, body: req.body },
     function(err, result) {
       if (err) {
         res
           .status(404)
           .json({ success: false, error: "User update track record failed" })
           .send(err);
-      } else
-      { console.log("User update track record ", result);
+      } else {
+        console.log("User update track record ", result);
         if (result.status) {
           res.status(200);
           res.send(result);
@@ -420,7 +423,6 @@ router.put("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
     }
   );
 });
-
 
 //Get Tracking details of a user by id
 /*
@@ -441,8 +443,8 @@ router.get("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
           .status(404)
           .json({ success: false, error: "User track record failed" })
           .send(err);
-      } else
-      { console.log("User track record ", result);
+      } else {
+        console.log("User track record ", result);
         if (result.status) {
           res.status(200);
           res.send(result);
@@ -453,7 +455,6 @@ router.get("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
     }
   );
 });
-
 
 //Route to get the Number of clicks for job (click per job posting graph in recruiter dashboard)
 router.get("/:recruiterId/jobs/logs/click-count", function(req, res) {
@@ -467,8 +468,8 @@ router.get("/:recruiterId/jobs/logs/click-count", function(req, res) {
           .status(404)
           .json({ success: false, error: "Get click count failed" })
           .send(err);
-      } else
-      { console.log("Click count Result ", result);
+      } else {
+        console.log("Click count Result ", result);
         if (result.status) {
           res.status(200);
           res.send(result);
@@ -479,10 +480,6 @@ router.get("/:recruiterId/jobs/logs/click-count", function(req, res) {
     }
   );
 });
-
-
-
-
 
 // To increment the number of clicks in job schema
 /*
@@ -505,8 +502,8 @@ router.put("/jobs/logs/click-count", function(req, res) {
           .status(404)
           .json({ success: false, error: "Update click count failed" })
           .send(err);
-      } else
-      { console.log("Update click count success ", result);
+      } else {
+        console.log("Update click count success ", result);
         if (result.status) {
           res.status(200);
           res.send(result);
@@ -517,8 +514,6 @@ router.put("/jobs/logs/click-count", function(req, res) {
     }
   );
 });
-
-
 
 //Route to get the Bottom 5 job posting of a recruiter
 router.get("/:recruiterId/last-five", function(req, res) {
@@ -532,8 +527,8 @@ router.get("/:recruiterId/last-five", function(req, res) {
           .status(404)
           .json({ success: false, error: "Get Bottom 5 job posting failed" })
           .send(err);
-      } else
-      { console.log("bottom 5 jobs  are", result);
+      } else {
+        console.log("bottom 5 jobs  are", result);
         if (result.status) {
           res.status(200);
           res.send(result);
@@ -544,6 +539,5 @@ router.get("/:recruiterId/last-five", function(req, res) {
     }
   );
 });
-
 
 module.exports = router;
