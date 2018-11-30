@@ -274,6 +274,36 @@ router.get("/:recruiter_id/jobs/:job_id", function(req, res) {
   );
 });
 
+
+
+
+// Recruiter gets list of all their job posting 
+router.get("/:recruiter_id/jobs/", function(req, res) {
+  console.log("Backend Recruiter Job List ");
+  kafka.make_request(
+    "jobs_topic",
+    { path: "listOfJobs", id: req.params.recruiter_id },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to fetch list of Jobs."
+        });
+      } else {
+        console.log("Inside else");
+        res.json({
+          jobsList: results
+        });
+
+        res.end();
+      }
+    }
+  );
+});
+
 //Recruiter updates job details
 router.put("/:recruiter_id/jobs/:job_id", function(req, res) {
   kafka.make_request(

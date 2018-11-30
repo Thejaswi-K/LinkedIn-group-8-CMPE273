@@ -21,6 +21,10 @@ exports.handle_request = function handle_request(msg, callback) {
       break;
     case "getSavedJobsNumber":
       getSavedJobsNumber(msg, callback);
+      break;
+    case "listOfJobs":
+      getListOfJobs(msg,callback);
+      break;
   }
 };
 
@@ -97,6 +101,42 @@ function getJobsDetail(msg, callback) {
       callback(null, {
         success: true,
         status: "Job fetched Success",
+        data: job
+      });
+    })
+    .catch(error => {
+      console.log("Error at connecting to Jobs");
+      callback(error, { success: false, status: "Failed connecting to mongo" });
+    });
+}
+
+
+//GET jobs details based on job_id
+function getListOfJobs(msg, callback) {
+  console.log("KAFKA : getListOfJobs --> ", msg.id);
+  jobsModel
+    .aggregate([
+      { $match: { recruiterId: msg.id } },
+      {
+        $project: {
+          title: 1,
+          description : 1,
+          industry :1,
+          location : 1,
+          companyLogo: 1,
+          noOfApplicants: { $size: { "$ifNull": ["$jobApplications", []] } }
+        }
+      },
+      // {$pull : {jobApplicationssize:{$lt:1}}},
+      { $sort: { "noOfApplicants": -1 } },
+    ])
+    .then(job => {
+      if (!job) {
+        callback(null, { success: false, status: "Job list Fetch  failed" });
+      }
+      callback(null, {
+        success: true,
+        status: "Job List fetched Success",
         data: job
       });
     })
