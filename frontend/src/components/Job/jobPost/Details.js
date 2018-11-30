@@ -1,5 +1,5 @@
 import React from 'react';
-import './jopost.css';
+import '../jopost.css';
 const details = (props) => {
     return(
         <div>

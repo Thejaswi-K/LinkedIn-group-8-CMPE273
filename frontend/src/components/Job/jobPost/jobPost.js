@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router';
 import axios from 'axios';
-import './jopost.css';
+import '../jopost.css';
 import $ from 'jquery';
 import Welcome from './Welocome';
 import Details from './Details';
 import Photos from './Photos';
-import JobNavbar from '../Navbar/JobNavbar';
-import * as Validate from '../../validation/ValidationUtil';
+import JobNavbar from '../../Navbar/JobNavbar';
+import * as Validate from '../../../validation/ValidationUtil';
 import jwtDecode from 'jwt-decode';
 // import {postPropertyData} from '../../actions/index';
 // import {connect} from 'react-redux';
 // import { withRouter } from 'react-router-dom';
-import {CONSTANTS} from '../../Constants';
+import {CONSTANTS} from '../../../Constants';
 
 class PostJob extends Component {
     constructor(props) {

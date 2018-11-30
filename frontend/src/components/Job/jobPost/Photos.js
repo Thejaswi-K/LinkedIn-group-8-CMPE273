@@ -1,5 +1,5 @@
 import React from 'react';
-import './jopost.css';
+import '../jopost.css';
 import Dropzone from 'react-dropzone';
 
 const photos =(props)=> {

@@ -7,7 +7,7 @@ import MessageView from "./Applicant/Messages/messageView";
 // import RecruiterLoginNavbar from './Navbar/RecruiterLoginNavbar';
 import ApplicantLoginNavbar from "./Navbar/ApplicantLoginNavbar";
 import UserNavbar from "./Navbar/UserNavbar";
-import PostJob from "./Job/jobPost";
+import PostJob from "./Job/jobPost/jobPost";
 import ApplicantSignup from "./Applicant/ApplicantSignup/ApplicantSignup";
 import RecruiterSignup from "./Recruiter/RecruiterSignup/RecruiterSignup";
 import ApplicantProfileView from "./Applicant/ApplicantProfile/ApplicantProfileView";
@@ -17,7 +17,6 @@ import store from "../store";
 import MainRecruiterDashboard from "./Recruiter/RecruiterDashboard/main";
 import ViewConnections from './Connections/ViewConnections';
 import ViewPendingRequests from './Connections/ViewPendingRequests'
-import JobDetails from './Job/Details';
 import JobApply from './Job/jobapply';
 
 // Create a Main Component
@@ -43,7 +42,7 @@ class Main extends Component {
                     {/* <Route path="/ownerlogin" component={OwnerLogin}/> */}
                     <Route path="/profile" component={UserNavbar}/>
                     <Route path="/job" component={PostJob}/>
-                    <Route path="/jobDetails" component={JobDetails}/>
+                    {/* <Route path="/jobDetails" component={JobDetails}/> */}
                     <Route path="/jobApply" component={JobApply}/>
                     
                     <Route

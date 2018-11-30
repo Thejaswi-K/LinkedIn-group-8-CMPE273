@@ -1,6 +1,6 @@
 import React from 'react';
 // import {capitalizeFirstLetter} from '../../utility';
-import './jopost.css';
+import '../jopost.css';
 // import jwtDecode from 'jwt-decode';
 const welcome = () => {
     return(
