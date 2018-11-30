@@ -8,7 +8,7 @@ const details = (props) => {
             <h1 data-test-post-page-title="" className="jobs__main-title">
                 <b>Step 1:</b> What job do you want to post?
             </h1>
-            <form >
+            <form className = "needs-validation" novalidate>
                 <div className="form-row">
                     <div className="col-md-3">
                         <label className = "label-job required" for="validationDefault01">Company</label>

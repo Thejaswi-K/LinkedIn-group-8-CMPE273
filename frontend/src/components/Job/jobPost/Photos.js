@@ -55,7 +55,7 @@ const photos =(props)=> {
                                 <div>
                                     <div className="checklist-buttons" style = {{float: 'right'}}>
                                         {/* <div><a href="#details" data-toggle="tab" ref={nextTab => this.nextTab = nextTab}></a> */}
-                                            <div><button onClick ={props.submitClick} className="btn btn-primary continue-button"><span>Post Job</span></button></div>
+                                            <div><button onClick ={props.submitClick} className="btn btn-primary continue-button" type="submit"><span>Post Job</span></button></div>
                                     </div>
                                 </div>
                                 {/* <div style={{ paddingTop: '10px', paddingBottom: '25px', textAlign: 'center' }} className="panel-control step-footer-wrapper">
