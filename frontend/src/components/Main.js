@@ -19,6 +19,7 @@ import ViewConnections from './Connections/ViewConnections';
 import ViewPendingRequests from './Connections/ViewPendingRequests'
 import JobDetails from './Job/jobDetails';
 import JobApply from './Job/jobapply';
+import MainRecruiterJobListing from './Recruiter/RecruiterJobListing/main';
 
 // Create a Main Component
 class Main extends Component {
@@ -49,6 +50,10 @@ class Main extends Component {
                     <Route
                         path="/recruiterDashboard"
                         component={MainRecruiterDashboard}
+                    />
+                    <Route
+                        path="/recruiterJobListing"
+                        component={MainRecruiterJobListing}
                     />
                     <Route path="/viewConnections" component={ViewConnections}/>
                     <Route path="/viewPendingRequests" component={ViewPendingRequests}/>
