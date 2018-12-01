@@ -11,7 +11,7 @@ class JobListingComponent extends Component {
 
     this.state = {
       //recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "testrecruiter2@gmail.com",
+      recruiter: "recruiter13@gmail.com",
       joblist: ""
     };
   }
@@ -23,7 +23,8 @@ class JobListingComponent extends Component {
         `${CONSTANTS.BACKEND_URL}/recruiters/` + this.state.recruiter + "/jobs"
       )
       .then(response => {
-        console.log(response.data);
+        console.log("Inside JobListing component",response.data.jobsList);
+        // console.log("Inside JobListing component didmount",response.data.jobsList.data);
         this.setState({
           joblist: response.data.jobsList.data
         });
