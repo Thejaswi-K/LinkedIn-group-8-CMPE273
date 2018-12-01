@@ -21,7 +21,7 @@ class ProfileSearchItem extends Component {
         <h5>{profile.city}, {profile.state}</h5>
         </div>
         <div className="col-4">
-        {profile.skills}
+        
         </div>
         <div className="col-3">
             <div className="text-right">
