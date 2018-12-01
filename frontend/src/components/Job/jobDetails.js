@@ -12,7 +12,8 @@ class JobDetails extends Component {
             jobData: "",
             applicantData:"",
             jobId: this.props.location.jobId,
-            status:"",
+            savedStatus:"",
+            appliedStatus:"",
             easyApply: false
         };
         this.saveHandler = this.saveHandler.bind(this);
@@ -40,7 +41,16 @@ class JobDetails extends Component {
         .catch(function(error){
             console.log("error in receiving job details to front end", error);
         });
-        axios.get("http://localhost:3001/applicants/")
+        axios.get("http://localhost:3001/applicants/ak@gmail.com",{headers: {'Authorization': "Bearer" + " " +"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFrQGdtYWlsLmNvbSIsImlzUmVjcnVpdGVyIjpmYWxzZSwiaWF0IjoxNTQzNjI0NjcxLCJleHAiOjE1NDM2MjgyNzF9.Dmt4Z1H96GxWjn5pEawghPgwzeN0CmkvBm60Yxo_GKE"}})
+        .then(response => {
+            console.log("response in applicant details retrieval",response.data);
+            this.setState({
+                applicantData: response.data
+            })
+        })
+        .catch(function(error){
+            console.log("error in receiving applicant details to front end", error);
+        })
     }
     saveHandler = (e) => {
         e.preventDefault();
@@ -50,6 +60,7 @@ class JobDetails extends Component {
     applyJobHandler = (e) => {
         e.preventDefault();
         //applyJob API
+
     };
     easyApplyJobHandler = (e) => {
         e.preventDefault();
@@ -63,9 +74,10 @@ class JobDetails extends Component {
             button = <button className="btn btn-primary" data-toggle="modal" data-target="#easyApplyModalForm">Easy Apply</button>
         }
         else{
-            button = <button className="btn btn-primary">Apply</button>
+            button = <button className="btn btn-primary" target="_blank">Apply</button>
         }
         var allData = Array.prototype.slice.call(this.state.jobData);
+        var prefillData = this.state.applicantData;
         return ( 
             <div style={{margin:"10px"}}>
                 {/* <UserNavbar/> */}
@@ -108,17 +120,22 @@ class JobDetails extends Component {
                                                     <div className="row">
                                                         <div className="col">
                                                             <label>First name</label>
-                                                            <input type="text" className="form-control" placeholder="First name"/>
+                                                            <input type="text" className="form-control" placeholder="First name" name="firstname" value={prefillData.firstName}/>
                                                         </div>
                                                         <div className="col">
                                                             <label>Last name</label>
-                                                            <input type="text" className="form-control" placeholder="Last name"/>
+                                                            <input type="text" className="form-control" placeholder="Last name" name="lastname" value={prefillData.lastName}/>
                                                         </div>
                                                     </div>
+                                                    <div class="form-group">
+                                                        <label for="inputAddress">email</label>
+                                                        <input type="text" className="form-control" id="inputAddress" placeholder="email" name="email" value={prefillData.email}/>
+                                                    </div>
+                                                    <br />
                                                     <br />
                                                     <div class="form-group">
                                                         <label for="inputAddress">Address</label>
-                                                        <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St, city state zip"/>
+                                                        <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St, city state zip" name="address" value={prefillData.address + ", " + prefillData.city + " " + prefillData.state + " " + prefillData.zipcode}/>
                                                     </div>
                                                     <br />
                                                     <div>
