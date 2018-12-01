@@ -11,16 +11,16 @@ export default class LeftRailComponent extends Component {
     //   recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
     //   recruiter: "recruiter@gmail.com",
       recruiterData : "",
-      jobId : this.props.location.state
+      jobId : this.props.jobid
     };
   }
 componentDidMount(){
   axios.defaults.withCredentials = true;
 
   axios
-  .get(`${CONSTANTS.BACKEND_URL}/jobs/`+this.state.jobId)
+  .get(`${CONSTANTS.BACKEND_URL}/jobs/`+this.props.jobId)
   .then(response => {
-    console.log(response.data);
+    console.log("Inside /jobs/jobid",response.data);
     this.setState({
       recruiterData: response.data
     });
@@ -33,6 +33,7 @@ componentDidMount(){
 
 }
   render() {
+    console.log("Props in left rail ", this.props.jobId)
     return (
       <div>
         <div

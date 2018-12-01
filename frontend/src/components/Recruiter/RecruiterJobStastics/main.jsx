@@ -5,6 +5,7 @@ import jwtDecode from "jwt-decode";
 // import LeftRailComponent from "./rightrail";
 import  JobStats from "./jobStats";
 import JobNavbar from "../../Navbar/JobNavbar";
+import  LeftRailComponent from "./jobstatLeftRail";
 
 export default class MainRecruiterJobStats extends Component {
   constructor(props) {
@@ -12,7 +13,8 @@ export default class MainRecruiterJobStats extends Component {
 
     this.state = {
       // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "recruiter1@gmail.com"
+      recruiter: "testrecruiter2@gmail.com",
+      jobId : this.props.location.state
     };
   }
 
@@ -39,8 +41,8 @@ export default class MainRecruiterJobStats extends Component {
        
         <div className="row">
         <div className="col-2">
-            {/* <LeftRailComponent /> */}
-            <h1> Hello there!</h1>
+            <LeftRailComponent jobId={this.state.jobId}/>
+            {/* <h1> Hello there!</h1> */}
         </div>
         <div className="col-10">
           <JobStats/>
