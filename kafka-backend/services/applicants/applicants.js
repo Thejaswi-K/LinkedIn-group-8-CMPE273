@@ -26,11 +26,11 @@ function JobSaveApplicant(msg, callback) {
     },
     function(err, res) {
       if (err) {
-        console.log("unable to update applicant ");
+        console.log("unable to update saved jobs ");
 
         callback(error, {
           success: false,
-          status: "Unable to update applicant"
+          status: "Unable to update saved jobs"
         });
       }
       JobsModel.update(
@@ -38,13 +38,13 @@ function JobSaveApplicant(msg, callback) {
         { $push: { savedBy: msg.applicantId } },
         function(error, res) {
           if (error) {
-            console.log("unable to update job application savedby");
+            console.log("unable to update saved by");
 
             callback(error, { status: false });
           }
           console.log("Job ", msg.jobId, "   updated");
           console.log(res);
-          callback(null, { success: true, status: "Job Saved" });
+          callback(null, { success: true, status: "Job saved" });
         }
       );
     }
