@@ -108,25 +108,38 @@ function getJobsTopTen(msg, callback) {
   console.log("KAFKA : getJobsTopTen --> ", msg.id);
 
   jobsModel.aggregate([
+    //match with recruiteriD
     { $match: { recruiterId: msg.id } },
+    //get count of JobApplication size
     {
       $project: {
         _id:1,
-        jobTitle: 1,
+        title: 1,
         jobApplications: 1,
         jobApplicationssize: { $size: { "$ifNull": ["$jobApplications", []] } }
       }
     },
-    // {$pull : {jobApplicationssize:{$lt:1}}},
+    //Remove Job Application size less than 0
+    { $match: { "jobApplicationssize": { "$gt" : 0} } },
+    //Sort by decreasing order
     { $sort: { "jobApplicationssize": -1 } },
+    //Take only top 10
     { $limit: 10 },
+    // Unwind each element in the JobApplications array 
     { $unwind: "$jobApplications" },
-    {
-      $group: {
-        _id: { month: { $month: "$jobApplications.appliedOn" } },
-        count: { $sum: 1 }
-      }
-    }
+    //group each key now, by month and job_id, then count number of occurences and store to count
+    // Keep job title using $first
+    { 
+              $group: {
+                _id: { month: { $month: "$jobApplications.appliedOn" }, id : "$_id" },
+                jobtitle: {$first : '$title'},
+            
+                count: { $sum: 1 }
+              }
+
+      
+    },
+    { $sort: { "_id.id": -1 } },
   ])
   .then(count => {
     console.log("Result in get jobs top ten applications per month ", count);
