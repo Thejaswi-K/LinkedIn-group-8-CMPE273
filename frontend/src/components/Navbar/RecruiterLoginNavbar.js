@@ -5,6 +5,7 @@ import {CONSTANTS} from '../../Constants';
 import {recruiterLogin} from "../../actions/recruiterActions";
 import * as Validation from "../../validation/ValidationUtil";
 import Redirect from "react-router/es/Redirect";
+import {isEmpty} from "lodash";
 
 class RecruiterLoginNavbar extends Component {
     constructor(props) {
@@ -36,7 +37,7 @@ class RecruiterLoginNavbar extends Component {
                 $('#login-callout').addClass('hidden');
             });
         });
-        if (nextProps.recruiterProfile.recruiterUser !== "") {
+        if (!isEmpty(nextProps.recruiterProfile.recruiterUser)) {
             this.setState({
                 ...this.state,
                 success: true
@@ -66,7 +67,7 @@ class RecruiterLoginNavbar extends Component {
 
     render() {
         if (this.state.success) {
-            return <Redirect to="/applicantprofileview"/>
+            return <Redirect to="/recruiterprofileview"/>
         }
 
         let message = null;

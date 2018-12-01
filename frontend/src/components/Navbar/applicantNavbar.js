@@ -1,9 +1,16 @@
 import React, {Component} from 'react';
 import '../../App.css';
 import {Link} from "react-router-dom";
+import Dropdown from 'react-dropdown'
+import 'react-dropdown/style.css'
 
 
 class applicantNavbar extends Component {
+
+     options = [
+        'one', 'two', 'three'
+    ]
+
 
     render() {
         var loginOrOut;
@@ -41,18 +48,9 @@ class applicantNavbar extends Component {
         </li>;
 
 
-        accountSettings = <li className="dropdown">
-            <a className="navbar-brand text-center text-white ">
-                <span
-                    className="glyphicon glyphicon-cog navbar-icon" title="Settings">
+        accountSettings = <li className="drpdown">
 
-                </span>
-                <div className="text-white">Settings</div>
-            </a>
-            <ul className="dropdown-menu">
-                <li><a href="#">Yes</a></li>
-                <li><a href="#">No</a></li>
-            </ul>
+            <Dropdown options={this.options} placeholder="Settings" className="drpdown"/>
         </li>;
 
         requests =

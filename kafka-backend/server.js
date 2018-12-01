@@ -35,6 +35,7 @@ var EditApplicantEducation = require("./services/profile/applicant/editEducation
 var AddApplicantSkill = require("./services/profile/applicant/addSkill");
 var EditApplicantSkill = require("./services/profile/applicant/editSkill");
 var EditApplicantSummary = require("./services/profile/applicant/editSummary");
+var EditRecruiterSummary = require("./services/profile/recruiter/editSummary");
 var JobPost = require("./services/Jobs/postJob");
 var RecruiterGetJobs = require("./services/Jobs/recruiterGetJobs");
 var ApplicantViewPendingRequests=require("./services/applicants/applicantViewPendingRequests");
@@ -100,6 +101,7 @@ handleTopicRequest("add_education", AddApplicantEducation);
 handleTopicRequest("add_skill", AddApplicantSkill);
 handleTopicRequest("edit_skill", EditApplicantSkill);
 handleTopicRequest("edit_summary", EditApplicantSummary);
+handleTopicRequest("edit_recruiter_summary", EditRecruiterSummary);
 
 handleTopicRequest("applicant_messages", applicantMessages);
 handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
@@ -151,6 +153,7 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_summary;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_PendingRequests;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_SearchProfile;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_recruiter_summary;
 ) &
 
 */

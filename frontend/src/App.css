@@ -2108,3 +2108,9 @@ div.hopscotch-bubble .hopscotch-actions {
 }
 
 .text-white { color: #FFF; }
+
+.drpdown {
+  background: linear-gradient(to right, #32404B, #32404B);
+}
+
+
