@@ -221,9 +221,16 @@ router.get("/:recruiterId/jobs/top-ten", function(req, res) {
           .status(404)
           .json({ success: false, error: "Recruiter not found" })
           .send(err);
-      } else console.log("Recruiter log Top Ten Jobs", result);
-      {
-        if (result.status) {
+      } else 
+      { console.log("Recruiter log Top Ten Jobs", result);
+        if (result.success) {
+          
+
+
+
+
+
+
           res.status(200);
           res.send(result);
         } else {
