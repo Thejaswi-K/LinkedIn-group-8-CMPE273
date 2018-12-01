@@ -207,20 +207,7 @@ router.delete(
 //GET LOGS of top ten jobs of recruiter he/she has posted
 //Returns :
 /*
-{
-    Jobs: [
-           {job_id: "1", number_of_applicants: 800}, 
-           {job_id: "2", number_of_applicants: 600}, 
-           {job_id: "3", number_of_applicants: 700}, 
-           {job_id: "4", number_of_applicants: 650}, 
-           {job_id: "5", number_of_applicants: 900}, 
-           {job_id: "6", number_of_applicants: 200}, 
-           {job_id: "7", number_of_applicants: 300}, 
-           {job_id: "8", number_of_applicants: 350}, 
-           {job_id: "9", number_of_applicants: 100}, 
-           {job_id: "10", number_of_applicants: 1000}
-          ]
-}
+
 */
 router.get("/:recruiterId/jobs/top-ten", function(req, res) {
   console.log("inside backend jobs/top-ten");

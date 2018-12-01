@@ -6,7 +6,7 @@ function handle_request(msg, callback) {
     console.log("KAFKA : search Profile --> ", msg.body);
     var res = {};
     
-    Applicants.find({email:msg.email})
+    Applicants.find({firstName:msg.firstName})
   .then(profile => {
     if (!profile) {
         res.code = 404 ;

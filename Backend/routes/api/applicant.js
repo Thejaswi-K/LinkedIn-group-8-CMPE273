@@ -558,6 +558,7 @@ router.post("/:applicantId/jobs/:jobId", function(req, res) {
   //Increment noOfViews +1
   // add jobId into applicant Collection as appliedJobs
   //
+  console.log("Inside applicant apply job", req.body);
 
   kafka.make_request(
     "applicant_topic",
@@ -755,7 +756,7 @@ router.post("/searchprofile", function(req, res) {
   console.log("Backend Search Profile");
   kafka.make_request(
     "applicant_SearchProfile",
-    { email: req.body.email },
+    { firstName: req.body.firstName },
     function(err, results) {
       console.log("in result");
       console.log(results);
