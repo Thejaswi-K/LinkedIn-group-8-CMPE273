@@ -12,7 +12,7 @@ class ProfileSearch extends Component {
     constructor(){
         super();
         this.state={
-            email:''
+          firstName:''
     
         };
         this.onChange=this.onChange.bind(this);
@@ -42,7 +42,7 @@ onSubmit(e){
     
         const searchdata={
                
-            email:this.state.email
+          firstName:this.state.firstName
         };
         this.props.getSearchedProfiles(searchdata)
     }
@@ -80,11 +80,11 @@ onSubmit(e){
 
               <div className="form-group">
                   <input
-                    type="email"
+                    type="text"
                     className="form-control form-control-lg"
                     placeholder="Search by Email"
-                    name="email"
-                    value={this.state.email}
+                    name="firstName"
+                    value={this.state.firstName}
                     onChange={this.onChange}
                   />
                   
