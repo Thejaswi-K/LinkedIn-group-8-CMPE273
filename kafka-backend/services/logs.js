@@ -107,11 +107,42 @@ function updateProfileViewCount(msg, callback) {
 function getJobsTopTen(msg, callback) {
   console.log("KAFKA : getJobsTopTen --> ", msg.id);
 
-
-
-
-
-
+  jobsModel.aggregate([
+    { $match: { recruiterId: msg.id } },
+    {
+      $project: {
+        _id:1,
+        jobTitle: 1,
+        jobApplications: 1,
+        jobApplicationssize: { $size: { "$ifNull": ["$jobApplications", []] } }
+      }
+    },
+    // {$pull : {jobApplicationssize:{$lt:1}}},
+    { $sort: { "jobApplicationssize": -1 } },
+    { $limit: 10 },
+    { $unwind: "$jobApplications" },
+    {
+      $group: {
+        _id: { month: { $month: "$jobApplications.appliedOn" } },
+        count: { $sum: 1 }
+      }
+    }
+  ])
+  .then(count => {
+    console.log("Result in get jobs top ten applications per month ", count);
+    callback(null, {
+      success: true,
+      status: "jobs top ten applications per month",
+      data: count
+    });
+  })
+  .catch(err => {
+    console.log("top ten applications per month aggregation failed", err);
+    callback(null, {
+      success: false,
+      status: "top ten applications per month failed"
+    });
+  })
 
 }
 //Get request to fetch particular user track history
