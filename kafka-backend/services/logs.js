@@ -106,6 +106,13 @@ function updateProfileViewCount(msg, callback) {
 
 function getJobsTopTen(msg, callback) {
   console.log("KAFKA : getJobsTopTen --> ", msg.id);
+
+
+
+
+
+
+
 }
 //Get request to fetch particular user track history
 function trackUserId(msg, callback) {
@@ -129,7 +136,7 @@ function trackUserId(msg, callback) {
       }
     })
     .catch(function(err) {
-      callback(null, { success: false, sstatus: "error for track user" });
+      callback(null, { success: false, status: "error for track user" });
     });
 }
 

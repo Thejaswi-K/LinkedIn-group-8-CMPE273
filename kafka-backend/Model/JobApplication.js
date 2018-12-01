@@ -51,6 +51,10 @@ var jobApplication = new mongoose.Schema({
         type: String,
         required: false,
         default: ""
+      },
+      appliedOn :{
+        type: Date,
+        default : Date.now
       }
 });
 

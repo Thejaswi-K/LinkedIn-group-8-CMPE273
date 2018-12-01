@@ -558,6 +558,7 @@ router.post("/:applicantId/jobs/:jobId", function(req, res) {
   //Increment noOfViews +1
   // add jobId into applicant Collection as appliedJobs
   //
+  console.log("Inside applicant apply job", req.body);
 
   kafka.make_request(
     "applicant_topic",
