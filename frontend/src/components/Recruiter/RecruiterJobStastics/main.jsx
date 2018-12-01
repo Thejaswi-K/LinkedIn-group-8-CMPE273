@@ -40,12 +40,12 @@ export default class MainRecruiterJobStats extends Component {
 
        
         <div className="row">
-        <div className="col-2">
+        <div className="col-3">
             <LeftRailComponent jobId={this.state.jobId}/>
             {/* <h1> Hello there!</h1> */}
         </div>
-        <div className="col-10">
-          <JobStats/>
+        <div className="col-9">
+          <JobStats jobId={this.state.jobId}/>
         </div>
           
 
