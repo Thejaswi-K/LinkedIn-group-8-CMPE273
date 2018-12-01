@@ -103,7 +103,7 @@ function handleTopicRequest(topic_name, fname) {
 // handleTopicRequest("applicant_messages", applicantMessages);
 // handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
 // handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
-//handleTopicRequest("search_job", JobSearch);
+// handleTopicRequest("search_job", JobSearch);
 // handleTopicRequest("post_job", JobPost);
 // handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 // handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
