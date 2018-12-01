@@ -74,7 +74,7 @@ class RecruiterLoginNavbar extends Component {
 
     render() {
         if (this.state.success) {
-            return <Redirect to="/applicantprofileview"/>
+            return <Redirect to="/recruiterDashboard"/>
         }
 
         let message = null;

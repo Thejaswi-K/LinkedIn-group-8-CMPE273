@@ -64,6 +64,7 @@ router.get("/", function(req, res) {
   });
 });
 
+      
 //SEARCH jobs based on title and location
 router.get("/jobSearch", function(req, res) {
   console.log("inside backend /jobs/:title&:location");
