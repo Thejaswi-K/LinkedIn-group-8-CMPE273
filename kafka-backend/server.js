@@ -107,6 +107,7 @@ function handleTopicRequest(topic_name, fname) {
 // handleTopicRequest("post_job", JobPost);
 // handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 // handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
+// handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */
