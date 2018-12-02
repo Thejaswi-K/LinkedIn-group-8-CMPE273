@@ -73,7 +73,7 @@ function handleTopicRequest(topic_name, fname) {
 // Add your TOPICs here
 //first argument is topic name
 //second argument is a function that will handle this topic request
-/*handleTopicRequest("logs_topic", Log);
+handleTopicRequest("logs_topic", Log);
 handleTopicRequest("jobs_topic", Job);
 handleTopicRequest("applicant_details", ApplicantDetails);
 handleTopicRequest("recruiter_details", RecruiterDetails);
@@ -81,6 +81,7 @@ handleTopicRequest("applicant_login", ApplicantLogin);
 handleTopicRequest("recruiter_login", RecruiterLogin);
 handleTopicRequest("applicant_signup", ApplicantSignup);
 handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
+handleTopicRequest("recruiter_signup_mongo", RecruiterSignupMongo);
 handleTopicRequest("recruiter_signup", RecruiterSignup);
 handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
 handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
@@ -110,7 +111,7 @@ handleTopicRequest("search_job", JobSearch);
 handleTopicRequest("post_job", JobPost);
 handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
-handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);*/
+handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */
@@ -153,5 +154,6 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_summary;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_PendingRequests;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_SearchProfile;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_recruiter_summary;
 ) &
 */

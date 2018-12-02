@@ -48,7 +48,7 @@ export const applicantSignup = (userData, history) => dispatch => {
           .catch(err =>
             dispatch({
               type: APPLICANT_SIGNUP_ERROR_REDUCER,
-              payload: err.response
+              payload: err.response.data.message
             })
           );
       } else {
@@ -58,7 +58,7 @@ export const applicantSignup = (userData, history) => dispatch => {
     .catch(err =>
       dispatch({
         type: APPLICANT_SIGNUP_ERROR_REDUCER,
-        payload: err.response
+        payload: err.response.data.message
       })
     );
 };
