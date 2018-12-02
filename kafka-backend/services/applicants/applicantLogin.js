@@ -16,17 +16,15 @@ function handle_request(msg, callback) {
     pool.getConnection(function (err, con) {
 
         if (err) {
-            res.writeHead(400, {
-                'Content-Type': 'text/plain'
-            });
-            res.end("Could Not Get Connection Object");
+            res.err = 'No mysql connection';
+            res.code = 400;
+            callback(null, res);
         } else {
             con.query(sql, function (err, user) {
                 if (err) {
-                    res.writeHead(400, {
-                        'Content-Type': 'text/plain'
-                    });
-                    res.end("Could Not Get Connection Object");
+                    res.err = 'No mysql connection';
+                    res.code = 400;
+                    callback(null, res);
                 } else {
                     if (user.length > 0) {
                         bcrypt.compare(password, user[0].PASSWORD).then(isMatch => {

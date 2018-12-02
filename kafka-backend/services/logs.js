@@ -20,6 +20,9 @@ exports.handle_request = function handle_request(msg, callback) {
     case "getJobsTopTen":
       getJobsTopTen(msg, callback);
       break;
+    case "citywise":
+      getJobsCityWise(msg, callback);
+      break;
     case "trackUserById":
       trackUserId(msg, callback);
       break;
@@ -106,6 +109,124 @@ function updateProfileViewCount(msg, callback) {
 
 function getJobsTopTen(msg, callback) {
   console.log("KAFKA : getJobsTopTen --> ", msg.id);
+
+  jobsModel
+    .aggregate([
+      //match with recruiteriD
+      { $match: { recruiterId: msg.id } },
+      //get count of JobApplication size
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          jobApplications: 1,
+          jobApplicationssize: { $size: { $ifNull: ["$jobApplications", []] } }
+        }
+      },
+      //Remove Job Application size less than 0
+      { $match: { jobApplicationssize: { $gt: 0 } } },
+      //Sort by decreasing order
+      { $sort: { jobApplicationssize: -1 } },
+      //Take only top 10
+      { $limit: 10 },
+      // Unwind each element in the JobApplications array for computation
+      { $unwind: "$jobApplications" },
+      //group each key now, by month and job_id, then count number of occurences and store to count
+      // Keep job title using $first
+      {
+        $group: {
+          _id: { month: { $month: "$jobApplications.appliedOn" }, id: "$_id" },
+          jobtitle: { $first: "$title" },
+
+          count: { $sum: 1 }
+        }
+      },
+      // group based on job id, and add all details together into an array
+      {
+        $group: {
+          _id: { id: "$_id.id" },
+          jobtitle: { $first: "$jobtitle" },
+          job: { $push: { month: "$_id.month", count: "$count" } }
+        }
+      }
+    ])
+    .then(resultJob => {
+      console.log("Result in get jobs top ten applications per month ", resultJob);
+      callback(null, {
+        success: true,
+        status: "jobs top ten applications per month",
+        data: resultJob
+      });
+    })
+    .catch(err => {
+      console.log("top ten applications per month aggregation failed", err);
+      callback(null, {
+        success: false,
+        status: "top ten applications per month failed"
+      });
+    });
+}
+
+
+function getJobsCityWise(msg, callback) {
+  console.log("KAFKA : getJobsCityWise --> ", msg.id);
+
+  jobsModel
+    .aggregate([
+      //match with recruiteriD
+      { $match: { recruiterId: msg.id } },
+      //get count of JobApplication size
+
+      // {
+      //   $project: {
+      //     _id: 1,
+      //     title: 1,
+      //     jobApplications: 1,
+      //     jobApplicationssize: { $size: { $ifNull: ["$jobApplications", []] } }
+      //   }
+      // },
+
+      //Remove Job Application size less than 0
+      // { $match: { jobApplicationssize: { $gt: 0 } } },
+      //Sort by decreasing order
+      // { $sort: { jobApplicationssize: -1 } },
+      //Take only top 10
+      // { $limit: 10 },
+      // Unwind each element in the JobApplications array for computation
+      // { $unwind: "$jobApplications" },
+      //group each key now, by month and job_id, then count number of occurences and store to count
+      // Keep job title using $first
+      {
+        $group: {
+          _id: { location: "$location" },
+          
+          count: { $sum: 1 }
+        }
+      }
+      // group based on job id, and add all details together into an array
+      // {
+      //   $group: {
+      //     _id: { id: "$_id.id" },
+      //     jobtitle: { $first: "$jobtitle" },
+      //     job: { $push: { month: "$_id.month", count: "$count" } }
+      //   }
+      // }
+    ])
+    .then(resultJob => {
+      console.log("Result in get jobs getJobsCityWise applications per month ", resultJob);
+      callback(null, {
+        success: true,
+        status: "jobs getJobsCityWise applications per month",
+        data: resultJob
+      });
+    })
+    .catch(err => {
+      console.log("top getJobsCityWises per month aggregation failed", err);
+      callback(null, {
+        success: false,
+        status: "top getJobsCityWises per month failed"
+      });
+    });
 }
 //Get request to fetch particular user track history
 function trackUserId(msg, callback) {
@@ -129,7 +250,7 @@ function trackUserId(msg, callback) {
       }
     })
     .catch(function(err) {
-      callback(null, { success: false, sstatus: "error for track user" });
+      callback(null, { success: false, status: "error for track user" });
     });
 }
 
@@ -160,7 +281,7 @@ function createTrackUserId(msg, callback) {
         tracker: {
           page: "Sign up"
         }
-      });
+      }); 
       newTracker
         .save()
         .then(function(result) {
@@ -210,7 +331,7 @@ function clickCount(msg, callback) {
 
   console.log("In handle request:" + JSON.stringify(msg));
   jobsModel
-    .find({ recruiterId: msg.id, noOfViews: { $gt: 0 } }, "title noOfViews")
+    .find({ recruiterId: msg.id, noOfViews: { $gt: 0 } }, "title noOfViews").sort({noOfViews:-1}).limit(10)
     .then(clickCount => {
       if (!clickCount) {
         callback(null, {
@@ -268,7 +389,7 @@ function clickCountIncrementer(msg, callback) {
 }
 
 //Get request to fetch Bottom 5 jobs of a recruiter (least number of applications)
-// https://stackoverflow.com/questions/9040161/mongo-order-by-length-of-array 
+// https://stackoverflow.com/questions/9040161/mongo-order-by-length-of-array
 function lastFiveJobs(msg, callback) {
   console.log("KAFKA : Last five jobs  of  --> ", msg.id);
 
@@ -278,12 +399,12 @@ function lastFiveJobs(msg, callback) {
       { $match: { recruiterId: msg.id } },
       {
         $project: {
-          jobTitle: 1,
-          jobApplicationssize: {$size: { "$ifNull": [ "$jobApplications", [] ] } }
+          title: 1,
+          jobApplicationssize: { $size: { $ifNull: ["$jobApplications", []] } }
         }
       },
       // {$pull : {jobApplicationssize:{$lt:1}}},
-      { $sort: { "jobApplicationssize": -1 } },
+      { $sort: { jobApplicationssize: 1 } },
       { $limit: 5 }
     ])
 

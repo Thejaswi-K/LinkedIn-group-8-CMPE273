@@ -25,8 +25,8 @@ export default class MainRecruiterJobListing extends Component {
     return (
       <div
         style={{
-          minHeight: "100vh",
-          minWidth: "100%",
+          // minHeight: "100vh",
+          // minWidth: "100%",
           boxSizing: "border-box",
           backgroundColor: "#f4f4f4",
           borderRadius: "15px"
@@ -34,7 +34,7 @@ export default class MainRecruiterJobListing extends Component {
       >
         {/* {redirectVar} */}
 
-        {/* <JobNavbar /> */}
+        <JobNavbar />
 
        
         <div className="row">

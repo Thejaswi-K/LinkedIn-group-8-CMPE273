@@ -2,17 +2,19 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import jwtDecode from "jwt-decode";
 
-import RightRailComponent from "./rightrail";
-import  UserTraceDashboard from "./userTraceDashboard";
+// import LeftRailComponent from "./rightrail";
+import  JobStats from "./jobStats";
 import JobNavbar from "../../Navbar/JobNavbar";
-import GraphDashboardMain from "./graphDashboard";
-export default class MainRecruiterDashboard extends Component {
+import  LeftRailComponent from "./jobstatLeftRail";
+
+export default class MainRecruiterJobStats extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "ag@gmail.com"
+      recruiter: "testrecruiter2@gmail.com",
+      jobId : this.props.location.state
     };
   }
 
@@ -20,13 +22,13 @@ export default class MainRecruiterDashboard extends Component {
     // check for auth flag
     let redirectVar = null;
     if (!localStorage.getItem("recruiterToken")) {
-      redirectVar = <Redirect to="/" />;
+      redirectVar = <Redirect to="/recruiterSignup" />;
     }
     return (
       <div
         style={{
-          minHeight: "100vh",
-          minWidth: "100%",
+          // minHeight: "100vh",
+          // minWidth: "100%",
           boxSizing: "border-box",
           backgroundColor: "#f4f4f4",
           borderRadius: "15px"
@@ -38,19 +40,17 @@ export default class MainRecruiterDashboard extends Component {
 
        
         <div className="row">
-        <div className="col-9">
-            <GraphDashboardMain />
-          </div>
-          
-          <div className="col-3" style={{position: "fixed", right:"20px"}}>
-            <RightRailComponent />
-          </div>
+        <div className="col-3" >
+            <LeftRailComponent jobId={this.state.jobId}/>
+            {/* <h1> Hello there!</h1> */}
         </div>
-        {/* <div className="row" >
-          <div className="col-9">
-            <UserTraceDashboard />
-          </div>
-        </div> */}
+        <div className="col-9">
+          <JobStats jobId={this.state.jobId}/>
+        </div>
+          
+
+        </div>
+
 
       </div>
     );

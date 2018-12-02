@@ -2,7 +2,6 @@ var mongoose = require("mongoose");
 var utility = require("../utility");
 
 var recruiterSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
   firstName: {
     type: String,
     required: true,

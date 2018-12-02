@@ -76,13 +76,7 @@ router.post("/login", (req, res) => {
 
 //applicant signup
 router.post("/", (req, res) => {
-  // const { errors, isValid } = validateRegisterInput(req.body);
-
-  // Check Validation
-  /* if (!isValid) {
-           return res.status(400).json(errors);
-       }*/
-
+  console.log("Inside Applicant signup(MYSQL) backend");
   kafka.make_request("applicant_signup", req.body, function(err, results) {
     console.log("in result");
     console.log(results);
@@ -93,12 +87,19 @@ router.post("/", (req, res) => {
         msg: "System Error, Try Again."
       });
     } else {
-      if (results.code === 200) {
+      if (results.code === 201) {
+        console.log("Applicant record in MYSQL created successfully");
         res.status(results.code).json({
           success: true,
           token: "Bearer " + results.token
         });
+      } else if (results.code === 409) {
+        console.log("User already exists in MYSQL");
+        res.status(results.code).json({
+          message: "User already exists"
+        });
       } else {
+        console.log("Unable to create applicant record in MYSQL");
         res.status(results.code).json({
           error: results.err
         });
@@ -107,6 +108,38 @@ router.post("/", (req, res) => {
     }
   });
 });
+// router.post("/", (req, res) => {
+//   // const { errors, isValid } = validateRegisterInput(req.body);
+
+//   // Check Validation
+//   /* if (!isValid) {
+//            return res.status(400).json(errors);
+//        }*/
+
+//   kafka.make_request("applicant_signup", req.body, function(err, results) {
+//     console.log("in result");
+//     console.log(results);
+//     if (err) {
+//       console.log("Inside err");
+//       res.json({
+//         status: "error",
+//         msg: "System Error, Try Again."
+//       });
+//     } else {
+//       if (results.code === 200) {
+//         res.status(results.code).json({
+//           success: true,
+//           token: "Bearer " + results.token
+//         });
+//       } else {
+//         res.status(results.code).json({
+//           error: results.err
+//         });
+//       }
+//       res.end();
+//     }
+//   });
+// });
 
 //applicant signup call for mongodb
 router.post("/mongo", (req, res) => {
@@ -130,7 +163,7 @@ router.post("/mongo", (req, res) => {
         msg: "System Error, Try Again."
       });
     } else {
-      if (results.code === 200) {
+      if (results.code === 201) {
         res.status(results.code).json({
           success: true,
           token: "Bearer " + results.token
@@ -558,6 +591,7 @@ router.post("/:applicantId/jobs/:jobId", function(req, res) {
   //Increment noOfViews +1
   // add jobId into applicant Collection as appliedJobs
   //
+  console.log("Inside applicant apply job", req.body);
 
   kafka.make_request(
     "applicant_topic",
@@ -572,10 +606,11 @@ router.post("/:applicantId/jobs/:jobId", function(req, res) {
         throw err;
         done(err, {});
       } else {
+        console.log("results in backend",results);
         if (results.code == 200) {
-          return res.status(200).json(results.value);
+          return res.status(200).json(results);
         } else {
-          return res.status(500).json(results.value);
+          return res.status(500).json(results);
         }
       }
     }
@@ -599,10 +634,15 @@ router.post("/:applicantId/jobs/:jobId/save", function(req, res) {
         throw err;
         done(err, {});
       } else {
+        console.log("results logged",results);
+        // console.log("results code",results.code);
+        // console.log("results.value", results.value);
+        // console.log("results.status", results.status);
+
         if (results.code == 200) {
-          return res.status(200).json(results.value);
+          return res.status(200).json(results);
         } else {
-          return res.status(500).json(results.value);
+          return res.status(500).json(results);
         }
       }
     }
@@ -676,11 +716,11 @@ router.get("/applicantMessages/:from_email", (req, res) => {
 });
 
 /****************Applicant View All Connections*********************/
-router.get("/viewconnections/:applicant_id", function(req, res) {
+router.get("/viewconnections/:email", function(req, res) {
   console.log("Backend Applicant View Connections");
   kafka.make_request(
     "applicant_ViewConnection",
-    { applicant_id: req.params.applicant_id },
+    { email: req.params.email },
     function(err, results) {
       console.log("in result");
       console.log(results);
@@ -700,11 +740,11 @@ router.get("/viewconnections/:applicant_id", function(req, res) {
 });
 
 /****************Applicant View Pending Requests*********************/
-router.get("/viewPendingRequests/:applicant_id", function(req, res) {
+router.get("/viewPendingRequests/:email", function(req, res) {
   console.log("Backend Applicant View Connections");
   kafka.make_request(
     "applicant_PendingRequests",
-    { applicant_id: req.params.applicant_id },
+    { email: req.params.email },
     function(err, results) {
       console.log("in result");
       console.log(results);
@@ -755,7 +795,7 @@ router.post("/searchprofile", function(req, res) {
   console.log("Backend Search Profile");
   kafka.make_request(
     "applicant_SearchProfile",
-    { email: req.body.email },
+    { firstName: req.body.firstName },
     function(err, results) {
       console.log("in result");
       console.log(results);

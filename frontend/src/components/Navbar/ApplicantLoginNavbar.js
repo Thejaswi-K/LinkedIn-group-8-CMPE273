@@ -17,24 +17,31 @@ class ApplicantLoginNavbar extends Component {
             isRecruiter: false,
             userExists: false,
             isLoggedIn: false,
+            isEmpty: false,
             messageDiv: "",
             success: false,
         };
-    }
+        // Bind the handlers to this class
+        this.doLogin = this.doLogin.bind(this);
+}
+    // componentDidMount = () => {
+    //     $(document).ready(function () {
+    //         $('#cl').on('click', function () {
+    //             $('#login-callout').addClass('hidden');
+    //         });
+    //     });
+    // }
 
     componentWillReceiveProps(nextProps) {
-        $(document).ready(function () {
-            $('#cl').on('click', function () {
-                $('#login-callout').addClass('hidden');
-            });
-        });
         if (!isEmpty(nextProps.applicantProfile.applicantUser)) {
             this.setState({
                 ...this.state,
                 success: true
             })
         } else if (nextProps.applicantErrorReducer.error !== "") {
-            alert(nextProps.applicantErrorReducer.error);
+            if(nextProps.applicantErrorReducer.error !== "Incorrect password" && nextProps.applicantErrorReducer.error !== "User already exists"){
+                alert(nextProps.applicantErrorReducer.error);
+            }
         }
     }
 
@@ -42,7 +49,12 @@ class ApplicantLoginNavbar extends Component {
     doLogin = (event) => {
         event.preventDefault();
         let valid = Validation.loginValidations(this.state);
-        if (valid === '') {
+        if(this.state.email==="" || this.state.password === ""){
+            this.setState ({
+                ...this.state,
+                isEmpty : true
+            })
+        } else if (valid === '') {
             const data = {
                 password: this.state.password,
                 email: this.state.email
@@ -106,15 +118,14 @@ class ApplicantLoginNavbar extends Component {
                             :
                             <a className="link-forgot-password" tabindex="1" href={CONSTANTS.ROOTURL+"/ApplicantSignup"}>Applicant?</a>
                             }
-                            {(this.state.userExists) ?
+                            {(this.state.isEmpty) ?
                             <div id="login-callout" className="hopscotch-bubble animated hopscotch-callout no-number" tabindex="-1"
                                 role="alert" aria-live="polite">
                                 <div className="hopscotch-bubble-container">
                                     <div className="hopscotch-bubble-content">
                                         <h3 className="hopscotch-title">Trying to sign in?</h3>
                                         <div className="hopscotch-content">
-                                            Someone's already using that email. If that’s you, enter your
-                                            Email and password here to sign in.
+                                            Please enter complete details.
                                         </div>
                                     </div>
                                     <a id ="cl" title="Close" href="#" className="hopscotch-bubble-close hopscotch-close">Close</a>

@@ -78,14 +78,14 @@ const options = {
   }
 
 }
-export default class UserTraceDashboard extends Component {
+export default class LocationTraceDashboard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
       recruiter: "recruiter13@gmail.com",
-      user :"",
+      location :"",
       chartData: {
         labels: [],
         datasets: [
@@ -114,16 +114,16 @@ export default class UserTraceDashboard extends Component {
         ]
       }
     }
-    this.usernameSubmitHandler = this.usernameSubmitHandler.bind(this);
+    this.locationSubmitHandler = this.locationSubmitHandler.bind(this);
     this.valueChangeHandler= this.valueChangeHandler.bind(this);
   }
-  usernameSubmitHandler(e){
+  locationSubmitHandler(e){
     e.preventDefault();
     console.log("Username of applicant ", this.state.user);
 
     axios
     .get(
-      `${CONSTANTS.BACKEND_URL}/recruiters/` + this.state.recruiter + "/logs/applicants/"+ this.state.user)
+      `${CONSTANTS.BACKEND_URL}/recruiters/` + this.state.recruiter + "/logs/location/"+ this.state.location)
     .then(response => {
       console.log("Inside user trace   component",response.data);
       //console.log("Inside  user trace   component didmount",response.data.jobsList.data);
@@ -170,14 +170,14 @@ export default class UserTraceDashboard extends Component {
                         <input
                       type="text"
                       class="form-control"
-                      placeholder="Username"
+                      placeholder="location"
                       name="user"
                       onChange={this.valueChangeHandler}
                     />
                        
                     </div>
                     <div className="form-group">
-                    <button class="btn btn-warning" onClick={this.usernameSubmitHandler} >Submit</button>
+                    <button class="btn btn-warning" onClick={this.locationSubmitHandler} >Submit</button>
                     </div>
 
                     

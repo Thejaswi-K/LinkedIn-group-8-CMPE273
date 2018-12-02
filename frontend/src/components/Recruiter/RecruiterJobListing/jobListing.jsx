@@ -1,16 +1,17 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { CONSTANTS } from "../../../Constants";
 
 
-export default class JobListingComponent extends Component {
+class JobListingComponent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "recruiter1@gmail.com",
+      //recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
+      recruiter: "recruiter13@gmail.com",
       joblist: ""
     };
   }
@@ -22,7 +23,8 @@ export default class JobListingComponent extends Component {
         `${CONSTANTS.BACKEND_URL}/recruiters/` + this.state.recruiter + "/jobs"
       )
       .then(response => {
-        console.log(response.data);
+        console.log("Inside JobListing component",response.data.jobsList);
+        // console.log("Inside JobListing component didmount",response.data.jobsList.data);
         this.setState({
           joblist: response.data.jobsList.data
         });
@@ -42,7 +44,7 @@ export default class JobListingComponent extends Component {
   buttonView = e => {
     e.preventDefault();
     this.props.history.push({
-      pathname: "/jobApplicantsDetails",
+      pathname: "/recruiterjobstats",
       state: e.target.value
     });
   };
@@ -61,23 +63,31 @@ export default class JobListingComponent extends Component {
         <div
           className="card"
           style={{
-            margin: "50px",
-            marginRight: "10px",
-            padding: "40px",
-            paddingBottom: "100px",
+            // margin: "50px",
+            // marginRight: "10px",
+            // padding: "40px",
+            // paddingBottom: "100px",
+            marginTop: "2rem",
             backgroundColor: "#FAFAFA",
-            borderRadius: "40px"
+            borderRadius: "10px"
           }}
         >
-          <h4 style={{ marginLeft: "120px", marginTop: "40px" }}>
+
+        <h1 data-test-post-page-title="" className="jobs__main-title" style={{ marginLeft: "5rem", marginTop: "3rem" , marginBottom:"2rem"}}>
+                <b>Listed Jobs</b>
+            </h1>
+          {/* <h4 style={{ marginLeft: "5rem", marginTop: "7rem" }}>
             Jobs listed
-          </h4>
+          </h4> */}
           {allImgs.map((job, i) => (
             <div
               className="card"
               style={{
-                margin: "10px",
-                marginLeft: "120px",
+                 marginLeft: "3rem",
+                 marginRight:"3rem",
+                 marginBottom: "1rem",
+                //  marginLeft: "3rem",
+                 borderRadius: "10px",
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
               }}
@@ -88,7 +98,7 @@ export default class JobListingComponent extends Component {
               </div> */}
               <ul
                 className="list-group list-group-flush"
-                style={{ margin: "10px" }}
+                style={{ margin: "5px" }}
               >
                 <li
                   className="list-group-item"
@@ -159,3 +169,6 @@ export default class JobListingComponent extends Component {
     );
   }
 }
+
+
+export default withRouter(JobListingComponent);

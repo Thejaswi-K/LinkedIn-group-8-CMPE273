@@ -9,10 +9,11 @@ import ProfileSearchItem from './ProfileSearchItem';
 
 class ProfileSearch extends Component {
   arr=[]
+  
     constructor(){
         super();
         this.state={
-            email:''
+          firstName:''
     
         };
         this.onChange=this.onChange.bind(this);
@@ -25,11 +26,12 @@ class ProfileSearch extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-     // if(nextProps.connection.allconnections !== undefined){
+     if(nextProps.searchProfile.searchedprofiles.SearchedProfile !== undefined){
      this.arr  = nextProps.searchProfile.searchedprofiles.SearchedProfile;
-        
+     
      console.log("Array is" + this.arr);
-     // }
+     
+     }
      
     }
     
@@ -42,18 +44,17 @@ onSubmit(e){
     
         const searchdata={
                
-            email:this.state.email
+          firstName:this.state.firstName
         };
         this.props.getSearchedProfiles(searchdata)
     }
   render() {
     let profileItems;
-        
-
-     
+    
+    
         if(this.arr.length>0){
         
-        console.log("print all", this.arr);
+        console.log("print arr", this.arr);
         profileItems = this.arr.map(profile => (
                
           <div>
@@ -63,8 +64,11 @@ onSubmit(e){
       ));
         
         }
-   
-
+        else{
+          profileItems=<div className="text-center"><h4>Please Search By Name. No Results Found</h4></div>
+        }
+      
+        
     return (
         <div className="login">
         <div className="container">
@@ -80,11 +84,11 @@ onSubmit(e){
 
               <div className="form-group">
                   <input
-                    type="email"
+                    type="text"
                     className="form-control form-control-lg"
-                    placeholder="Search by Email"
-                    name="email"
-                    value={this.state.email}
+                    placeholder="Search People"
+                    name="firstName"
+                    value={this.state.firstName}
                     onChange={this.onChange}
                   />
                   
@@ -100,6 +104,7 @@ onSubmit(e){
           </div>
           <br/>
               {profileItems}
+              
         </div>
         
       </div>

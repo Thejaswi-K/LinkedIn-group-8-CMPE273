@@ -66,7 +66,7 @@ componentDidMount(){
                   <dt class="col-sm-5">Company</dt>
                   <dd class="col-sm-7">company </dd>
                   <dt class="col-sm-5">Location:</dt>
-                  <dd class="col-sm-7"> Locaiton</dd>
+                  <dd class="col-sm-7"> Location</dd>
                   </dl>
 
                   </div>

@@ -14,6 +14,7 @@ class RecruiterLoginNavbar extends Component {
             email: "",
             password: "",
             isRecruiter: true,
+            userExists: false,
             isLoggedIn: false,
             isEmpty: false,
             messageDiv: "",
@@ -32,11 +33,6 @@ class RecruiterLoginNavbar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        $(document).ready(function () {
-            $('#cl').on('click', function () {
-                $('#login-callout').addClass('hidden');
-            });
-        });
         if (!isEmpty(nextProps.recruiterProfile.recruiterUser)) {
             this.setState({
                 ...this.state,
@@ -74,7 +70,8 @@ class RecruiterLoginNavbar extends Component {
 
     render() {
         if (this.state.success) {
-            return <Redirect to="/applicantprofileview"/>
+            return <Redirect to="/job"/>
+            // return <Redirect to="/recruiterprofileview"/>
         }
 
         let message = null;

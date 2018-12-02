@@ -34,7 +34,8 @@ function getSavedJobsNumber(msg, callback) {
   jobsModel
     .aggregate([
       { $match: { recruiterId: msg.recruiterId } },
-      { $project: { title: "$title", savedBy: { $size: "$savedBy" } } }
+      { $project: { title: "$title", savedBy: { $size: "$savedBy" } } },
+      { $match: { savedBy: { $gt: 0 } } }
     ])
     .then(savedJobsCount => {
       console.log("result of saved job count", savedJobsCount);
