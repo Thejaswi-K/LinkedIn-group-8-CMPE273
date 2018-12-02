@@ -56,7 +56,7 @@ function handle_request(msg, callback) {
                 newUser
                     .save()
                     .then(function (result) {
-                        res.code = 200;
+                        res.code = 201;
                         res.token = token;
                         res.user = result;
                         callback(null, res);

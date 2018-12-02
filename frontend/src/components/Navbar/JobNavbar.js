@@ -22,6 +22,10 @@ class JobNavbar extends Component {
         localStorage.removeItem('recruiterToken');
         // let user = {}
         // this.props.logoutData(false, user, true);
+        this.setState = ({
+            ...this.state,
+            isLogged: false
+        });
         this.props.history.push('/');
         alert(`${loggedInUser} logged out successfully.`);
         console.log("User logged out Successfully.");
