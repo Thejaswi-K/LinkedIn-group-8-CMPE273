@@ -5,7 +5,7 @@ import {CONSTANTS} from '../../Constants';
 import {recruiterLogin} from "../../actions/recruiterActions";
 import * as Validation from "../../validation/ValidationUtil";
 import Redirect from "react-router/es/Redirect";
-import {isEmpty} from "lodash";
+import { isEmpty } from 'lodash';
 
 class RecruiterLoginNavbar extends Component {
     constructor(props) {
@@ -16,6 +16,7 @@ class RecruiterLoginNavbar extends Component {
             isRecruiter: true,
             userExists: false,
             isLoggedIn: false,
+            isEmpty: false,
             messageDiv: "",
             success: false,
         }
@@ -43,14 +44,21 @@ class RecruiterLoginNavbar extends Component {
                 success: true
             })
         } else if (nextProps.recruiterErrorReducer.error !== "") {
-            alert(nextProps.recruiterErrorReducer.error);
+            if(nextProps.recruiterErrorReducer.error !== "Incorrect password" && nextProps.recruiterErrorReducer.error !== "User already exists"){
+                alert(nextProps.recruiterErrorReducer.error);
+            }
         }
     }
 
     doLogin = (event) => {
         event.preventDefault();
         let valid = Validation.loginValidations(this.state);
-        if (valid === '') {
+        if(this.state.email==="" || this.state.password === ""){
+            this.setState ({
+                ...this.state,
+                isEmpty : true
+            })
+        } else if (valid === '') {
             const data = {
                 password: this.state.password,
                 email: this.state.email
@@ -67,6 +75,7 @@ class RecruiterLoginNavbar extends Component {
 
     render() {
         if (this.state.success) {
+            return <Redirect to="/recruiterDashboard"/>
             return <Redirect to="/recruiterprofileview"/>
         }
 
@@ -110,15 +119,14 @@ class RecruiterLoginNavbar extends Component {
                             :
                             <a className="link-forgot-password" tabindex="1" href={CONSTANTS.ROOTURL+"/ApplicantSignup"}>Applicant?</a>
                         }
-                        {(this.state.userExists) ?
+                        {(this.state.isEmpty) ?
                         <div id="login-callout" className="hopscotch-bubble animated hopscotch-callout no-number" tabindex="-1"
                             role="alert" aria-live="polite">
                             <div className="hopscotch-bubble-container">
                                 <div className="hopscotch-bubble-content">
                                     <h3 className="hopscotch-title">Trying to sign in?</h3>
                                     <div className="hopscotch-content">
-                                        Someone's already using that email. If that’s you, enter your
-                                        Email and password here to sign in.
+                                        Please enter complete details.
                                     </div>
                                 </div>
                                 <a id ="cl" title="Close" href="#" className="hopscotch-bubble-close hopscotch-close">Close</a>

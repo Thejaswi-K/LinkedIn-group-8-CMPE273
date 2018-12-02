@@ -1658,7 +1658,7 @@ div.hopscotch-bubble .hopscotch-bubble-close:before {
   speak: none;
   font-size: 13px;
   color: inherit;
-  content: "\00d7"; 
+  content: "\00d7";
 }
 div.hopscotch-bubble .hopscotch-bubble-close:before {
   vertical-align: top;
@@ -2102,7 +2102,7 @@ div.hopscotch-bubble .hopscotch-actions {
 }
 
 .navbar {
-  background: linear-gradient(to right, #32404B, #32404B);
+  background: linear-gradient(to right, #32404b, #32404b);
   border-radius: 0px;
   margin-bottom: 0px;
 }
@@ -2114,3 +2114,8 @@ div.hopscotch-bubble .hopscotch-actions {
 }
 
 
+
+.text-white {
+  color: #fff;
+}
+/*CSS for left rail card*/

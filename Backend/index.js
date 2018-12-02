@@ -11,13 +11,16 @@ var jwt = require("jsonwebtoken");
 var passport = require("passport");
 var kafka = require("./kafka/client");
 const photos = require("./routes/api/photos");
+const morgan = require('morgan');
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// //Use morgan 
+app.use(morgan('dev'));
+
 
 //MONGODB Config
-
 const dbkey = require("./config/keys").mongoURI;
 
 // Connect to Mongo Db
@@ -28,8 +31,7 @@ mongoose
 
 app.use(
   cors({
-    origin:
-      "http://localhost:3000",
+    origin: "http://localhost:3000",
     credentials: true
   })
 );
@@ -39,10 +41,7 @@ app.use(bodyParser.json());
 
 //Allow Access Control
 app.use(function(req, res, next) {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "http://localhost:3000"
-  );
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Methods",

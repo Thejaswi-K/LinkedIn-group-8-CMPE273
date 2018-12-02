@@ -82,3 +82,12 @@ export function paginate(items, pageNumber, pageSize) {
       .take(pageSize)
       .value();
   }
+
+export function extractNameFromEmail(str){
+    if(str === null){
+        return str;
+    }
+    var nameParts = str.split("@");
+    var name = nameParts.length==2 ? nameParts[0] : null;
+    return name;
+}

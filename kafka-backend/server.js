@@ -3,11 +3,11 @@ var {mongoose} = require("./db/mongo");
 //topics files
 //var signin = require('./services/signin.js');
 
-
 //topics files
 //var signin = require('./services/signin.js');
 var Log = require("./services/logs.js");
 var Job = require("./services/jobs.js");
+var JobSearch = require("./services/Jobs/jobSearch");
 var ApplicantDetails = require("./services/applicants/applicantViewProfile");
 var RecruiterDetails = require("./services/recruiter/recruiterViewProfile");
 var ApplicantLogin = require("./services/applicants/applicantLogin");
@@ -38,8 +38,8 @@ var EditApplicantSummary = require("./services/profile/applicant/editSummary");
 var EditRecruiterSummary = require("./services/profile/recruiter/editSummary");
 var JobPost = require("./services/Jobs/postJob");
 var RecruiterGetJobs = require("./services/Jobs/recruiterGetJobs");
-var ApplicantViewPendingRequests=require("./services/applicants/applicantViewPendingRequests");
-var ApplicantSearchProfile=require("./services/applicants/applicantSearchProfile");
+var ApplicantViewPendingRequests = require("./services/applicants/applicantViewPendingRequests");
+var ApplicantSearchProfile = require("./services/applicants/applicantSearchProfile");
 
 function handleTopicRequest(topic_name, fname) {
     //var topic_name = 'root_topic';
@@ -70,7 +70,6 @@ function handleTopicRequest(topic_name, fname) {
         });
     });
 }
-
 // Add your TOPICs here
 //first argument is topic name
 //second argument is a function that will handle this topic request
@@ -106,19 +105,18 @@ handleTopicRequest("edit_recruiter_summary", EditRecruiterSummary);
 handleTopicRequest("applicant_messages", applicantMessages);
 handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
 handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
-
+handleTopicRequest("search_job", JobSearch);
 handleTopicRequest("post_job", JobPost);
 handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
-handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);*/
+handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
+handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);*/
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */
 
 /*
 Run the topics using
-
-//Change port between 2181(default) / 2183 depending on compatability 
-
+//Change port between 2181(default) / 2183 depending on compatability
 (bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic logs_topic;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic jobs_topic; 
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_details;
@@ -144,6 +142,7 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_SendConnection;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic rec_get_jobs;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic post_job;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic search_job;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic add_experience;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_experience;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_education;
@@ -155,5 +154,4 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_SearchProfile;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_recruiter_summary;
 ) &
-
 */

@@ -380,51 +380,50 @@ router.put(
 
 //Get Applicant details without and redis.
 router.get(
-    "/wok/:applicant_id",
-    passport.authenticate("jwt", {session: false}),
-    (req, res) => {
-        const errors = {};
-        var responseRadis = {};
-        var resP = {};
-        var responseRadis = {};
-        var redisKey = 'applicantViewProfilewok' + req.params.applicant_id;
-        redis.get(redisKey, function (err, reply) {
-            if (reply == null) {
-                Applicants.findOne({email: req.params.applicant_id})
-                    .then(profile => {
-                        if (!profile) {
-                            resP.code = 404;
-                            resP.message = "User not found";
-                            res.status(resP.code).json(resP.message);
-                            res.end();
-                        }
-
-                        resP.code = 200;
-                        resP.message = profile;
-                        res.status(resP.code).json(resP.message);
-
-                        responseRadis.code = resP.code;
-                        responseRadis.message = resP.message;
-                        redis.set(redisKey, JSON.stringify(responseRadis));
-                        redis.expire(redisKey, 60);
-                        console.log("wokk");
-                        res.end();
-
-                    })
-                    .catch(function (err) {
-                        resP.message = err;
-                        resP.code = 400;
-                        res.status(resP.code).json(resP.message);
-                        res.end();
-                    });
-
-            } else {
-                res.status(JSON.parse(reply).code).json(JSON.parse(reply).message);
-                console.log("wok");
-                res.end();
+  "/wok/:applicant_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    var responseRadis = {};
+    var resP = {};
+    var responseRadis = {};
+    var redisKey = "applicantViewProfilewok" + req.params.applicant_id;
+    redis.get(redisKey, function(err, reply) {
+      if (reply == null) {
+        Applicants.findOne({ email: req.params.applicant_id })
+          .then(profile => {
+            if (!profile) {
+              resP.code = 404;
+              resP.message = "User not found";
+              res.status(resP.code).json(resP.message);
+              res.end();
             }
-        });
+
+            resP.code = 200;
+            resP.message = profile;
+            res.status(resP.code).json(resP.message);
+
+            responseRadis.code = resP.code;
+            responseRadis.message = resP.message;
+            redis.set(redisKey, JSON.stringify(responseRadis));
+            redis.expire(redisKey, 60);
+            console.log("wokk");
+            res.end();
+          })
+          .catch(function(err) {
+            resP.message = err;
+            resP.code = 400;
+            res.status(resP.code).json(resP.message);
+            res.end();
+          });
+      } else {
+        res.status(JSON.parse(reply).code).json(JSON.parse(reply).message);
+        console.log("wok");
+        res.end();
+      }
     });
+  }
+);
 
 //implemented redis
 //Get Applicant details
@@ -471,141 +470,144 @@ router.get(
   }
 );
 
-// //Get Applicant details
-// router.get('/:applicant_id', passport.authenticate('jwt', {session: false}),
-//     (req, res) => {
+//Get Applicant details
+router.get(
+  "/:applicant_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("applicant_details", req.params, function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        });
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 200) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.message);
+        }
+        res.end();
+      }
+    });
+  }
+);
 
-//         const errors = {};
-//         kafka.make_request('applicant_details', req.params, function (err, results) {
-//             console.log('in result');
-//             console.log(results);
-//             if (err) {
-//                 console.log("Inside err");
-//                 res.json({
-//                     status: "error",
-//                     msg: "System Error, Try Again."
-//                 })
-//             } else {
-//                 console.log("Inside else", results);
-//                 if (results.code === 200) {
-//                     res.status(results.code).json(results.message);
-//                 } else {
-//                     res.status(results.code).json(results.message);
-//                 }
-//                 res.end();
-//             }
-//         });
-//     });
+//delete applicant
+router.delete(
+  "/:applicant_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("applicant_delete", req.body, function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        });
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 202) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.errorMessage);
+        }
+        res.end();
+      }
+    });
+  }
+);
 
-// //delete applicant
-// router.delete('/:applicant_id',
-//     passport.authenticate('jwt', {session: false}),
-//     (req, res) => {
+//Get Profile view count of particular applicant
+router.get("/:applicantId/logs/profile-view-count", function(req, res) {
+  console.log("inside backend profile-view-count");
 
-//         const errors = {};
-//         kafka.make_request('applicant_delete', req.body, function (err, results) {
-//             console.log('in result');
-//             console.log(results);
-//             if (err) {
-//                 console.log("Inside err");
-//                 res.json({
-//                     status: "error",
-//                     msg: "System Error, Try Again."
-//                 })
-//             } else {
-//                 console.log("Inside else", results);
-//                 if (results.code === 202) {
-//                     res.status(results.code).json(results.message);
-//                 } else {
-//                     res.status(results.code).json(results.errorMessage);
-//                 }
-//                 res.end();
-//             }
-//         });
-//     });
+  kafka.make_request(
+    "logs_topic",
+    { path: "getProfileViewCount", id: req.params.applicantId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Applicant not found" })
+          .send(err);
+      } else console.log("applicant log profile view count", result);
+      {
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
 
-//     //Get Profile view count of particular applicant
-// router.get("/:applicantId/logs/profile-view-count", function(req, res) {
-//   console.log("inside backend profile-view-count");
+//applicant Applies for new job
+router.post("/:applicantId/jobs/:jobId", function(req, res) {
+  //Update the corresponding JobId with this info into job application object ($addToSet)
+  //Increment noOfViews +1
+  // add jobId into applicant Collection as appliedJobs
+  //
 
-//   kafka.make_request(
-//     "logs_topic",
-//     { path: "getProfileViewCount", id: req.params.applicantId },
-//     function(err, result) {
-//       if (err) {
-//         res
-//           .status(404)
-//           .json({ success: false, error: "Applicant not found" })
-//           .send(err);
-//       } else console.log("applicant log profile view count", result);
-//       {
-//         if (result.status) {
-//           res.status(200);
-//           res.send(result);
-//         } else {
-//           res.status(400).json({ success: false });
-//         }
-//       }
-//     }
-//   );
-// });
+  kafka.make_request(
+    "applicant_topic",
+    {
+      path: "jobApply",
+      applicantId: req.params.applicantId,
+      jobId: req.params.jobId,
+      data: req.body
+    },
+    function(err, results) {
+      if (err) {
+        throw err;
+        done(err, {});
+      } else {
+        if (results.code == 200) {
+          return res.status(200).json(results.value);
+        } else {
+          return res.status(500).json(results.value);
+        }
+      }
+    }
+  );
+});
 
-// //applicant Applies for new job
-// router.post("/:applicantId/jobs/:jobId", function(req, res) {
-//   //Update the corresponding JobId with this info into job application object ($addToSet)
-//   //Increment noOfViews +1
-//   // add jobId into applicant Collection as appliedJobs
-//   //
-
-//   kafka.make_request(
-//     "applicant_topic",
-//     {
-//       path: "jobApply",
-//       applicantId: req.params.applicantId,
-//       jobId: req.params.jobId,
-//       data: req.body
-//     },
-//     function(err, results) {
-//       if (err) {
-//         throw err;
-//         done(err, {});
-//       } else {
-//         if (results.code == 200) {
-//           return res.status(200).json(results.value);
-//         } else {
-//           return res.status(500).json(results.value);
-//         }
-//       }
-//     }
-//   );
-// });
-
-// //applicant Saves job
-// router.post("/:applicantId/jobs/:jobId/save", function(req, res) {
-//   //Update applicant schema ADD jobid into savedJobs
-//   //store applicant id in savedJobs of Jobs
-//   kafka.make_request(
-//     "applicant_topic",
-//     {
-//       path: "jobSave",
-//       applicantId: req.params.applicantId,
-//       jobId: req.params.jobId,
-//       data: req.body
-//     },
-//     function(err, results) {
-//       if (err) {
-//         throw err;
-//         done(err, {});
-//       } else {
-//         if (results.code == 200) {
-//           return res.status(200).json(results.value);
-//         } else {
-//           return res.status(500).json(results.value);
-//         }
-//       }
-//     }
-//   );
-// });
+//applicant Saves job
+router.post("/:applicantId/jobs/:jobId/save", function(req, res) {
+  //Update applicant schema ADD jobid into savedJobs
+  //store applicant id in savedJobs of Jobs
+  kafka.make_request(
+    "applicant_topic",
+    {
+      path: "jobSave",
+      applicantId: req.params.applicantId,
+      jobId: req.params.jobId,
+      data: req.body
+    },
+    function(err, results) {
+      if (err) {
+        throw err;
+        done(err, {});
+      } else {
+        if (results.code == 200) {
+          return res.status(200).json(results.value);
+        } else {
+          return res.status(500).json(results.value);
+        }
+      }
+    }
+  );
+});
 
 /**************** Applicant Sending Message ********** */
 
@@ -631,11 +633,14 @@ router.post("/sendMessage", (req, res) => {
 });
 
 /****************Receiving Messages *************** */
-router.get("/receiveMessage", (req, res) => {
+router.get("/receiveMessage/:emails", (req, res) => {
   console.log("Inside getting messages conversation");
-  console.log(req.query.from_email);
-  console.log(req.query.to_email);
-  kafka.make_request("receive_message", req.query, function(err, results) {
+  console.log(req.query);
+  // console.log(req.query.to_email);
+  kafka.make_request("receive_message", req.params.emails, function(
+    err,
+    results
+  ) {
     console.log("In message conversation result call");
     console.log(results);
     if (err) {
@@ -652,10 +657,10 @@ router.get("/receiveMessage", (req, res) => {
 
 /****************Applicant Messages Names *************** */
 
-router.get("/applicantMessages", (req, res) => {
+router.get("/applicantMessages/:from_email", (req, res) => {
   console.log("Inside getting messagers names");
-  console.log(req.query.from_email);
-  kafka.make_request("applicant_messages", req.query, function(err, results) {
+  console.log(req.params);
+  kafka.make_request("applicant_messages", req.params, function(err, results) {
     console.log("In message names result call");
     console.log(results);
     if (err) {
@@ -671,103 +676,157 @@ router.get("/applicantMessages", (req, res) => {
 });
 
 /****************Applicant View All Connections*********************/
-router.get('/viewconnections/:applicant_id', function(req, res){
-  console.log("Backend Applicant View Connections")
-   kafka.make_request('applicant_ViewConnection', {applicant_id:req.params.applicant_id} , function(err,results){
-       console.log('in result');
-       console.log(results);
-       if (err){
-           console.log("Inside err");
-           res.json({
-               status:"error",
-               msg:"Unable to fetch Connections."
-           })
-       }else{
-           console.log("Inside else");
-               res.json(results
-               );
-               res.end();
-           }
-   });
-});
-
-/****************Applicant View Pending Requests*********************/
-router.get('/viewPendingRequests/:applicant_id', function(req, res){
-  console.log("Backend Applicant View Connections")
-   kafka.make_request('applicant_PendingRequests', {applicant_id:req.params.applicant_id} , function(err,results){
-       console.log('in result');
-       console.log(results);
-       if (err){
-           console.log("Inside err");
-           res.json({
-               status:"error",
-               msg:"Unable to fetch Connections."
-           })
-       }else{
-           console.log("Inside else");
-               res.json(results
-               );
-               res.end();
-           }
-   });
-});
-
-
-
-
-/****************Applicant Send Connection*********************/
-router.post("/connections/:applicant_id", function (req, res) {
-    console.log("Backend Applicant Send Connection");
-    kafka.make_request(
-        "applicant_SendConnection",
-        {applicant_id: req.params.applicant_id, body: req.body},
-        function (err, results) {
-            console.log("in result");
-            console.log(results);
-            if (err) {
-                console.log("Inside err");
-                res.json({
-                    status: "error",
-                    msg: "Unable to Send Connection."
-                });
-            } else {
-                console.log("Inside else");
-                res.json({
-                    SendConnections: results
-                });
-
-                res.end();
-            }
-        }
-    );
-});
-
-/****************Search Profile*********************/
-router.post("/searchprofile", function (req, res) {
-  console.log("Backend Search Profile");
+router.get("/viewconnections/:applicant_id", function(req, res) {
+  console.log("Backend Applicant View Connections");
   kafka.make_request(
-      "applicant_SearchProfile",
-      {email:req.body.email},
-      function (err, results) {
-          console.log("in result");
-          console.log(results);
-          if (err) {
-              console.log("Inside err");
-              res.json({
-                  status: "error",
-                  msg: "Unable to Search Profile."
-              });
-          } else {
-              console.log("Inside else");
-              res.json({
-                  SearchedProfile: results
-              });
-
-              res.end();
-          }
+    "applicant_ViewConnection",
+    { applicant_id: req.params.applicant_id },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to fetch Connections."
+        });
+      } else {
+        console.log("Inside else");
+        res.json(results);
+        res.end();
       }
+    }
   );
 });
 
+/****************Applicant View Pending Requests*********************/
+router.get("/viewPendingRequests/:applicant_id", function(req, res) {
+  console.log("Backend Applicant View Connections");
+  kafka.make_request(
+    "applicant_PendingRequests",
+    { applicant_id: req.params.applicant_id },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to fetch Connections."
+        });
+      } else {
+        console.log("Inside else");
+        res.json(results);
+        res.end();
+      }
+    }
+  );
+});
+
+/****************Applicant Send Connection*********************/
+router.post("/connections/:applicant_id", function(req, res) {
+  console.log("Backend Applicant Send Connection");
+  kafka.make_request(
+    "applicant_SendConnection",
+    { applicant_id: req.params.applicant_id, body: req.body },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to Send Connection."
+        });
+      } else {
+        console.log("Inside else");
+        res.json({
+          SendConnections: results
+        });
+
+        res.end();
+      }
+    }
+  );
+});
+
+/****************Search Profile*********************/
+router.post("/searchprofile", function(req, res) {
+  console.log("Backend Search Profile");
+  kafka.make_request(
+    "applicant_SearchProfile",
+    { email: req.body.email },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to Search Profile."
+        });
+      } else {
+        console.log("Inside else");
+        res.json({
+          SearchedProfile: results
+        });
+
+        res.end();
+      }
+    }
+  );
+});
+
+//Get Profile view count of particular applicant
+router.get("/:applicantId/logs/profile-view-count", function(req, res) {
+  console.log("inside backend profile-view-count");
+
+  kafka.make_request(
+    "logs_topic",
+    { path: "getProfileViewCount", id: req.params.applicantId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Applicant not found" })
+          .send(err);
+      } else {
+        console.log("applicant log profile view count", result);
+        if (result.success) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+//Update Profile view count of particular applicant
+router.put("/:applicantId/logs/profile-view-count", function(req, res) {
+  console.log("inside backend update profile-view-count");
+
+  kafka.make_request(
+    "logs_topic",
+    { path: "updateProfileViewCount", id: req.params.applicantId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Applicant not found" })
+          .send(err);
+      } else {
+        console.log("applicant log profile view count updated", result);
+        if (result.success) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
 
 module.exports = router;

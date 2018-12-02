@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 
-
 class applicantNavbar extends Component {
 
      options = [
@@ -27,25 +26,26 @@ class applicantNavbar extends Component {
 
         var div;
 
+    //if the user is logged in, show the logout and profile link
 
-        //if the user is logged in, show the logout and profile link
+    loginOrOut = (
+      <li>
+        <Link to="/logout" className="navbar-brand">
+          <span
+            className="glyphicon glyphicon-off navbar-icon"
+            title="Logout"
+          />
+        </Link>
+      </li>
+    );
 
-        loginOrOut =
-            <li>
-                <Link to="/logout" className="navbar-brand"><span className="glyphicon glyphicon-off navbar-icon"
-                                                                  title="Logout">
-
-                </span>
-                </Link>
-            </li>;
-
-        profile = <li>
-            <Link to="/" title="Profile" className="navbar-brand">
-                <span
-                    className="glyphicon glyphicon-user navbar-icon"
-                />
-            </Link>
-        </li>;
+    profile = (
+      <li>
+        <Link to="/" title="Profile" className="navbar-brand">
+          <span className="glyphicon glyphicon-user navbar-icon" />
+        </Link>
+      </li>
+    );
 
 
         accountSettings = <li className="drpdown">
@@ -78,18 +78,25 @@ class applicantNavbar extends Component {
         search = <input className="form-control mr-sm-1 " type="search" placeholder="Search" aria-label="Search"
                         style={{width: 120}}/>;
 
-        jobs = <Link to="/" className="navbar-brand connections-icon text-center text-white">
-                <span className='glyphicon glyphicon-briefcase '>
-                </span>
-            <div className="text-white">Jobs</div>
-        </Link>;
+    jobs = (
+      <Link
+        to="/jobSearch"
+        className="navbar-brand connections-icon text-center text-white"
+      >
+        <span className="glyphicon glyphicon-briefcase " />
+        <div className="text-white">Jobs</div>
+      </Link>
+    );
 
-        messaging = <Link to="/" className="navbar-brand connections-icon text-center text-white">
-                <span className='glyphicon glyphicon-comment '>
-                </span>
-            <div className="text-white">Messaging</div>
-        </Link>;
-
+    messaging = (
+      <Link
+        to="/messages"
+        className="navbar-brand connections-icon text-center text-white"
+      >
+        <span className="glyphicon glyphicon-comment " />
+        <div className="text-white">Messaging</div>
+      </Link>
+    );
 
         navClassName = "navbar navbar-default navbar-static-top";
 
