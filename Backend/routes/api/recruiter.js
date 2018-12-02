@@ -221,9 +221,16 @@ router.get("/:recruiterId/jobs/top-ten", function(req, res) {
           .status(404)
           .json({ success: false, error: "Recruiter not found" })
           .send(err);
-      } else console.log("Recruiter log Top Ten Jobs", result);
-      {
-        if (result.status) {
+      } else 
+      { console.log("Recruiter log Top Ten Jobs", result);
+        if (result.success) {
+          console.log("Data inside success  -->  "+result.data);
+
+
+
+
+
+
           res.status(200);
           res.send(result);
         } else {
@@ -526,5 +533,36 @@ router.get("/:recruiterId/last-five", function(req, res) {
     }
   );
 });
+
+
+//to edit summary
+router.put(
+    "/summary/edit",
+    passport.authenticate("jwt", { session: false }),
+    (req, res) => {
+        const errors = {};
+        kafka.make_request("edit_recruiter_summary", req.body, function(err, results) {
+            console.log("in result");
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                });
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+
+                res.end();
+            }
+        });
+    }
+);
+
 
 module.exports = router;

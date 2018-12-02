@@ -20,33 +20,36 @@ function JobSaveApplicant(msg, callback) {
   console.log("In handle request Save Jobs:" + JSON.stringify(msg));
 
   ApplicantUser.update(
-    { _id: msg.applicantId },
+    { email: msg.applicantId },
     {
       $push: { savedJobs: msg.jobId }
     },
     function(err, res) {
       if (err) {
-        console.log("unable to update applicant ");
+        console.log("unable to update saved jobs ");
 
         callback(error, {
+          code: 500,
           success: false,
-          status: "Unable to update applicant"
+          status: "Unable to update saved jobs"
         });
       }
+      else{
       JobsModel.update(
         { _id: msg.jobId },
         { $push: { savedBy: msg.applicantId } },
         function(error, res) {
           if (error) {
-            console.log("unable to update job application savedby");
+            console.log("unable to update saved by");
 
             callback(error, { status: false });
           }
           console.log("Job ", msg.jobId, "   updated");
           console.log(res);
-          callback(null, { success: true, status: "Job Saved" });
+          callback(null, { code: 200, success: true, status: "Job saved" });
         }
       );
+      }
     }
   );
 }
@@ -63,70 +66,71 @@ function JobApplyApplicant(msg, callback) {
       JSON.stringify(msg.applicantId)
   );
   //check whether applicant has already applied for this job
-  JobsModel.findOne({ "jobApplications.applicant_id": msg.applicantId },{'jobApplications.$':1})
-    .then(applicant => {
-      console.log("applicant is ", applicant);
+  // JobsModel.findOne({ "jobApplications.applicant_id": msg.applicantId },{'jobApplications.$':1})
+  //   .then(applicant => {
+  //     console.log("applicant is ", applicant);
 
-      if (applicant) {
-        console.log("Applicant has already applied");
-        callback(null, { success: false, status: "Already applied to job" });
-      }
+  //     if (applicant) {
+  //       console.log("Applicant has already applied");
+  //       callback(null, { code: 200, success: false, status: "Already applied to job" });
+  //     }
+      
+        newJobApplication.applicant_id = msg.applicantId;
+        newJobApplication.firstName = msg.data.firstName;
+        newJobApplication.lastName = msg.data.lastName;
+        newJobApplication.address = msg.data.address;
+        newJobApplication.hearAboutUs = msg.data.hearAboutUs;
+        newJobApplication.diversity = msg.data.diversity;
+        newJobApplication.sponsorship = msg.data.sponsorship;
+        newJobApplication.disability = msg.data.disability;
+        newJobApplication.resume = msg.data.resume;
+        newJobApplication.coverLetter = msg.data.coverLetter;
+        console.log("new job application", newJobApplication);
+        //find the correct job document to append to
+        JobsModel.findOneAndUpdate(
+          { _id: msg.jobId },
+          {
+            $push: { jobApplications: newJobApplication },
+            $inc: { noOfViews: 1 }
+          }
+        )
+          .then(jobApplication => {
+            console.log(
+              "Jobs schema      ",
+              jobApplication,
+              "     updated with new Job application "
+            );
+            ApplicantUser.findOneAndUpdate(
+              { email: msg.applicantId },
+              { $push: { appliedJobs: msg.jobId } }
+            )
+              .then(result => {
+                console.log("applicant ", result, "  document updated");
+                callback(null, { code: 200, success: true, status: "job applied" });
+              })
+              .catch(applicantError => {
+                console.log("unable to update applicant user", applicantError);
 
-      newJobApplication.applicant_id = msg.applicantId;
-      newJobApplication.firstName = msg.data.first_name;
-      newJobApplication.lastName = msg.data.last_name;
-      newJobApplication.address = msg.data.address;
-      newJobApplication.hearAboutUs = msg.data.referral;
-      newJobApplication.diversity = msg.data.diversity;
-      newJobApplication.sponsorship = msg.data.sponsorship;
-      newJobApplication.disability = msg.data.disability;
-      newJobApplication.resume = msg.data.resume;
-      newJobApplication.cover_letter = msg.data.cover_letter;
-      console.log("new job application", newJobApplication);
-      //find the correct job document to append to
-      JobsModel.findOneAndUpdate(
-        { _id: msg.jobId },
-        {
-          $push: { jobApplications: newJobApplication },
-          $inc: { noOfViews: 1 }
-        }
-      )
-        .then(jobApplication => {
-          console.log(
-            "Jobs schema      ",
-            jobApplication,
-            "     updated with new Job application "
-          );
-          ApplicantUser.findOneAndUpdate(
-            { email: msg.applicantId },
-            { $push: { appliedJobs: msg.jobId } }
-          )
-            .then(result => {
-              console.log("applicant ", result, "  document updated");
-              callback(null, { success: true, status: "job applied" });
-            })
-            .catch(applicantError => {
-              console.log("unable to update applicant user", applicantError);
-
-              callback(null, { status: false });
+                callback(null, { success: false, status: "unable to apply job" });
+              });
+          })
+          .catch(errorApplication => {
+            console.log(
+              "Error in updating JobApplication subdocument ",
+              errorApplication
+            );
+            callback(null, {
+              success: false,
+              status: "error for updating job applicant subdocument"
             });
-        })
-        .catch(errorApplication => {
-          console.log(
-            "Error in updating JobApplication subdocument ",
-            errorApplication
-          );
-          callback(null, {
-            success: false,
-            status: "error for updating job applicant subdocument"
           });
-        });
-    })
-    .catch(err => {
-      console.log("Errored inside apply job", err);
-      callback(null, {
-        success: false,
-        status: "error for find job applicant"
-      });
-    });
+        
+    // })
+    // .catch(err => {
+    //   console.log("Errored inside apply job", err);
+    //   callback(null, {
+    //     success: false,
+    //     status: "error for find job applicant"
+    //   });
+    // });
 }

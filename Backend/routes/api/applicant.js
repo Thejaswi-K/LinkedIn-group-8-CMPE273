@@ -573,10 +573,11 @@ router.post("/:applicantId/jobs/:jobId", function(req, res) {
         throw err;
         done(err, {});
       } else {
+        console.log("results in backend",results);
         if (results.code == 200) {
-          return res.status(200).json(results.value);
+          return res.status(200).json(results);
         } else {
-          return res.status(500).json(results.value);
+          return res.status(500).json(results);
         }
       }
     }
@@ -600,10 +601,15 @@ router.post("/:applicantId/jobs/:jobId/save", function(req, res) {
         throw err;
         done(err, {});
       } else {
+        console.log("results logged",results);
+        // console.log("results code",results.code);
+        // console.log("results.value", results.value);
+        // console.log("results.status", results.status);
+
         if (results.code == 200) {
-          return res.status(200).json(results.value);
+          return res.status(200).json(results);
         } else {
-          return res.status(500).json(results.value);
+          return res.status(500).json(results);
         }
       }
     }

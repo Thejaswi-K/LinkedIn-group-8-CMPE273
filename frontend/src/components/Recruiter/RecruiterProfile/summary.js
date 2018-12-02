@@ -2,7 +2,7 @@ import Image from "react-bootstrap/es/Image";
 import Card from "@material-ui/core/Card/Card";
 import {Component} from "react";
 import connect from "react-redux/es/connect/connect";
-import {editSummary} from "../../../actions/applicantActions";
+import {editSummary} from "../../../actions/recruiterActions";
 import {getPhoto, postPhotos} from "../../../actions/photoActions";
 
 var React = require('react');
@@ -20,7 +20,7 @@ class Summary extends Component {
             name: "",
             city: "",
             state: "",
-            profileSummary: "",
+            companyName: "",
             profileImage: ""
         };
         this.getPhoto = false;
@@ -106,7 +106,7 @@ class Summary extends Component {
                 lastName: this.props.lastName,
                 city: this.props.city,
                 state: this.props.state,
-                profileSummary: this.props.profileSummary
+                companyName: this.props.companyName
             };
             this.sum = this.sumProp;
         }
@@ -116,7 +116,7 @@ class Summary extends Component {
         var
             cityState = this.sum.city + ", " + this.sum.state;
         var
-            profileSummary = this.sum.profileSummary;
+            companyName = this.sum.companyName;
 
         return (
             <Card className="w-75 p-3 ml-5" style={{overflow: "auto", height: "auto"}}>
@@ -146,7 +146,7 @@ class Summary extends Component {
 
                 <label className="ml-4">{cityState}</label>
 
-                <h5 className="ml-4">{profileSummary}</h5>
+                <h5 className="ml-4">{companyName}</h5>
 
                 <hr/>
 
@@ -163,7 +163,7 @@ class Summary extends Component {
         var
             cityState = this.sum.city + ", " + this.sum.state;
         var
-            profileSummary = this.sum.profileSummary;
+            companyName = this.sum.companyName;
 
 
         return (
@@ -198,7 +198,7 @@ class Summary extends Component {
 
                             <hr/>
 
-                            <input className="ml-4" ref="profileSummary" defaultValue={profileSummary}/>
+                            <input className="ml-4" ref="companyName" defaultValue={companyName}/>
 
                             <center>
                                 <div className="btn btn-toolbar">
@@ -230,7 +230,7 @@ class Summary extends Component {
             lastName: this.refs.lastName.value,
             city: this.refs.city.value,
             state: this.refs.state.value,
-            profileSummary: this.refs.profileSummary.value,
+            companyName: this.refs.companyName.value,
             profileImage: this.state.profileImage
         };
 
