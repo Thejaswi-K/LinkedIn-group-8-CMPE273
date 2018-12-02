@@ -40,6 +40,7 @@ var JobPost = require("./services/Jobs/postJob");
 var RecruiterGetJobs = require("./services/Jobs/recruiterGetJobs");
 var ApplicantViewPendingRequests = require("./services/applicants/applicantViewPendingRequests");
 var ApplicantSearchProfile = require("./services/applicants/applicantSearchProfile");
+var ApplicantAcceptConnection = require("./services/applicants/ApplicantConnectionAccept")
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -110,7 +111,8 @@ handleTopicRequest("search_job", JobSearch);
 handleTopicRequest("post_job", JobPost);
 handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
-handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);*/
+handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
+handleTopicRequest("applicant_AcceptConnection", ApplicantSendConnections);*/
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */
@@ -153,5 +155,6 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_summary;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_PendingRequests;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_SearchProfile;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_AcceptConnection;
 ) &
 */

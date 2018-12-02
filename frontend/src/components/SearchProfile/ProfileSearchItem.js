@@ -1,8 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import jwt_decode from "jwt-decode";
 
 
 class ProfileSearchItem extends Component {
+
+    onConnectClick() {
+      //  console.log('email on click',email)
+        if (localStorage.getItem("applicantToken")) {
+            let token = localStorage.getItem("applicantToken");
+            this.decodedApplicant = jwt_decode(token);
+            this.isApplicantLoggedIn = true;
+            this.email = this.decodedApplicant.email;
+            console.log("Emmail", this.email)
+        }
+        const requestEmail={
+            requestFrom:this.email
+        }
+        axios
+          .post(`http://localhost:3001/applicants/connections/${this.props.toEmail}`, requestEmail)
+          .then(function(res) { 
+              if (res.data) {
+                alert("Connection Sent Successfully")
+                
+              } 
+    })
+          
+    }
+    
 
   render() {
     const { profile } = this.props;
@@ -25,7 +51,12 @@ class ProfileSearchItem extends Component {
         </div>
         <div className="col-3">
             <div className="text-right">
-                <button type="submit" className="btn btn-primary">
+                <button 
+                type="submit" 
+                className="btn btn-primary"
+             //  onClick={this.onConnectClick(profile.email).bind(this)} 
+               onClick={this.onConnectClick.bind(this)} 
+                >
                     Connect
                 </button>
             </div>
