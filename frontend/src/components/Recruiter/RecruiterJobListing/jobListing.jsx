@@ -1,16 +1,17 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { CONSTANTS } from "../../../Constants";
 
 
-export default class JobListingComponent extends Component {
+class JobListingComponent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "recruiter1@gmail.com",
+      //recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
+      recruiter: "recruiter13@gmail.com",
       joblist: ""
     };
   }
@@ -22,7 +23,8 @@ export default class JobListingComponent extends Component {
         `${CONSTANTS.BACKEND_URL}/recruiters/` + this.state.recruiter + "/jobs"
       )
       .then(response => {
-        console.log(response.data);
+        console.log("Inside JobListing component",response.data.jobsList);
+        // console.log("Inside JobListing component didmount",response.data.jobsList.data);
         this.setState({
           joblist: response.data.jobsList.data
         });
@@ -42,7 +44,7 @@ export default class JobListingComponent extends Component {
   buttonView = e => {
     e.preventDefault();
     this.props.history.push({
-      pathname: "/jobApplicantsDetails",
+      pathname: "/recruiterjobstats",
       state: e.target.value
     });
   };
@@ -167,3 +169,6 @@ export default class JobListingComponent extends Component {
     );
   }
 }
+
+
+export default withRouter(JobListingComponent);

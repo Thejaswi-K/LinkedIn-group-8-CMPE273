@@ -22,12 +22,9 @@ import JobApply from "./Job/jobapply";
 import JobSearch from "./Job/jobSearch";
 import JobList from "./Job/jobList";
 import MainRecruiterJobListing from './Recruiter/RecruiterJobListing/main';
-<<<<<<< HEAD
 import Temp from './Temp';
 import MainRecruiterJobStats from './Recruiter/RecruiterJobStastics/main'; 
-=======
 import ProfileSearch from './SearchProfile/ProfileSearch'
->>>>>>> a6c5987852bcad68d579b006fbf791450067f9ba
 // Create a Main Component
 class Main extends Component {
   render() {
@@ -66,12 +63,9 @@ class Main extends Component {
           <Route path="/viewPendingRequests" component={ViewPendingRequests} />
           <Route path="/jobSearch" component={JobSearch} />
           <Route path="/jobList" component={JobList} />
-<<<<<<< HEAD
           <Route path="/temp" component={Temp} />
           <Route path="/recruiterjobstats" component={MainRecruiterJobStats} />
-=======
           <Route path="/searchProfile" component={ProfileSearch}/>
->>>>>>> a6c5987852bcad68d579b006fbf791450067f9ba
         </div>
       </Provider>
     );
