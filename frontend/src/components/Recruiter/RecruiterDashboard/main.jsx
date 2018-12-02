@@ -46,11 +46,11 @@ export default class MainRecruiterDashboard extends Component {
             <RightRailComponent />
           </div>
         </div>
-        <div className="row" >
+        {/* <div className="row" >
           <div className="col-9">
             <UserTraceDashboard />
           </div>
-        </div>
+        </div> */}
 
       </div>
     );

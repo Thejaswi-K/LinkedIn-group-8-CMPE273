@@ -7,7 +7,7 @@ var { mongoose } = require("./db/mongo");
 //var signin = require('./services/signin.js');
 var Log = require("./services/logs.js");
 var Job = require("./services/jobs.js");
-var JobSearch = require("./services/Jobs/jobSearch"); 
+var JobSearch = require("./services/Jobs/jobSearch");
 var ApplicantDetails = require("./services/applicants/applicantViewProfile");
 var RecruiterDetails = require("./services/recruiter/recruiterViewProfile");
 var ApplicantLogin = require("./services/applicants/applicantLogin");
@@ -112,6 +112,7 @@ handleTopicRequest("post_job", JobPost);
 handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
 handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
+
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */

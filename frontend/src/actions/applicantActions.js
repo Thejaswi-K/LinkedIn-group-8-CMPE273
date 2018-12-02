@@ -29,12 +29,12 @@ export const applicantSignup = (userData, history) => dispatch => {
     .then(res => {
       // Save to localStorage
 
-      if (res.status === 200) {
+      if (res.status === 201) {
         axios.defaults.withCredentials = true;
         axios
           .post(`${CONSTANTS.BACKEND_URL}/applicants/mongo`, userData)
           .then(res => {
-            if (res.status === 200) {
+            if (res.status === 201) {
               const { token } = res.data;
               //set token to local storage
               localStorage.setItem("applicantToken", token);
@@ -44,12 +44,13 @@ export const applicantSignup = (userData, history) => dispatch => {
               // Set current user
               dispatch(setCurrentUser(decoded));
               history.push("/applicantsignup");
+              alert("Applicant created successfully.");
             }
           })
           .catch(err =>
             dispatch({
               type: APPLICANT_SIGNUP_ERROR_REDUCER,
-              payload: err.response
+              payload: err.response.data.message
             })
           );
       } else {
@@ -59,7 +60,7 @@ export const applicantSignup = (userData, history) => dispatch => {
     .catch(err =>
       dispatch({
         type: APPLICANT_SIGNUP_ERROR_REDUCER,
-        payload: err.response
+        payload: err.response.data.message
       })
     );
 };

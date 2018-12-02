@@ -198,9 +198,8 @@ function getJobsCityWise(msg, callback) {
       // Keep job title using $first
       {
         $group: {
-          _id: { month: "$location" },
-          jobtitle: { $first: "$title" },
-
+          _id: { location: "$location" },
+          
           count: { $sum: 1 }
         }
       }
@@ -332,7 +331,7 @@ function clickCount(msg, callback) {
 
   console.log("In handle request:" + JSON.stringify(msg));
   jobsModel
-    .find({ recruiterId: msg.id, noOfViews: { $gt: 0 } }, "title noOfViews")
+    .find({ recruiterId: msg.id, noOfViews: { $gt: 0 } }, "title noOfViews").sort({noOfViews:-1}).limit(10)
     .then(clickCount => {
       if (!clickCount) {
         callback(null, {
@@ -400,12 +399,12 @@ function lastFiveJobs(msg, callback) {
       { $match: { recruiterId: msg.id } },
       {
         $project: {
-          jobTitle: 1,
+          title: 1,
           jobApplicationssize: { $size: { $ifNull: ["$jobApplications", []] } }
         }
       },
       // {$pull : {jobApplicationssize:{$lt:1}}},
-      { $sort: { jobApplicationssize: -1 } },
+      { $sort: { jobApplicationssize: 1 } },
       { $limit: 5 }
     ])
 

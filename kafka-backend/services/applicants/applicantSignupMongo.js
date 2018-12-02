@@ -9,7 +9,7 @@ var pool = require('../../db/pool');
 const ApplicantUser = require('../../Model/Applicant');
 
 function handle_request(msg, callback) {
-
+    console.log("Kafka Backend --> Inside create recruiter SignUp(MongoDB) Request Handler");
     var a;
     var b;
 
