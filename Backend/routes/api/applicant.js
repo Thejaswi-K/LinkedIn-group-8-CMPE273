@@ -76,13 +76,7 @@ router.post("/login", (req, res) => {
 
 //applicant signup
 router.post("/", (req, res) => {
-  // const { errors, isValid } = validateRegisterInput(req.body);
-
-  // Check Validation
-  /* if (!isValid) {
-           return res.status(400).json(errors);
-       }*/
-
+  console.log("Inside Applicant signup(MYSQL) backend");
   kafka.make_request("applicant_signup", req.body, function(err, results) {
     console.log("in result");
     console.log(results);
@@ -93,12 +87,19 @@ router.post("/", (req, res) => {
         msg: "System Error, Try Again."
       });
     } else {
-      if (results.code === 200) {
+      if (results.code === 201) {
+        console.log("Applicant record in MYSQL created successfully");
         res.status(results.code).json({
           success: true,
           token: "Bearer " + results.token
         });
+      } else if (results.code === 409) {
+        console.log("User already exists in MYSQL");
+        res.status(results.code).json({
+          message: "User already exists"
+        });
       } else {
+        console.log("Unable to create applicant record in MYSQL");
         res.status(results.code).json({
           error: results.err
         });
@@ -107,6 +108,38 @@ router.post("/", (req, res) => {
     }
   });
 });
+// router.post("/", (req, res) => {
+//   // const { errors, isValid } = validateRegisterInput(req.body);
+
+//   // Check Validation
+//   /* if (!isValid) {
+//            return res.status(400).json(errors);
+//        }*/
+
+//   kafka.make_request("applicant_signup", req.body, function(err, results) {
+//     console.log("in result");
+//     console.log(results);
+//     if (err) {
+//       console.log("Inside err");
+//       res.json({
+//         status: "error",
+//         msg: "System Error, Try Again."
+//       });
+//     } else {
+//       if (results.code === 200) {
+//         res.status(results.code).json({
+//           success: true,
+//           token: "Bearer " + results.token
+//         });
+//       } else {
+//         res.status(results.code).json({
+//           error: results.err
+//         });
+//       }
+//       res.end();
+//     }
+//   });
+// });
 
 //applicant signup call for mongodb
 router.post("/mongo", (req, res) => {
@@ -130,7 +163,7 @@ router.post("/mongo", (req, res) => {
         msg: "System Error, Try Again."
       });
     } else {
-      if (results.code === 200) {
+      if (results.code === 201) {
         res.status(results.code).json({
           success: true,
           token: "Bearer " + results.token

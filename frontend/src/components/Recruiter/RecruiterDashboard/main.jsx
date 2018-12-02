@@ -6,6 +6,8 @@ import RightRailComponent from "./rightrail";
 import  UserTraceDashboard from "./userTraceDashboard";
 import JobNavbar from "../../Navbar/JobNavbar";
 import GraphDashboardMain from "./graphDashboard";
+// import GraphTopTenJobPostingComponent from './GraphDashboardComponents/graphTopTenJobPosting';
+
 export default class MainRecruiterDashboard extends Component {
   constructor(props) {
     super(props);
@@ -46,11 +48,9 @@ export default class MainRecruiterDashboard extends Component {
             <RightRailComponent />
           </div>
         </div>
-        <div className="row" >
-          <div className="col-9">
-            <UserTraceDashboard />
-          </div>
-        </div>
+        {/* <div className="row" >
+       <GraphTopTenJobPostingComponent/>
+        </div> */}
 
       </div>
     );

@@ -1,4 +1,4 @@
-//Load Messages Model
+  //Load Messages Model
 const Jobs = require("../../Model/Jobs");
 
 function handle_request(msg, callback) {
@@ -8,7 +8,7 @@ function handle_request(msg, callback) {
   var location = msg.joblocation;
 
   //not working with array? ? ?
-  Jobs.find({ $or: [{ title: title }, { location: location }] })
+  Jobs.find({ $and: [({ title: title }, { location: location })] })
     .then(job => {
       console.log("result of jobs", job);
       if (!job) {
