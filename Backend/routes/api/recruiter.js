@@ -552,4 +552,35 @@ router.get("/:recruiterId/last-five", function(req, res) {
   );
 });
 
+
+//to edit summary
+router.put(
+    "/summary/edit",
+    passport.authenticate("jwt", { session: false }),
+    (req, res) => {
+        const errors = {};
+        kafka.make_request("edit_recruiter_summary", req.body, function(err, results) {
+            console.log("in result");
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                });
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+
+                res.end();
+            }
+        });
+    }
+);
+
+
 module.exports = router;

@@ -68,8 +68,19 @@
       })();
       $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
+          alert("I am clicked");
             $('#sidebar').toggleClass('active');
-        })
+        });
+        $('#openresume').on('click', function(){
+          alert(" I am clicked");
+          $('#pop-up').addClass('active');
+          $('#pop-up-overlay').addClass('active');
+        });
+        //removes the "active" class to .popup and .popup-content when the "Close" button is clicked 
+        $('.#closeresume').on('click', function(){
+          $("#pop-up").removeClass("active");
+          $("#pop-up-overlay").removeClass("active");
+        });
       });
     </script>
     <div id="root"></div>
