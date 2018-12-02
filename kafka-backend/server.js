@@ -7,7 +7,7 @@ var { mongoose } = require("./db/mongo");
 //var signin = require('./services/signin.js');
 var Log = require("./services/logs.js");
 var Job = require("./services/jobs.js");
-var JobSearch = require("./services/Jobs/jobSearch"); 
+var JobSearch = require("./services/Jobs/jobSearch");
 var ApplicantDetails = require("./services/applicants/applicantViewProfile");
 var RecruiterDetails = require("./services/recruiter/recruiterViewProfile");
 var ApplicantLogin = require("./services/applicants/applicantLogin");
@@ -73,7 +73,7 @@ function handleTopicRequest(topic_name, fname) {
 // Add your TOPICs here
 //first argument is topic name
 //second argument is a function that will handle this topic request
-handleTopicRequest("logs_topic", Log);
+/*handleTopicRequest("logs_topic", Log);
 handleTopicRequest("jobs_topic", Job);
 handleTopicRequest("applicant_details", ApplicantDetails);
 handleTopicRequest("recruiter_details", RecruiterDetails);
@@ -111,7 +111,8 @@ handleTopicRequest("search_job", JobSearch);
 handleTopicRequest("post_job", JobPost);
 handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
-handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
+handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);*/
+
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */
