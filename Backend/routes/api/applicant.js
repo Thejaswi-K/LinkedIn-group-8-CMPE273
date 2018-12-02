@@ -676,11 +676,11 @@ router.get("/applicantMessages/:from_email", (req, res) => {
 });
 
 /****************Applicant View All Connections*********************/
-router.get("/viewconnections/:applicant_id", function(req, res) {
+router.get("/viewconnections/:email", function(req, res) {
   console.log("Backend Applicant View Connections");
   kafka.make_request(
     "applicant_ViewConnection",
-    { applicant_id: req.params.applicant_id },
+    { email: req.params.email },
     function(err, results) {
       console.log("in result");
       console.log(results);
@@ -700,11 +700,11 @@ router.get("/viewconnections/:applicant_id", function(req, res) {
 });
 
 /****************Applicant View Pending Requests*********************/
-router.get("/viewPendingRequests/:applicant_id", function(req, res) {
+router.get("/viewPendingRequests/:email", function(req, res) {
   console.log("Backend Applicant View Connections");
   kafka.make_request(
     "applicant_PendingRequests",
-    { applicant_id: req.params.applicant_id },
+    { email: req.params.email },
     function(err, results) {
       console.log("in result");
       console.log(results);
