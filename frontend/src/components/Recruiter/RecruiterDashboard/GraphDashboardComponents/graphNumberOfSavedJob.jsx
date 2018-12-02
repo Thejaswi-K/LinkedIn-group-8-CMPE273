@@ -68,7 +68,7 @@ export default class GraphNumberofSavedJobComponent extends Component {
           <Bar
           data={this.state.chartData}
           width={100}
-          height={100}
+          height={50}
           options={
             {
           legend: {

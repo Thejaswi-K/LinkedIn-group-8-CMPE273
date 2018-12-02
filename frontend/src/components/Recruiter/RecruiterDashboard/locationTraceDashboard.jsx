@@ -119,15 +119,15 @@ export default class LocationTraceDashboard extends Component {
   }
   locationSubmitHandler(e){
     e.preventDefault();
-    console.log("Username of applicant ", this.state.user);
+    console.log("Location is ", this.state.location);
 
     axios
     .get(
-      `${CONSTANTS.BACKEND_URL}/recruiters/` + this.state.recruiter + "/logs/location/"+ this.state.location)
+      `${CONSTANTS.BACKEND_URL}/recruiters/locations/track/`+ this.state.location)
     .then(response => {
-      console.log("Inside user trace   component",response.data);
+      console.log("Inside location trace   component",response.data);
       //console.log("Inside  user trace   component didmount",response.data.jobsList.data);
-      var usertracked = this.state.user;
+      var locationTracked = this.state.location;
       var tempstate = {...this.state.chartData};
       tempstate.datasets[0].data = response.data.data;
       tempstate.labels = response.data.labels;
@@ -135,7 +135,7 @@ export default class LocationTraceDashboard extends Component {
 
      this.setState({
        chartData : tempstate,
-       user : usertracked
+       location : locationTracked
      })
       
      
@@ -163,15 +163,15 @@ export default class LocationTraceDashboard extends Component {
             margin: "5px"
           }}
         >
-          <h4 style={{ textAlign: "center" }}>User Trace Diagram</h4>
+          <h4 style={{ textAlign: "center" }}>Location Trace Diagram</h4>
           <form>
                     <div className="form-group col-2">
-                        <label for="exampleFormControlInput1">Enter User Name:</label>
+                        <label for="exampleFormControlInput1">Enter Location:</label>
                         <input
                       type="text"
                       class="form-control"
                       placeholder="location"
-                      name="user"
+                      name="location"
                       onChange={this.valueChangeHandler}
                     />
                        

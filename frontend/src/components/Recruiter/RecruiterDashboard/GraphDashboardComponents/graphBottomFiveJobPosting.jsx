@@ -63,6 +63,7 @@ export default class GraphBottomFiveJobPostingComponent extends Component {
           style={{
             borderRadius: "7px",
             margin: "5px"
+            
           }}
         >
           <h4 style={{ textAlign: "center" }}>Bottom 5 job Posting</h4>
@@ -70,7 +71,7 @@ export default class GraphBottomFiveJobPostingComponent extends Component {
           <Bar
           data={this.state.chartData}
           width={100}
-          height={100}
+          height={50}
           options={
             {
           legend: {
