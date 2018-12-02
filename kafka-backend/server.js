@@ -1,14 +1,13 @@
 var connection = new require("./kafka/Connection");
-var {mongoose} = require("./db/mongo");
+var { mongoose } = require("./db/mongo");
 //topics files
 //var signin = require('./services/signin.js');
-
-var receiveMessage = require("./services/applicants/receiveMessage");
 
 //topics files
 //var signin = require('./services/signin.js');
 var Log = require("./services/logs.js");
 var Job = require("./services/jobs.js");
+var JobSearch = require("./services/Jobs/jobSearch"); 
 var ApplicantDetails = require("./services/applicants/applicantViewProfile");
 var RecruiterDetails = require("./services/recruiter/recruiterViewProfile");
 var ApplicantLogin = require("./services/applicants/applicantLogin");
@@ -36,6 +35,10 @@ var EditApplicantEducation = require("./services/profile/applicant/editEducation
 var AddApplicantSkill = require("./services/profile/applicant/addSkill");
 var EditApplicantSkill = require("./services/profile/applicant/editSkill");
 var EditApplicantSummary = require("./services/profile/applicant/editSummary");
+var JobPost = require("./services/Jobs/postJob");
+var RecruiterGetJobs = require("./services/Jobs/recruiterGetJobs");
+var ApplicantViewPendingRequests = require("./services/applicants/applicantViewPendingRequests");
+var ApplicantSearchProfile = require("./services/applicants/applicantSearchProfile");
 
 function handleTopicRequest(topic_name, fname) {
     //var topic_name = 'root_topic';
@@ -71,61 +74,61 @@ function handleTopicRequest(topic_name, fname) {
 //first argument is topic name
 //second argument is a function that will handle this topic request
 
-// handleTopicRequest("logs_topic", Log);
-// handleTopicRequest("jobs_topic", Job);
-// handleTopicRequest("applicant_details", ApplicantDetails);
-// handleTopicRequest("recruiter_details", RecruiterDetails);
-// handleTopicRequest("applicant_login", ApplicantLogin);
-// handleTopicRequest("recruiter_login", RecruiterLogin);
-// handleTopicRequest("applicant_signup", ApplicantSignup);
-// handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
-// handleTopicRequest("recruiter_signup", RecruiterSignup);
-// handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
-// handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
-// handleTopicRequest("applicant_delete", ApplicantDelete);
-// handleTopicRequest("applicant_topic", Applicant);
-// handleTopicRequest("send_message", sendMessage);
-// handleTopicRequest("receive_message", receiveMessage);
-// handleTopicRequest("logs_topic", Log);
-// handleTopicRequest("jobs_topic", Job);
-// handleTopicRequest("applicant_details", ApplicantDetails);
-// handleTopicRequest("recruiter_details", RecruiterDetails);
-// handleTopicRequest("applicant_login", ApplicantLogin);
-// handleTopicRequest("recruiter_login", RecruiterLogin);
-// handleTopicRequest("applicant_signup", ApplicantSignup);
-// handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
-// handleTopicRequest("recruiter_signup_mongo", RecruiterSignupMongo);
-// handleTopicRequest("recruiter_signup", RecruiterSignup);
-// handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
-// handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
-// handleTopicRequest("applicant_delete", ApplicantDelete);
-// handleTopicRequest("applicant_topic", Applicant);
-// handleTopicRequest("send_message", sendMessage);
-// handleTopicRequest("receive_message", receiveMessage);
-// handleTopicRequest("recruiter_JobView",RecruiterJobView);
-// handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
-// handleTopicRequest("recruiter_delete", RecruiterDelete);
-// handleTopicRequest("recruiter_JobView", RecruiterJobView);
-// handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
-// handleTopicRequest("add_experience", AddApplicantExperience);
-// handleTopicRequest("edit_experience", EditApplicantExperience);
-// handleTopicRequest("edit_education", EditApplicantEducation);
-// handleTopicRequest("add_education", AddApplicantEducation);
-// handleTopicRequest("add_skill", AddApplicantSkill);
-// handleTopicRequest("edit_skill", EditApplicantSkill);
-// handleTopicRequest("edit_summary", EditApplicantSummary);
+handleTopicRequest("logs_topic", Log);
+handleTopicRequest("jobs_topic", Job);
+handleTopicRequest("applicant_details", ApplicantDetails);
+handleTopicRequest("recruiter_details", RecruiterDetails);
+handleTopicRequest("applicant_login", ApplicantLogin);
+handleTopicRequest("recruiter_login", RecruiterLogin);
+handleTopicRequest("applicant_signup", ApplicantSignup);
+handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
+handleTopicRequest("recruiter_signup", RecruiterSignup);
+handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
+handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
+handleTopicRequest("applicant_delete", ApplicantDelete);
+handleTopicRequest("applicant_topic", Applicant);
+handleTopicRequest("send_message", sendMessage);
+handleTopicRequest("receive_message", receiveMessage);
+handleTopicRequest("logs_topic", Log);
+handleTopicRequest("jobs_topic", Job);
+handleTopicRequest("applicant_details", ApplicantDetails);
+handleTopicRequest("recruiter_details", RecruiterDetails);
+handleTopicRequest("applicant_login", ApplicantLogin);
+handleTopicRequest("recruiter_login", RecruiterLogin);
+handleTopicRequest("applicant_signup", ApplicantSignup);
+handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
+handleTopicRequest("recruiter_signup_mongo", RecruiterSignupMongo);
+handleTopicRequest("recruiter_signup", RecruiterSignup);
+handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
+handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
+handleTopicRequest("applicant_delete", ApplicantDelete);
+handleTopicRequest("applicant_topic", Applicant);
+handleTopicRequest("send_message", sendMessage);
+handleTopicRequest("receive_message", receiveMessage);
+handleTopicRequest("recruiter_JobView",RecruiterJobView);
+handleTopicRequest("recruiter_JobUpdate",RecruiterJobUpdate);
+handleTopicRequest("recruiter_delete", RecruiterDelete);
+handleTopicRequest("recruiter_JobView", RecruiterJobView);
+handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
+handleTopicRequest("add_experience", AddApplicantExperience);
+handleTopicRequest("edit_experience", EditApplicantExperience);
+handleTopicRequest("edit_education", EditApplicantEducation);
+handleTopicRequest("add_education", AddApplicantEducation);
+handleTopicRequest("add_skill", AddApplicantSkill);
+handleTopicRequest("edit_skill", EditApplicantSkill);
+handleTopicRequest("edit_summary", EditApplicantSummary);
 
-// handleTopicRequest("recruiter_delete", RecruiterDelete);
-// handleTopicRequest("recruiter_JobView", RecruiterJobView);
-// handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
-// handleTopicRequest("applicant_messages", applicantMessages);
-// handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
-// handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
-// handleTopicRequest("search_job", JobSearch);
-// handleTopicRequest("post_job", JobPost);
-// handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
-// handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
-// handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
+handleTopicRequest("recruiter_delete", RecruiterDelete);
+handleTopicRequest("recruiter_JobView", RecruiterJobView);
+handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
+handleTopicRequest("applicant_messages", applicantMessages);
+handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
+handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
+handleTopicRequest("search_job", JobSearch);
+handleTopicRequest("post_job", JobPost);
+handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
+handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
+handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */

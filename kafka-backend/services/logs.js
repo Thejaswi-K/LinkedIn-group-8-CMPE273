@@ -107,43 +107,61 @@ function updateProfileViewCount(msg, callback) {
 function getJobsTopTen(msg, callback) {
   console.log("KAFKA : getJobsTopTen --> ", msg.id);
 
-  jobsModel.aggregate([
-    { $match: { recruiterId: msg.id } },
-    {
-      $project: {
-        _id:1,
-        jobTitle: 1,
-        jobApplications: 1,
-        jobApplicationssize: { $size: { "$ifNull": ["$jobApplications", []] } }
-      }
-    },
-    // {$pull : {jobApplicationssize:{$lt:1}}},
-    { $sort: { "jobApplicationssize": -1 } },
-    { $limit: 10 },
-    { $unwind: "$jobApplications" },
-    {
-      $group: {
-        _id: { month: { $month: "$jobApplications.appliedOn" } },
-        count: { $sum: 1 }
-      }
-    }
-  ])
-  .then(count => {
-    console.log("Result in get jobs top ten applications per month ", count);
-    callback(null, {
-      success: true,
-      status: "jobs top ten applications per month",
-      data: count
-    });
-  })
-  .catch(err => {
-    console.log("top ten applications per month aggregation failed", err);
-    callback(null, {
-      success: false,
-      status: "top ten applications per month failed"
-    });
-  })
+  jobsModel
+    .aggregate([
+      //match with recruiteriD
+      { $match: { recruiterId: msg.id } },
+      //get count of JobApplication size
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          jobApplications: 1,
+          jobApplicationssize: { $size: { $ifNull: ["$jobApplications", []] } }
+        }
+      },
+      //Remove Job Application size less than 0
+      { $match: { jobApplicationssize: { $gt: 0 } } },
+      //Sort by decreasing order
+      { $sort: { jobApplicationssize: -1 } },
+      //Take only top 10
+      { $limit: 10 },
+      // Unwind each element in the JobApplications array for computation
+      { $unwind: "$jobApplications" },
+      //group each key now, by month and job_id, then count number of occurences and store to count
+      // Keep job title using $first
+      {
+        $group: {
+          _id: { month: { $month: "$jobApplications.appliedOn" }, id: "$_id" },
+          jobtitle: { $first: "$title" },
 
+          count: { $sum: 1 }
+        }
+      },
+      // group based on job id, and add all details together into an array
+      {
+        $group: {
+          _id: { id: "$_id.id" },
+          jobtitle: { $first: "$jobtitle" },
+          job: { $push: { month: "$_id.month", count: "$count" } }
+        }
+      }
+    ])
+    .then(resultJob => {
+      console.log("Result in get jobs top ten applications per month ", resultJob);
+      callback(null, {
+        success: true,
+        status: "jobs top ten applications per month",
+        data: resultJob
+      });
+    })
+    .catch(err => {
+      console.log("top ten applications per month aggregation failed", err);
+      callback(null, {
+        success: false,
+        status: "top ten applications per month failed"
+      });
+    });
 }
 //Get request to fetch particular user track history
 function trackUserId(msg, callback) {
@@ -198,7 +216,7 @@ function createTrackUserId(msg, callback) {
         tracker: {
           page: "Sign up"
         }
-      });
+      }); 
       newTracker
         .save()
         .then(function(result) {
@@ -306,7 +324,7 @@ function clickCountIncrementer(msg, callback) {
 }
 
 //Get request to fetch Bottom 5 jobs of a recruiter (least number of applications)
-// https://stackoverflow.com/questions/9040161/mongo-order-by-length-of-array 
+// https://stackoverflow.com/questions/9040161/mongo-order-by-length-of-array
 function lastFiveJobs(msg, callback) {
   console.log("KAFKA : Last five jobs  of  --> ", msg.id);
 
@@ -317,11 +335,11 @@ function lastFiveJobs(msg, callback) {
       {
         $project: {
           jobTitle: 1,
-          jobApplicationssize: {$size: { "$ifNull": [ "$jobApplications", [] ] } }
+          jobApplicationssize: { $size: { $ifNull: ["$jobApplications", []] } }
         }
       },
       // {$pull : {jobApplicationssize:{$lt:1}}},
-      { $sort: { "jobApplicationssize": -1 } },
+      { $sort: { jobApplicationssize: -1 } },
       { $limit: 5 }
     ])
 
