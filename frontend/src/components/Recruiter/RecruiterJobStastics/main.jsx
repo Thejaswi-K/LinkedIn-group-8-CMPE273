@@ -27,8 +27,8 @@ export default class MainRecruiterJobStats extends Component {
     return (
       <div
         style={{
-          minHeight: "100vh",
-          minWidth: "100%",
+          // minHeight: "100vh",
+          // minWidth: "100%",
           boxSizing: "border-box",
           backgroundColor: "#f4f4f4",
           borderRadius: "15px"
@@ -40,7 +40,7 @@ export default class MainRecruiterJobStats extends Component {
 
        
         <div className="row">
-        <div className="col-3">
+        <div className="col-3" >
             <LeftRailComponent jobId={this.state.jobId}/>
             {/* <h1> Hello there!</h1> */}
         </div>

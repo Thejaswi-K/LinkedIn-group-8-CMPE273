@@ -9,6 +9,7 @@ import ProfileSearchItem from './ProfileSearchItem';
 
 class ProfileSearch extends Component {
   arr=[]
+  
     constructor(){
         super();
         this.state={
@@ -25,11 +26,12 @@ class ProfileSearch extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-     // if(nextProps.connection.allconnections !== undefined){
+     if(nextProps.searchProfile.searchedprofiles.SearchedProfile !== undefined){
      this.arr  = nextProps.searchProfile.searchedprofiles.SearchedProfile;
-        
+     
      console.log("Array is" + this.arr);
-     // }
+     
+     }
      
     }
     
@@ -48,12 +50,11 @@ onSubmit(e){
     }
   render() {
     let profileItems;
-        
-
-     
+    
+    
         if(this.arr.length>0){
         
-        console.log("print all", this.arr);
+        console.log("print arr", this.arr);
         profileItems = this.arr.map(profile => (
                
           <div>
@@ -63,8 +64,11 @@ onSubmit(e){
       ));
         
         }
-   
-
+        else{
+          profileItems=<div className="text-center"><h4>Please Search By Name. No Results Found</h4></div>
+        }
+      
+        
     return (
         <div className="login">
         <div className="container">
@@ -82,7 +86,7 @@ onSubmit(e){
                   <input
                     type="text"
                     className="form-control form-control-lg"
-                    placeholder="Search by Email"
+                    placeholder="Search People"
                     name="firstName"
                     value={this.state.firstName}
                     onChange={this.onChange}
@@ -100,6 +104,7 @@ onSubmit(e){
           </div>
           <br/>
               {profileItems}
+              
         </div>
         
       </div>

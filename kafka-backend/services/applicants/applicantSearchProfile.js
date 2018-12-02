@@ -1,21 +1,42 @@
 // Load Property model
 const Applicants = require('../../Model/Applicant');
+const Recruiter = require('../../Model/Recruiter')
 
 
 function handle_request(msg, callback) {
     console.log("KAFKA : search Profile --> ", msg.body);
     var res = {};
-    
-    Applicants.find({firstName:msg.firstName})
+    var profile1=[]
+    var profile2=[]
+    var profiles=[]
+    Recruiter.find({
+        firstName:msg.firstName
+     })
+
   .then(profile => {
-    if (!profile) {
-        res.code = 404 ;
-        res.message = "No Profile found" ;
-        callback(null,res);
-    }
+      if(profile.length>0){
+        profile1.push(profile)
+        profiles=profiles.concat(profile1[0])
+      }
+      Applicants.find({
+        firstName:msg.firstName
+     })
+
+  .then(profile => {
+    if(profile.length>0){
+        profile2.push(profile)
+        profiles=profiles.concat(profile2[0])
+      }
+    callback(null,profiles);
+
     
-    callback(null,profile);
 })
+
+console.log("Hi",profiles)
+
+    
+    
+  })
 .catch(function (err) {
     res.message = err;
     res.code = 400;

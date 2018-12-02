@@ -2,9 +2,9 @@
 const Applicants = require('../../Model/Applicant');
 
 function handle_request(msg, callback) {
-    console.log("KAFKA : viewApplicantPendingRequests --> ", msg.applicant_id);
+    console.log("KAFKA : viewApplicantPendingRequests --> ", msg.email);
     var res = {};
-    Applicants.findById({_id:msg.applicant_id},
+    Applicants.find({email:msg.email},
         { 'connectionsRequests':['requestFrom'] }
   )
   .then(job => {

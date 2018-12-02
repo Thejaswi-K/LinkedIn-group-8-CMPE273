@@ -69,7 +69,7 @@ router.get("/", function(req, res) {
 router.get("/jobSearch", function(req, res) {
   console.log("inside backend /jobs/:title&:location");
 
-  kafka.make_request("jobs_topic", req.query, function(err, result) {
+  kafka.make_request("search_job", req.query, function(err, result) {
     if (err) {
       res
         .status(404)
