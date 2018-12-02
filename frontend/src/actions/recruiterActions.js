@@ -107,6 +107,7 @@ export const recruiterDetails = (recruiterEmail) => dispatch => {
 //edit summary
 export const editSummary = summary => dispatch => {
     axios.defaults.withCredentials = true;
+    setAuthToken(localStorage.getItem("recruiterToken"));
     axios
         .put(`${CONSTANTS.BACKEND_URL}/recruiters/summary/edit`, summary)
         .then(res => {
