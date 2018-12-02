@@ -51,6 +51,8 @@ class applicantNavbar extends Component {
         accountSettings = <li className="drpdown">
 
             <Dropdown options={this.options} placeholder="Settings" className="drpdown"/>
+
+
         </li>;
 
         requests =

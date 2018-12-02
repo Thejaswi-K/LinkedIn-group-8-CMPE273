@@ -6,14 +6,17 @@ import Summary from "./summary";
 import Skills from "./skills";
 import jwt_decode from "jwt-decode";
 import {applicantDetails} from "../../../actions/applicantActions";
+import {deleteApplicant} from "../../../actions/applicantActions";
 import Redirect from "react-router/es/Redirect";
 import ProfileNavbar from "../../Navbar/applicantNavbar"
+import Button from "@material-ui/core/es/Button/Button";
 
 
 class ApplicantProfileView extends Component {
 
     applicantProfile = {};
     isApplicantLoggedIn = false;
+    isDelete = false ;
 
     constructor(props) {
         super(props);
@@ -36,11 +39,16 @@ class ApplicantProfileView extends Component {
             this.email = this.decodedApplicant.email;
 
         }
+
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.applicantProfile.applicantProfile !== "") {
+
             this.applicantProfile = nextProps.applicantProfile.applicantProfile;
+            if(this.applicantProfile.delete !== ""){
+                this.isDelete = true ;
+            }
             this.setState({
                 ...this.state,
                 firstName: this.applicantProfile.firstName,
@@ -56,6 +64,10 @@ class ApplicantProfileView extends Component {
         }
     }
 
+
+
+
+
     componentDidMount() {
         this.props.applicantDetails(this.email);
     }
@@ -65,6 +77,12 @@ class ApplicantProfileView extends Component {
         if (!this.isApplicantLoggedIn) {
             return <Redirect to="/applicantsignup"/>
         }
+
+        if (!this.isDelete) {
+            return <Redirect to="/applicantsignup"/>
+        }
+
+        var deleteButton = <Button name="Delete" onClick={this.props.deleteApplicant(this.email)}/>
 
         return (
             <div>
@@ -90,6 +108,14 @@ class ApplicantProfileView extends Component {
 
                 <br/>
 
+                <div>
+                    {deleteButton}
+                </div>
+
+
+
+
+
             </div>
         )
     }
@@ -100,6 +126,6 @@ const mapStateToProps = (state) => ({
     applicantProfile: state.applicantProfile
 });
 
-export default connect(mapStateToProps, {applicantDetails})(ApplicantProfileView);
+export default connect(mapStateToProps, {applicantDetails, deleteApplicant})(ApplicantProfileView);
 
 
