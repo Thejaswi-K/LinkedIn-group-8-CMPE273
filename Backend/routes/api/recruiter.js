@@ -224,15 +224,33 @@ router.get("/:recruiterId/jobs/top-ten", function(req, res) {
       } else 
       { console.log("Recruiter log Top Ten Jobs", result);
         if (result.success) {
-          console.log("Data inside success  -->  "+result.data);
+          console.log("Data inside success  -->  "+  JSON.stringify(result.data));
+        
+          let datas = new Array();
+        let colors = ['rgba(106,183,255,0.6)','rgba(0,0,128, 0.6)', 'rgba(0,0,255,0.6)','rgba(255,0,255,0.6)','rgba(128,0,128,0.6)','rgba(0,255,25,0.8)','rgba(0,128,128,0.6)','rgba(128,128,128,0.6)','rgba(0,255,0,0.6)','rgba(0,128,0,0.6)','rgba(128,128,0,0.6)','rgba(192,192,192,0.6)']
+          
+        for(var job =0; job< result.data.length; job++){
+            console.log("each job is:",result.data[job]);
+            var months = [0,0,0,0,0,0,0,0,0,0,0,0];
+            let r =result.data[job].job.map((monthsCount)=>
+            months[monthsCount.month-1]=monthsCount.count
+            )
+            console.log("Variable r  is ",r);
 
 
-
+            var obj = {
+              "label" : result.data[job].jobtitle,
+              "data" : months,
+              "backgroundColor" : colors[job]
+            }
+            datas.push(obj)
+          }
+          console.log("Return data is ",datas)
 
 
 
           res.status(200);
-          res.send(result);
+          res.send(datas);
         } else {
           res.status(400).json({ success: false });
         }
