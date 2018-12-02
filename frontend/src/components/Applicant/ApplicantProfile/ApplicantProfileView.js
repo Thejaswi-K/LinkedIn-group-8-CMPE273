@@ -78,11 +78,11 @@ class ApplicantProfileView extends Component {
             return <Redirect to="/applicantsignup"/>
         }
 
-        if (!this.isDelete) {
+       /* if (this.isDelete) {
             return <Redirect to="/applicantsignup"/>
-        }
+        }*/
 
-        var deleteButton = <Button name="Delete" onClick={this.props.deleteApplicant(this.email)}/>
+
 
         return (
             <div>
@@ -109,7 +109,7 @@ class ApplicantProfileView extends Component {
                 <br/>
 
                 <div>
-                    {deleteButton}
+
                 </div>
 
 
