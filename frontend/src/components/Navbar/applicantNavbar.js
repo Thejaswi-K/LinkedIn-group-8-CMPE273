@@ -82,7 +82,7 @@ class applicantNavbar extends Component {
                     </button>
                     <div class="dropdown-menu" aria-labelledby="site-header__login">
                         <ul style= {{padding: "0px"}}>
-                            <li class="dropdown-item"><Link to="/RecruiterSignup"><span className="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;&nbsp;Applicant Login</Link></li>
+                            <li class="dropdown-item"><Link to="/applicantSignup"><span className="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;&nbsp;Applicant Login</Link></li>
                         </ul>
                     </div>
                 </div>
