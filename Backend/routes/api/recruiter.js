@@ -224,7 +224,7 @@ router.get("/:recruiterId/jobs/top-ten", function(req, res) {
       } else 
       { console.log("Recruiter log Top Ten Jobs", result);
         if (result.success) {
-          
+          console.log("Data inside success  -->  "+result.data);
 
 
 
