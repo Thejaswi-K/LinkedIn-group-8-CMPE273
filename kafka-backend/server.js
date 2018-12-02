@@ -113,7 +113,7 @@ handleTopicRequest("post_job", JobPost);
 handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
 handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
-handleTopicRequest("applicant_AcceptConnection", ApplicantSendConnections);
+handleTopicRequest("applicant_AcceptConnection", ApplicantAcceptConnection);
 handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);*/
 
 /* ****************************************************
