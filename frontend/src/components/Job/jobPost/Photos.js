@@ -30,7 +30,7 @@ const photos =(props)=> {
                                                 <div style = {{}}>
                                                 <Dropzone onDrop={props.companyLogoChange}
                                                         multiple = {false}
-                                                        accept="image/*"
+                                                        accept="image/*, .pdf"
                                                         type="file"
                                                         style={{"width" : "150px", "height" : "150px", "border" : "2px dashed black", "marginLeft": "465px", }}>
                                                     <div style = {{ textAlign: 'center' , paddingTop : '50px'}}>Drop company logo to upload.</div>

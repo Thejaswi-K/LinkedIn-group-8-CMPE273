@@ -7,6 +7,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
     "chart.js": "^2.7.3",
+    "emodal": "^1.2.65",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "jwt-decode": "^2.2.0",
