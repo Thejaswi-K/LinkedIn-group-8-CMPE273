@@ -7,7 +7,7 @@ import jwt_decode from "jwt-decode";
 import { connect } from "react-redux";
 import { jobDetalsByID } from "../../actions/jobSearchActions"; 
 import { withRouter } from "react-router-dom";
-import {CONSTANTS} from '../../Constants';
+import { CONSTANTS } from '../../Constants';
 
 class JobDetails extends Component {
     constructor(props) {
@@ -55,11 +55,44 @@ class JobDetails extends Component {
         }
         
     };
+    // componentWillReceiveProps(nextProps) {
+    //     if (
+    //       this.state.jobData != null &&
+    //       this.getPhoto === true
+    //     ) {
+    //       let imagePreview = "data:image/jpg;base64, " + nextProps.photos.photo;
+    //       this.imageBase.push(imagePreview);
+    //       this.setState({
+    //         imagePushed: true
+    //       });
+    //     } else
+    //     if (this.state.jobData != null   &&
+    //         this.getPhoto === false) {
+        
+    //       this.jobDetails = this.state.jobData;
+    //       if (this.jobDetails.length > 0) {
+    //         for (let i = 0; i < this.jobDetails.length; i++) {
+    //           var photoData = this.jobDetails[i].companyNameLogo;
+    //           var photoArr = JSON.parse(photoData);
+    //           this.handleGetPhoto(photoArr[0]);
+    //         }
+    //         this.setState({
+    //           ...this.state,
+    //           isRes: true
+    //         });
+    //       }
+    //     }
+    //   }
     componentDidMount(){
         console.log("Job details initial state", this.state);
         axios.defaults.withCredentials = true;
-        //remove hardcode and add this.state.JobId
-        
+        axios.put(CONSTANTS.BACKEND_URL+"/recruiters/jobs/logs/click-count",{ "jobid": this.props.jobSearchReducer.jobDetailsByID})
+        .then(response => {
+            console.log("click count successful");
+        })
+        .catch(function(error){
+            console.log("error in incrementing click count", error);
+        });
         axios.get(CONSTANTS.BACKEND_URL+"/jobs/" + this.props.jobSearchReducer.jobDetailsByID)
         .then(response => {
             console.log("response in then",response.data);
@@ -72,7 +105,17 @@ class JobDetails extends Component {
                 this.setState({
                     easyApply: true
                 });
-            }   
+            } 
+            if(this.state.jobData[0].savedBy.indexOf(this.email) > -1) {
+                this.setState({
+                    savedStatus: true
+                });
+            } 
+            if(this.state.applicantData.appliedJobs.indexof(this.props.jobSearchReducer.jobDetailsByID)){
+                this.setState({
+                    appliedStatus: true
+                });
+            }
         })
         .catch(function(error){
             console.log("error in receiving job details to front end", error);
@@ -93,36 +136,37 @@ class JobDetails extends Component {
     
     saveHandler = (e) => {
         e.preventDefault();
-        // axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID+"/save")
-        // .then(response=>{
-        //     this.setState({
-        //         savedStatus: true
-        //     })
-        // })
-        // .catch(function(error){
-        //     console.log(error);
-        // });
+        console.log("save call", CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID+"/save");
+        axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID+"/save")
+        .then(response=>{
+            this.setState({
+                savedStatus: true
+            })
+        })
+        .catch(function(error){
+            console.log(error);
+        });
     };
 
     applyJobHandler = (e) => {
         e.preventDefault();
-        window.open(CONSTANTS.ROOT_URL+'/jobApply',"_blank");
+        window.open(CONSTANTS.ROOTURL+"/jobApply","_blank");
     };
     easyApplyJobHandler = (e) => {
         e.preventDefault();
         //easyApply API
-        axios.defaults.withCredentials = true;
-        const { resume } = this.state;
-        let formData = new FormData();
-        formData.append('resume', resume);
-        axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
-        .then((result=>{
-            console.log("upload successful");
+        // axios.defaults.withCredentials = true;
+        // const { resume } = this.state;
+        // let formData = new FormData();
+        // formData.append('resume', resume);
+        // axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
+        // .then((result=>{
+        //     console.log("upload successful");
             const data = {
                 firstName: this.state.applicantData.firstName,
                 lastName: this.state.applicantData.lastName,
                 email: this.state.applicantData.email,
-                address: this.state.applicantData.address,
+                address: this.state.address,
                 hearAboutUs: this.state.hearaboutus,
                 sponsorship: this.state.sponsorship,
                 diversity: this.state.diversity,
@@ -141,10 +185,10 @@ class JobDetails extends Component {
             .catch(function(error){
                 console.log(error);
             });
-        }))
-        .catch((error)=>{
-            console.log("unable to upload");
-        });
+        // }))
+        // .catch((error)=>{
+        //     console.log("unable to upload");
+        // });
         
     };
 
@@ -158,7 +202,7 @@ class JobDetails extends Component {
             save = <button className="btn btn-default" name="btn_save" disabled>saved</button>
         }
         else{
-            save = <button type="button" className="btn btn-default" name="btn_save" text-color="blue">save</button>
+            save = <button type="button" className="btn btn-default" name="btn_save" text-color="blue" onClick={this.saveHandler}>save</button>
         }
         if(appliedStatus){
             button = <button className="btn btn-primary" disabled>Applied</button>
