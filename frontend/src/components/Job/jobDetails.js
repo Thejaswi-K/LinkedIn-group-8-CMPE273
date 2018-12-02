@@ -11,21 +11,45 @@ class JobDetails extends Component {
             jobData: "",
             applicantData:"",
             jobId: this.props.location.jobId,
-            savedStatus:"",
-            appliedStatus:"",
-            easyApply: false
+            savedStatus:false,
+            appliedStatus:false,
+            easyApply: false,
+            hearaboutus:"",
+            sponsorship:"",
+            diversity:"",
+            disability:"",
+            resume:"",
+            coverletter:""
         };
         if (localStorage.getItem("applicantToken")) {
             let token = localStorage.getItem("applicantToken");
             this.decodedApplicant = jwt_decode(token);
             this.isApplicantLoggedIn = true;
             this.email = this.decodedApplicant.email;
-
         }
         this.saveHandler = this.saveHandler.bind(this);
         this.applyJobHandler = this.applyJobHandler.bind(this);
         this.easyApplyJobHandler = this.easyApplyJobHandler.bind(this);
+        this.valueChangeHandler = this.valueChangeHandler.bind(this);
     }
+    valueChangeHandler = (e) => {
+        if(e.target.name == 'resume'){
+            console.log("Target files",e.target.files);
+            this.setState({
+                resume:  e.target.files
+            });
+        }else if(e.target.name == 'coverletter'){
+            console.log("Target files",e.target.files);
+            this.setState({
+                coverletter:  e.target.files[0].name
+            });
+        }
+        else{
+            this.setState({ [e.target.name]: e.target.value });
+            console.log(this.state);
+        }
+        
+    };
     componentDidMount(){
         console.log("Job details initial state", this.state);
         axios.defaults.withCredentials = true;
@@ -47,7 +71,10 @@ class JobDetails extends Component {
         .catch(function(error){
             console.log("error in receiving job details to front end", error);
         });
-        axios.get("http://localhost:3001/applicants/"+this.email,{headers: {'Authorization': localStorage.getItem("applicantToken")}})
+        console.log("BEARER TOKEN", localStorage.getItem("applicantToken"));
+        console.log("email in state", this.state.email);
+        //localStorage.getItem("applicantToken")
+        axios.get("http://localhost:3001/applicants/"+"ak@gmail.com",{headers: {'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFrQGdtYWlsLmNvbSIsImlzUmVjcnVpdGVyIjpmYWxzZSwiaWF0IjoxNTQzNzE4OTAyLCJleHAiOjE1NDM3MjI1MDJ9.iQ-4zEUwwDDvxtrZijUPQBxyzLxKpMnUO6jP_gfscvc"}}) 
         .then(response => {
             console.log("response in applicant details retrieval",response.data);
             this.setState({
@@ -58,30 +85,88 @@ class JobDetails extends Component {
             console.log("error in receiving applicant details to front end", error);
         })
     }
+    
     saveHandler = (e) => {
         e.preventDefault();
-        //save API
-        
+        // axios.post("http://localhost:3001/applicants/"+"ak@gmail.com"+"/jobs/"+"5bfc781de8df91050d1b4852"+"/save")
+        // .then(response=>{
+        //     this.setState({
+        //         savedStatus: true
+        //     })
+        // })
+        // .catch(function(error){
+        //     console.log(error);
+        // });
     };
+
     applyJobHandler = (e) => {
         e.preventDefault();
-        //applyJob API
-
+        window.open('http://localhost:3000/jobApply',"_blank");
     };
     easyApplyJobHandler = (e) => {
         e.preventDefault();
         //easyApply API
+        axios.defaults.withCredentials = true;
+        const { resume } = this.state;
+        let formData = new FormData();
+        formData.append('resume', resume);
+        axios.post("http://localhost:3001/api/documentsUpload/uploadResume", formData)
+        .then((result=>{
+            console.log("upload successful");
+            const data = {
+                firstName: this.state.applicantData.firstName,
+                lastName: this.state.applicantData.lastName,
+                email: this.state.applicantData.email,
+                address: this.state.applicantData.address,
+                hearAboutUs: this.state.hearaboutus,
+                sponsorship: this.state.sponsorship,
+                diversity: this.state.diversity,
+                disablility: this.state.disability,
+                resume: this.state.resume[0].name,
+                coverLetter: this.state.coverletter
+            }
+            console.log("submit data",data);
+    
+            axios.post("http://localhost:3001/applicants/"+"ak@gmail.com"+"/jobs/"+"5bfc781de8df91050d1b4852", data)
+            .then(response=>{
+                this.setState({
+                    appliedStatus: true
+                })
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+        }))
+        .catch((error)=>{
+            console.log("unable to upload");
+        });
+        
     };
 
     render() { 
         const easyApply = this.state.easyApply;
+        const savedStatus = this.state.savedStatus;
+        const appliedStatus = this.state.appliedStatus;
         let button;
-        if(easyApply){
-            button = <button className="btn btn-primary" data-toggle="modal" data-target="#easyApplyModalForm">Easy Apply</button>
+        let save;
+        if(savedStatus){
+            save = <button className="btn btn-default" name="btn_save" disabled>saved</button>
         }
         else{
-            button = <button className="btn btn-primary" target="_blank">Apply</button>
+            save = <button type="button" className="btn btn-default" name="btn_save" text-color="blue">save</button>
         }
+        if(appliedStatus){
+            button = <button className="btn btn-primary" disabled>Applied</button>
+        }
+        else{
+            if(easyApply){
+                button = <button className="btn btn-primary" data-toggle="modal" data-target="#easyApplyModalForm">Easy Apply</button>
+            }
+            else{
+                button = <button className="btn btn-primary" onClick={this.applyJobHandler}>Apply</button>
+            }
+        }
+        
         var allData = Array.prototype.slice.call(this.state.jobData);
         var prefillData = this.state.applicantData;
         return ( 
@@ -109,7 +194,7 @@ class JobDetails extends Component {
                                     <span className="card-subtitle md-2 text-muted"> </span>
                                 </div>
                                 <div className="btn-toolbar">
-                                    <button type="button" className="btn btn-default" name="btn_save" text-color="blue">save</button>
+                                    {save}
                                     {button}
                                 </div>
                                 <div className="modal fade" id="easyApplyModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -126,16 +211,16 @@ class JobDetails extends Component {
                                                     <div className="row">
                                                         <div className="col">
                                                             <label>First name</label>
-                                                            <input type="text" className="form-control" placeholder="First name" name="firstname" value={prefillData.firstName}/>
+                                                            <input type="text" className="form-control" placeholder="First name" name="firstname" value={prefillData.firstName} />
                                                         </div>
                                                         <div className="col">
                                                             <label>Last name</label>
-                                                            <input type="text" className="form-control" placeholder="Last name" name="lastname" value={prefillData.lastName}/>
+                                                            <input type="text" className="form-control" placeholder="Last name" name="lastname" value={prefillData.lastName} />
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="inputAddress">email</label>
-                                                        <input type="text" className="form-control" id="inputAddress" placeholder="email" name="email" value={prefillData.email}/>
+                                                        <input type="text" className="form-control" id="inputAddress" placeholder="email" name="email" value={prefillData.email} />
                                                     </div>
                                                     <br />
                                                     <br />
@@ -146,54 +231,54 @@ class JobDetails extends Component {
                                                     <br />
                                                     <div>
                                                         <label >How did you hear about us?</label>
-                                                        <input type="text" className="form-control" placeholder="Type your response here"/>
+                                                        <input type="text" className="form-control" placeholder="Type your response here" name="hearaboutus" onChange={this.valueChangeHandler}/>
                                                     </div>
                                                     <br />
                                                     <div>
                                                         <label>Would you be requiring visa sponsorship to work in our company?</label>
                                                         <div class="form-check-inline">
-                                                            <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="yes"/>
-                                                            <label className="form-check-label" for="exampleRadios2">Yes</label>
+                                                            <input className="form-check-input" type="radio" name="sponsorship" id="sponsorship" value="yes" onChange={this.valueChangeHandler}/>
+                                                            <label className="form-check-label" for="sponsorship" value="yes">Yes</label>
                                                             
-                                                            <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="no"/>
-                                                            <label className="form-check-label" for="exampleRadios2">No</label>
+                                                            <input className="form-check-input" type="radio" name="sponsorship" id="sponsorship" value="no" onChange={this.valueChangeHandler}/>
+                                                            <label className="form-check-label" for="sponsorship" value="no">No</label>
                                                         </div>
                                                     </div>
                                                     <br />
                                                     <div className="form-group">
                                                         <label for="inputState">Ethnicity</label>
-                                                        <select id="inputState" className="form-control">
+                                                        <select id="inputState" className="form-control" name="diversity" onChange={this.valueChangeHandler}>
                                                             <option selected>Choose...</option>
-                                                            <option>Asian</option>
-                                                            <option>Latino</option>
-                                                            <option>American</option>
-                                                            <option>Hispanic</option>
+                                                            <option value="Asian">Asian</option>
+                                                            <option value="Latino">Latino</option>
+                                                            <option value="American">American</option>
+                                                            <option value="Hispanic">Hispanic</option>
                                                         </select>
                                                     </div>
                                                     <br />
                                                     <div className="form-group">
                                                         <label for="inputState">Do you have any disability?</label>
-                                                        <select id="inputState" className="form-control">
+                                                        <select id="inputState" className="form-control" name="disability" onChange={this.valueChangeHandler}>
                                                             <option selected>Choose...</option>
-                                                            <option>Yes</option>
-                                                            <option>No</option>
+                                                            <option value="yes">Yes</option>
+                                                            <option value="no">No</option>
                                                         </select>
                                                     </div>
                                                     <br />
                                                     <div class="form-group">
                                                         <label>Upload your resume</label>
-                                                        <input type="file" className="form-control-file" id="exampleFormControlFile1" />
+                                                        <input type="file" className="form-control-file" id="exampleFormControlFile1" name="resume" onChange={this.valueChangeHandler}/>
                                                     </div>
                                                     <br />
                                                     <div class="form-group">
                                                         <label>Upload your cover letter</label>
-                                                        <input type="file" className="form-control-file" id="exampleFormControlFile1" />
+                                                        <input type="file" className="form-control-file" id="exampleFormControlFile1" name="coverletter" onChange={this.valueChangeHandler}/>
                                                     </div>
                                                 </form>
                                             </div>
                                             <div className="modal-footer">
                                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="button" className="btn btn-primary">Submit Application</button>
+                                                <button type="button" className="btn btn-primary" onClick={this.easyApplyJobHandler}>Submit Application</button>
                                             </div>
                                         </div>
                                     </div>
