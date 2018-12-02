@@ -163,7 +163,7 @@ router.post("/mongo", (req, res) => {
         msg: "System Error, Try Again."
       });
     } else {
-      if (results.code === 200) {
+      if (results.code === 201) {
         res.status(results.code).json({
           success: true,
           token: "Bearer " + results.token
