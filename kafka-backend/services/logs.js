@@ -26,6 +26,9 @@ exports.handle_request = function handle_request(msg, callback) {
     case "trackUserById":
       trackUserId(msg, callback);
       break;
+    case "trackUserByLocation":
+      trackUserLocation(msg,callback);
+      break;
     case "createTrackUserById":
       createTrackUserId(msg, callback);
       break;
@@ -198,9 +201,8 @@ function getJobsCityWise(msg, callback) {
       // Keep job title using $first
       {
         $group: {
-          _id: { month: "$location" },
-          jobtitle: { $first: "$title" },
-
+          _id: { location: "$location" },
+          
           count: { $sum: 1 }
         }
       }
@@ -249,6 +251,37 @@ function trackUserId(msg, callback) {
           data: trackDetails
         });
       }
+    })
+    .catch(function(err) {
+      callback(null, { success: false, status: "error for track user" });
+    });
+}
+
+//Get request to fetch particular user track history
+function trackUserLocation(msg, callback) {
+  console.log("KAFKA : trackuser by location  hh--> ", msg.location);
+
+  console.log("In handle request:" + JSON.stringify(msg));
+  userTrackerModel
+    .aggregate([
+      { $match : {location: msg.location } },
+      {
+        $group: {
+          _id: { location: "$location" },
+          tracker : { $first : "$tracker"}
+          
+          
+        }
+      }
+    ])
+    .then(trackDetails => {
+       console.log("Result in track user location ", trackDetails);
+        callback(null, {
+          success: true,
+          status: "Tracking details found",
+          data: trackDetails
+        });
+      
     })
     .catch(function(err) {
       callback(null, { success: false, status: "error for track user" });
@@ -332,7 +365,7 @@ function clickCount(msg, callback) {
 
   console.log("In handle request:" + JSON.stringify(msg));
   jobsModel
-    .find({ recruiterId: msg.id, noOfViews: { $gt: 0 } }, "title noOfViews")
+    .find({ recruiterId: msg.id, noOfViews: { $gt: 0 } }, "title noOfViews").sort({noOfViews:-1}).limit(10)
     .then(clickCount => {
       if (!clickCount) {
         callback(null, {
@@ -400,12 +433,12 @@ function lastFiveJobs(msg, callback) {
       { $match: { recruiterId: msg.id } },
       {
         $project: {
-          jobTitle: 1,
+          title: 1,
           jobApplicationssize: { $size: { $ifNull: ["$jobApplications", []] } }
         }
       },
       // {$pull : {jobApplicationssize:{$lt:1}}},
-      { $sort: { jobApplicationssize: -1 } },
+      { $sort: { jobApplicationssize: 1 } },
       { $limit: 5 }
     ])
 
