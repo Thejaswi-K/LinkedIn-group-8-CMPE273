@@ -8,7 +8,7 @@ export default class GraphCityWiseComponent extends Component {
     this.state = {
       // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
       chartData: {
-        labels: ['January', 'February', 'March', 'April', 'May','June','July', 'August', 'September','October', 'November', 'December'],
+        labels: [],
         datasets: [
           {
             

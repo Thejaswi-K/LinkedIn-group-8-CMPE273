@@ -40,9 +40,10 @@ componentDidMount(){
         <div
           className="card"
           style={{
-            position: "relative",
+             position: "fixed",
             borderRadius: "7px",
             margin : "10px",
+            width : "45rem",
             marginTop: "2rem",
             boxShadow:
                   "0 1px 5px 1px rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"

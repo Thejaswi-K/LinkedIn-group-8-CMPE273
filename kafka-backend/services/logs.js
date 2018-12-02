@@ -20,6 +20,9 @@ exports.handle_request = function handle_request(msg, callback) {
     case "getJobsTopTen":
       getJobsTopTen(msg, callback);
       break;
+    case "citywise":
+      getJobsCityWise(msg, callback);
+      break;
     case "trackUserById":
       trackUserId(msg, callback);
       break;
@@ -160,6 +163,69 @@ function getJobsTopTen(msg, callback) {
       callback(null, {
         success: false,
         status: "top ten applications per month failed"
+      });
+    });
+}
+
+
+function getJobsCityWise(msg, callback) {
+  console.log("KAFKA : getJobsCityWise --> ", msg.id);
+
+  jobsModel
+    .aggregate([
+      //match with recruiteriD
+      { $match: { recruiterId: msg.id } },
+      //get count of JobApplication size
+
+      // {
+      //   $project: {
+      //     _id: 1,
+      //     title: 1,
+      //     jobApplications: 1,
+      //     jobApplicationssize: { $size: { $ifNull: ["$jobApplications", []] } }
+      //   }
+      // },
+
+      //Remove Job Application size less than 0
+      // { $match: { jobApplicationssize: { $gt: 0 } } },
+      //Sort by decreasing order
+      // { $sort: { jobApplicationssize: -1 } },
+      //Take only top 10
+      // { $limit: 10 },
+      // Unwind each element in the JobApplications array for computation
+      // { $unwind: "$jobApplications" },
+      //group each key now, by month and job_id, then count number of occurences and store to count
+      // Keep job title using $first
+      {
+        $group: {
+          _id: { month: "$location" },
+          jobtitle: { $first: "$title" },
+
+          count: { $sum: 1 }
+        }
+      }
+      // group based on job id, and add all details together into an array
+      // {
+      //   $group: {
+      //     _id: { id: "$_id.id" },
+      //     jobtitle: { $first: "$jobtitle" },
+      //     job: { $push: { month: "$_id.month", count: "$count" } }
+      //   }
+      // }
+    ])
+    .then(resultJob => {
+      console.log("Result in get jobs getJobsCityWise applications per month ", resultJob);
+      callback(null, {
+        success: true,
+        status: "jobs getJobsCityWise applications per month",
+        data: resultJob
+      });
+    })
+    .catch(err => {
+      console.log("top getJobsCityWises per month aggregation failed", err);
+      callback(null, {
+        success: false,
+        status: "top getJobsCityWises per month failed"
       });
     });
 }

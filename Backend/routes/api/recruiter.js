@@ -583,4 +583,31 @@ router.put(
 );
 
 
+//Route to get the Bottom 5 job posting of a recruiter
+router.get("/:recruiterId/jobs/logs/citywise", function(req, res) {
+  console.log("inside backend citywise");
+  kafka.make_request(
+    "logs_topic",
+    { path: "citywise", id: req.params.recruiterId },
+    function(err, result) {
+      if (err) {
+        console.log("Error in city wise : ", err);
+        res
+          .status(404)
+          .json({ success: false, error: "Get citywise jobs failed" })
+          .send(err);
+      } else {
+        console.log("city wise jobs are ", result);
+        if (result.success) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+
 module.exports = router;
