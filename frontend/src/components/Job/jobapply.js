@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Card from "@material-ui/core/Card/Card";
-import UserNavbar from "../Navbar/UserNavbar";
+import ProfileNavbar from "../Navbar/applicantNavbar";
+import {CONSTANTS} from '../../Constants';
 class JobApply extends Component {
     constructor(props){
         super(props);
@@ -33,7 +34,7 @@ class JobApply extends Component {
     render() { 
         return ( 
             <div>
-                {/* <UserNavbar/> */}
+                <ProfileNavbar />
                 <Card className="w-80 p-3 ml-5">
                     <form className="form-group">
                         <div className="row">

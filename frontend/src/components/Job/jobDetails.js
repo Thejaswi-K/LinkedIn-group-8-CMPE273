@@ -1,8 +1,13 @@
 import Card from "@material-ui/core/Card/Card";
 import React, { Component } from 'react';
 import axios from "axios";
-import UserNavbar from "../Navbar/UserNavbar";
+import ProfileNavbar from "../Navbar/applicantNavbar";
 import jwt_decode from "jwt-decode";
+
+import { connect } from "react-redux";
+import { jobDetalsByID } from "../../actions/jobSearchActions"; 
+import { withRouter } from "react-router-dom";
+import {CONSTANTS} from '../../Constants';
 
 class JobDetails extends Component {
     constructor(props) {
@@ -54,7 +59,8 @@ class JobDetails extends Component {
         console.log("Job details initial state", this.state);
         axios.defaults.withCredentials = true;
         //remove hardcode and add this.state.JobId
-        axios.get("http://localhost:3001/jobs/" + "5bfc781ce8df91050d1b484f")
+        
+        axios.get(CONSTANTS.BACKEND_URL+"/jobs/" + this.props.jobSearchReducer.jobDetailsByID)
         .then(response => {
             console.log("response in then",response.data);
             // var data = JSON.parse(response.data);
@@ -71,10 +77,9 @@ class JobDetails extends Component {
         .catch(function(error){
             console.log("error in receiving job details to front end", error);
         });
-        console.log("BEARER TOKEN", localStorage.getItem("applicantToken"));
-        console.log("email in state", this.state.email);
+        //console.log("BEARER TOKEN", localStorage.getItem("applicantToken"));
         //localStorage.getItem("applicantToken")
-        axios.get("http://localhost:3001/applicants/"+"ak@gmail.com",{headers: {'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFrQGdtYWlsLmNvbSIsImlzUmVjcnVpdGVyIjpmYWxzZSwiaWF0IjoxNTQzNzE4OTAyLCJleHAiOjE1NDM3MjI1MDJ9.iQ-4zEUwwDDvxtrZijUPQBxyzLxKpMnUO6jP_gfscvc"}}) 
+        axios.get(CONSTANTS.BACKEND_URL+"/applicants/"+this.email,{headers: {'Authorization': localStorage.getItem("applicantToken")}}) 
         .then(response => {
             console.log("response in applicant details retrieval",response.data);
             this.setState({
@@ -88,7 +93,7 @@ class JobDetails extends Component {
     
     saveHandler = (e) => {
         e.preventDefault();
-        // axios.post("http://localhost:3001/applicants/"+"ak@gmail.com"+"/jobs/"+"5bfc781de8df91050d1b4852"+"/save")
+        // axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID+"/save")
         // .then(response=>{
         //     this.setState({
         //         savedStatus: true
@@ -101,7 +106,7 @@ class JobDetails extends Component {
 
     applyJobHandler = (e) => {
         e.preventDefault();
-        window.open('http://localhost:3000/jobApply',"_blank");
+        window.open(CONSTANTS.ROOT_URL+'/jobApply',"_blank");
     };
     easyApplyJobHandler = (e) => {
         e.preventDefault();
@@ -110,7 +115,7 @@ class JobDetails extends Component {
         const { resume } = this.state;
         let formData = new FormData();
         formData.append('resume', resume);
-        axios.post("http://localhost:3001/api/documentsUpload/uploadResume", formData)
+        axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
         .then((result=>{
             console.log("upload successful");
             const data = {
@@ -127,7 +132,7 @@ class JobDetails extends Component {
             }
             console.log("submit data",data);
     
-            axios.post("http://localhost:3001/applicants/"+"ak@gmail.com"+"/jobs/"+"5bfc781de8df91050d1b4852", data)
+            axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID, data)
             .then(response=>{
                 this.setState({
                     appliedStatus: true
@@ -168,10 +173,11 @@ class JobDetails extends Component {
         }
         
         var allData = Array.prototype.slice.call(this.state.jobData);
+        console.log("jod details fetched",allData);
         var prefillData = this.state.applicantData;
         return ( 
             <div style={{margin:"10px"}}>
-                {/* <UserNavbar/> */}
+                <ProfileNavbar />
                 <br />
                 {allData.map((job,i)=>(
                     <div>
@@ -226,7 +232,7 @@ class JobDetails extends Component {
                                                     <br />
                                                     <div class="form-group">
                                                         <label for="inputAddress">Address</label>
-                                                        <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St, city state zip" name="address" value={prefillData.address + ", " + prefillData.city + " " + prefillData.state + " " + prefillData.zipcode}/>
+                                                        <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St, city state zip" name="address"/>
                                                     </div>
                                                     <br />
                                                     <div>
@@ -321,5 +327,13 @@ class JobDetails extends Component {
          );
     }
 }
- 
-export default JobDetails;
+
+const mapStateToProps = state => ({
+    jobSearchReducer: state.jobSearchReducer,
+    applicantProfile: state.applicantProfile
+  });
+  
+  export default connect(
+    mapStateToProps,
+    { jobDetalsByID }
+  )(withRouter(JobDetails));
