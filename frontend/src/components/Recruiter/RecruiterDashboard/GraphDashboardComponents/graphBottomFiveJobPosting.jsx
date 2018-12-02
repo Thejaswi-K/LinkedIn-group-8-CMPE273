@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import { Bar } from "react-chartjs-2";
+import axios from "axios";
+import {CONSTANTS} from '../../../../Constants';
 
 export default class GraphBottomFiveJobPostingComponent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      recruiter : "recruiter13@gmail.com",
       // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
       chartData: {
-        labels: ['Job 12', 'Job 21', 'Job 71', 'Job 19', 'Job 12'],
+        labels: [],
         datasets: [
           {
             label: "Jobs",
@@ -17,7 +20,7 @@ export default class GraphBottomFiveJobPostingComponent extends Component {
             borderWidth: 1,
             hoverBackgroundColor: 'rgba(255,99,132,0.4)',
             hoverBorderColor: 'rgba(255,99,132,1)',
-            data: [1, 5, 2, 3, 4]
+            data: []
           }
         ]
       }
@@ -26,6 +29,32 @@ export default class GraphBottomFiveJobPostingComponent extends Component {
   }
 
 
+  componentDidMount() {
+    console.log("Recruiter is ", this.state.recruiter);
+    axios
+      .get(
+        `${CONSTANTS.BACKEND_URL}/recruiters/` + this.state.recruiter + "/last-five"
+      )
+      .then(response => {
+        console.log("Inside last five jobs  component",response.data);
+        // console.log("Inside JobListing component didmount",response.data.jobsList.data);
+        var tempstate = {...this.state.chartData};
+        tempstate.datasets[0].data = response.data.data;
+        tempstate.labels = response.data.labels;
+        console.log("Temp state in did mount bottom five job posting",tempstate);
+
+       this.setState({
+         chartData : tempstate
+       })
+        
+       
+      })
+      
+      .catch(function(error) {
+        console.log("errored in component did mount last five jobs ");
+        console.log(error);
+      });
+  }
   render() {
     return (
       <div>

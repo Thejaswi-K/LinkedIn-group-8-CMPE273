@@ -360,10 +360,17 @@ router.get("/:recruiterId/jobs/logs/saved-job-count", function(req, res) {
           .json({ success: false, error: "Jobs empty" })
           .send(err);
       } else {
-        console.log("result", result);
-        if (result.status) {
+        console.log("result", result.data);
+        let title = result.data.map((eachJob)=>(
+          eachJob.title
+        ))
+        let savedJobSize = result.data.map((eachJob)=>(
+          eachJob.savedBy
+        ))
+
+        if (result.success) {
           res.status(200);
-          res.send(result);
+          res.send({"labels" :title , "data": savedJobSize});
         } else {
           res.status(400).json({ success: false });
         }
@@ -457,9 +464,15 @@ router.get("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
           .send(err);
       } else {
         console.log("User track record ", result);
+        let pages = result.data.tracker.map((eachPage)=>(
+          eachPage.page
+        ))
+        let times = result.data.tracker.map((eachTime)=>(
+          eachTime.timeStamp
+        ))
         if (result.status) {
           res.status(200);
-          res.send(result);
+          res.send({"labels" : times, "data" : pages});
         } else {
           res.status(400).json({ success: false });
         }
@@ -481,10 +494,17 @@ router.get("/:recruiterId/jobs/logs/click-count", function(req, res) {
           .json({ success: false, error: "Get click count failed" })
           .send(err);
       } else {
-        console.log("Click count Result ", result);
-        if (result.status) {
+        console.log("Click count Result ", result.data);
+        let title =result.data.map((eachJob)=>(
+          eachJob.title
+        ))
+        let clickCount = result.data.map((eachJob)=>(
+          eachJob.noOfViews
+        ))
+
+        if (result.success) {
           res.status(200);
-          res.send(result);
+          res.send({"labels" :title , "data": clickCount});
         } else {
           res.status(400).json({ success: false });
         }
@@ -496,7 +516,7 @@ router.get("/:recruiterId/jobs/logs/click-count", function(req, res) {
 // To increment the number of clicks in job schema
 /*
 Include this call in every route to a job details page
-http://localhost:3001/recruiters/recruiter1@gmail.com/jobs/logs/click-count
+http://localhost:3001/recruiters/jobs/logs/click-count
 BODY:
 {
 	"jobid":"5bfc781ce8df91050d1b484f"
@@ -540,10 +560,17 @@ router.get("/:recruiterId/last-five", function(req, res) {
           .json({ success: false, error: "Get Bottom 5 job posting failed" })
           .send(err);
       } else {
-        console.log("bottom 5 jobs  are", result);
-        if (result.status) {
+        console.log("bottom 5 jobs  are", result.data);
+        let title = result.data.map((eachJob)=>(
+          eachJob.title
+        ))
+        let jobSize = result.data.map((eachJob)=>(
+          eachJob.jobApplicationssize
+        ))
+
+        if (result.success) {
           res.status(200);
-          res.send(result);
+          res.send({"labels" :title , "data": jobSize});
         } else {
           res.status(400).json({ success: false });
         }
@@ -598,9 +625,18 @@ router.get("/:recruiterId/jobs/logs/citywise", function(req, res) {
           .send(err);
       } else {
         console.log("city wise jobs are ", result);
+        let months = new Array();
+        let count = new Array();
+        for(var job =0; job< result.data.length; job++){
+          console.log("data", result.data[job]._id.location);
+          months.push(result.data[job]._id.location);
+          count.push(result.data[job].count);
+        }
+
+
         if (result.success) {
           res.status(200);
-          res.send(result);
+          res.send({"labels" : months, "data" : count});
         } else {
           res.status(400).json({ success: false });
         }

@@ -112,7 +112,7 @@ export default class GraphTopTenJobPostingComponent extends Component {
       })
       
       .catch(function(error) {
-        console.log("errored in component did mount jobListing");
+        console.log("errored in componenent graph top ten");
         console.log(error);
       });
   }
