@@ -2,13 +2,12 @@ import Card from "@material-ui/core/Card/Card";
 import React, { Component } from 'react';
 import axios from "axios";
 import UserNavbar from "../Navbar/UserNavbar";
+import jwt_decode from "jwt-decode";
 
 class JobDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            applicantId: "",
-            //applicantId : this.props.location.state.applicantId,
             jobData: "",
             applicantData:"",
             jobId: this.props.location.jobId,
@@ -16,6 +15,13 @@ class JobDetails extends Component {
             appliedStatus:"",
             easyApply: false
         };
+        if (localStorage.getItem("applicantToken")) {
+            let token = localStorage.getItem("applicantToken");
+            this.decodedApplicant = jwt_decode(token);
+            this.isApplicantLoggedIn = true;
+            this.email = this.decodedApplicant.email;
+
+        }
         this.saveHandler = this.saveHandler.bind(this);
         this.applyJobHandler = this.applyJobHandler.bind(this);
         this.easyApplyJobHandler = this.easyApplyJobHandler.bind(this);
@@ -41,7 +47,7 @@ class JobDetails extends Component {
         .catch(function(error){
             console.log("error in receiving job details to front end", error);
         });
-        axios.get("http://localhost:3001/applicants/ak@gmail.com",{headers: {'Authorization': "Bearer" + " " +"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFrQGdtYWlsLmNvbSIsImlzUmVjcnVpdGVyIjpmYWxzZSwiaWF0IjoxNTQzNjI0NjcxLCJleHAiOjE1NDM2MjgyNzF9.Dmt4Z1H96GxWjn5pEawghPgwzeN0CmkvBm60Yxo_GKE"}})
+        axios.get("http://localhost:3001/applicants/"+this.email,{headers: {'Authorization': localStorage.getItem("applicantToken")}})
         .then(response => {
             console.log("response in applicant details retrieval",response.data);
             this.setState({

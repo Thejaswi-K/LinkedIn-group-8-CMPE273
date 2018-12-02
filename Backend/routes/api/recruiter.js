@@ -207,20 +207,7 @@ router.delete(
 //GET LOGS of top ten jobs of recruiter he/she has posted
 //Returns :
 /*
-{
-    Jobs: [
-           {job_id: "1", number_of_applicants: 800}, 
-           {job_id: "2", number_of_applicants: 600}, 
-           {job_id: "3", number_of_applicants: 700}, 
-           {job_id: "4", number_of_applicants: 650}, 
-           {job_id: "5", number_of_applicants: 900}, 
-           {job_id: "6", number_of_applicants: 200}, 
-           {job_id: "7", number_of_applicants: 300}, 
-           {job_id: "8", number_of_applicants: 350}, 
-           {job_id: "9", number_of_applicants: 100}, 
-           {job_id: "10", number_of_applicants: 1000}
-          ]
-}
+
 */
 router.get("/:recruiterId/jobs/top-ten", function(req, res) {
   console.log("inside backend jobs/top-ten");
@@ -234,11 +221,36 @@ router.get("/:recruiterId/jobs/top-ten", function(req, res) {
           .status(404)
           .json({ success: false, error: "Recruiter not found" })
           .send(err);
-      } else console.log("Recruiter log Top Ten Jobs", result);
-      {
-        if (result.status) {
+      } else 
+      { console.log("Recruiter log Top Ten Jobs", result);
+        if (result.success) {
+          console.log("Data inside success  -->  "+  JSON.stringify(result.data));
+        
+          let datas = new Array();
+        let colors = ['rgba(106,183,255,0.6)','rgba(0,0,128, 0.6)', 'rgba(0,0,255,0.6)','rgba(255,0,255,0.6)','rgba(128,0,128,0.6)','rgba(0,255,25,0.8)','rgba(0,128,128,0.6)','rgba(128,128,128,0.6)','rgba(0,255,0,0.6)','rgba(0,128,0,0.6)','rgba(128,128,0,0.6)','rgba(192,192,192,0.6)']
+          
+        for(var job =0; job< result.data.length; job++){
+            console.log("each job is:",result.data[job]);
+            var months = [0,0,0,0,0,0,0,0,0,0,0,0];
+            let r =result.data[job].job.map((monthsCount)=>
+            months[monthsCount.month-1]=monthsCount.count
+            )
+            console.log("Variable r  is ",r);
+
+
+            var obj = {
+              "label" : result.data[job].jobtitle,
+              "data" : months,
+              "backgroundColor" : colors[job]
+            }
+            datas.push(obj)
+          }
+          console.log("Return data is ",datas)
+
+
+
           res.status(200);
-          res.send(result);
+          res.send(datas);
         } else {
           res.status(400).json({ success: false });
         }
@@ -539,5 +551,36 @@ router.get("/:recruiterId/last-five", function(req, res) {
     }
   );
 });
+
+
+//to edit summary
+router.put(
+    "/summary/edit",
+    passport.authenticate("jwt", { session: false }),
+    (req, res) => {
+        const errors = {};
+        kafka.make_request("edit_recruiter_summary", req.body, function(err, results) {
+            console.log("in result");
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                });
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+
+                res.end();
+            }
+        });
+    }
+);
+
 
 module.exports = router;

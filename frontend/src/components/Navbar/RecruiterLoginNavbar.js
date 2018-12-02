@@ -14,6 +14,7 @@ class RecruiterLoginNavbar extends Component {
             email: "",
             password: "",
             isRecruiter: true,
+            userExists: false,
             isLoggedIn: false,
             isEmpty: false,
             messageDiv: "",
@@ -75,6 +76,7 @@ class RecruiterLoginNavbar extends Component {
     render() {
         if (this.state.success) {
             return <Redirect to="/recruiterDashboard"/>
+            return <Redirect to="/recruiterprofileview"/>
         }
 
         let message = null;
