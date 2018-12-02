@@ -27,10 +27,7 @@ class jobList extends Component {
 
   redirectDetails = jobID => {
     this.props.jobDetalsByID(jobID);
-    this.setState({
-      ...this.state,
-      isClicked: true
-    });
+    this.props.history.push("/jobDetails")
   };
 
   componentWillReceiveProps(nextProps) {
@@ -64,9 +61,7 @@ class jobList extends Component {
     const jobs = paginate(this.jobDetails, currentPage, pageSize);
 
     let redirect = null;
-    if (this.state.isClicked) {
-      return <Redirect to="/jobDetails" />;
-    }
+   
 
     return (
       <div>

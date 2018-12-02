@@ -6,14 +6,16 @@ import {
   
 
 } from './types';
+import setAuthToken from "../utils/setAuthToken";
+import { CONSTANTS } from "../Constants";
 
-const ROOT_URL = "http://localhost:3001";
 
-
-  // Get all homes
-  export const getConnections = () => dispatch => {
+  // Get All Connections
+  export const getConnections = (email) => dispatch => {
+    axios.defaults.withCredentials = true;
+  setAuthToken(localStorage.getItem("applicantToken"));
     axios
-      .get('http://localhost:3001/applicants/viewconnections/5bedf49fccefb3685709f81c')
+      .get(`${CONSTANTS.BACKEND_URL}/applicants/viewconnections/${email}`)
       .then(res =>
         dispatch({
           type: GET_ALL_CONNECTIONS,
@@ -28,9 +30,12 @@ const ROOT_URL = "http://localhost:3001";
       );
   };
 
-  export const getPendingRequets = () => dispatch => {
+    // Get All Pending Requests
+  export const getPendingRequets = (email) => dispatch => {
+    axios.defaults.withCredentials = true;
+  setAuthToken(localStorage.getItem("applicantToken"));
     axios
-      .get('http://localhost:3001/applicants/viewPendingRequests/5bedf49fccefb3685709f81c')
+      .get(`${CONSTANTS.BACKEND_URL}/applicants/viewPendingRequests/${email}`)
       .then(res =>
         dispatch({
           type: GET_PENDING_REQUESTS,

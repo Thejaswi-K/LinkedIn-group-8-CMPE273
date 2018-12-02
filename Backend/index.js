@@ -11,6 +11,7 @@ var jwt = require("jsonwebtoken");
 var passport = require("passport");
 var kafka = require("./kafka/client");
 const photos = require("./routes/api/photos");
+const doc = require("./routes/api/documentsUpload");
 const morgan = require('morgan');
 
 // Body parser middleware
@@ -66,6 +67,7 @@ app.use("/jobs", jobs);
 app.use("/applicants", applicant);
 app.use("/recruiters", recruiter);
 app.use("/api/photos", photos);
+app.use("/api/documentsUpload", doc);
 app.use;
 
 app.get("/healthcheck", (req, res) => {
