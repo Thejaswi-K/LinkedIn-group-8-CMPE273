@@ -10,21 +10,19 @@ export default class GraphDashboardMain extends Component {
     return (
       <div >
         <div className="row">
-          <div className="col-3">
+          <div className="col-6">
           <GraphClicksPerJobComponent/>
           </div>
-          <div className="col-3">
+          <div className="col-6">
           <GraphNumberofSavedJobComponent/></div>
-          <div className="col-3">
-          {/* <GraphTopTenJobPostingComponent/> */}
-          </div>
+         
         </div>
         <div className="row">
-          <div className="col-3">
+          <div className="col-6">
           <GraphCityWiseComponent/></div>
-          <div className="col-3">
+          <div className="col-6">
           <GraphBottomFiveJobPostingComponent/></div>
-          <div className="col-3">graph 6</div>
+          
         </div>
         <div>
         <GraphTopTenJobPostingComponent/>

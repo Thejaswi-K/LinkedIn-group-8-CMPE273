@@ -44,9 +44,9 @@ class messageList extends Component {
 
   componentDidMount() {
     var data = {
-      from_email: this.props.applicantProfile.applicantProfile.email
+      from_email: this.props.applicantProfile.applicantUser.email
     };
-    var author = this.props.applicantProfile.applicantProfile.email;
+    var author = this.props.applicantProfile.applicantUser.email;
     sessionStorage.setItem("author", author);
 
     // setAuthToken(localStorage.getItem("applicantToken"));
@@ -71,12 +71,7 @@ class messageList extends Component {
                       <div className="ml-5 mt-2">
                         <Messages
                           // membername={propval.messageMembers[1]}
-                          membername={
-                            propval.messageMembers[1] ===
-                            this.props.applicantProfile.applicantProfile.email
-                              ? propval.messageMembers[1]
-                              : propval.messageMembers[0]
-                          }
+                          membername={propval.messageMembers[1]}
                           from_email={propval.authorMessage[place].author}
                           onClick={() =>
                             this.redirectDetails(propval.messageMembers)
