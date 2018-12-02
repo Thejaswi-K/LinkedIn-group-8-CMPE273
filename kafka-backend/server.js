@@ -7,7 +7,7 @@ var { mongoose } = require("./db/mongo");
 //var signin = require('./services/signin.js');
 var Log = require("./services/logs.js");
 var Job = require("./services/jobs.js");
-var JobSearch = require("./services/Jobs/jobSearch"); 
+var JobSearch = require("./services/Jobs/jobSearch");
 var ApplicantDetails = require("./services/applicants/applicantViewProfile");
 var RecruiterDetails = require("./services/recruiter/recruiterViewProfile");
 var ApplicantLogin = require("./services/applicants/applicantLogin");
@@ -76,7 +76,7 @@ function handleTopicRequest(topic_name, fname) {
 // handleTopicRequest("jobs_topic", Job);
 // handleTopicRequest("applicant_details", ApplicantDetails);
 // handleTopicRequest("recruiter_details", RecruiterDetails);
-// handleTopicRequest("applicant_login", ApplicantLogin);
+handleTopicRequest("applicant_login", ApplicantLogin);
 // handleTopicRequest("recruiter_login", RecruiterLogin);
 // handleTopicRequest("applicant_signup", ApplicantSignup);
 // handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
@@ -85,8 +85,8 @@ function handleTopicRequest(topic_name, fname) {
 // handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
 // handleTopicRequest("applicant_delete", ApplicantDelete);
 // handleTopicRequest("applicant_topic", Applicant);
-// handleTopicRequest("send_message", sendMessage);
-// handleTopicRequest("receive_message", receiveMessage);
+handleTopicRequest("send_message", sendMessage);
+handleTopicRequest("receive_message", receiveMessage);
 
 // handleTopicRequest("recruiter_delete", RecruiterDelete);
 // handleTopicRequest("recruiter_JobView", RecruiterJobView);
@@ -100,10 +100,10 @@ function handleTopicRequest(topic_name, fname) {
 // handleTopicRequest("edit_skill", EditApplicantSkill);
 // handleTopicRequest("edit_summary", EditApplicantSummary);
 
-// handleTopicRequest("applicant_messages", applicantMessages);
+handleTopicRequest("applicant_messages", applicantMessages);
 // handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
 // handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
-//handleTopicRequest("search_job", JobSearch);
+handleTopicRequest("search_job", JobSearch);
 // handleTopicRequest("post_job", JobPost);
 // handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 // handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
