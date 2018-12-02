@@ -81,6 +81,7 @@ handleTopicRequest("applicant_login", ApplicantLogin);
 handleTopicRequest("recruiter_login", RecruiterLogin);
 handleTopicRequest("applicant_signup", ApplicantSignup);
 handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
+handleTopicRequest("recruiter_signup_mongo", RecruiterSignupMongo);
 handleTopicRequest("recruiter_signup", RecruiterSignup);
 handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
 handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
