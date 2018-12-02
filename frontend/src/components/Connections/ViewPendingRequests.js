@@ -2,25 +2,37 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import jwt_decode from "jwt-decode";
 import ViewPendingRequestsItem from './ViewPendingRequestsItem';
 import { getPendingRequets } from '../../actions/connectionActions';
 
 
 class ViewPendingRequests extends Component {
   arr=[];
-    componentDidMount() {
-      this.props.getPendingRequets();
-      
-      }
+    isApplicantLoggedIn = false;
 
       componentWillReceiveProps(nextProps){
         if(nextProps.connection.pendingrequests !== undefined){
-       this.arr  = nextProps.connection.pendingrequests.connectionsRequests;
+       this.arr  = nextProps.connection.pendingrequests[0].connectionsRequests;
           
-       console.log("Array is" + this.arr);
+       console.log("Array is " + this.arr);
         }
        
       }
+
+      componentDidMount() {
+        if (localStorage.getItem("applicantToken")) {
+          let token = localStorage.getItem("applicantToken");
+          this.decodedApplicant = jwt_decode(token);
+          this.isApplicantLoggedIn = true;
+          this.email = this.decodedApplicant.email;
+          console.log("Emmail", this.email)
+
+      }
+        console.log("Emmail in CDM", this.email)
+        this.props.getPendingRequets(this.email);
+        
+        }
     
        render() {
         let homeItems;
@@ -39,47 +51,7 @@ class ViewPendingRequests extends Component {
       ));
         
         }
-        //console.log("type of allconnections:", typeof(this.props.connection.allconnections));
-        // let obj =[] 
-        //let obj = this.props.connection.allconnections;
-       // console.log(allconnections);
-        //let temp = obj.connectionsRequests;
-        //console.log("temp:", temp);
-        // let temp = JSON.parse(obj);
-        // console.log(temp.connectionsRequests);
-        // let temp = obj.allconnections.connectionsRequests;
-        // console.log( temp);
-        // console.log("allconnections:_id",allconnections._id,"allConnections:connectionrequests",allconnections.connectionsRequests);
-        // let obj = JSON.parse(allconnections);
-        // console.log(`after parsing: $typeof{obj}`);
-
-        // console.log(obj.connectionsRequests);
-        // console.log(Array.prototype.slice.call(allconnections[1].connectionsRequests));
-        // let homeItems, headings;
-        
-        // if (allconnections === null) {
-        //     homeItems = <h4 style={{textAlign:'center', paddingBottom:'214px'}}>No connections available</h4>;
-        // } else {
             
-        //  if (allconnections.length > 0) {
-            
-        //     headings=<ViewConnectionsHeading/>
-        //     homeItems = allconnections.map(ownerhome => (
-               
-        //         <div>
-        //             <ViewConnectionsItem key={ownerhome._id} ownerhome={ownerhome} />
-        //       </div>
-        //     ));
-            
-        //   } else {
-        //     homeItems = <h5>there are no connections</h5>;
-        //   }
-          
-        // }
-        
-        
-        
-    
         return (
           <div className="homes">
             <div className="container">

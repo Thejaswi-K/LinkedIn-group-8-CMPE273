@@ -2107,8 +2107,15 @@ div.hopscotch-bubble .hopscotch-actions {
   margin-bottom: 0px;
 }
 
+.text-white { color: #FFF; }
+
+.drpdown {
+  background: linear-gradient(to right, #32404B, #32404B);
+}
+
+
+
 .text-white {
   color: #fff;
 }
 /*CSS for left rail card*/
- 
