@@ -42,6 +42,10 @@ var RecruiterGetJobs = require("./services/Jobs/recruiterGetJobs");
 var ApplicantViewPendingRequests = require("./services/applicants/applicantViewPendingRequests");
 var ApplicantSearchProfile = require("./services/applicants/applicantSearchProfile");
 var ApplicantAcceptConnection = require("./services/applicants/ApplicantConnectionAccept");
+var RecruiterViewConnections = require("./services/recruiter/RecruiterViewConnections");
+var RecruiterSendConnections = require("./services/recruiter/RecruiterConnectionSend");
+var RecruiterViewPendingRequests = require("./services/recruiter/RecruiterViewPendingRequests");
+var RecruiterAcceptConnection = require("./services/recruiter/RecruiterConnectionAccept");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -79,7 +83,7 @@ function handleTopicRequest(topic_name, fname) {
 // handleTopicRequest("jobs_topic", Job);
 // handleTopicRequest("applicant_details", ApplicantDetails);
 // handleTopicRequest("recruiter_details", RecruiterDetails);
-handleTopicRequest("applicant_login", ApplicantLogin);
+// handleTopicRequest("applicant_login", ApplicantLogin);
 // handleTopicRequest("recruiter_login", RecruiterLogin);
 // handleTopicRequest("applicant_signup", ApplicantSignup);
 // handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
@@ -90,8 +94,8 @@ handleTopicRequest("applicant_login", ApplicantLogin);
 // handleTopicRequest("applicant_delete", ApplicantDelete);
 // handleTopicRequest("applicant_mysql_delete", ApplicantDeleteMysql);
 // handleTopicRequest("applicant_topic", Applicant);
-handleTopicRequest("send_message", sendMessage);
-handleTopicRequest("receive_message", receiveMessage);
+// handleTopicRequest("send_message", sendMessage);
+// handleTopicRequest("receive_message", receiveMessage);
 
 // handleTopicRequest("recruiter_delete", RecruiterDelete);
 // handleTopicRequest("recruiter_JobView", RecruiterJobView);
@@ -107,16 +111,20 @@ handleTopicRequest("receive_message", receiveMessage);
 
 // handleTopicRequest("edit_recruiter_summary", EditRecruiterSummary);
 
-handleTopicRequest("applicant_messages", applicantMessages);
+// handleTopicRequest("applicant_messages", applicantMessages);
 // handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
 // handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
-handleTopicRequest("search_job", JobSearch);
+// handleTopicRequest("search_job", JobSearch);
 // handleTopicRequest("post_job", JobPost);
 // handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 // handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
 // handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
 // handleTopicRequest("applicant_AcceptConnection", ApplicantAcceptConnection);
-handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
+// handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
+// handleTopicRequest("recruiter_ViewConnection", RecruiterViewConnections);
+// handleTopicRequest("recruiter_SendConnection", RecruiterSendConnections);
+// handleTopicRequest("recruiter_PendingRequests", RecruiterViewPendingRequests);
+// handleTopicRequest("recruiter_AcceptConnection", RecruiterAcceptConnection);
 
 /* ****************************************************
 please  UPDATE  below code before adding new topics
@@ -163,5 +171,9 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_AcceptConnection;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_recruiter_summary;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_mysql_delete;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_ViewConnection;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_SendConnection;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_PendingRequests;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_AcceptConnection;
 ) &
 */
