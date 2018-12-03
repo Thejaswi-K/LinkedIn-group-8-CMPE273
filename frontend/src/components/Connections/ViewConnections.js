@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import jwt_decode from "jwt-decode";
 import ViewConnectionsItem from './ViewConnectionsItem';
 import { getConnections } from '../../actions/connectionActions';
+import ApplicantNavbar from '../Navbar/applicantNavbar';
 
 
 class ViewConnections extends Component {
@@ -45,7 +46,6 @@ class ViewConnections extends Component {
         homeItems = this.arr.map(ownerhome => (
                
           <div>
-              
               <ViewConnectionsItem key={ownerhome._id} ownerhome={ownerhome} />
         </div>
       ));
@@ -53,6 +53,9 @@ class ViewConnections extends Component {
         }
         
         return (
+          <div>
+            <ApplicantNavbar/>
+          
           <div className="homes">
             <div className="container">
             <br/>
@@ -95,6 +98,7 @@ class ViewConnections extends Component {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         );
     

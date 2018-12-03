@@ -4,7 +4,9 @@ import ProfileNavbar from "../Navbar/applicantNavbar";
 import axios from "axios";
 import {CONSTANTS} from '../../Constants';
 import jwt_decode from "jwt-decode";
-
+import { connect } from "react-redux";
+import { jobDetalsByID } from "../../actions/jobSearchActions"; 
+import { withRouter } from "react-router-dom";
 class JobApply extends Component {
     constructor(props){
         super(props);
@@ -29,6 +31,12 @@ class JobApply extends Component {
         this.applyJobHandler = this.applyJobHandler.bind(this);
         this.valueChangeHandler = this.valueChangeHandler.bind(this);
         this.backHandler = this.backHandler.bind(this);
+
+
+        
+        if(sessionStorage.getItem("jobId")){
+            this.jobID = sessionStorage.getItem("jobId");
+        }
     }
     valueChangeHandler = (e) => {
         if(e.target.name == 'resume'){
@@ -59,22 +67,23 @@ class JobApply extends Component {
         .then((result=>{
             console.log("upload successful");
             const data = {
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
+                firstName: this.state.firstname,
+                lastName: this.state.lastname,
                 email: this.state.email,
                 address: this.state.address,
                 hearAboutUs: this.state.hearaboutus,
                 sponsorship: this.state.sponsorship,
                 diversity: this.state.diversity,
-                disablility: this.state.disability,
+                disability: this.state.disability,
                 resume: this.state.resume.name,
                 coverLetter: this.state.coverletter.name
             }
             console.log("submit data",data);
-            console.log("apply job axios post", CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID);
-            axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID, data)
+            console.log("apply job axios post", CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.jobID);
+            axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.jobID, data)
             .then(response=>{
-                console.log("job applied through regular apply")
+                console.log("job applied through regular apply");
+                window.close();
             })
             .catch(function(error){
                 console.log(error);
@@ -83,7 +92,7 @@ class JobApply extends Component {
         .catch((error)=>{
             console.log("unable to upload");
         });  
-        //window.close();
+        
     };
 
     backHandler = (e) => {
@@ -172,4 +181,12 @@ class JobApply extends Component {
     }
 }
  
-export default JobApply;
+const mapStateToProps = state => ({
+    jobSearchReducer: state.jobSearchReducer,
+    applicantProfile: state.applicantProfile
+  });
+  
+  export default connect(
+    mapStateToProps,
+    { jobDetalsByID }
+  )(withRouter(JobApply));

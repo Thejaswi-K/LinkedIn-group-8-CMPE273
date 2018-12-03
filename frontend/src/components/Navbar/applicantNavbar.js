@@ -146,15 +146,18 @@ class applicantNavbar extends Component {
           <div className="dropdown-menu" aria-labelledby="site-header__login">
             <ul style={{ padding: "0px" }}>
               <li class="dropdown-item">
-                <Link to="/applicantSignup" onClick={this.handleLogout}>
-                  <span className="glyphicon glyphicon-log-out" />
-                  &nbsp;&nbsp;&nbsp;Logout
-                </Link>
-              </li>
-              <li class="dropdown-item">
                 <Link to="/applicantDashboard">
                   <span className="glyphicon glyphicon-briefcase" />
                   &nbsp;&nbsp;&nbsp;My Dashboard
+                </Link>
+              </li>
+              <li class="dropdown-item"><Link to="/viewPendingRequests"><span
+                          className="glyphicon glyphicon-link"></span>&nbsp;&nbsp;&nbsp;My Requests</Link>
+                      </li>
+              <li class="dropdown-item">
+                <Link to="/applicantSignup" onClick={this.handleLogout}>
+                  <span className="glyphicon glyphicon-log-out" />
+                  &nbsp;&nbsp;&nbsp;Logout
                 </Link>
               </li>
             </ul>
@@ -241,7 +244,7 @@ class applicantNavbar extends Component {
     connections = (
       <li>
         <Link
-          to="/"
+          to="/viewConnections"
           className="navbar-brand connections-icon text-center text-white"
         >
           <span className="glyphicon glyphicon-globe " title="Connections" />
@@ -252,7 +255,7 @@ class applicantNavbar extends Component {
 
     home = (
       <li>
-        <Link to="/" className="navbar-brand text-center text-white">
+        <Link to="/applicantprofileview" className="navbar-brand text-center text-white">
           <span className="glyphicon glyphicon-home navbar-icon" />
           <div className="text-white">Home</div>
         </Link>
