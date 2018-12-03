@@ -13,6 +13,7 @@ var kafka = require("./kafka/client");
 const photos = require("./routes/api/photos");
 const doc = require("./routes/api/documentsUpload");
 const morgan = require('morgan');
+const neo4j = require('neo4j-driver').v1;
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -55,17 +56,19 @@ app.use(function(req, res, next) {
   res.setHeader("Cache-Control", "no-cache");
   next();
 });
-
+const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "password273"));
+const session = driver.session();
 //index.js stores the homepage
 var index = require("./routes/api/index");
 var applicant = require("./routes/api/applicant");
 var jobs = require("./routes/api/jobs");
 var recruiter = require("./routes/api/recruiter");
-
+var graphs = require("./routes/api/graph");
 //app.use('/', index);
 app.use("/jobs", jobs);
 app.use("/applicants", applicant);
 app.use("/recruiters", recruiter);
+app.use("/graphs", graphs);
 app.use("/api/photos", photos);
 app.use("/api/documentsUpload", doc);
 app.use;
