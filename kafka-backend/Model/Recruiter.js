@@ -79,16 +79,20 @@ var recruiterSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
-  connectionsRequests : {
-    type: Array,
-    required : false, 
-    default: []
-  },
-  connections : {
-    type: Array,
-    required : false, 
-    default: []
-  }
+  connectionsRequests: [
+    {
+      requestFrom: { type: String, required: false, default: "" },
+      requestTo: { type: String, required: false, default: "" },
+      isAccepted: { type: Boolean, required: false, default: false }
+    }
+  ],
+  connections: [
+    {
+      acceptedFrom: { type: String, required: false, default: "" },
+      acceptedTo: { type: String, required: false, default: "" },
+      isAccepted: { type: Boolean, required: false, default: true }
+    }
+  ]
 });
 
 module.exports = mongoose.model("Recruiters", recruiterSchema);
