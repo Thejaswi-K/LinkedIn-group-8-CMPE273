@@ -58,7 +58,7 @@ onSubmit(e){
                
           <div>
               
-              <ProfileSearchItem key={profile._id} profile={profile} toEmail={profile.email} />
+              <ProfileSearchItem key={profile._id} profile={profile} toEmail={profile.email} toFirstName={profile.firstName}  />
         </div>
       ));
         

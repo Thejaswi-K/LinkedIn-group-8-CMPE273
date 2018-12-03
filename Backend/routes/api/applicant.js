@@ -653,9 +653,7 @@ router.post("/:applicantId/jobs/:jobId/save", function(req, res) {
 
 router.post("/sendMessage", (req, res) => {
   console.log("Inside sending the message to the Target");
-  console.log(req.body.from_email);
-  console.log(req.body.to_email);
-  console.log(req.body.sendMessage);
+  console.log(req.body);
 
   kafka.make_request("send_message", req.body, function(err, results) {
     console.log("In sending message success call");
