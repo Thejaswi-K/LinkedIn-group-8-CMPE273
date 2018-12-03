@@ -9,7 +9,7 @@ import Paper from "@material-ui/core/Paper";
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    width: 1082,
+    width: 500,
     padding: theme.spacing.unit * 2
   },
   image: {

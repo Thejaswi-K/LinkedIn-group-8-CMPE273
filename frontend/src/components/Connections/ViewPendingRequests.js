@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import jwt_decode from "jwt-decode";
 import ViewPendingRequestsItem from './ViewPendingRequestsItem';
 import { getPendingRequets } from '../../actions/connectionActions';
+import ApplicantNavbar from '../Navbar/applicantNavbar';
 
 class ViewPendingRequests extends Component {
   arr=[];
@@ -51,6 +52,8 @@ class ViewPendingRequests extends Component {
         }
             
         return (
+          <div>
+            <ApplicantNavbar/>
           <div className="homes">
             <div className="container">
             <br/>
@@ -93,6 +96,7 @@ class ViewPendingRequests extends Component {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         );
     
