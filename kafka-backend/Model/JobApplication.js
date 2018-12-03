@@ -7,14 +7,14 @@ var jobApplication = new mongoose.Schema({
         default: ""
       },
       resume: {
-        type: String,
+        type: Array,
         required: false,
-        default: ""
+        default: []
       },
       coverLetter: {
-        type: String,
+        type: Array,
         required: false,
-        default: ""
+        default: []
       },
       firstName: {
         type: String,
