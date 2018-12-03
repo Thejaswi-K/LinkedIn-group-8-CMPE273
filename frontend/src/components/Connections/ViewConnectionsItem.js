@@ -10,7 +10,7 @@ class ViewConnectionsItem extends Component {
 
     return (
       
-      <div className="card card-body bg-dark mb-3">
+      <div className="card card-body bg-light mb-3">
 
         <Messages membername={ownerhome.acceptedFrom}/>
     
