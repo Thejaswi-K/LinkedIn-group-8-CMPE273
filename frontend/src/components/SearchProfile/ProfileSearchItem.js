@@ -2,9 +2,27 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
+import { connect } from "react-redux";
+import {extractNameFromEmail,capitalizeFirstLetter} from '../../utility';
 
 
 class ProfileSearchItem extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+          messageContent: ""
+        }
+        this.changeMessage = this.changeMessage.bind(this);
+       
+      }
+
+      changeMessage = e => {
+        this.setState({
+            messageContent: e.target.value
+        });
+      };
+    
 
     onConnectClick() {
       //  console.log('email on click',email)
@@ -13,6 +31,7 @@ class ProfileSearchItem extends Component {
             this.decodedApplicant = jwt_decode(token);
             this.isApplicantLoggedIn = true;
             this.email = this.decodedApplicant.email;
+            this.firstName = this.decodedApplicant.firstName;
             console.log("Emmail", this.email)
         }
         const requestEmail={
@@ -28,10 +47,40 @@ class ProfileSearchItem extends Component {
     })
           
     }
+
+    onMessageSendClick() {
+        //  console.log('email on click',email)
+          if (localStorage.getItem("applicantToken")) {
+              let token = localStorage.getItem("applicantToken");
+              this.decodedApplicant = jwt_decode(token);
+              this.isApplicantLoggedIn = true;
+              this.email = this.decodedApplicant.email;
+              this.firstName = this.decodedApplicant.firstName;
+              console.log("Emmail", this.email)
+          }
+          const messageDetails={
+              from_email:this.email,
+              to_email:this.props.toEmail,
+              messageSent:this.state.messageContent,
+              senderFirstName: capitalizeFirstLetter(extractNameFromEmail(jwt_decode(localStorage.getItem('applicantToken')).email)),
+              receiverFirstName:this.props.toFirstName
+          }
+          console.log("mD",messageDetails);
+          axios
+            .post('http://localhost:3001/applicants/sendMessage', messageDetails)
+            .then(function(res) { 
+                if (res.data) {
+                  alert("Message Sent Successfully")
+                  
+                } 
+      })
+            
+      }
     
 
   render() {
     const { profile } = this.props;
+
 
     return (
       
@@ -62,9 +111,36 @@ class ProfileSearchItem extends Component {
             </div>
             <br/>
             <div className="text-right">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary" data-toggle="modal" data-target="#messagingWindow">
                     Message
                 </button>
+            </div>
+            <div className="modal fade" id="messagingWindow" tabindex="-1" role="dialog" aria-labelledby="modalLongTitle" aria-hidden="true">
+                <div className="modal-dialog modal-lg" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLongTitle">Send Message From: {capitalizeFirstLetter(extractNameFromEmail(jwt_decode(localStorage.getItem('applicantToken')).email))}</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            Message To : {profile.firstName}
+                        </div>
+                        <div className="modal-footer">
+                            
+                            <textarea 
+                            className="form-control" 
+                            rows="5" 
+                            id="message" 
+                            placeholder="Enter your message"
+                            name="messageContent"
+                            onChange={this.changeMessage}></textarea>
+                            <button type="button" className="btn btn-primary" onClick={this.onMessageSendClick.bind(this)}  >Send</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>    
             </div>
         </div>
         <div className="col-1">
@@ -82,4 +158,9 @@ ProfileSearchItem.propTypes = {
     profile: PropTypes.object.isRequired
 };
 
-export default ProfileSearchItem;
+const mapStateToProps = state => ({
+    
+    applicantProfile: state.applicantProfile
+  });
+
+export default connect(mapStateToProps)(ProfileSearchItem);
