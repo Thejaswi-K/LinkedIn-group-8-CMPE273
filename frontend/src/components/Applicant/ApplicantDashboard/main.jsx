@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 
 import RightRailComponent from "./rightrail";
 import ApplicantNavbar from "../../Navbar/applicantNavbar";
-
+import GraphProfileViewCount from "./graphProfileViewCount";
 export default class MainApplicantDashboard extends Component {
   constructor(props) {
     super(props);
@@ -39,16 +39,14 @@ export default class MainApplicantDashboard extends Component {
        
         <div className="row">
         <div className="col-9">
-           
+        <GraphProfileViewCount/>
           </div>
           
           <div className="col-3" style={{position: "fixed", right:"20px"}}>
             <RightRailComponent />
           </div>
         </div>
-        {/* <div className="row" >
-       <GraphTopTenJobPostingComponent/>
-        </div> */}
+
 
       </div>
     );

@@ -4,7 +4,8 @@ import {
     ADD_EXPERIENCE,
     ADD_EDUCATION,
     ADD_SKILLS,
-    EDIT_SUMMARY
+    EDIT_SUMMARY,
+    APPLICANT_DELETE
 } from '../actions/types';
 
 const initialState = {
@@ -13,7 +14,8 @@ const initialState = {
     experience: [],
     education: [],
     skills: [],
-    summary: {}
+    summary: {},
+    delete: ""
 };
 
 export default function (state = initialState, action) {
@@ -48,6 +50,12 @@ export default function (state = initialState, action) {
                 ...state,
                 summary: action.payload
             };
+        case APPLICANT_DELETE:
+            return {
+                ...state,
+                delete: action.payload
+            };
+
         default:
             return state;
 

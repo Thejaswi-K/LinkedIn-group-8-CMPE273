@@ -10,7 +10,8 @@ import {
   UPDATE_PROFILE_ERROR,
   ADD_SKILLS,
   ADD_EDUCATION,
-  EDIT_SUMMARY
+  EDIT_SUMMARY,
+    APPLICANT_DELETE
 } from "./types";
 
 import setAuthToken from "../utils/setAuthToken";
@@ -305,6 +306,50 @@ export const applicantDetails = applicantEmail => dispatch => {
         payload: err.response
       })
     );
+};
+
+//delete applicant
+export const deleteApplicant = applicantEmail => dispatch => {
+    axios.defaults.withCredentials = true;
+    setAuthToken(localStorage.getItem("applicantToken"));
+
+    axios
+        .delete(`${CONSTANTS.BACKEND_URL}/applicants/${applicantEmail}`)
+        .then(res => {
+            // Save to localStorage
+
+            if (res.status === 202) {
+                setAuthToken(localStorage.getItem("applicantToken"));
+                axios.defaults.withCredentials = true;
+                axios
+                    .delete(`${CONSTANTS.BACKEND_URL}/applicants/mysql/${applicantEmail}`)
+                    .then(res => {
+                        if (res.status === 202) {
+                            dispatch({
+                                type: APPLICANT_DELETE,
+                                payload: res.data
+                            })
+                        }
+                    })
+                    .catch(err =>
+                        dispatch({
+                            type: UPDATE_PROFILE_ERROR,
+                            payload: err.response
+                        })
+                    );
+            } else {
+                dispatch({
+                    type: UPDATE_PROFILE_ERROR,
+                    payload: res.message
+                })
+            }
+        })
+        .catch(err =>
+            dispatch({
+                type: UPDATE_PROFILE_ERROR,
+                payload: err.response
+            })
+        );
 };
 
 export const currentApplicantProfile = decoded => {
