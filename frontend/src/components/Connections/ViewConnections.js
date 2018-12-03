@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import ViewConnectionsItem from './ViewConnectionsItem';
 import { getConnections } from '../../actions/connectionActions';
 
+
 class ViewConnections extends Component {
   arr=[];
   isApplicantLoggedIn = false;
@@ -63,7 +64,7 @@ class ViewConnections extends Component {
 
                   <div className="row">
                   <div className="col-8">
-                    <h3 className="display-8 text-left"> Your Connections</h3>
+                    <h3 className="display-8 text-left">Your Connections</h3>
                   </div>
                   <div className="col-2">
                     
