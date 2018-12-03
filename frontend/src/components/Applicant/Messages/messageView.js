@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
-import ProfileNavbar from "../../Navbar/applicantNavbar";
 
 // REDUX functionality
 import { connect } from "react-redux";
@@ -56,7 +54,7 @@ class messageView extends Component {
     this.setState({
       messageSent: ""
     });
-    this.props.history.push("messages");
+    this.props.history.push("/messages");
   };
 
   changeMessage = e => {

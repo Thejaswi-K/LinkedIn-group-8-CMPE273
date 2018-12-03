@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 import ProfileNavbar from "../Navbar/applicantNavbar";
+import * as Validate from "../../validation/ValidationUtil";
+import { capitalizeFirstLetter } from "../../utility";
 
 class Home extends Component {
   constructor(props) {
@@ -26,24 +28,46 @@ class Home extends Component {
 
   changeJobLocation = e => {
     this.setState({
-      joblocation: e.target.value
+      joblocation: capitalizeFirstLetter(e.target.value)
     });
   };
 
   searchSubmit = e => {
-    e.preventDefault();
-    this.setState({
-      authFlag: true
-    });
-    sessionStorage.setItem("jobname", this.state.jobname);
-    sessionStorage.setItem("joblocation", this.state.joblocation);
+    let valid = Validate.jobSearch(this.state);
+    if (valid === "") {
+      e.preventDefault();
+      sessionStorage.setItem("jobname", this.state.jobname);
+      sessionStorage.setItem("joblocation", this.state.joblocation);
+      this.setState({
+        authFlag: true
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        messagediv: valid
+      });
+      e.preventDefault();
+    }
   };
 
   render() {
+    let message = null;
+    if (this.state.messagediv !== "") {
+      message = (
+        <div className="clearfix">
+          <div className="alert-danger text-center" role="alert">
+            {this.state.messagediv}
+          </div>
+        </div>
+      );
+    } else {
+      message = <div />;
+    }
     let redirect = null;
     if (this.state.authFlag) {
       redirect = <Redirect to="/jobList" />;
     }
+
     return (
       <div
         style={{
@@ -54,6 +78,7 @@ class Home extends Component {
       >
         {redirect}
         <ProfileNavbar />
+        <div>{message}</div>
         <div class="col-md-5" style={{ top: "250px", left: "60px" }}>
           <div class="form-group form-group-lg form-group-icon-left">
             <input
