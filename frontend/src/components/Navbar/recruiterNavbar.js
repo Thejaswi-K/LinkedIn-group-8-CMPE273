@@ -89,14 +89,20 @@ class recruiterNavbar extends Component {
             </div>
           </button>
           <div className="dropdown-menu" aria-labelledby="site-header__login">
-            <ul style={{ padding: "0px" }}>
-              <li class="dropdown-item">
-                <Link to="/RecruiterSignup" onClick={this.handleLogout}>
-                  <span className="glyphicon glyphicon-log-out" />
-                  &nbsp;&nbsp;&nbsp;Logout
-                </Link>
-              </li>
-            </ul>
+                  <ul style={{ padding: "0px" }}>
+                      <li class="dropdown-item"><Link to="/recruiterDashboard"><span
+                          className="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;My Dashboard</Link>
+                      </li>
+                      <li class="dropdown-item"><Link to="/viewRecruiterPendingRequests"><span
+                          className="glyphicon glyphicon-link"></span>&nbsp;&nbsp;&nbsp;My Requests</Link>
+                      </li>
+                      <li class="dropdown-item">
+                          <Link to="/RecruiterSignup" onClick={this.handleLogout}>
+                              <span className="glyphicon glyphicon-log-out" />
+                              &nbsp;&nbsp;&nbsp;Logout
+                        </Link>
+                      </li>
+                  </ul>
           </div>
         </div>
       );
@@ -180,7 +186,7 @@ class recruiterNavbar extends Component {
     connections = (
       <li>
         <Link
-          to="/"
+          to="/viewRecruiterConnections"
           className="navbar-brand connections-icon text-center text-white"
         >
           <span className="glyphicon glyphicon-globe " title="Connections" />
@@ -191,7 +197,7 @@ class recruiterNavbar extends Component {
 
     home = (
       <li>
-        <Link to="/" className="navbar-brand text-center text-white">
+        <Link to="/recruiterprofileview" className="navbar-brand text-center text-white">
           <span className="glyphicon glyphicon-home navbar-icon" />
           <div className="text-white">Home</div>
         </Link>
