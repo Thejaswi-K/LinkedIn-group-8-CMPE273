@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getSearchedProfiles } from '../../actions/searchProfileActions';
 import ProfileSearchItem from './ProfileSearchItem';
-//import { Link } from 'react-router-dom';
-//import classnames from 'classnames';
+
 
 
 class ProfileSearch extends Component {
