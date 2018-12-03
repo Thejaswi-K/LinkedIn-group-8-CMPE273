@@ -9,6 +9,31 @@ const messageSchema = new Schema({
     default: []
   },
 
+  senderFirstname: {
+    type: String,
+    required: false,
+    lowercase: true,
+    default: ""
+  },
+  receiverFirstname: {
+    type: String,
+    required: false,
+    lowercase: true,
+    default: ""
+  },
+  from_email: {
+    type: String,
+    required: false,
+    lowercase: true,
+    default: ""
+  },
+  to_email: {
+    type: String,
+    required: false,
+    lowercase: true,
+    default: ""
+  },
+
   authorMessage: [
     {
       author: {

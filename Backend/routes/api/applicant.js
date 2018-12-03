@@ -587,7 +587,7 @@ router.delete(
         });
     }
 );
-
+/*
 //Get Profile view count of particular applicant
 router.get("/:applicantId/logs/profile-view-count", function(req, res) {
   console.log("inside backend profile-view-count");
@@ -613,7 +613,7 @@ router.get("/:applicantId/logs/profile-view-count", function(req, res) {
     }
   );
 });
-
+*/
 //applicant Applies for new job
 router.post("/:applicantId/jobs/:jobId", function(req, res) {
   //Update the corresponding JobId with this info into job application object ($addToSet)
@@ -682,9 +682,7 @@ router.post("/:applicantId/jobs/:jobId/save", function(req, res) {
 
 router.post("/sendMessage", (req, res) => {
   console.log("Inside sending the message to the Target");
-  console.log(req.body.from_email);
-  console.log(req.body.to_email);
-  console.log(req.body.sendMessage);
+  console.log(req.body);
 
   kafka.make_request("send_message", req.body, function(err, results) {
     console.log("In sending message success call");
@@ -887,10 +885,22 @@ router.get("/:applicantId/logs/profile-view-count", function(req, res) {
           .json({ success: false, error: "Applicant not found" })
           .send(err);
       } else {
-        console.log("applicant log profile view count", result);
+        console.log("applicantdsafdasfasfasfas log profile view count", result.data);
+       let months = new Array(30).fill(0);
+
+       for(var day = 0 ; day < result.data.length; day++){
+         console.log("each available day is", day );
+         months[result.data[day]._id.day] = result.data[day].count;
+       }
+
+
+        // let days = result.data.map((day)=>day._id.day);
+        // let counts = result.data.map((count)=>count.count);
+
+        console.log("Days array ",months);
         if (result.success) {
           res.status(200);
-          res.send(result);
+          res.send(months);
         } else {
           res.status(400).json({ success: false });
         }
@@ -913,7 +923,9 @@ router.put("/:applicantId/logs/profile-view-count", function(req, res) {
           .json({ success: false, error: "Applicant not found" })
           .send(err);
       } else {
+
         console.log("applicant log profile view count updated", result);
+
         if (result.success) {
           res.status(200);
           res.send(result);
