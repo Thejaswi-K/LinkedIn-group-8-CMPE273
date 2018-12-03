@@ -53,15 +53,9 @@ export const loginValidations = data => {
   return msg;
 };
 
-export const jobSearchFilter = data => {
+export const jobSearch = data => {
   let msg = "";
-  if (
-    data.jobtype === "" ||
-    data.location === "" ||
-    data.industry === "" ||
-    data.company === "" ||
-    data.title === ""
-  ) {
+  if (data.jobname == "" || data.joblocation == "") {
     msg = "All fields are mandatory. Please fill all details";
     return msg;
   }

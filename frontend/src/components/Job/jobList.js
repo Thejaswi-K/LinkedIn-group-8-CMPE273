@@ -85,26 +85,27 @@ class jobList extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    // if (
-    //   nextProps.jobSearchReducer.jobSearchDetails.data != null &&
-    //   this.getPhoto === true
-    // ) {
-    //   let imagePreview = "data:image/jpg;base64, " + nextProps.photos.photo;
-    //   this.imageBase.push(imagePreview);
-    //   this.setState({
-    //     imagePushed: true
-    //   });
-    // } else
-    if (nextProps.jobSearchReducer.jobSearchDetails.data != null) {
-      // &&
-      //   this.getPhoto === false
+    if (
+      nextProps.jobSearchReducer.jobSearchDetails.data != null &&
+      this.getPhoto === true
+    ) {
+      let imagePreview = "data:image/jpg;base64, " + nextProps.photos.photo;
+      this.imageBase.push(imagePreview);
+      this.setState({
+        imagePushed: true
+      });
+    } else if (
+      nextProps.jobSearchReducer.jobSearchDetails.data != null &&
+      this.getPhoto === false
+    ) {
       this.jobDetails = nextProps.jobSearchReducer.jobSearchDetails.data;
       if (this.jobDetails.length > 0) {
-        // for (let i = 0; i < this.jobDetails.length; i++) {
-        //   var photoData = this.jobDetails[i].companyNameLogo;
-        //   var photoArr = JSON.parse(photoData);
-        //   this.handleGetPhoto(photoArr[0]);
-        // }
+        for (let i = 0; i < this.jobDetails.length; i++) {
+          var photoData = this.jobDetails[i].companyLogo;
+          // var photoArr = JSON.parse(photoData);
+          // this.handleGetPhoto(photoArr[0]);
+          this.handleGetPhoto(photoData);
+        }
         this.setState({
           ...this.state,
           isRes: true
@@ -248,10 +249,10 @@ class jobList extends Component {
     });
   };
 
-  // handleGetPhoto = imgName => {
-  //   this.props.getPhoto(imgName);
-  //   this.getPhoto = true;
-  // };
+  handleGetPhoto = imgName => {
+    this.props.getPhoto(imgName);
+    this.getPhoto = true;
+  };
 
   render() {
     var { length: count } = this.jobDetails;
@@ -346,8 +347,10 @@ class jobList extends Component {
           <div className="ml-5 mt-2">
             <JobCard
               title={propval.title}
+              companyName={propval.companyName}
+              location={propval.location}
               description={propval.description}
-              // photo={this.imageBase[place]}
+              photo={this.imageBase[place]}
               onClick={() => this.redirectDetails(propval._id)}
               //   headline={propval.headline}
               //   description={propval.description}

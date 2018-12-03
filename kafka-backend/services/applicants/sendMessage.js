@@ -16,6 +16,10 @@ function handle_request(msg, callback) {
       console.log(members);
       const newMessage = new Messages({
         messageMembers: members,
+        senderFirstname: msg.senderFirstName,
+        receiverFirstname: msg.receiverFirstName,
+        from_email: msg.from_email,
+        to_email: msg.to_email,
         authorMessage: [
           {
             author: msg.from_email,

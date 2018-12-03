@@ -606,7 +606,7 @@ router.post("/:applicantId/jobs/:jobId", function(req, res) {
         throw err;
         done(err, {});
       } else {
-        console.log("results in backend",results);
+        console.log("results in backend", results);
         if (results.code == 200) {
           return res.status(200).json(results);
         } else {
@@ -634,7 +634,7 @@ router.post("/:applicantId/jobs/:jobId/save", function(req, res) {
         throw err;
         done(err, {});
       } else {
-        console.log("results logged",results);
+        console.log("results logged", results);
         // console.log("results code",results.code);
         // console.log("results.value", results.value);
         // console.log("results.status", results.status);
@@ -656,6 +656,8 @@ router.post("/sendMessage", (req, res) => {
   console.log(req.body.from_email);
   console.log(req.body.to_email);
   console.log(req.body.sendMessage);
+  console.log(req.body.senderFirstname);
+  console.log(req.body.receiverFirstname);
 
   kafka.make_request("send_message", req.body, function(err, results) {
     console.log("In sending message success call");
@@ -673,71 +675,86 @@ router.post("/sendMessage", (req, res) => {
 });
 
 /****************Receiving Messages *************** */
-router.get("/receiveMessage/:emails", (req, res) => {
-  console.log("Inside getting messages conversation");
-  console.log(req.query);
-  // console.log(req.query.to_email);
-  kafka.make_request("receive_message", req.params.emails, function(
-    err,
-    results
-  ) {
-    console.log("In message conversation result call");
-    console.log(results);
-    if (err) {
-      console.log("Inside err");
-      return res.status(400).json({
-        message: "Getting message conversation Failed"
-      });
-    } else {
-      console.log("Inside getting message conversation Success");
-      return res.status(200).json(results);
-    }
-  });
-});
-
-/****************Applicant Messages Names *************** */
-
-router.get("/applicantMessages/:from_email", (req, res) => {
-  console.log("Inside getting messagers names");
-  console.log(req.params);
-  kafka.make_request("applicant_messages", req.params, function(err, results) {
-    console.log("In message names result call");
-    console.log(results);
-    if (err) {
-      console.log("Inside err");
-      return res.status(400).json({
-        message: "Getting message names Failed"
-      });
-    } else {
-      console.log("Inside getting message names Success");
-      return res.status(200).json(results);
-    }
-  });
-});
-
-/****************Applicant View All Connections*********************/
-router.get("/viewconnections/:email", function(req, res) {
-  console.log("Backend Applicant View Connections");
-  kafka.make_request(
-    "applicant_ViewConnection",
-    { email: req.params.email },
-    function(err, results) {
-      console.log("in result");
+router.get(
+  "/receiveMessage/:emails",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("Inside getting messages conversation");
+    console.log(req.query);
+    // console.log(req.query.to_email);
+    kafka.make_request("receive_message", req.params.emails, function(
+      err,
+      results
+    ) {
+      console.log("In message conversation result call");
       console.log(results);
       if (err) {
         console.log("Inside err");
-        res.json({
-          status: "error",
-          msg: "Unable to fetch Connections."
+        return res.status(400).json({
+          message: "Getting message conversation Failed"
         });
       } else {
-        console.log("Inside else");
-        res.json(results);
-        res.end();
+        console.log("Inside getting message conversation Success");
+        return res.status(200).json(results);
       }
-    }
-  );
-});
+    });
+  }
+);
+
+/****************Applicant Messages Names *************** */
+
+router.get(
+  "/applicantMessages/:from_email",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("Inside getting messagers names");
+    console.log(req.params);
+    kafka.make_request("applicant_messages", req.params, function(
+      err,
+      results
+    ) {
+      console.log("In message names result call");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        return res.status(400).json({
+          message: "Getting message names Failed"
+        });
+      } else {
+        console.log("Inside getting message names Success");
+        return res.status(200).json(results);
+      }
+    });
+  }
+);
+
+/****************Applicant View All Connections*********************/
+router.get(
+  "/viewconnections/:email",
+  passport.authenticate("jwt", { session: false }),
+  function(req, res) {
+    console.log("Backend Applicant View Connections");
+    kafka.make_request(
+      "applicant_ViewConnection",
+      { email: req.params.email },
+      function(err, results) {
+        console.log("in result");
+        console.log(results);
+        if (err) {
+          console.log("Inside err");
+          res.json({
+            status: "error",
+            msg: "Unable to fetch Connections."
+          });
+        } else {
+          console.log("Inside else");
+          res.json(results);
+          res.end();
+        }
+      }
+    );
+  }
+);
 
 /****************Applicant View Pending Requests*********************/
 router.get("/viewPendingRequests/:email", function(req, res) {
