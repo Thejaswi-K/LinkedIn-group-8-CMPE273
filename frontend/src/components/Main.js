@@ -15,6 +15,7 @@ import RecruiterProfileView from "./Recruiter/RecruiterProfile/RecruiterProfileV
 import Provider from "react-redux/es/components/Provider";
 import store from "../store";
 import MainRecruiterDashboard from "./Recruiter/RecruiterDashboard/main";
+import MainApplicantDashboard from "./Applicant/ApplicantDashboard/main";
 import ViewConnections from "./Connections/ViewConnections";
 import ViewPendingRequests from "./Connections/ViewPendingRequests";
 import JobDetails from "./Job/jobDetails";
@@ -55,11 +56,8 @@ class Main extends Component {
           <Route path="/jobDetails" component={JobDetails} />
           <Route path="/jobApply" component={JobApply} />
           <Route path="/jobEdit" component={EditJob}/>
-
-          <Route
-            path="/recruiterDashboard"
-            component={MainRecruiterDashboard}
-          />
+          <Route path="/applicantDashboard" component={MainApplicantDashboard}/>
+          <Route path="/recruiterDashboard" component={MainRecruiterDashboard}/>
            <Route
                         path="/recruiterJobListing"
                         component={MainRecruiterJobListing}
