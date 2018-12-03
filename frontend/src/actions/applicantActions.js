@@ -373,3 +373,20 @@ export const dispatchApplicantSignupError = decoded => {
     payload: decoded
   };
 };
+
+// Set logged in user
+export const setDelete = decoded => {
+    return {
+        type: APPLICANT_DELETE,
+        payload: decoded
+    };
+};
+
+// Log user out
+export const deleteUser = () => dispatch => {
+    setAuthToken(false);
+    // Set current user to {} which will set isAuthenticated to false
+    dispatch(setDelete(""));
+};
+
+
