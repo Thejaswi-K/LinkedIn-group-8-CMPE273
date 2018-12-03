@@ -41,48 +41,20 @@ class JobDetails extends Component {
         if(e.target.name == 'resume'){
             console.log("Target files",e.target.files);
             this.setState({
-                resume:  e.target.files
+                resume:  e.target.files[0]
             });
         }else if(e.target.name == 'coverletter'){
             console.log("Target files",e.target.files);
             this.setState({
-                coverletter:  e.target.files[0].name
+                coverletter:  e.target.files[0]
             });
         }
         else{
             this.setState({ [e.target.name]: e.target.value });
             console.log(this.state);
-        }
-        
+        } 
     };
-    // componentWillReceiveProps(nextProps) {
-    //     if (
-    //       this.state.jobData != null &&
-    //       this.getPhoto === true
-    //     ) {
-    //       let imagePreview = "data:image/jpg;base64, " + nextProps.photos.photo;
-    //       this.imageBase.push(imagePreview);
-    //       this.setState({
-    //         imagePushed: true
-    //       });
-    //     } else
-    //     if (this.state.jobData != null   &&
-    //         this.getPhoto === false) {
-        
-    //       this.jobDetails = this.state.jobData;
-    //       if (this.jobDetails.length > 0) {
-    //         for (let i = 0; i < this.jobDetails.length; i++) {
-    //           var photoData = this.jobDetails[i].companyNameLogo;
-    //           var photoArr = JSON.parse(photoData);
-    //           this.handleGetPhoto(photoArr[0]);
-    //         }
-    //         this.setState({
-    //           ...this.state,
-    //           isRes: true
-    //         });
-    //       }
-    //     }
-    //   }
+
     componentDidMount(){
         console.log("Job details initial state", this.state);
         axios.defaults.withCredentials = true;
@@ -147,21 +119,21 @@ class JobDetails extends Component {
             console.log(error);
         });
     };
-
     applyJobHandler = (e) => {
         e.preventDefault();
         window.open(CONSTANTS.ROOTURL+"/jobApply","_blank");
     };
     easyApplyJobHandler = (e) => {
         e.preventDefault();
-        //easyApply API
-        // axios.defaults.withCredentials = true;
-        // const { resume } = this.state;
-        // let formData = new FormData();
-        // formData.append('resume', resume);
-        // axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
-        // .then((result=>{
-        //     console.log("upload successful");
+        axios.defaults.withCredentials = true;
+        const { resume } = this.state;
+        const { coverletter } = this.state;
+        const formData = new FormData();
+        formData.append('resume', resume);
+        formData.append('coverletter', coverletter);
+        axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
+        .then((result=>{
+            console.log("upload successful");
             const data = {
                 firstName: this.state.applicantData.firstName,
                 lastName: this.state.applicantData.lastName,
@@ -171,8 +143,8 @@ class JobDetails extends Component {
                 sponsorship: this.state.sponsorship,
                 diversity: this.state.diversity,
                 disablility: this.state.disability,
-                resume: this.state.resume[0].name,
-                coverLetter: this.state.coverletter
+                resume: this.state.resume.name,
+                coverLetter: this.state.coverletter.name
             }
             console.log("submit data",data);
     
@@ -185,10 +157,10 @@ class JobDetails extends Component {
             .catch(function(error){
                 console.log(error);
             });
-        // }))
-        // .catch((error)=>{
-        //     console.log("unable to upload");
-        // });
+        }))
+        .catch((error)=>{
+            console.log("unable to upload");
+        });
         
     };
 
