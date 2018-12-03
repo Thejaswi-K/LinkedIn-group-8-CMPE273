@@ -74,8 +74,8 @@ class JobDetails extends Component {
             .then(response => {
                 console.log("response in then",response.data);
                 //console.log("image file name: ",response.data.data[0].companyLogo[0]);
-                var imgName = JSON.parse(response.data.data[0].companyLogo[0]);
-                console.log(imgName[0]);
+                //var imgName = JSON.parse(response.data.data[0].companyLogo[0]);
+                //console.log(imgName[0]);
                 // axios.post(CONSTANTS.BACKEND_URL+"/api/photos/download/"+ imgName[0])
                 // .then(response => {
                 //     console.log("Image res: ", response);
@@ -104,6 +104,7 @@ class JobDetails extends Component {
                             appliedStatus: true
                         });
                     }
+                    console.log("finally state before rendering", this.state);
                 // })
                 // .catch(function(error){
                 //     console.log(error);
