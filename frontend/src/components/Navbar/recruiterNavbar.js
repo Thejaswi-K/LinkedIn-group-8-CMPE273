@@ -216,11 +216,11 @@ class recruiterNavbar extends Component {
 
     jobs = (
       <Link
-        to="/jobSearch"
+        to="/job"
         className="navbar-brand connections-icon text-center text-white"
       >
         <span className="glyphicon glyphicon-briefcase " />
-        <div className="text-white">Jobs</div>
+        <div className="text-white">Post Job</div>
       </Link>
     );
 

@@ -98,96 +98,6 @@ class applicantNavbar extends Component {
       return <Redirect to="/searchProfile" />;
     }
 
-<<<<<<< HEAD
-
-    render() {
-
-        if(this.arr.length>0){
-            return(
-                <Redirect to="/searchProfile"/>
-            )
-        }
-
-
-        var loginOrOut;
-        var profile;
-        var signUp;
-        var accountSettings;
-        var requests;
-        var connections;
-        var home;
-        var search;
-        var jobs;
-        var navClassName;
-        var messaging;
-
-        var div;
-        let userLogin = null;
-        if (!this.state.isRecruiter && this.state.isLogged) {
-            console.log('Able to read session.');
-            userLogin = (
-                <div className="dropdown" tabindex="-1" role="presentation">
-                    <button
-                        style={{fontSize: "100%", color: "#fff", border: "none", paddingTop: "0px", fontWeight: "600"}}
-                        aria-haspopup="true" aria-expanded="false"
-                        className=" Dropdown__toggle navbar navbar-expand-lg navbar-light bg-light"
-                        id="dropdownMenuButton"
-                        label="Login" data-toggle="dropdown">
-                        {/* {this.props.userData.loginData.userFirstName.toUpperCase()}<span aria-hidden="true" className="caret"></span> */}
-                        <span className="glyphicon glyphicon-user"></span>
-                        <div
-                            className="text-white">{capitalizeFirstLetter(extractNameFromEmail(jwtDecode(localStorage.getItem('applicantToken')).email))}&nbsp;
-                            <span aria-hidden="true" className="caret"></span></div>
-                    </button>
-                    <div className="dropdown-menu" aria-labelledby="site-header__login">
-                        <ul style={{padding: "0px"}}>
-                            <li class="dropdown-item"><Link to="/applicantDashboard"><span
-                                className="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;My Dashboard</Link>
-                            </li>
-                            <li class="dropdown-item"><Link to="/viewPendingRequests"><span
-                                className="glyphicon glyphicon-link"></span>&nbsp;&nbsp;&nbsp;My Requests</Link>
-                            </li>
-                            <li class="dropdown-item"><Link to="/applicantSignup" onClick={this.handleLogout}><span
-                                className="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;&nbsp;Logout</Link></li>
-                        </ul>
-                    </div>
-                </div>
-            );
-        } else {
-            console.log("unable to read session");
-            userLogin = (
-                <div id="login" className="dropdown" tabindex="-1" role="presentation">
-                    <button style={{
-                        fontSize: "1.6rem",
-                        color: "#fff",
-                        border: "none",
-                        paddingBottom: "18px",
-                        fontWeight: "600"
-                    }} aria-haspopup="true" aria-expanded="false" className="site-header-nav__toggle Dropdown__toggle "
-                            id="dropdownMenuButton"
-                            label="Login" data-toggle="dropdown">
-                        Applicant Login&nbsp;<span aria-hidden="true" className="caret"></span>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="site-header__login">
-                        <ul style={{padding: "0px"}}>
-                            <li class="dropdown-item"><Link to="/applicantSignup"><span
-                                className="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;&nbsp;Applicant Login</Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            );
-        }
-        //if the user is logged in, show the logout and profile link
-
-        loginOrOut = (
-            <li>
-                <Link to="/logout" className="navbar-brand">
-          <span
-              className="glyphicon glyphicon-off navbar-icon"
-              title="Logout"
-          />
-=======
     var loginOrOut;
     var profile;
     var signUp;
@@ -236,16 +146,18 @@ class applicantNavbar extends Component {
           <div className="dropdown-menu" aria-labelledby="site-header__login">
             <ul style={{ padding: "0px" }}>
               <li class="dropdown-item">
-                <Link to="/applicantSignup" onClick={this.handleLogout}>
-                  <span className="glyphicon glyphicon-log-out" />
-                  &nbsp;&nbsp;&nbsp;Logout
->>>>>>> fb32e3fd98a2b8ba3bfc2b9fa5e11d2f5e96485f
-                </Link>
-              </li>
-              <li class="dropdown-item">
                 <Link to="/applicantDashboard">
                   <span className="glyphicon glyphicon-briefcase" />
                   &nbsp;&nbsp;&nbsp;My Dashboard
+                </Link>
+              </li>
+              <li class="dropdown-item"><Link to="/viewPendingRequests"><span
+                          className="glyphicon glyphicon-link"></span>&nbsp;&nbsp;&nbsp;My Requests</Link>
+                      </li>
+              <li class="dropdown-item">
+                <Link to="/applicantSignup" onClick={this.handleLogout}>
+                  <span className="glyphicon glyphicon-log-out" />
+                  &nbsp;&nbsp;&nbsp;Logout
                 </Link>
               </li>
             </ul>
@@ -281,111 +193,11 @@ class applicantNavbar extends Component {
                   <span className="glyphicon glyphicon-log-in" />
                   &nbsp;&nbsp;&nbsp;Applicant Login
                 </Link>
-<<<<<<< HEAD
-            </li>;
-
-        connections = <li>
-
-            <Link to="/viewConnections" className="navbar-brand connections-icon text-center text-white">
-                <span className='glyphicon glyphicon-globe ' title="Connections">
-                </span>
-                <div className="text-white">My Network</div>
-            </Link>
-        </li>;
-
-        home = <li><Link to="/applicantprofileview" className="navbar-brand text-center text-white">
-            <span className='glyphicon glyphicon-home navbar-icon'/>
-            <div className="text-white">Home</div>
-        </Link></li>;
-
-        search = <input name="firstName" className="form-control mr-sm-1 " type="search" placeholder="Search"
-                        aria-label="Search"
-                        style={{width: 250, marginTop: 10}} value={this.state.firstName}
-                        onChange={this.onChange}/>;
-
-        jobs = (
-            <Link
-                to="/jobSearch"
-                className="navbar-brand connections-icon text-center text-white"
-            >
-                <span className="glyphicon glyphicon-briefcase "/>
-                <div className="text-white">Jobs</div>
-            </Link>
-        );
-
-        messaging = (
-            <Link
-                to="/messages"
-                className="navbar-brand connections-icon text-center text-white"
-            >
-                <span className="glyphicon glyphicon-comment "/>
-                <div className="text-white">Messaging</div>
-            </Link>
-        );
-
-        navClassName = "navbar navbar-default navbar-static-top";
-
-        return (
-
-            <div>
-
-
-                <div>
-
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                        <div className="navbar-header row" style={{marginLeft: 10}}>
-                            <Link to="/" className="navbar-brand">
-                                <img src="https://static.licdn.com/sc/h/95o6rrc5ws6mlw6wqzy0xgj7y" alt="logo"
-                                />
-                            </Link>
-
-                            {search}
-                            <input style={{
-                                fontSize: '100%',
-                                weight: 300,
-                                marginLeft: 25,
-                                marginTop: 8,
-                                marginBottom: 5,
-                                color: '#fff'
-                            }} tabindex="1" id="login-submit" className="header wrapper login-form login submit-button"
-                                   type="submit"
-                                   value="Search" onClick={this.searchProfile.bind(this)}/>
-                        </div>
-                        <div className="collapse navbar-collapse" id="navbarNav">
-                            <ul className="navbar-nav pull-right" style={{marginRight: 67}}>
-                                <li className="nav-item active">
-                                    {home}
-                                </li>
-                                <li className="nav-item">
-                                    {connections}
-                                </li>
-                                <li className="nav-item">
-                                    {jobs}
-                                </li>
-                                <li className="nav-item">
-                                    {messaging}
-                                </li>
-
-                                <li className="nav-item">
-                                    {userLogin}
-                                </li>
-
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-
-            </div>
-
-
-        )
-=======
               </li>
             </ul>
           </div>
         </div>
       );
->>>>>>> fb32e3fd98a2b8ba3bfc2b9fa5e11d2f5e96485f
     }
     //if the user is logged in, show the logout and profile link
 
@@ -432,7 +244,7 @@ class applicantNavbar extends Component {
     connections = (
       <li>
         <Link
-          to="/"
+          to="/viewConnections"
           className="navbar-brand connections-icon text-center text-white"
         >
           <span className="glyphicon glyphicon-globe " title="Connections" />
@@ -443,7 +255,7 @@ class applicantNavbar extends Component {
 
     home = (
       <li>
-        <Link to="/" className="navbar-brand text-center text-white">
+        <Link to="/applicantprofileview" className="navbar-brand text-center text-white">
           <span className="glyphicon glyphicon-home navbar-icon" />
           <div className="text-white">Home</div>
         </Link>
