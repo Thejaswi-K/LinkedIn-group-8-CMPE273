@@ -2,11 +2,11 @@
 const Applicants = require('../../Model/Applicant');
 
 function handle_request(msg, callback) {
-    console.log("KAFKA : viewApplicantConnections --> ", msg.applicant_id, msg.body);
+    console.log("KAFKA : viewApplicantConnections --> ", msg.email, msg.body);
     var res = {};
     
     Applicants.update(
-        {'_id':msg.applicant_id},
+        {'email':msg.email},
         {$push:{ 'connectionsRequests':[
           {'requestFrom':msg.body.requestFrom,'requestTo':msg.body.requestTo, 'isAccepted':false}
         ]

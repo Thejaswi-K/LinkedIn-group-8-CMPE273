@@ -19,6 +19,7 @@ var RecruiterSignupMongo = require("./services/recruiter/recruiterSignupMongo");
 var ApplicantUpdateProfile = require("./services/applicants/applicantUpdateProfile");
 var RecruiterUpdateProfile = require("./services/recruiter/recruiterUpdateProfile");
 var ApplicantDelete = require("./services/applicants/applicantDelete");
+var ApplicantDeleteMysql = require("./services/applicants/applicantDeleteMysql");
 var RecruiterDelete = require("./services/recruiter/recruiterDelete");
 var Applicant = require("./services/applicants/applicants.js");
 var RecruiterJobView = require("./services/recruiter/recruiterViewJobById");
@@ -40,6 +41,7 @@ var JobPost = require("./services/Jobs/postJob");
 var RecruiterGetJobs = require("./services/Jobs/recruiterGetJobs");
 var ApplicantViewPendingRequests = require("./services/applicants/applicantViewPendingRequests");
 var ApplicantSearchProfile = require("./services/applicants/applicantSearchProfile");
+var ApplicantAcceptConnection = require("./services/applicants/ApplicantConnectionAccept")
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -73,7 +75,7 @@ function handleTopicRequest(topic_name, fname) {
 // Add your TOPICs here
 //first argument is topic name
 //second argument is a function that will handle this topic request
-handleTopicRequest("logs_topic", Log);
+/*handleTopicRequest("logs_topic", Log);
 handleTopicRequest("jobs_topic", Job);
 handleTopicRequest("applicant_details", ApplicantDetails);
 handleTopicRequest("recruiter_details", RecruiterDetails);
@@ -86,6 +88,7 @@ handleTopicRequest("recruiter_signup", RecruiterSignup);
 handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
 handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
 handleTopicRequest("applicant_delete", ApplicantDelete);
+handleTopicRequest("applicant_mysql_delete", ApplicantDeleteMysql);
 handleTopicRequest("applicant_topic", Applicant);
 handleTopicRequest("send_message", sendMessage);
 handleTopicRequest("receive_message", receiveMessage);
@@ -112,6 +115,8 @@ handleTopicRequest("post_job", JobPost);
 handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
 handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
+handleTopicRequest("applicant_AcceptConnection", ApplicantAcceptConnection);
+handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);*/
 
 /* ****************************************************
 please  UPDATE  below code before adding new topics
@@ -155,6 +160,8 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_summary;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_PendingRequests;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_SearchProfile;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_AcceptConnection;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic edit_recruiter_summary;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_mysql_delete;
 ) &
 */

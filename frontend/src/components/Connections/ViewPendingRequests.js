@@ -46,7 +46,7 @@ class ViewPendingRequests extends Component {
                
           <div>
               
-              <ViewPendingRequestsItem key={ownerhome._id} ownerhome={ownerhome} />
+              <ViewPendingRequestsItem key={ownerhome._id} ownerhome={ownerhome} toEmail={ownerhome.requestFrom} />
         </div>
       ));
         

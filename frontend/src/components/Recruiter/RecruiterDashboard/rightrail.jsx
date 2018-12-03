@@ -9,7 +9,7 @@ export default class RightRailComponent extends Component {
 
     this.state = {
       // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "testrecruiter@gmail.com",
+      recruiter: "recruiter13@gmail.com",
       recruiterData : ""
     };
   }
@@ -19,7 +19,7 @@ componentDidMount(){
   axios
   .get(`${CONSTANTS.BACKEND_URL}/recruiters/` + this.state.recruiter)
   .then(response => {
-    console.log(response.data);
+    console.log("Recruiter details in right rail ",response.data);
     this.setState({
       recruiterData: response.data
     });
@@ -58,15 +58,15 @@ componentDidMount(){
                     <dl class="row">
                   
                   <dt class="col-sm-5">First Name :</dt>
-                  <dd class="col-sm-7"> firstname</dd>
+                  <dd class="col-sm-7"> {this.state.recruiterData.firstName}</dd>
                   <dt class="col-sm-5">Last Name :</dt>
-                  <dd class="col-sm-7"> lastname</dd>
+                  <dd class="col-sm-7">{this.state.recruiterData.lastName}</dd>
                   <dt class="col-sm-5">Email :</dt>
-                  <dd class="col-sm-7"> emailid</dd>
+                  <dd class="col-sm-7"> {this.state.recruiterData.email}</dd>
                   <dt class="col-sm-5">Company</dt>
-                  <dd class="col-sm-7">company </dd>
+                  <dd class="col-sm-7">{this.state.recruiterData.companyName} </dd>
                   <dt class="col-sm-5">Location:</dt>
-                  <dd class="col-sm-7"> Location</dd>
+                  <dd class="col-sm-7">{this.state.recruiterData.address}</dd>
                   </dl>
 
                   </div>

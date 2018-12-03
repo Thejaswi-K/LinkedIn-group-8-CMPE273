@@ -319,6 +319,7 @@ export const deleteApplicant = applicantEmail => dispatch => {
             // Save to localStorage
 
             if (res.status === 202) {
+                setAuthToken(localStorage.getItem("applicantToken"));
                 axios.defaults.withCredentials = true;
                 axios
                     .delete(`${CONSTANTS.BACKEND_URL}/applicants/mysql/${applicantEmail}`)

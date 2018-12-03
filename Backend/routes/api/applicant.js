@@ -537,7 +537,7 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const errors = {};
-    kafka.make_request("applicant_delete", req.body, function(err, results) {
+    kafka.make_request("applicant_delete", req.params, function(err, results) {
       console.log("in result");
       console.log(results);
       if (err) {
@@ -557,6 +557,35 @@ router.delete(
       }
     });
   }
+);
+
+
+//delete applicant
+router.delete(
+    "/mysql/:applicant_id",
+    passport.authenticate("jwt", { session: false }),
+    (req, res) => {
+        const errors = {};
+        kafka.make_request("applicant_mysql_delete", req.params, function(err, results) {
+            console.log("in result");
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                });
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+                res.end();
+            }
+        });
+    }
 );
 
 //Get Profile view count of particular applicant
@@ -764,11 +793,11 @@ router.get("/viewPendingRequests/:email", function(req, res) {
 });
 
 /****************Applicant Send Connection*********************/
-router.post("/connections/:applicant_id", function(req, res) {
+router.post("/connections/:email", function(req, res) {
   console.log("Backend Applicant Send Connection");
   kafka.make_request(
     "applicant_SendConnection",
-    { applicant_id: req.params.applicant_id, body: req.body },
+    { email: req.params.email, body: req.body },
     function(err, results) {
       console.log("in result");
       console.log(results);
@@ -777,6 +806,33 @@ router.post("/connections/:applicant_id", function(req, res) {
         res.json({
           status: "error",
           msg: "Unable to Send Connection."
+        });
+      } else {
+        console.log("Inside else");
+        res.json({
+          SendConnections: results
+        });
+
+        res.end();
+      }
+    }
+  );
+});
+
+/****************Applicant Accept Connection*********************/
+router.post("/acceptConnection/:email", function(req, res) {
+  console.log("Backend Applicant Accept Connection");
+  kafka.make_request(
+    "applicant_AcceptConnection",
+    { email: req.params.email, body: req.body },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to Accept Connection."
         });
       } else {
         console.log("Inside else");
