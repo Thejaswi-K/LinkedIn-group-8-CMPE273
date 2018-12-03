@@ -16,8 +16,27 @@ export default class MainRecruiterDashboard extends Component {
       // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
       recruiter: "ag@gmail.com"
     };
+    this.userTraceRedirect = this.userTraceRedirect.bind(this);
+    this.locationTraceRedirect = this.locationTraceRedirect.bind(this);
   }
 
+  userTraceRedirect = (e) =>{
+    e.preventDefault();
+  
+    this.props.history.push({
+      pathname:"/traceuser"
+      
+      })
+    }
+  
+  locationTraceRedirect = (e) =>{
+      e.preventDefault();
+    
+      this.props.history.push({
+        pathname:"/tracelocation"
+        
+        })
+      }
   render() {
     // check for auth flag
     let redirectVar = null;
@@ -45,7 +64,18 @@ export default class MainRecruiterDashboard extends Component {
           </div>
           
           <div className="col-3" style={{position: "fixed", right:"20px"}}>
-            <RightRailComponent />
+          <div className="row">
+               <RightRailComponent />
+          </div>
+          <div className="row" >
+              <div classname="col-6" >
+                <button className="btn btn-lg btn-primary" style={{margin:"20px", marginLeft:"70px", width:"14rem"}} onClick={this.userTraceRedirect} >User Trace</button>
+              </div>
+              <div classname="col-6" >
+                <button className="btn btn-lg btn-primary" style={{margin:"20px", marginLeft:"60px"}} onClick={this.locationTraceRedirect}>Location Trace</button>
+              </div>
+          </div>
+            
           </div>
         </div>
         {/* <div className="row" >
