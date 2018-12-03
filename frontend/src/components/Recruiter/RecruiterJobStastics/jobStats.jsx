@@ -59,8 +59,8 @@ export default class JobListingComponent extends Component {
     buttonViewResume = e => {
         e.preventDefault();
         var photoD = e.target.value;
-        var photoArray = JSON.parse(photoD);
-        this.handleGetPhoto(photoArray[0]);
+        // var photoArray = JSON.parse(photoD);
+        this.handleGetPhoto(photoD);
 
     };
 

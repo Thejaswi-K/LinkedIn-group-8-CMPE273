@@ -336,12 +336,18 @@ router.put("/:recruiter_id/jobs/:job_id", function(req, res) {
           msg: "Unable to Update Job."
         });
       } else {
-        console.log("Inside else");
-        res.json({
-          UpdatedJob: results
-        });
+        console.log("Inside else" ,results );
+        if(results.code === 202){
+          res.status(202)
+          res.end();
+        }else { 
+          res.status(400)
+          res.end();
 
-        res.end();
+        }
+
+
+       
       }
     }
   );

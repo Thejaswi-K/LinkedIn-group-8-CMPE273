@@ -68,6 +68,34 @@ export const jobSearchFilter = data => {
   return msg;
 };
 
+export const postJob = data => {
+  let msg = "";
+  const namePattern = /^[a-zA-Z\s]+$/;
+  if (
+    data.jobCompany === "" ||
+    data.jobTitle === "" ||
+    data.jobLocation === "" ||
+    data.jobFunction === "" ||
+    data.jobEmploymentType === ""||
+    data.jobIndustry === "" ||
+    data.jobDescription === ""
+  ) {
+    msg = "All fields are mandatory. Please fill all details";
+    return msg;
+  } if(!namePattern.test(data.jobCompany)) {
+    msg = "Enter valid Company Name";
+    return msg;
+  } if(!namePattern.test(data.jobTitle)) {
+    msg = "Enter valid Job Title";
+    return msg;
+  }if(!namePattern.test(data.jobLocation)) {
+    msg = "Enter valid Job Location";
+    return msg;
+  }
+  return msg;
+}
+
+
 export const isEmpty = value => {
   value === undefined ||
     value === null ||
