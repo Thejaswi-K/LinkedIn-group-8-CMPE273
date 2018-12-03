@@ -79,11 +79,6 @@ class jobList extends Component {
     });
   };
 
-  // handleGetPhoto = imgName => {
-  //   this.props.getPhoto(imgName);
-  //   this.getPhoto = true;
-  // };
-
   redirectDetails = jobID => {
     this.props.jobDetalsByID(jobID);
     this.props.history.push("/jobDetails");
