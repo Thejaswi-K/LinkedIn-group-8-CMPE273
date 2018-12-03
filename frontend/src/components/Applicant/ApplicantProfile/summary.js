@@ -291,7 +291,7 @@ class Summary extends Component {
                             <hr/>
                             <input className="ml-4" ref="gender" defaultValue={this.sum.gender}/>
                             <hr/>
-                            <input type="file" className="ml-4" ref="resume" defaultValue={this.sum.resume} onChange={(e) => this.handleDropResume(e.target.files[0])}/>
+                            <input type="file" className="ml-4" ref="resume" defaultValue="" onChange={(e) => this.handleDropResume(e.target.files[0])}/>
                             <hr/>
 
                             <center>
