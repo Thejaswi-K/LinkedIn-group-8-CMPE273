@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import {CONSTANTS} from '../../../Constants';
 import {usaDateFormat} from '../../../utility';
+import jwtDecode from 'jwt-decode';
 
 
 export default class LeftRailComponent extends Component {
@@ -9,7 +10,7 @@ export default class LeftRailComponent extends Component {
     super(props);
 
     this.state = {
-    //   recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
+      recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
     //   recruiter: "recruiter@gmail.com",
       jobData : "",
       jobId : this.props.jobid

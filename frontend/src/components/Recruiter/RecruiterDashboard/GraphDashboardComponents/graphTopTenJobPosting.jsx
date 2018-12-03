@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
-import {CONSTANTS} from '../../../../Constants'
+import {CONSTANTS} from '../../../../Constants';
+import jwtDecode from 'jwt-decode';
 // var yLabels = {
 //   1: "January",
 //   2: "February",
@@ -82,8 +83,8 @@ export default class GraphTopTenJobPostingComponent extends Component {
     super(props);
 
     this.state = {
-      // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter : "recruiter13@gmail.com",
+      recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
+      // recruiter : "recruiter13@gmail.com",
       chartData: {
         labels: ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'August','September', 'Oct', 'Nov', 'Dec']
         
