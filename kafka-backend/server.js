@@ -79,7 +79,7 @@ function handleTopicRequest(topic_name, fname) {
 // handleTopicRequest("jobs_topic", Job);
 // handleTopicRequest("applicant_details", ApplicantDetails);
 // handleTopicRequest("recruiter_details", RecruiterDetails);
-// handleTopicRequest("applicant_login", ApplicantLogin);
+handleTopicRequest("applicant_login", ApplicantLogin);
 // handleTopicRequest("recruiter_login", RecruiterLogin);
 // handleTopicRequest("applicant_signup", ApplicantSignup);
 // handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
@@ -90,8 +90,8 @@ function handleTopicRequest(topic_name, fname) {
 // handleTopicRequest("applicant_delete", ApplicantDelete);
 // handleTopicRequest("applicant_mysql_delete", ApplicantDeleteMysql);
 // handleTopicRequest("applicant_topic", Applicant);
-// handleTopicRequest("send_message", sendMessage);
-// handleTopicRequest("receive_message", receiveMessage);
+handleTopicRequest("send_message", sendMessage);
+handleTopicRequest("receive_message", receiveMessage);
 
 // handleTopicRequest("recruiter_delete", RecruiterDelete);
 // handleTopicRequest("recruiter_JobView", RecruiterJobView);
@@ -107,16 +107,16 @@ function handleTopicRequest(topic_name, fname) {
 
 // handleTopicRequest("edit_recruiter_summary", EditRecruiterSummary);
 
-// handleTopicRequest("applicant_messages", applicantMessages);
+handleTopicRequest("applicant_messages", applicantMessages);
 // handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
 // handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
-// handleTopicRequest("search_job", JobSearch);
+handleTopicRequest("search_job", JobSearch);
 // handleTopicRequest("post_job", JobPost);
 // handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
 // handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
 // handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
 // handleTopicRequest("applicant_AcceptConnection", ApplicantAcceptConnection);
-// handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
+handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
 
 /* ****************************************************
 please  UPDATE  below code before adding new topics
