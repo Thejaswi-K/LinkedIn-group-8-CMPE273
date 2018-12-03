@@ -22,6 +22,10 @@ class JobNavbar extends Component {
         localStorage.removeItem('recruiterToken');
         // let user = {}
         // this.props.logoutData(false, user, true);
+        this.setState = ({
+            ...this.state,
+            isLogged: false
+        });
         this.props.history.push('/');
         alert(`${loggedInUser} logged out successfully.`);
         console.log("User logged out Successfully.");
@@ -33,7 +37,7 @@ class JobNavbar extends Component {
             console.log('Able to read session.');
             userLogin = (
                 <div className="dropdown" tabindex="-1" role="presentation">
-                <button style= {{background: "#006097", fontSize: "1.6rem", color: "#fff", border: "none", paddingBottom: "18px", fontWeight: "600"}} aria-haspopup="true" aria-expanded="false" className="site-header-nav__toggle Dropdown__toggle" id="dropdownMenuButton"
+                <button style= {{background: "#006097", fontSize: "1.6rem", color: "#fff", border: "none", marginTop: "0px", fontWeight: "600"}} aria-haspopup="true" aria-expanded="false" className="site-header-nav__toggle Dropdown__toggle" id="dropdownMenuButton"
                     label="Login" data-toggle="dropdown">
                     {/* {this.props.userData.loginData.userFirstName.toUpperCase()}<span aria-hidden="true" className="caret"></span> */}
                     {capitalizeFirstLetter(extractNameFromEmail(jwtDecode(localStorage.getItem('recruiterToken')).email))}&nbsp;<span aria-hidden="true" className="caret"></span>

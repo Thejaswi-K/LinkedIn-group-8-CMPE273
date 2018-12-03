@@ -387,11 +387,11 @@ pass user to be tracked email as param
 pass location of user as Body    -->  {"location": "San Jose" }
 *************************
 */
-router.post("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
+router.post("/track/:user", function(req, res) {
   console.log("inside backend post track user by id");
   kafka.make_request(
     "logs_topic",
-    { path: "createTrackUserById", id: req.params.applicantId, body: req.body },
+    { path: "createTrackUserById", id: req.params.user, body: req.body },
     function(err, result) {
       if (err) {
         res
@@ -419,11 +419,11 @@ pass user to be tracked email as param
 pass page user has visited as Body    -->  {"page": "User Login" }
 *************************
 */
-router.put("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
+router.put("/track/:user", function(req, res) {
   console.log("inside backend update track user by id");
   kafka.make_request(
     "logs_topic",
-    { path: "updateTrackUserById", id: req.params.applicantId, body: req.body },
+    { path: "updateTrackUserById", id: req.params.user, body: req.body },
     function(err, result) {
       if (err) {
         res
@@ -451,11 +451,11 @@ pass user to be fetched  email as param
 :applicantId  = goel1@gmail.com
 *************************
 */
-router.get("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
+router.get("/track/:user", function(req, res) {
   console.log("inside backend get track user by id");
   kafka.make_request(
     "logs_topic",
-    { path: "trackUserById", id: req.params.applicantId },
+    { path: "trackUserById", id: req.params.user },
     function(err, result) {
       if (err) {
         res
@@ -480,6 +480,48 @@ router.get("/:recruiterId/logs/applicants/:applicantId", function(req, res) {
     }
   );
 });
+//Get Tracking details of a user by location
+/*
+Tested and working
+*************************
+pass location to be fetched  as param
+:location  = San Jose
+*************************
+*/
+router.get("/locations/track/:location", function(req, res) {
+  console.log("inside backend GET track user by locaTION");
+  kafka.make_request(
+    "logs_topic",
+    { path: "trackUserByLocation", location : req.params.location },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Location track record failed" })
+          .send(err);
+      } else {
+        console.log("location track record ", result);
+        let pages = result.data[0].tracker.map((eachPage)=>(
+          eachPage.page
+        ))
+        let times = result.data[0].tracker.map((eachTime)=>(
+          eachTime.timeStamp
+        ))
+        if (result.status) {
+          res.status(200);
+           res.send({
+             "data": pages,
+             "labels" : times,
+             "location" : result.data[0]._id.location
+           });
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
 
 //Route to get the Number of clicks for job (click per job posting graph in recruiter dashboard)
 router.get("/:recruiterId/jobs/logs/click-count", function(req, res) {

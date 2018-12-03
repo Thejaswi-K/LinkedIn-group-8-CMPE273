@@ -123,7 +123,7 @@ export default class UserTraceDashboard extends Component {
 
     axios
     .get(
-      `${CONSTANTS.BACKEND_URL}/recruiters/` + this.state.recruiter + "/logs/applicants/"+ this.state.user)
+      `${CONSTANTS.BACKEND_URL}/recruiters/track/`+ this.state.user)
     .then(response => {
       console.log("Inside user trace   component",response.data);
       //console.log("Inside  user trace   component didmount",response.data.jobsList.data);

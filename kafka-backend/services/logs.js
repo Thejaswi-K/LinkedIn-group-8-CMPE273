@@ -26,6 +26,9 @@ exports.handle_request = function handle_request(msg, callback) {
     case "trackUserById":
       trackUserId(msg, callback);
       break;
+    case "trackUserByLocation":
+      trackUserLocation(msg,callback);
+      break;
     case "createTrackUserById":
       createTrackUserId(msg, callback);
       break;
@@ -248,6 +251,37 @@ function trackUserId(msg, callback) {
           data: trackDetails
         });
       }
+    })
+    .catch(function(err) {
+      callback(null, { success: false, status: "error for track user" });
+    });
+}
+
+//Get request to fetch particular user track history
+function trackUserLocation(msg, callback) {
+  console.log("KAFKA : trackuser by location  hh--> ", msg.location);
+
+  console.log("In handle request:" + JSON.stringify(msg));
+  userTrackerModel
+    .aggregate([
+      { $match : {location: msg.location } },
+      {
+        $group: {
+          _id: { location: "$location" },
+          tracker : { $first : "$tracker"}
+          
+          
+        }
+      }
+    ])
+    .then(trackDetails => {
+       console.log("Result in track user location ", trackDetails);
+        callback(null, {
+          success: true,
+          status: "Tracking details found",
+          data: trackDetails
+        });
+      
     })
     .catch(function(err) {
       callback(null, { success: false, status: "error for track user" });
