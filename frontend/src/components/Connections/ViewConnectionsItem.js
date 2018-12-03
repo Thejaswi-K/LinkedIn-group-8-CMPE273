@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Messages from "./Messages";
 
 
 class ViewConnectionsItem extends Component {
@@ -10,26 +11,9 @@ class ViewConnectionsItem extends Component {
     return (
       
       <div className="card card-body bg-light mb-3">
-      <div className="row">
 
-        <div className="col-1">
-        
-        </div>
-
-        <div className="col-3">
-        <h4>{ownerhome.acceptedFrom}</h4>
-        </div>
-        <div className="col-5">
-        
-        </div>
-        <div className="col-2">
-        
-        </div>
-        <div className="col-1">
-        
-        </div>
-        
-      </div>
+        <Messages membername={ownerhome.acceptedFrom}/>
+    
     </div>
       
     );
