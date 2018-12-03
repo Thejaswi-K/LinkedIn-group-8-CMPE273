@@ -27,7 +27,7 @@ class jobList extends Component {
     this.filtercompanyName = this.filtercompanyName.bind(this);
 
     this.filterData = this.filterData.bind(this);
-    // this.clearData = this.clearData.bind(this);
+    this.clearData = this.clearData.bind(this);
     this.state = {
       isPassed: false,
       currentPage: 1,
@@ -66,6 +66,16 @@ class jobList extends Component {
   filtercompanyName = e => {
     this.setState({
       companyName: e.target.value
+    });
+  };
+
+  clearData = e => {
+    console.log("clearing filter");
+    this.jobDetails = this.props.jobSearchReducer.jobSearchDetails.data;
+    console.log(this.jobDetails);
+    this.setState({
+      ...this.state,
+      filterUpdate: true
     });
   };
 
@@ -123,18 +133,7 @@ class jobList extends Component {
   filterData = e => {
     console.log("Inside filter");
     var filterResult = [];
-    console.log(this.state.employmentType);
-    console.log(this.state.location);
-    console.log(this.state.companyName);
-    console.log(this.state.title);
-
-    // let valid = Validate.jobSearchFilter(this.state);
-    // console.log(valid);
-    // if (valid === "") {
-    console.log("Inside validation filter");
     e.preventDefault();
-    console.log(this.props.jobSearchReducer.jobSearchDetails.data);
-
     if (
       this.state.location !== "" &&
       this.state.employmentType !== "" &&
@@ -246,23 +245,12 @@ class jobList extends Component {
         }
       );
     }
-
-    console.log(filterResult);
     this.finalFilter = _.compact(filterResult);
-    console.log(this.finalFilter);
     this.jobDetails = this.finalFilter;
     this.setState({
       ...this.state,
       filterUpdate: true
     });
-    // }
-    // } else {
-    //   this.setState({
-    //     ...this.state,
-    //     messagediv: valid
-    //   });
-    //   e.preventDefault();
-    // }
   };
 
   // handleGetPhoto = imgName => {
