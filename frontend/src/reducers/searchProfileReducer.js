@@ -1,23 +1,23 @@
-import { 
-    GET_SEARCHED_PROFILES
-    
-  } from '../actions/types';
-  
-  const initialState = {
-    
-    searchedprofiles: null
-    
-  };
-  
-  export default function(state = initialState, action) {
-    switch (action.type) {
-      case GET_SEARCHED_PROFILES:
+import { GET_SEARCHED_PROFILES, GET_SEARCH_NAME } from "../actions/types";
+
+const initialState = {
+  searchName: "",
+  searchedprofiles: []
+};
+
+export default function(state = initialState, action) {
+  switch (action.type) {
+    case GET_SEARCHED_PROFILES:
       return {
         ...state,
         searchedprofiles: action.payload
       };
-      default:
-        return state;
-    }
+    case GET_SEARCH_NAME:
+      return {
+        ...state,
+        searchName: action.payload
+      };
+    default:
+      return state;
   }
-  
+}
