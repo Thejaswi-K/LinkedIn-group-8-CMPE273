@@ -68,6 +68,7 @@ class applicantNavbar extends Component {
                 <div className="dropdown-menu" aria-labelledby="site-header__login">
                     <ul style= {{padding: "0px"}}>
                         <li class="dropdown-item"><Link to="/applicantSignup" onClick = {this.handleLogout}><span className="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;&nbsp;Logout</Link></li>
+                        <li class="dropdown-item"><Link to="/applicantDashboard"><span className="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;My Dashboard</Link></li>
                     </ul>
                 </div>
             </div>

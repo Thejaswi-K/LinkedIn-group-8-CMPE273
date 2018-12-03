@@ -29,7 +29,7 @@ const photos =(props)=> {
                                                 <h2 className="photo-drop-error text-muted">Only JPEG images are supported</h2> */}
                                                 <div style = {{}}>
                                                 <Dropzone onDrop={props.companyLogoChange}
-                                                        multiple = {false}
+                                                        multiple = {true}
                                                         accept="image/*, .pdf"
                                                         type="file"
                                                         style={{"width" : "150px", "height" : "150px", "border" : "2px dashed black", "marginLeft": "465px", }}>
