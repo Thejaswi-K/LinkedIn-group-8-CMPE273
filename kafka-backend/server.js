@@ -75,48 +75,48 @@ function handleTopicRequest(topic_name, fname) {
 // Add your TOPICs here
 //first argument is topic name
 //second argument is a function that will handle this topic request
-// handleTopicRequest("logs_topic", Log);
-// handleTopicRequest("jobs_topic", Job);
-// handleTopicRequest("applicant_details", ApplicantDetails);
-// handleTopicRequest("recruiter_details", RecruiterDetails);
-// handleTopicRequest("applicant_login", ApplicantLogin);
-// handleTopicRequest("recruiter_login", RecruiterLogin);
-// handleTopicRequest("applicant_signup", ApplicantSignup);
-// handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
-// handleTopicRequest("recruiter_signup_mongo", RecruiterSignupMongo);
-// handleTopicRequest("recruiter_signup", RecruiterSignup);
-// handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
-// handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
-// handleTopicRequest("applicant_delete", ApplicantDelete);
-// handleTopicRequest("applicant_mysql_delete", ApplicantDeleteMysql);
-// handleTopicRequest("applicant_topic", Applicant);
-// handleTopicRequest("send_message", sendMessage);
-// handleTopicRequest("receive_message", receiveMessage);
+/*handleTopicRequest("logs_topic", Log);
+handleTopicRequest("jobs_topic", Job);
+handleTopicRequest("applicant_details", ApplicantDetails);
+handleTopicRequest("recruiter_details", RecruiterDetails);
+handleTopicRequest("applicant_login", ApplicantLogin);
+handleTopicRequest("recruiter_login", RecruiterLogin);
+handleTopicRequest("applicant_signup", ApplicantSignup);
+handleTopicRequest("applicant_signup_mongo", ApplicantSignupMongo);
+handleTopicRequest("recruiter_signup_mongo", RecruiterSignupMongo);
+handleTopicRequest("recruiter_signup", RecruiterSignup);
+handleTopicRequest("applicant_update_profile", ApplicantUpdateProfile);
+handleTopicRequest("recruiter_update_profile", RecruiterUpdateProfile);
+handleTopicRequest("applicant_delete", ApplicantDelete);
+handleTopicRequest("applicant_mysql_delete", ApplicantDeleteMysql);
+handleTopicRequest("applicant_topic", Applicant);
+handleTopicRequest("send_message", sendMessage);
+handleTopicRequest("receive_message", receiveMessage);
 
-// handleTopicRequest("recruiter_delete", RecruiterDelete);
-// handleTopicRequest("recruiter_JobView", RecruiterJobView);
-// handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
-// handleTopicRequest("add_experience", AddApplicantExperience);
-// handleTopicRequest("edit_experience", EditApplicantExperience);
+handleTopicRequest("recruiter_delete", RecruiterDelete);
+handleTopicRequest("recruiter_JobView", RecruiterJobView);
+handleTopicRequest("recruiter_JobUpdate", RecruiterJobUpdate);
+handleTopicRequest("add_experience", AddApplicantExperience);
+handleTopicRequest("edit_experience", EditApplicantExperience);
 
-// handleTopicRequest("edit_education", EditApplicantEducation);
-// handleTopicRequest("add_education", AddApplicantEducation);
-// handleTopicRequest("add_skill", AddApplicantSkill);
-// handleTopicRequest("edit_skill", EditApplicantSkill);
-// handleTopicRequest("edit_summary", EditApplicantSummary);
+handleTopicRequest("edit_education", EditApplicantEducation);
+handleTopicRequest("add_education", AddApplicantEducation);
+handleTopicRequest("add_skill", AddApplicantSkill);
+handleTopicRequest("edit_skill", EditApplicantSkill);
+handleTopicRequest("edit_summary", EditApplicantSummary);
 
-// handleTopicRequest("edit_recruiter_summary", EditRecruiterSummary);
+handleTopicRequest("edit_recruiter_summary", EditRecruiterSummary);
 
-// handleTopicRequest("applicant_messages", applicantMessages);
-// handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
-// handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
-// handleTopicRequest("search_job", JobSearch);
-// handleTopicRequest("post_job", JobPost);
-// handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
-// handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
-// handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
-// handleTopicRequest("applicant_AcceptConnection", ApplicantAcceptConnection);
-// handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
+handleTopicRequest("applicant_messages", applicantMessages);
+handleTopicRequest("applicant_ViewConnection", ApplicantViewConnections);
+handleTopicRequest("applicant_SendConnection", ApplicantSendConnections);
+handleTopicRequest("search_job", JobSearch);
+handleTopicRequest("post_job", JobPost);
+handleTopicRequest("rec_get_jobs", RecruiterGetJobs);
+handleTopicRequest("applicant_PendingRequests", ApplicantViewPendingRequests);
+handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
+handleTopicRequest("applicant_AcceptConnection", ApplicantAcceptConnection);
+handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);*/
 
 /* ****************************************************
 please  UPDATE  below code before adding new topics
