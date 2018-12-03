@@ -164,8 +164,8 @@ class PostJob extends Component {
     postJob = (event) => {
         //prevent page from refresh
         event.preventDefault();
-        let valid = '';
-        // let valid = Validate.postproperty(this.state);
+        // let valid = '';
+        let valid = Validate.postJob(this.state);
         if(valid === '') {
             const jobData = {
                         ...this.state
@@ -239,7 +239,7 @@ class PostJob extends Component {
             return (
                 <div>
                     <JobNavbar/>
-                    <div className = "row">
+                    <div className = "">
                         {message}
                     </div>
                     <div className="wrapper">

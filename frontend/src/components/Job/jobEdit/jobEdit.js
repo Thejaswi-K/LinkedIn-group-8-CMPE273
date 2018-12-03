@@ -54,7 +54,7 @@ class EditJob extends Component {
     // }
     componentDidMount() {
         //this.props.location.state
-        console.log("component did moint")
+        console.log("component did mount")
         axios
           .get(`${CONSTANTS.BACKEND_URL}/jobs/`+this.props.location.state )
           .then(response => {
@@ -192,8 +192,8 @@ class EditJob extends Component {
     editJob = (event) => {
         //prevent page from refresh
         event.preventDefault();
-        let valid = '';
-        // let valid = Validate.postproperty(this.state);
+        // let valid = '';
+        let valid = Validate.postJob(this.state);
         if(valid === '') {
             const jobData = {
                     title : this.state.jobTitle,
@@ -277,7 +277,7 @@ class EditJob extends Component {
             return (
                 <div>
                     <JobNavbar/>
-                    <div className = "row">
+                    <div className = "">
                         {message}
                     </div>
                     <div className="wrapper">

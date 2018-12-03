@@ -62,12 +62,13 @@ class recruiterNavbar extends Component {
                 <button style= {{ fontSize: "100%", color: "#fff", border: "none", paddingTop: "0px", fontWeight: "600"}} aria-haspopup="true" aria-expanded="false" className="site-header-nav__toggle Dropdown__toggle navbar navbar-expand-lg navbar-light bg-light" id="dropdownMenuButton"
                     label="Login" data-toggle="dropdown">
                     {/* {this.props.userData.loginData.userFirstName.toUpperCase()}<span aria-hidden="true" className="caret"></span> */}
-                    <span className="glyphicon glyphicon-comment " ></span>
+                    <span className="glyphicon glyphicon-user" ></span>
                     <div className ="text-white">{capitalizeFirstLetter(extractNameFromEmail(jwtDecode(localStorage.getItem('recruiterToken')).email))}&nbsp;<span aria-hidden="true" className="caret"></span></div>
                 </button>
                 <div className="dropdown-menu" aria-labelledby="site-header__login">
                     <ul style= {{padding: "0px"}}>
                         <li class="dropdown-item"><Link to="/RecruiterSignup" onClick = {this.handleLogout}><span className="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;&nbsp;Logout</Link></li>
+                        <li class="dropdown-item"><Link to="/recruiterDashboard"><span className="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;My Dashboard</Link></li>
                     </ul>
                 </div>
             </div>
@@ -83,7 +84,6 @@ class recruiterNavbar extends Component {
                     <div class="dropdown-menu" aria-labelledby="site-header__login">
                         <ul style= {{padding: "0px"}}>
                             <li class="dropdown-item"><Link to="/RecruiterSignup"><span className="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;&nbsp;Recruiter Login</Link></li>
-                            <li class="dropdown-item"><Link to="/recruiterDashboard"><span className="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;My Dashboard</Link></li>
                         </ul>
                     </div>
                 </div>
