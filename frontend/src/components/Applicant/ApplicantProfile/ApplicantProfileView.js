@@ -5,7 +5,7 @@ import Education from "./education";
 import Summary from "./summary";
 import Skills from "./skills";
 import jwt_decode from "jwt-decode";
-import {applicantDetails, deleteApplicant} from "../../../actions/applicantActions";
+import {applicantDetails, deleteApplicant, deleteUser} from "../../../actions/applicantActions";
 import Redirect from "react-router/es/Redirect";
 import ProfileNavbar from "../../Navbar/applicantNavbar"
 
@@ -49,6 +49,7 @@ class ApplicantProfileView extends Component {
                 alert("User deleted successfully");
                 this.isApplicantLoggedIn = false ;
                 localStorage.removeItem('applicantToken');
+                this.props.deleteUser();
             }
             this.setState({
                 ...this.state,
@@ -133,6 +134,6 @@ const mapStateToProps = (state) => ({
     applicantProfile: state.applicantProfile
 });
 
-export default connect(mapStateToProps, {applicantDetails, deleteApplicant})(ApplicantProfileView);
+export default connect(mapStateToProps, {applicantDetails, deleteApplicant,deleteUser})(ApplicantProfileView);
 
 

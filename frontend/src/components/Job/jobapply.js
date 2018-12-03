@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import Card from "@material-ui/core/Card/Card";
 import ProfileNavbar from "../Navbar/applicantNavbar";
+import axios from "axios";
 import {CONSTANTS} from '../../Constants';
+import jwt_decode from "jwt-decode";
+
 class JobApply extends Component {
     constructor(props){
         super(props);
@@ -17,17 +20,72 @@ class JobApply extends Component {
             resume:"",
             coverletter:""
         }
+        if (localStorage.getItem("applicantToken")) {
+            let token = localStorage.getItem("applicantToken");
+            this.decodedApplicant = jwt_decode(token);
+            this.isApplicantLoggedIn = true;
+            this.email = this.decodedApplicant.email;
+        }
         this.applyJobHandler = this.applyJobHandler.bind(this);
         this.valueChangeHandler = this.valueChangeHandler.bind(this);
         this.backHandler = this.backHandler.bind(this);
     }
     valueChangeHandler = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
+        if(e.target.name == 'resume'){
+            console.log("Target files",e.target.files);
+            this.setState({
+                resume:  e.target.files[0]
+            });
+        }else if(e.target.name == 'coverletter'){
+            console.log("Target files",e.target.files);
+            this.setState({
+                coverletter:  e.target.files[0]
+            });
+        }
+        else{
+            this.setState({ [e.target.name]: e.target.value });
             console.log(this.state);
+        }
     }
     applyJobHandler = (e) => {
-        //apply job
-    }
+        e.preventDefault();
+        axios.defaults.withCredentials = true;
+        const { resume } = this.state;
+        const { coverletter } = this.state;
+        const formData = new FormData();
+        formData.append('resume', resume);
+        formData.append('coverletter', coverletter);
+        axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
+        .then((result=>{
+            console.log("upload successful");
+            const data = {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                address: this.state.address,
+                hearAboutUs: this.state.hearaboutus,
+                sponsorship: this.state.sponsorship,
+                diversity: this.state.diversity,
+                disablility: this.state.disability,
+                resume: this.state.resume.name,
+                coverLetter: this.state.coverletter.name
+            }
+            console.log("submit data",data);
+            console.log("apply job axios post", CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID);
+            axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID, data)
+            .then(response=>{
+                console.log("job applied through regular apply")
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+        }))
+        .catch((error)=>{
+            console.log("unable to upload");
+        });  
+        //window.close();
+    };
+
     backHandler = (e) => {
         window.close();
     }
@@ -40,22 +98,22 @@ class JobApply extends Component {
                         <div className="row">
                             <div className="col">
                                 <label>First name</label>
-                                <input type="text" className="form-control" placeholder="First name" name="firstname" />
+                                <input type="text" className="form-control" placeholder="First name" name="firstname" onChange={this.valueChangeHandler}/>
                             </div>
                             <div className="col">
                                 <label>Last name</label>
-                                <input type="text" className="form-control" placeholder="Last name" name="lastname" />
+                                <input type="text" className="form-control" placeholder="Last name" name="lastname" onChange={this.valueChangeHandler}/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputAddress">email</label>
-                            <input type="text" className="form-control" id="inputAddress" placeholder="email" name="email"  />
+                            <input type="text" className="form-control" id="inputAddress" placeholder="email" name="email" onChange={this.valueChangeHandler}/>
                         </div>
                         <br />
                         <br />
                         <div class="form-group">
                             <label for="inputAddress">Address</label>
-                            <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St, city state zip" name="address" />
+                            <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St, city state zip" name="address" onChange={this.valueChangeHandler}/>
                         </div>
                         <br />
                         <div>
