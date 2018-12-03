@@ -1,123 +1,123 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getSearchedProfiles } from '../../actions/searchProfileActions';
-import ProfileSearchItem from './ProfileSearchItem';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getSearchedProfiles } from "../../actions/searchProfileActions";
+import ProfileSearchItem from "./ProfileSearchItem";
+import ApplicantNavBar from "../Navbar/applicantNavbar";
+import { withRouter } from "react-router-dom";
+// import { Redirect } from "react-router";
+import { paginate } from "../../utils/paginate";
+import { getPhoto } from "../../actions/jobPhotosAction";
 
-
+import Pagination from "../common/pagination";
 
 class ProfileSearch extends Component {
-  arr=[]
-  
-    constructor(){
-        super();
-        this.state={
-          firstName:''
-    
-        };
-        this.onChange=this.onChange.bind(this);
-        this.onSubmit=this.onSubmit.bind(this);
-    }
+  lookprop = [];
+  imageBase = [];
+  searchResult = [];
 
-    componentDidMount() {
-      
-      this.props.getSearchedProfiles()
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      photo: [],
+      currentPage: 1,
+      pageSize: 10,
+      authflag: false,
+      isClicked: false,
+      isRes: false
+    };
+    this.getPhoto = false;
+  }
 
-    componentWillReceiveProps(nextProps){
-     if(nextProps.searchProfile.searchedprofiles.SearchedProfile !== undefined){
-     this.arr  = nextProps.searchProfile.searchedprofiles.SearchedProfile;
-     
-     console.log("Array is" + this.arr);
-     
-     }
-     
+  handlePageChange = page => {
+    this.setState({ currentPage: page });
+  };
+
+  componentWillReceiveProps(nextProps) {
+    // if (
+    //   nextProps.searchProfile.searchedprofiles.SearchedProfile != null &&
+    //   this.getPhoto === true
+    // ) {
+    //   let imagePreview = "data:image/jpg;base64, " + nextProps.photos.photo;
+    //   this.imageBase.push(imagePreview);
+    //   this.setState({
+    //     imagePushed: true
+    //   });
+    // } else
+    if (nextProps.searchProfile.searchedprofiles.SearchedProfile != null) {
+      // &&
+      //   this.getPhoto === false
+      this.searchResult =
+        nextProps.searchProfile.searchedprofiles.SearchedProfile;
+      if (this.searchResult.length > 0) {
+        // for (let i = 0; i < this.searchResult.length; i++) {
+        //   var photoData = this.searchResult[i].photos;
+        //   var photoArr = JSON.parse(photoData);
+        //   this.handleGetPhoto(photoArr[0]);
+        // }
+
+        this.setState({
+          ...this.state,
+          isRes: true
+        });
+      }
     }
-    
-onChange(e){
-    this.setState({[e.target.name]:e.target.value});
-}
-    
-onSubmit(e){
-        e.preventDefault();
-    
-        const searchdata={
-               
-          firstName:this.state.firstName
-        };
-        this.props.getSearchedProfiles(searchdata)
-    }
+  }
+
+  componentDidMount() {
+    var data = {
+      firstName: this.props.searchProfile.searchName.firstName
+    };
+    console.log(data);
+    this.props.getSearchedProfiles(data);
+  }
+
+  //   handleGetPhoto = imgName => {
+  //     this.props.getPhoto(imgName);
+  //     this.getPhoto = true;
+  //   };
+
   render() {
-    let profileItems;
-    
-    
-        if(this.arr.length>0){
-        
-        console.log("print arr", this.arr);
-        profileItems = this.arr.map(profile => (
-               
-          <div>
-              
-              <ProfileSearchItem key={profile._id} profile={profile} toEmail={profile.email} toFirstName={profile.firstName}  />
-        </div>
-      ));
-        
-        }
-        else{
-          profileItems=<div className="text-center"><h4>Please Search By Name. No Results Found</h4></div>
-        }
-      
-        
+    var { length: count } = this.searchResult;
+    console.log(count);
+    const { pageSize, currentPage } = this.state;
+    const profileResults = paginate(this.searchResult, currentPage, pageSize);
+
     return (
-        <div className="login">
-        <div className="container">
-        <br/>
-        <br/>
-          <div className="row">
-            <div className="col-md-5 m-auto">
-              <h2 className="display-8 text-center">Search Profile</h2>
-              
-              
-              <br/>
-              <form onSubmit={this.onSubmit}>
-
-              <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Search People"
-                    name="firstName"
-                    value={this.state.firstName}
-                    onChange={this.onChange}
-                  />
-                  
-                  
-                </div>
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
-
-              
-
-              
-            </div>
+      <div>
+        <ApplicantNavBar />
+        {profileResults.map(profile => (
+          <div className="ml-5 mt-2">
+            <ProfileSearchItem
+              key={profile._id}
+              profile={profile}
+              toEmail={profile.email}
+              toFirstName={profile.firstName}
+            />
           </div>
-          <br/>
-              {profileItems}
-              
+        ))}
+        <div className="col-sm-12">
+          <Pagination
+            itemsCount={count}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            onPageChange={this.handlePageChange}
+          />
         </div>
-        
       </div>
-    )
+    );
   }
 }
 
-ProfileSearch.propTypes ={
-  getSearchedProfiles: PropTypes.func.isRequired,
-  searchProfile: PropTypes.object.isRequired
-}
+ProfileSearch.propTypes = {
+  getSearchedProfiles: PropTypes.func.isRequired
+};
 
-const mapStateToProps=(state) => ({
-  searchProfile:state.searchProfile,
+const mapStateToProps = state => ({
+  searchProfile: state.searchProfile
 });
 
-export default connect(mapStateToProps, {getSearchedProfiles}) (ProfileSearch);
+export default connect(
+  mapStateToProps,
+  { getSearchedProfiles, getPhoto }
+)(withRouter(ProfileSearch));

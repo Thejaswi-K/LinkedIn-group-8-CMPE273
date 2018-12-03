@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import jwt_decode from "jwt-decode";
 import ViewPendingRequestsItem from './ViewPendingRequestsItem';
 import { getPendingRequets } from '../../actions/connectionActions';
-
+import ApplicantNavbar from '../Navbar/applicantNavbar';
 
 class ViewPendingRequests extends Component {
   arr=[];
@@ -53,6 +52,8 @@ class ViewPendingRequests extends Component {
         }
             
         return (
+          <div>
+            <ApplicantNavbar/>
           <div className="homes">
             <div className="container">
             <br/>
@@ -64,7 +65,7 @@ class ViewPendingRequests extends Component {
 
                   <div className="row">
                   <div className="col-8">
-                    <h3 className="display-8 text-left"> Pending Connections</h3>
+                    <h3 className="display-8 text-left"> Your Pending Requests</h3>
                   </div>
                   <div className="col-2">
                     
@@ -95,6 +96,7 @@ class ViewPendingRequests extends Component {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         );
     

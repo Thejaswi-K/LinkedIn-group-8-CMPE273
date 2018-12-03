@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import Messages from "./Messages";
-import {CONSTANTS} from "./../../Constants"
+import {CONSTANTS} from "../../Constants"
 
 
 class ViewConnectionsItem extends Component {

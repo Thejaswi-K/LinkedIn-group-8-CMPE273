@@ -1,11 +1,11 @@
 // Load Property model
-const Applicants = require('../../Model/Applicant');
+const Recruiter = require('../../Model/Recruiter');
 
 function handle_request(msg, callback) {
     console.log("KAFKA : acceptConnection --> ", msg.email, msg.body);
     var res = {};
     
-    Applicants.update(
+    Recruiter.update(
         {'email':msg.email},
         //{"$push":{"connections":{"acceptedFrom":msg.body.requestFrom}}},
         { "$pull":{"connectionsRequests":{"requestFrom":msg.body.requestFrom}}},
@@ -17,7 +17,7 @@ function handle_request(msg, callback) {
         res.message = "Applicant Connections not found" ;
         callback(null,res);
     }
-    Applicants.update(
+    Recruiter.update(
         
         {'email':msg.body.requestFrom},
         //{"$push":{"connections":{"acceptedFrom":msg.body.requestFrom}}},
@@ -31,7 +31,7 @@ function handle_request(msg, callback) {
             res.message = "Applicant Connections not found" ;
             callback(null,res);
         }
-        Applicants.update(
+        Recruiter.update(
             {'email':msg.email},
             {"$push":{"connections":{"acceptedFrom":msg.body.requestFrom}}},
             
@@ -43,7 +43,7 @@ function handle_request(msg, callback) {
         res.message = "Applicant Connections not found" ;
         callback(null,res);
     }
-    Applicants.update(
+    Recruiter.update(
         {'email':msg.body.requestFrom},
         {"$push":{"connections":{"acceptedFrom":msg.email}}}
     

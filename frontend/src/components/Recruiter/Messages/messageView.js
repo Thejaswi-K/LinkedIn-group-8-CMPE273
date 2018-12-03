@@ -10,8 +10,8 @@ import { withRouter } from "react-router-dom";
 // import Pagination from "../common/pagination";
 // import { paginate } from "../../utils/paginate";
 import {
-  messageViewFunc,
-  sendMessageFunc
+  messageViewFuncRecruiter,
+  sendMessageFuncRecruiter
 } from "../../../actions/messageActions";
 
 class messageView extends Component {
@@ -52,11 +52,12 @@ class messageView extends Component {
       author: sessionStorage.getItem("author"),
       messageSent: this.state.messageSent
     };
-    this.props.sendMessageFunc(data);
+    this.props.sendMessageFuncRecruiter(data);
     this.setState({
+      ...this.state,
       messageSent: ""
     });
-    this.props.history.push("messages");
+    this.props.history.push("/messagesRecruiter");
   };
 
   changeMessage = e => {
@@ -112,7 +113,6 @@ class messageView extends Component {
                     marginLeft: "10px"
                   }}
                   onChange={this.changeMessage}
-                  value={this.state.message}
                 />
               </h6>
               <br />
@@ -150,5 +150,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { messageViewFunc, sendMessageFunc }
+  { messageViewFuncRecruiter, sendMessageFuncRecruiter }
 )(withRouter(messageView));

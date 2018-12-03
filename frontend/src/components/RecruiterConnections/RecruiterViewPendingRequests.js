@@ -2,21 +2,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import jwt_decode from "jwt-decode";
-import ViewConnectionsItem from './ViewConnectionsItem';
-import { getConnections } from '../../actions/connectionActions';
-import ApplicantNavbar from '../Navbar/applicantNavbar';
+import ViewPendingRequestsItem from './RecruiterViewPendingRequestsItem';
+import { getPendingRequets } from '../../actions/connectionActions';
 
-
-class ViewConnections extends Component {
+class ViewPendingRequests extends Component {
   arr=[];
-  isApplicantLoggedIn = false;
-    
+    isApplicantLoggedIn = false;
 
       componentWillReceiveProps(nextProps){
-        if(nextProps.connection.allconnections !== undefined){
-       this.arr  = nextProps.connection.allconnections[0].connections;
+        if(nextProps.connection.pendingrequests !== undefined){
+       this.arr  = nextProps.connection.pendingrequests[0].connectionsRequests;
           
-       console.log("Array is" + this.arr);
+       console.log("Array is " + this.arr);
         }
        
       }
@@ -31,7 +28,7 @@ class ViewConnections extends Component {
 
       }
         console.log("Emmail in CDM", this.email)
-        this.props.getConnections(this.email);
+        this.props.getPendingRequets(this.email);
         
         }
     
@@ -46,16 +43,14 @@ class ViewConnections extends Component {
         homeItems = this.arr.map(ownerhome => (
                
           <div>
-              <ViewConnectionsItem key={ownerhome._id} ownerhome={ownerhome} />
+              
+              <ViewPendingRequestsItem key={ownerhome._id} ownerhome={ownerhome} toEmail={ownerhome.requestFrom} />
         </div>
       ));
         
         }
-        
+            
         return (
-          <div>
-            <ApplicantNavbar/>
-          
           <div className="homes">
             <div className="container">
             <br/>
@@ -67,7 +62,7 @@ class ViewConnections extends Component {
 
                   <div className="row">
                   <div className="col-8">
-                    <h3 className="display-8 text-left">Your Connections</h3>
+                    <h3 className="display-8 text-left"> Your Pending Requests</h3>
                   </div>
                   <div className="col-2">
                     
@@ -99,14 +94,13 @@ class ViewConnections extends Component {
               </div>
             </div>
           </div>
-          </div>
         );
     
        }
     }
     
-    ViewConnections.propTypes = {
-      getConnections: PropTypes.func.isRequired,
+    ViewPendingRequests.propTypes = {
+      getPendingRequets: PropTypes.func.isRequired,
       connection: PropTypes.object.isRequired
     };
     
@@ -114,6 +108,6 @@ class ViewConnections extends Component {
       connection: state.connection
     });
     
-    export default connect(mapStateToProps, { getConnections })(ViewConnections);
+    export default connect(mapStateToProps, { getPendingRequets })(ViewPendingRequests);
 
 

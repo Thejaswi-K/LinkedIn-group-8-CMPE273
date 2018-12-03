@@ -4,12 +4,12 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import ButtonBase from "@material-ui/core/ButtonBase";
+
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    width: 200,
+    width: 500,
     padding: theme.spacing.unit * 2
   },
   image: {
@@ -27,9 +27,9 @@ const styles = theme => ({
 function messageCard(props) {
   const { classes } = props;
   return (
-    <div onClick={props.onClick}>
+    <div onClick={props.onClick} >
       {props.value}
-      <Paper className={classes.root}>
+      <Paper className={classes.root} >
         {props.value}
         <Grid container spacing={16}>
           <Grid item xs={12} sm container>

@@ -5,7 +5,7 @@ import Education from "./education";
 import Summary from "./summary";
 import Skills from "./skills";
 import jwt_decode from "jwt-decode";
-import {applicantDetails, deleteApplicant} from "../../../actions/applicantActions";
+import {applicantDetails, deleteApplicant, deleteUser} from "../../../actions/applicantActions";
 import Redirect from "react-router/es/Redirect";
 import ProfileNavbar from "../../Navbar/applicantNavbar"
 
@@ -27,7 +27,10 @@ class ApplicantProfileView extends Component {
             profileImage: "",
             experience: [],
             education: [],
-            skills: []
+            skills: [],
+            zipcode: "",
+            gender: "",
+            resume: ""
         };
 
         if (localStorage.getItem("applicantToken")) {
@@ -47,8 +50,9 @@ class ApplicantProfileView extends Component {
             if (nextProps.applicantProfile.delete !== "") {
                 this.isDelete = true;
                 alert("User deleted successfully");
-                this.isApplicantLoggedIn = false ;
+                this.isApplicantLoggedIn = false;
                 localStorage.removeItem('applicantToken');
+                this.props.deleteUser();
             }
             this.setState({
                 ...this.state,
@@ -60,18 +64,19 @@ class ApplicantProfileView extends Component {
                 experience: this.applicantProfile.experience,
                 education: this.applicantProfile.education,
                 skills: this.applicantProfile.skills,
-                profileImage: this.applicantProfile.profileImage
+                profileImage: this.applicantProfile.profileImage,
+                zipcode: this.applicantProfile.zipcode,
+                gender: this.applicantProfile.gender,
+                resume: this.applicantProfile.resume
             })
         }
     }
 
-    deleteClicked(){
+    deleteClicked() {
 
         this.props.deleteApplicant(this.email);
 
     }
-
-
 
 
     componentDidMount() {
@@ -85,7 +90,6 @@ class ApplicantProfileView extends Component {
         }
 
 
-
         return (
             <div>
 
@@ -96,7 +100,8 @@ class ApplicantProfileView extends Component {
                 <Summary firstName={this.state.firstName} lastName={this.state.lastName}
                          city={this.state.city} state={this.state.state}
                          profileSummary={this.state.profileSummary} applicantEmail={this.email}
-                         profileImage={this.state.profileImage}/>
+                         profileImage={this.state.profileImage} zipcode={this.state.zipcode} gender={this.state.gender}
+                         resume={this.state.resume}/>
 
                 <br/>
 
@@ -133,6 +138,6 @@ const mapStateToProps = (state) => ({
     applicantProfile: state.applicantProfile
 });
 
-export default connect(mapStateToProps, {applicantDetails, deleteApplicant})(ApplicantProfileView);
+export default connect(mapStateToProps, {applicantDetails, deleteApplicant, deleteUser})(ApplicantProfileView);
 
 

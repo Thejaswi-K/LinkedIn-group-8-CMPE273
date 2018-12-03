@@ -44,12 +44,12 @@ class messageList extends Component {
 
   componentDidMount() {
     var data = {
-      from_email: this.props.applicantProfile.applicantUser.email
+      // from_email: this.props.applicantProfile.applicantUser.email
+      from_email: "apurav@gmail.com"
     };
     var author = this.props.applicantProfile.applicantUser.email;
+    var author = "apurav@gmail.com";
     sessionStorage.setItem("author", author);
-
-    // setAuthToken(localStorage.getItem("applicantToken"));
     this.props.messageListFunc(data.from_email);
   }
 
@@ -66,13 +66,13 @@ class messageList extends Component {
             <div className="col-sm-3">
               <ul className="nav nav-navs" id="myTab" role="tablist">
                 {this.props.messageReducer.messageList.map((propval, place) => (
-                  <li className="nav-item">
-                    <a data-toggle="tab" href="#location">
+                  <li>
+                    <a data-toggle="tab" href="#messages">
                       <div className="ml-5 mt-2">
                         <Messages
                           // membername={propval.messageMembers[1]}
                           membername={propval.messageMembers[1]}
-                          from_email={propval.authorMessage[place].author}
+                          // from_email={propval.authorMessage[place].author}
                           onClick={() =>
                             this.redirectDetails(propval.messageMembers)
                           }
@@ -85,8 +85,8 @@ class messageList extends Component {
             </div>
 
             <div className="col-sm-9">
-              <div className="tab-content">
-                <div className="tab-pane fade in" id="location" role="tabpanel">
+              <div>
+                <div id="messages">
                   {redirect}
                   {/* {(this.state.isClicked) ? <MessageView /> : } */}
                 </div>
