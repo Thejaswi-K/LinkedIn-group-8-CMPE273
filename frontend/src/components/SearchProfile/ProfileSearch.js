@@ -38,7 +38,7 @@ class ProfileSearch extends Component {
             <div >
                 <ApplicantNavBar/>
                 <div className="container">
-                    
+
                     {this.props.searchProfile.searchedprofiles.SearchedProfile.map((profile) => (
 
                     <div>
