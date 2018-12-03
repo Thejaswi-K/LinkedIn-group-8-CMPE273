@@ -8,7 +8,6 @@ import MessageView from "./Applicant/Messages/messageView";
 import ApplicantLoginNavbar from "./Navbar/ApplicantLoginNavbar";
 import UserNavbar from "./Navbar/UserNavbar";
 import PostJob from "./Job/jobPost/jobPost";
-import EditJob from "./Job/jobEdit/jobEdit"
 import ApplicantSignup from "./Applicant/ApplicantSignup/ApplicantSignup";
 import RecruiterSignup from "./Recruiter/RecruiterSignup/RecruiterSignup";
 import ApplicantProfileView from "./Applicant/ApplicantProfile/ApplicantProfileView";
@@ -52,7 +51,6 @@ class Main extends Component {
           {/* <Route path="/ownerlogin" component={OwnerLogin}/> */}
           <Route path="/profile" component={UserNavbar} />
           <Route path="/job" component={PostJob} />
-          <Route path="/jobedit" component={EditJob} />
           <Route path="/jobDetails" component={JobDetails} />
           <Route path="/jobApply" component={JobApply} />
 

@@ -791,12 +791,14 @@ router.post("/connections/:email", function(req, res) {
 });
 
 /****************Applicant Accept Connection*********************/
-router.post("/acceptConnection/:email", function (req, res) {
+router.post("/acceptConnection/:email", function(req, res) {
   console.log("Backend Applicant Accept Connection");
   kafka.make_request(
     "applicant_AcceptConnection",
-    { path: "acceptConnectionPull", email: req.params.email, body: req.body },
-    function (err, results) {
+    { email: req.params.email, body: req.body },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
       if (err) {
         console.log("Inside err");
         res.json({
@@ -804,31 +806,16 @@ router.post("/acceptConnection/:email", function (req, res) {
           msg: "Unable to Accept Connection."
         });
       } else {
-        console.log("Inside else", results);
-        kafka.make_request(
-          "applicant_AcceptConnection",
-          { path: "acceptConnectionPush", email: req.params.email, body: req.body },
-          function (err2, results2) {
-            if (err2) {
-              console.log("Inside err");
-              res.json({
-                status: "error",
-                msg: "Unable to Accept Connection push"
-              });
-            }
+        console.log("Inside else");
+        res.json({
+          SendConnections: results
+        });
 
-
-            res.json({
-              SendConnections: results2
-            });
-
-            res.end();
-          }
-    
-  );
+        res.end();
+      }
     }
-})
-})
+  );
+});
 
 /****************Search Profile*********************/
 router.post("/searchprofile", function(req, res) {
