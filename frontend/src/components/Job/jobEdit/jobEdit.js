@@ -20,6 +20,7 @@ class EditJob extends Component {
         this.state = {
                 email: jwtDecode(localStorage.getItem('recruiterToken')).email,
                 // email: "testrecruiter2@gmail.com",
+                jobId : this.props.location.state,
                 jobCompany: "",
                 jobTitle: "",
                 jobLocation: "",
@@ -55,7 +56,7 @@ class EditJob extends Component {
         //this.props.location.state
         console.log("component did moint")
         axios
-          .get(`${CONSTANTS.BACKEND_URL}/jobs/5bfc781ce8df91050d1b4850` )
+          .get(`${CONSTANTS.BACKEND_URL}/jobs/`+this.props.location.state )
           .then(response => {
             console.log(response.data);
             let res = response.data.data[0];
@@ -188,7 +189,7 @@ class EditJob extends Component {
     }
 
     //Post Job handler to send a request to the node back-end
-    postJob = (event) => {
+    editJob = (event) => {
         //prevent page from refresh
         event.preventDefault();
         let valid = '';
@@ -197,12 +198,12 @@ class EditJob extends Component {
             const jobData = {
                         ...this.state
                 }
-            // this.props.postJobData( jobData,false);
+            // this.props.editJobData( jobData,false);
             //Post Call to post Property Details in DB
             //set the with credentials to true
             axios.defaults.withCredentials = true;
             //make a post request with the user data
-            axios.post(`${CONSTANTS.BACKEND_URL}/jobs`,
+            axios.post(`${CONSTANTS.BACKEND_URL}/recruiters/`+this.state.email+"/jobs/"+this.props.location.state,
             jobData,{
             headers: {
                 'Content-Type': 'application/json',
@@ -217,16 +218,16 @@ class EditJob extends Component {
                         ...this.state,
                         jobIsPosted : true
                     })
-                    // this.props.postJobData(jobData,true);
+                    // this.props.editJobData(jobData,true);
                     console.log("message:", response.data.message);
-                    alert("Your job was successfully posted.");
+                    alert("Your job was successfully edited.");
                 }else{
                     this.setState({
                         ...this.state,
                         jobIsPosted : false
                     })
-                    // this.props.postJobData(jobData,false);
-                    alert("Your job was not successfully posted.");
+                    // this.props.editJobData(jobData,false);
+                    alert("Your job was not successfully edited.");
                 }
             })
             .catch( error =>{
@@ -318,7 +319,7 @@ class EditJob extends Component {
                                     state = {this.state}
                                     companyLogoChange = {this.jobCompanyLogoDrop}
                                     easyApplyChange = {this.jobEasyApplyChangeHandler}
-                                    submitClick = {this.postJob}
+                                    submitClick = {this.editJob}
                                     />
                                 </div>
                             </div>
