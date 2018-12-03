@@ -22,7 +22,7 @@ const details = (props) => {
                     </div>
                     <div className="col-md-3 mb-3">
                         <label className = "label-job required" for="validationDefault02">Location</label>
-                        <input type="text" onChange= {props.locationChange} className="form-control input-fields" id="validationDefault02" placeholder="Location"  defaultValue={props.state.location}
+                        <input type="text" onChange= {props.locationChange} className="form-control input-fields" id="validationDefault02" placeholder="Location"  defaultValue={props.state.jobLocation}
                             required />
                     </div>
                 </div>
@@ -59,13 +59,13 @@ const details = (props) => {
                 <div className="form-row">
                     <div className="col-md-6 mb-3">
                         <label className = "label-job required" for="validationDefault03">Company industry (Select up to 3) </label><br></br>
-                        <input type="text" onChange ={props.industryChange} className="form-control input-fields" id="validationDefault03" placeholder="Enter Company industry" required defaultValue={props.state.industry}/>
+                        <input type="text" onChange ={props.industryChange} className="form-control input-fields" id="validationDefault03" placeholder="Enter Company industry" required defaultValue={props.state.jobIndustry}/>
                     </div>
                 </div>
                 <div className="form-row">
                     <div className="col-md-9">
                         <label className = "label-job required" for="validationDefault01">Job Description</label>
-                        <textarea type="text" value={props.state.description} onChange ={props.DescriptionChange} className=" form-control input-fields" id="validationDefault01" placeholder="Company" 
+                        <textarea type="text" value={props.state.jobDescription} onChange ={props.DescriptionChange} className=" form-control input-fields" id="validationDefault01" placeholder="Company" 
                             required >  </textarea>
                     </div>
                 </div>

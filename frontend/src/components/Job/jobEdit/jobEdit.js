@@ -46,7 +46,7 @@ class EditJob extends Component {
         this.jobEasyApplyChangeHandler = this.jobEasyApplyChangeHandler.bind(this);
         this.jobsavedByChangeHandler = this.jobsavedByChangeHandler.bind(this);
         this.jobCompanyLogoDrop = this.jobCompanyLogoDrop.bind(this);
-        this.postJob = this.postJob.bind(this);
+        this.editJob = this.editJob.bind(this);
     }
 
     // componentDidMount = () => {
@@ -196,14 +196,24 @@ class EditJob extends Component {
         // let valid = Validate.postproperty(this.state);
         if(valid === '') {
             const jobData = {
-                        ...this.state
+                    title : this.state.jobTitle,
+                    description : this.state.jobDescription,
+                    companyName : this.state.jobCompany,
+                    location: this.state.jobLocation,
+                    jobFunction : this.state.jobFunction,
+                    employmentType: this.state.jobEmploymentType,
+                    industry : this.state.jobIndustry,
+                    easyApply : this.state.jobEasyApply,
+                    savedBy : this.state.jobsavedBy
+
+
                 }
             // this.props.editJobData( jobData,false);
             //Post Call to post Property Details in DB
             //set the with credentials to true
             axios.defaults.withCredentials = true;
             //make a post request with the user data
-            axios.post(`${CONSTANTS.BACKEND_URL}/recruiters/`+this.state.email+"/jobs/"+this.props.location.state,
+            axios.put(`${CONSTANTS.BACKEND_URL}/recruiters/`+this.state.email+"/jobs/"+this.props.location.state,
             jobData,{
             headers: {
                 'Content-Type': 'application/json',
@@ -213,7 +223,7 @@ class EditJob extends Component {
             })
             .then(response => {
                 console.log("Status Code : ",response.status);
-                if(response.status === 201){
+                if(response.status === 202){
                     this.setState({
                         ...this.state,
                         jobIsPosted : true

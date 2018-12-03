@@ -27,6 +27,7 @@ import MainRecruiterJobStats from './Recruiter/RecruiterJobStastics/main';
 import UserTraceDashboard from './Recruiter/RecruiterDashboard/userTraceDashboard';
 import ProfileSearch from './SearchProfile/ProfileSearch';
 import LocationTraceDashboard from './Recruiter/RecruiterDashboard/locationTraceDashboard';
+import EditJob from './Job/jobEdit/jobEdit';
 
 // Create a Main Component
 class Main extends Component {
@@ -53,6 +54,7 @@ class Main extends Component {
           <Route path="/job" component={PostJob} />
           <Route path="/jobDetails" component={JobDetails} />
           <Route path="/jobApply" component={JobApply} />
+          <Route path="/jobEdit" component={EditJob}/>
 
           <Route
             path="/recruiterDashboard"
