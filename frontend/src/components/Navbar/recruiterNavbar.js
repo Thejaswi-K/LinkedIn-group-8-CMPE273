@@ -83,6 +83,7 @@ class recruiterNavbar extends Component {
                     <div class="dropdown-menu" aria-labelledby="site-header__login">
                         <ul style= {{padding: "0px"}}>
                             <li class="dropdown-item"><Link to="/RecruiterSignup"><span className="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;&nbsp;Recruiter Login</Link></li>
+                            <li class="dropdown-item"><Link to="/recruiterDashboard"><span className="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;My Dashboard</Link></li>
                         </ul>
                     </div>
                 </div>

@@ -29,7 +29,7 @@ const photos =(props)=> {
                                                 <h2 className="photo-drop-error text-muted">Only JPEG images are supported</h2> */}
                                                 <div style = {{}}>
                                                 <Dropzone onDrop={props.companyLogoChange}
-                                                        multiple = {true}
+                                                        multiple = {false}
                                                         accept="image/*, .pdf"
                                                         type="file"
                                                         style={{"width" : "150px", "height" : "150px", "border" : "2px dashed black", "marginLeft": "465px", }}>
@@ -43,7 +43,7 @@ const photos =(props)=> {
                                                 <input style={{ display: 'none', marginLeft: "480px" }}   onChange={props.companyLogoChange} type="file" id="uploadPhotoInput" multiple="" />
                                             </div>
                                             <div className="form-check">
-                                                <input onChange ={props.easyApplyChange} className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
+                                                <input onChange ={props.easyApplyChange} className="form-check-input" type="checkbox" value="" id="defaultCheck1" defaultChecked={props.state.jobEasyApply}/>
                                                 <label className="form-check-label label-job-checkbox" for="defaultCheck1">
                                                     Enable the Easy apply job feature for this job.
                                                 </label>
@@ -55,7 +55,7 @@ const photos =(props)=> {
                                 <div>
                                     <div className="checklist-buttons" style = {{float: 'right'}}>
                                         {/* <div><a href="#details" data-toggle="tab" ref={nextTab => this.nextTab = nextTab}></a> */}
-                                            <div><button onClick ={props.submitClick} className="btn btn-primary continue-button" type="submit"><span>Post Job</span></button></div>
+                                            <div><button onClick ={props.submitClick} className="btn btn-primary continue-button" type="submit"><span>Update Job</span></button></div>
                                     </div>
                                 </div>
                                 {/* <div style={{ paddingTop: '10px', paddingBottom: '25px', textAlign: 'center' }} className="panel-control step-footer-wrapper">

@@ -37,7 +37,7 @@ class JobListingComponent extends Component {
   buttonEdit = e => {
     e.preventDefault();
     this.props.history.push({
-      pathname: "/editJob",
+      pathname: "/jobEdit",
       state: e.target.value
     });
   };
