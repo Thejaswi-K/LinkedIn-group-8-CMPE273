@@ -15,13 +15,14 @@ class ViewConnectionsItem extends Component {
           console.log("Emmail", this.email)
       }
       const requestEmail={
-          acceptedFrom:this.email
+          requestFrom:this.props.toEmail
       }
       axios
-        .post(`http://localhost:3001/applicants/acceptConnection/${this.props.toEmail}`, requestEmail)
+        .post(`http://localhost:3001/applicants/acceptConnection/${this.email}`, requestEmail)
         .then(function(res) { 
             if (res.data) {
               alert("Connection Accepted Successfully")
+              window.location.reload();
               
             } 
   })

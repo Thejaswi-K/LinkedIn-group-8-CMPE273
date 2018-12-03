@@ -35,10 +35,10 @@ class ProfileSearchItem extends Component {
             console.log("Emmail", this.email)
         }
         const requestEmail={
-            requestFrom:this.email
+            requestFrom:this.props.toEmail
         }
         axios
-          .post(`http://localhost:3001/applicants/connections/${this.props.toEmail}`, requestEmail)
+          .post(`http://localhost:3001/applicants/connections/${this.email}`, requestEmail)
           .then(function(res) { 
               if (res.data) {
                 alert("Connection Sent Successfully")

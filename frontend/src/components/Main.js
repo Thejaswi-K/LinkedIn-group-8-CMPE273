@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import MessageList from "./Applicant/Messages/messageList";
+import MessageListRecruiter from "./Recruiter/Messages/messageList";
+
 import MessageView from "./Applicant/Messages/messageView";
 
 //Import Components
@@ -22,13 +24,13 @@ import JobDetails from "./Job/jobDetails";
 import JobApply from "./Job/jobapply";
 import JobSearch from "./Job/jobSearch";
 import JobList from "./Job/jobList";
-import MainRecruiterJobListing from './Recruiter/RecruiterJobListing/main';
-import Temp from './Temp';
-import MainRecruiterJobStats from './Recruiter/RecruiterJobStastics/main';
-import UserTraceDashboard from './Recruiter/RecruiterDashboard/userTraceDashboard';
-import ProfileSearch from './SearchProfile/ProfileSearch';
-import LocationTraceDashboard from './Recruiter/RecruiterDashboard/locationTraceDashboard';
-import EditJob from './Job/jobEdit/jobEdit';
+import MainRecruiterJobListing from "./Recruiter/RecruiterJobListing/main";
+import Temp from "./Temp";
+import MainRecruiterJobStats from "./Recruiter/RecruiterJobStastics/main";
+import UserTraceDashboard from "./Recruiter/RecruiterDashboard/userTraceDashboard";
+import ProfileSearch from "./SearchProfile/ProfileSearch";
+import LocationTraceDashboard from "./Recruiter/RecruiterDashboard/locationTraceDashboard";
+import EditJob from "./Job/jobEdit/jobEdit";
 
 // Create a Main Component
 class Main extends Component {
@@ -49,28 +51,36 @@ class Main extends Component {
             component={RecruiterProfileView}
           />
           <Route path="/messages" component={MessageList} />
+          <Route path="/messagesRecruiter" component={MessageListRecruiter} />
+
           <Route path="/messageview" component={MessageView} />
           {/* <Route path="/ownerlogin" component={OwnerLogin}/> */}
           <Route path="/profile" component={UserNavbar} />
           <Route path="/job" component={PostJob} />
           <Route path="/jobDetails" component={JobDetails} />
           <Route path="/jobApply" component={JobApply} />
-          <Route path="/jobEdit" component={EditJob}/>
-          <Route path="/applicantDashboard" component={MainApplicantDashboard}/>
-          <Route path="/recruiterDashboard" component={MainRecruiterDashboard}/>
-           <Route
-                        path="/recruiterJobListing"
-                        component={MainRecruiterJobListing}
-                    />
+          <Route path="/jobEdit" component={EditJob} />
+          <Route
+            path="/applicantDashboard"
+            component={MainApplicantDashboard}
+          />
+          <Route
+            path="/recruiterDashboard"
+            component={MainRecruiterDashboard}
+          />
+          <Route
+            path="/recruiterJobListing"
+            component={MainRecruiterJobListing}
+          />
           <Route path="/viewConnections" component={ViewConnections} />
           <Route path="/viewPendingRequests" component={ViewPendingRequests} />
           <Route path="/jobSearch" component={JobSearch} />
           <Route path="/jobList" component={JobList} />
           <Route path="/temp" component={Temp} />
           <Route path="/recruiterjobstats" component={MainRecruiterJobStats} />
-          <Route path="/searchProfile" component={ProfileSearch}/>
-          <Route path="/traceuser" component={UserTraceDashboard}/>
-          <Route path="/tracelocation" component={LocationTraceDashboard}/>
+          <Route path="/searchProfile" component={ProfileSearch} />
+          <Route path="/traceuser" component={UserTraceDashboard} />
+          <Route path="/tracelocation" component={LocationTraceDashboard} />
         </div>
       </Provider>
     );

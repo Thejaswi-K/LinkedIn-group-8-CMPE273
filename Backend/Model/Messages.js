@@ -8,7 +8,6 @@ const messageSchema = new Schema({
     lowercase: true,
     default: []
   },
-
   senderFirstname: {
     type: String,
     required: false,
@@ -33,7 +32,6 @@ const messageSchema = new Schema({
     lowercase: true,
     default: ""
   },
-
   authorMessage: [
     {
       author: {
