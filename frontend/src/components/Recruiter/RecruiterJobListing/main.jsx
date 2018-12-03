@@ -20,7 +20,7 @@ export default class MainRecruiterJobListing extends Component {
     // check for auth flag
     let redirectVar = null;
     if (!localStorage.getItem("recruiterToken")) {
-      redirectVar = <Redirect to="/recruiterSignup" />;
+      return redirectVar = <Redirect to="/recruiterSignup" />;
     }
     return (
       <div

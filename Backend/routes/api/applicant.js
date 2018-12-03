@@ -537,7 +537,7 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const errors = {};
-    kafka.make_request("applicant_delete", req.body, function(err, results) {
+    kafka.make_request("applicant_delete", req.params, function(err, results) {
       console.log("in result");
       console.log(results);
       if (err) {
@@ -559,6 +559,37 @@ router.delete(
   }
 );
 
+//delete applicant
+router.delete(
+  "/mysql/:applicant_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("applicant_mysql_delete", req.params, function(
+      err,
+      results
+    ) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
+        });
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 202) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.errorMessage);
+        }
+        res.end();
+      }
+    });
+  }
+);
+/*
 //Get Profile view count of particular applicant
 router.get("/:applicantId/logs/profile-view-count", function(req, res) {
   console.log("inside backend profile-view-count");
@@ -584,7 +615,7 @@ router.get("/:applicantId/logs/profile-view-count", function(req, res) {
     }
   );
 });
-
+*/
 //applicant Applies for new job
 router.post("/:applicantId/jobs/:jobId", function(req, res) {
   //Update the corresponding JobId with this info into job application object ($addToSet)
@@ -875,10 +906,24 @@ router.get("/:applicantId/logs/profile-view-count", function(req, res) {
           .json({ success: false, error: "Applicant not found" })
           .send(err);
       } else {
-        console.log("applicant log profile view count", result);
+        console.log(
+          "applicantdsafdasfasfasfas log profile view count",
+          result.data
+        );
+        let months = new Array(30).fill(0);
+
+        for (var day = 0; day < result.data.length; day++) {
+          console.log("each available day is", day);
+          months[result.data[day]._id.day] = result.data[day].count;
+        }
+
+        // let days = result.data.map((day)=>day._id.day);
+        // let counts = result.data.map((count)=>count.count);
+
+        console.log("Days array ", months);
         if (result.success) {
           res.status(200);
-          res.send(result);
+          res.send(months);
         } else {
           res.status(400).json({ success: false });
         }
@@ -902,6 +947,7 @@ router.put("/:applicantId/logs/profile-view-count", function(req, res) {
           .send(err);
       } else {
         console.log("applicant log profile view count updated", result);
+
         if (result.success) {
           res.status(200);
           res.send(result);

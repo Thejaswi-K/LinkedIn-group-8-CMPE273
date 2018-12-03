@@ -14,12 +14,13 @@ import jwtDecode from 'jwt-decode';
 // import { withRouter } from 'react-router-dom';
 import {CONSTANTS} from '../../../Constants';
 
-class PostJob extends Component {
+class EditJob extends Component {
     constructor(props) {
         super(props);
         this.state = {
                 email: jwtDecode(localStorage.getItem('recruiterToken')).email,
                 // email: "testrecruiter2@gmail.com",
+                jobId : this.props.location.state,
                 jobCompany: "",
                 jobTitle: "",
                 jobLocation: "",
@@ -45,12 +46,39 @@ class PostJob extends Component {
         this.jobEasyApplyChangeHandler = this.jobEasyApplyChangeHandler.bind(this);
         this.jobsavedByChangeHandler = this.jobsavedByChangeHandler.bind(this);
         this.jobCompanyLogoDrop = this.jobCompanyLogoDrop.bind(this);
-        this.postJob = this.postJob.bind(this);
+        this.editJob = this.editJob.bind(this);
     }
 
     // componentDidMount = () => {
 
     // }
+    componentDidMount() {
+        //this.props.location.state
+        console.log("component did mount")
+        axios
+          .get(`${CONSTANTS.BACKEND_URL}/jobs/`+this.props.location.state )
+          .then(response => {
+            console.log(response.data);
+            let res = response.data.data[0];
+            this.setState({
+                jobCompany: res.companyName,
+                jobTitle: res.title,
+                jobLocation: res.location,
+                jobFunction: res.jobFunction ,
+                jobEmploymentType: res.employmentType ,
+                jobIndustry: res.industry,
+                jobDescription: res.description,
+                jobEasyApply: res.easyApply,
+                jobCompanyLogo : res.companyLogo,
+                jobsavedBy: res.savedBy,
+                jobIsPosted: true
+            });
+          })
+          .catch(function(error) {
+            console.log("errored");
+            console.log(error);
+          });
+      }
 
     //Company change handler to update state variable with the text entered by the user
     jobCompanyChangeHandler = (e) => {
@@ -161,21 +189,31 @@ class PostJob extends Component {
     }
 
     //Post Job handler to send a request to the node back-end
-    postJob = (event) => {
+    editJob = (event) => {
         //prevent page from refresh
         event.preventDefault();
         // let valid = '';
         let valid = Validate.postJob(this.state);
         if(valid === '') {
             const jobData = {
-                        ...this.state
+                    title : this.state.jobTitle,
+                    description : this.state.jobDescription,
+                    companyName : this.state.jobCompany,
+                    location: this.state.jobLocation,
+                    jobFunction : this.state.jobFunction,
+                    employmentType: this.state.jobEmploymentType,
+                    industry : this.state.jobIndustry,
+                    easyApply : this.state.jobEasyApply,
+                    savedBy : this.state.jobsavedBy
+
+
                 }
-            // this.props.postJobData( jobData,false);
+            // this.props.editJobData( jobData,false);
             //Post Call to post Property Details in DB
             //set the with credentials to true
             axios.defaults.withCredentials = true;
             //make a post request with the user data
-            axios.post(`${CONSTANTS.BACKEND_URL}/jobs`,
+            axios.put(`${CONSTANTS.BACKEND_URL}/recruiters/`+this.state.email+"/jobs/"+this.props.location.state,
             jobData,{
             headers: {
                 'Content-Type': 'application/json',
@@ -185,21 +223,21 @@ class PostJob extends Component {
             })
             .then(response => {
                 console.log("Status Code : ",response.status);
-                if(response.status === 201){
+                if(response.status === 202){
                     this.setState({
                         ...this.state,
                         jobIsPosted : true
                     })
-                    // this.props.postJobData(jobData,true);
+                    // this.props.editJobData(jobData,true);
                     console.log("message:", response.data.message);
-                    alert("Your job was successfully posted.");
+                    alert("Your job was successfully edited.");
                 }else{
                     this.setState({
                         ...this.state,
                         jobIsPosted : false
                     })
-                    // this.props.postJobData(jobData,false);
-                    alert("Your job was not successfully posted.");
+                    // this.props.editJobData(jobData,false);
+                    alert("Your job was not successfully edited.");
                 }
             })
             .catch( error =>{
@@ -276,6 +314,7 @@ class PostJob extends Component {
                                 </div>
                                 <div id="details" className="tab-pane fade">
                                     <Details 
+                                    state = {this.state}
                                     companyChange = {this.jobCompanyChangeHandler}
                                     TitleChange = {this.jobTitleChangeHandler}
                                     locationChange = {this.jobLocationChangeHandler}
@@ -287,9 +326,10 @@ class PostJob extends Component {
                                 </div>
                                 <div id="photos" className="tab-pane fade" >
                                     <Photos 
+                                    state = {this.state}
                                     companyLogoChange = {this.jobCompanyLogoDrop}
                                     easyApplyChange = {this.jobEasyApplyChangeHandler}
-                                    submitClick = {this.postJob}
+                                    submitClick = {this.editJob}
                                     />
                                 </div>
                             </div>
@@ -314,4 +354,4 @@ class PostJob extends Component {
 // }
 // const postproperty = withRouter(connect(mapStateToProps, mapDispatchToProps)(PostProperty));
 // export default postproperty;
-export default PostJob;
+export default EditJob;

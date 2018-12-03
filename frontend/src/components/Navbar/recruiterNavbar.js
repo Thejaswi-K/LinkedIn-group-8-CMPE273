@@ -84,7 +84,8 @@ class recruiterNavbar extends Component {
                   jwtDecode(localStorage.getItem("recruiterToken")).email
                 )
               )}
-              &nbsp;<span aria-hidden="true" className="caret" />
+              &nbsp;
+              <span aria-hidden="true" className="caret" />
             </div>
           </button>
           <div className="dropdown-menu" aria-labelledby="site-header__login">
@@ -118,7 +119,8 @@ class recruiterNavbar extends Component {
             label="Login"
             data-toggle="dropdown"
           >
-            Recruiter Login&nbsp;<span aria-hidden="true" className="caret" />
+            Recruiter Login&nbsp;
+            <span aria-hidden="true" className="caret" />
           </button>
           <div class="dropdown-menu" aria-labelledby="site-header__login">
             <ul style={{ padding: "0px" }}>

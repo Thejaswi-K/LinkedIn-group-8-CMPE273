@@ -55,9 +55,9 @@ var jobSchema = new mongoose.Schema({
     default: ""
   },
   companyLogo: {
-    type: String,
+    type: Array,
     required: false,
-    default: ""
+    default: "[\"preview.png\"]"
   },
 
   postedDate: {
