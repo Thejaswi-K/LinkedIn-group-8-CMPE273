@@ -22,37 +22,39 @@ export default class MainRecruiterJobStats extends Component {
     // check for auth flag
     let redirectVar = null;
     if (!localStorage.getItem("recruiterToken")) {
-      redirectVar = <Redirect to="/recruiterSignup" />;
+      return redirectVar = <Redirect to="/Recruitersignup" />;
+
+    } else {
+      return (
+        <div
+          style={{
+            // minHeight: "100vh",
+            // minWidth: "100%",
+            boxSizing: "border-box",
+            backgroundColor: "#f4f4f4",
+            borderRadius: "15px"
+          }}
+        >
+          {/* {redirectVar} */}
+  
+          <JobNavbar />
+  
+         
+          <div className="row">
+          <div className="col-3" >
+              <LeftRailComponent jobId={this.state.jobId}/>
+              {/* <h1> Hello there!</h1> */}
+          </div>
+          <div className="col-9">
+            <JobStats jobId={this.state.jobId}/>
+          </div>
+            
+  
+          </div>
+  
+  
+        </div>
+      );
     }
-    return (
-      <div
-        style={{
-          // minHeight: "100vh",
-          // minWidth: "100%",
-          boxSizing: "border-box",
-          backgroundColor: "#f4f4f4",
-          borderRadius: "15px"
-        }}
-      >
-        {/* {redirectVar} */}
-
-        <JobNavbar />
-
-       
-        <div className="row">
-        <div className="col-3" >
-            <LeftRailComponent jobId={this.state.jobId}/>
-            {/* <h1> Hello there!</h1> */}
-        </div>
-        <div className="col-9">
-          <JobStats jobId={this.state.jobId}/>
-        </div>
-          
-
-        </div>
-
-
-      </div>
-    );
   }
 }
