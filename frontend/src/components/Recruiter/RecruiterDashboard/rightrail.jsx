@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 import {CONSTANTS} from '../../../Constants';
+import setAuthToken from "../../../utils/setAuthToken";
 
 
 export default class RightRailComponent extends Component {
@@ -8,14 +10,14 @@ export default class RightRailComponent extends Component {
     super(props);
 
     this.state = {
-      // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "recruiter13@gmail.com",
+      recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
+      // recruiter: "recruiter13@gmail.com",
       recruiterData : ""
     };
   }
 componentDidMount(){
   axios.defaults.withCredentials = true;
-
+  setAuthToken(localStorage.getItem("recruiterToken"));
   axios
   .get(`${CONSTANTS.BACKEND_URL}/recruiters/` + this.state.recruiter)
   .then(response => {
@@ -54,7 +56,7 @@ componentDidMount(){
                   style={{ margin: "10px" }}
                 >
                   <div className="card-body">
-                    <h4>Recruiter Name and username</h4>
+                  <b><span style={{ fontSize: "120%", color: "#006097" , paddingBottom: "5px"}}><u>Recruiter Details</u></span></b>
                     <dl class="row">
                   
                   <dt class="col-sm-5">First Name :</dt>

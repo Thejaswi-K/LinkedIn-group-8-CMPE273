@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
-import {CONSTANTS} from '../../../../Constants'
+import {CONSTANTS} from '../../../../Constants';
+import jwtDecode from 'jwt-decode';
 export default class GraphCityWiseComponent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "recruiter13@gmail.com",
+      recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
+      // recruiter: "recruiter13@gmail.com",
       chartData: {
         labels: [],
         datasets: [
