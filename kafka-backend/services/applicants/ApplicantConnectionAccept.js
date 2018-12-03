@@ -10,6 +10,31 @@ function handle_request(msg, callback) {
         //{"$push":{"connections":{"acceptedFrom":msg.body.requestFrom}}},
         { "$pull":{"connectionsRequests":{"requestFrom":msg.body.requestFrom}}},
         { safe: true, multi:true }
+        )
+  .then(job => {
+    if (!job) {
+        res.code = 404 ;
+        res.message = "Applicant Connections not found" ;
+        callback(null,res);
+    }
+    Applicants.update(
+        
+        {'email':msg.body.requestFrom},
+        //{"$push":{"connections":{"acceptedFrom":msg.body.requestFrom}}},
+        { "$pull":{"connectionsRequests":{"requestFrom":msg.email}}},
+        { safe: true, multi:true }
+        
+        )
+    .then(job=>{
+        if (!job) {
+            res.code = 404 ;
+            res.message = "Applicant Connections not found" ;
+            callback(null,res);
+        }
+        Applicants.update(
+            {'email':msg.email},
+            {"$push":{"connections":{"acceptedFrom":msg.body.requestFrom}}},
+            
         
         )
   .then(job => {
@@ -19,11 +44,9 @@ function handle_request(msg, callback) {
         callback(null,res);
     }
     Applicants.update(
-        {'email':msg.email},
-        {"$push":{"connections":{"acceptedFrom":msg.body.requestFrom}}},
-        //{ "$pull":{"connectionsRequests":{"requestFrom":msg.body.requestFrom}}},
-        //{ safe: false, multi:true }
-        
+        {'email':msg.body.requestFrom},
+        {"$push":{"connections":{"acceptedFrom":msg.email}}}
+    
         )
     .then(job=>{
         if (!job) {
@@ -31,11 +54,14 @@ function handle_request(msg, callback) {
             res.message = "Applicant Connections not found" ;
             callback(null,res);
         }
-    res.code = 200 ;
-    res.message = job ;
-    callback(null,res);
+        res.code = 200 ;
+        res.message = job ;
+        callback(null,res);
     })
+
+})  
     
+})
 })
 .catch(function (err) {
     res.message = err;
@@ -43,7 +69,7 @@ function handle_request(msg, callback) {
     callback(null, res);
 });
    console.log("after callback" + res);
-};
+}
 
 
 exports.handle_request = handle_request;
