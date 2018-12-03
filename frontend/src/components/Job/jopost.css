@@ -1,5 +1,56 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.label-job {
+    font-size: 1.4rem;
+    line-height: 1.42857;
+    font-weight: 400;
+    color: rgba(0,0,0,.9);
+    margin: 12px 0 3px;
+}
+.label-job-checkbox {
+    font-size: 1.6rem;
+    line-height: 1.42857;
+    font-weight: 600;
+    color: rgba(0,0,0,.9);
+    padding-left: 22px;
+}
+
+label.required:after {
+    content: '*';
+    color: #0073b1;
+    margin-left: 2px;
+}
+.post-page__cell-label {
+    margin: 0 0 4px;
+}
+
+.jobs__main-title, .jobs__title, :lang(ar) .jobs__main-title, :lang(ar) .jobs__title, :lang(ko) .jobs__main-title, :lang(ko) .jobs__title, :lang(th) .jobs__main-title, :lang(th) .jobs__title, :lang(zh) .jobs__main-title, :lang(zh) .jobs__title {
+    line-height: 1.33333;
+}
+
+.jobs__main-title, .jobs__title {
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: rgba(0,0,0,.9);
+}
+
+.select-input__select {
+    height: 50px;
+    padding: 0 16px;
+    background-position: top -31px right 1px;
+    background-color: #fff;
+}
+.input-fields {
+    height: 50px;
+}
+.jobs__input-box {
+    border: 1px solid rgba(0,0,0,.6);
+}
+
 p {
-    font-size: 1.1em;
+    font-size: 1.4em;
     font-weight: 300;
     line-height: 1.7em;
     color: #999;
@@ -35,7 +86,8 @@ span {
     min-width: 250px;
     max-width: 250px;
     background: rgb(253, 251, 251);
-    color: #0067db;
+    color: #006097;
+    /* color: #0067db; */
     transition: all 0.3s;
     padding-top: 0px;
 }
@@ -107,7 +159,8 @@ span {
 }
 
 #sidebar ul li a:hover {
-    color: #0067db;
+    color: #006097;
+    /* color: #0067db; */
     background: #eaeaec;
 }
 
@@ -118,7 +171,8 @@ span {
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #0067db;
+    background: #006097;
+    /* background: #0067db; */
 }
 
 a[data-toggle="collapse"] {

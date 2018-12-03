@@ -62,8 +62,6 @@ typings/
 .next
 
 
-/Backend/kafka/connection.js
-/kafka-backend/kafka/Connection.js
 /.idea/LinkedIn-group-8-CMPE273.iml
 /.idea/misc.xml
 /.idea/modules.xml

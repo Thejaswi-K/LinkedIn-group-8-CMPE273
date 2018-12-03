@@ -207,20 +207,7 @@ router.delete(
 //GET LOGS of top ten jobs of recruiter he/she has posted
 //Returns :
 /*
-{
-    Jobs: [
-           {job_id: "1", number_of_applicants: 800}, 
-           {job_id: "2", number_of_applicants: 600}, 
-           {job_id: "3", number_of_applicants: 700}, 
-           {job_id: "4", number_of_applicants: 650}, 
-           {job_id: "5", number_of_applicants: 900}, 
-           {job_id: "6", number_of_applicants: 200}, 
-           {job_id: "7", number_of_applicants: 300}, 
-           {job_id: "8", number_of_applicants: 350}, 
-           {job_id: "9", number_of_applicants: 100}, 
-           {job_id: "10", number_of_applicants: 1000}
-          ]
-}
+
 */
 router.get("/:recruiterId/jobs/top-ten", function(req, res) {
   console.log("inside backend jobs/top-ten");
@@ -234,11 +221,36 @@ router.get("/:recruiterId/jobs/top-ten", function(req, res) {
           .status(404)
           .json({ success: false, error: "Recruiter not found" })
           .send(err);
-      } else console.log("Recruiter log Top Ten Jobs", result);
-      {
-        if (result.status) {
+      } else 
+      { console.log("Recruiter log Top Ten Jobs", result);
+        if (result.success) {
+          console.log("Data inside success  -->  "+  JSON.stringify(result.data));
+        
+          let datas = new Array();
+        let colors = ['rgba(106,183,255,0.6)','rgba(0,0,128, 0.6)', 'rgba(0,0,255,0.6)','rgba(255,0,255,0.6)','rgba(128,0,128,0.6)','rgba(0,255,25,0.8)','rgba(0,128,128,0.6)','rgba(128,128,128,0.6)','rgba(0,255,0,0.6)','rgba(0,128,0,0.6)','rgba(128,128,0,0.6)','rgba(192,192,192,0.6)']
+          
+        for(var job =0; job< result.data.length; job++){
+            console.log("each job is:",result.data[job]);
+            var months = [0,0,0,0,0,0,0,0,0,0,0,0];
+            let r =result.data[job].job.map((monthsCount)=>
+            months[monthsCount.month-1]=monthsCount.count
+            )
+            console.log("Variable r  is ",r);
+
+
+            var obj = {
+              "label" : result.data[job].jobtitle,
+              "data" : months,
+              "backgroundColor" : colors[job]
+            }
+            datas.push(obj)
+          }
+          console.log("Return data is ",datas)
+
+
+
           res.status(200);
-          res.send(result);
+          res.send(datas);
         } else {
           res.status(400).json({ success: false });
         }
@@ -274,6 +286,41 @@ router.get("/:recruiter_id/jobs/:job_id", function(req, res) {
   );
 });
 
+// Recruiter gets list of all their job posting
+router.get("/:recruiter_id/jobs", function(req, res) {
+  console.log("Backend Recruiter Job List ");
+  kafka.make_request(
+    "jobs_topic",
+    { path: "listOfJobs", id: req.params.recruiter_id },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to fetch list of Jobs."
+        });
+        res.end();
+      } else {
+        if (results.success) {
+          console.log("Inside else");
+          res.json({
+            jobsList: results
+          });
+          res.end();
+        } else {
+          res.json({
+            status: "error",
+            msg: "Job list empty"
+          });
+          res.end();
+        }
+      }
+    }
+  );
+});
+
 //Recruiter updates job details
 router.put("/:recruiter_id/jobs/:job_id", function(req, res) {
   kafka.make_request(
@@ -289,12 +336,18 @@ router.put("/:recruiter_id/jobs/:job_id", function(req, res) {
           msg: "Unable to Update Job."
         });
       } else {
-        console.log("Inside else");
-        res.json({
-          UpdatedJob: results
-        });
+        console.log("Inside else" ,results );
+        if(results.code === 202){
+          res.status(202)
+          res.end();
+        }else { 
+          res.status(400)
+          res.end();
 
-        res.end();
+        }
+
+
+       
       }
     }
   );
@@ -312,8 +365,47 @@ router.get("/:recruiterId/jobs/logs/saved-job-count", function(req, res) {
           .status(404)
           .json({ success: false, error: "Jobs empty" })
           .send(err);
-      } else console.log("Jobs saved number", result);
-      {
+      } else {
+        console.log("result", result.data);
+        let title = result.data.map((eachJob)=>(
+          eachJob.title
+        ))
+        let savedJobSize = result.data.map((eachJob)=>(
+          eachJob.savedBy
+        ))
+
+        if (result.success) {
+          res.status(200);
+          res.send({"labels" :title , "data": savedJobSize});
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+//Add Tracking details of a user by id
+/*
+Tested and working
+*************************
+pass user to be tracked email as param
+pass location of user as Body    -->  {"location": "San Jose" }
+*************************
+*/
+router.post("/track/:user", function(req, res) {
+  console.log("inside backend post track user by id");
+  kafka.make_request(
+    "logs_topic",
+    { path: "createTrackUserById", id: req.params.user, body: req.body },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "User create track record failed" })
+          .send(err);
+      } else {
+        console.log("User create track record ", result);
         if (result.status) {
           res.status(200);
           res.send(result);
@@ -324,5 +416,282 @@ router.get("/:recruiterId/jobs/logs/saved-job-count", function(req, res) {
     }
   );
 });
+
+//Update Tracking details of a user by id with existing page
+/*
+Tested and working
+*************************
+pass user to be tracked email as param
+pass page user has visited as Body    -->  {"page": "User Login" }
+*************************
+*/
+router.put("/track/:user", function(req, res) {
+  console.log("inside backend update track user by id");
+  kafka.make_request(
+    "logs_topic",
+    { path: "updateTrackUserById", id: req.params.user, body: req.body },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "User update track record failed" })
+          .send(err);
+      } else {
+        console.log("User update track record ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+//Get Tracking details of a user by id
+/*
+Tested and working
+*************************
+pass user to be fetched  email as param
+:applicantId  = goel1@gmail.com
+*************************
+*/
+router.get("/track/:user", function(req, res) {
+  console.log("inside backend get track user by id");
+  kafka.make_request(
+    "logs_topic",
+    { path: "trackUserById", id: req.params.user },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "User track record failed" })
+          .send(err);
+      } else {
+        console.log("User track record ", result);
+        let pages = result.data.tracker.map((eachPage)=>(
+          eachPage.page
+        ))
+        let times = result.data.tracker.map((eachTime)=>(
+          eachTime.timeStamp
+        ))
+        if (result.status) {
+          res.status(200);
+          res.send({"labels" : times, "data" : pages});
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+//Get Tracking details of a user by location
+/*
+Tested and working
+*************************
+pass location to be fetched  as param
+:location  = San Jose
+*************************
+*/
+router.get("/locations/track/:location", function(req, res) {
+  console.log("inside backend GET track user by locaTION");
+  kafka.make_request(
+    "logs_topic",
+    { path: "trackUserByLocation", location : req.params.location },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Location track record failed" })
+          .send(err);
+      } else {
+        console.log("location track record ", result);
+        let pages = result.data[0].tracker.map((eachPage)=>(
+          eachPage.page
+        ))
+        let times = result.data[0].tracker.map((eachTime)=>(
+          eachTime.timeStamp
+        ))
+        if (result.status) {
+          res.status(200);
+           res.send({
+             "data": pages,
+             "labels" : times,
+             "location" : result.data[0]._id.location
+           });
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+
+//Route to get the Number of clicks for job (click per job posting graph in recruiter dashboard)
+router.get("/:recruiterId/jobs/logs/click-count", function(req, res) {
+  console.log("inside backend get click count");
+  kafka.make_request(
+    "logs_topic",
+    { path: "getClickCount", id: req.params.recruiterId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Get click count failed" })
+          .send(err);
+      } else {
+        console.log("Click count Result ", result.data);
+        let title =result.data.map((eachJob)=>(
+          eachJob.title
+        ))
+        let clickCount = result.data.map((eachJob)=>(
+          eachJob.noOfViews
+        ))
+
+        if (result.success) {
+          res.status(200);
+          res.send({"labels" :title , "data": clickCount});
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+// To increment the number of clicks in job schema
+/*
+Include this call in every route to a job details page
+http://localhost:3001/recruiters/jobs/logs/click-count
+BODY:
+{
+	"jobid":"5bfc781ce8df91050d1b484f"
+}
+
+*/
+router.put("/jobs/logs/click-count", function(req, res) {
+  console.log("inside backend update Click count for job", req.body.jobid);
+  kafka.make_request(
+    "logs_topic",
+    { path: "updateClickCount", id: req.body.jobid },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Update click count failed" })
+          .send(err);
+      } else {
+        console.log("Update click count success ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+//Route to get the Bottom 5 job posting of a recruiter
+router.get("/:recruiterId/last-five", function(req, res) {
+  console.log("inside backend Find last 5 jobs");
+  kafka.make_request(
+    "logs_topic",
+    { path: "lastFive", id: req.params.recruiterId },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Get Bottom 5 job posting failed" })
+          .send(err);
+      } else {
+        console.log("bottom 5 jobs  are", result.data);
+        let title = result.data.map((eachJob)=>(
+          eachJob.title
+        ))
+        let jobSize = result.data.map((eachJob)=>(
+          eachJob.jobApplicationssize
+        ))
+
+        if (result.success) {
+          res.status(200);
+          res.send({"labels" :title , "data": jobSize});
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+
+//to edit summary
+router.put(
+    "/summary/edit",
+    passport.authenticate("jwt", { session: false }),
+    (req, res) => {
+        const errors = {};
+        kafka.make_request("edit_recruiter_summary", req.body, function(err, results) {
+            console.log("in result");
+            console.log(results);
+            if (err) {
+                console.log("Inside err");
+                res.json({
+                    status: "error",
+                    msg: "System Error, Try Again."
+                });
+            } else {
+                console.log("Inside else", results);
+                if (results.code === 202) {
+                    res.status(results.code).json(results.message);
+                } else {
+                    res.status(results.code).json(results.errorMessage);
+                }
+
+                res.end();
+            }
+        });
+    }
+);
+
+
+//Route to get the Bottom 5 job posting of a recruiter
+router.get("/:recruiterId/jobs/logs/citywise", function(req, res) {
+  console.log("inside backend citywise");
+  kafka.make_request(
+    "logs_topic",
+    { path: "citywise", id: req.params.recruiterId },
+    function(err, result) {
+      if (err) {
+        console.log("Error in city wise : ", err);
+        res
+          .status(404)
+          .json({ success: false, error: "Get citywise jobs failed" })
+          .send(err);
+      } else {
+        console.log("city wise jobs are ", result);
+        let months = new Array();
+        let count = new Array();
+        for(var job =0; job< result.data.length; job++){
+          console.log("data", result.data[job]._id.location);
+          months.push(result.data[job]._id.location);
+          count.push(result.data[job].count);
+        }
+
+
+        if (result.success) {
+          res.status(200);
+          res.send({"labels" : months, "data" : count});
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
 
 module.exports = router;

@@ -1,5 +1,5 @@
 var crypto = require('crypto');
-var conn = require('./connection.js');
+var conn = require('./Connection.js');
 
 var TIMEOUT=8000; //time to wait for response in ms
 var self;

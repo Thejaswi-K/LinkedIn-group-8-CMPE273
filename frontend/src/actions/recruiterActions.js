@@ -6,7 +6,7 @@ import {
     RECRUITER_PROFILE,
     RECRUITER_GET_ERRORS,
     SET_RECRUITER_CURRENT_USER,
-    RECRUITER_SIGNUP_ERROR_REDUCER
+    RECRUITER_SIGNUP_ERROR_REDUCER, UPDATE_PROFILE_ERROR, EDIT_SUMMARY
 
 } from './types';
 
@@ -38,7 +38,7 @@ export const recruiterSignup = (userData, history) => dispatch => {
                     .catch(err =>
                         dispatch({
                             type: RECRUITER_SIGNUP_ERROR_REDUCER,
-                            payload: err.response
+                            payload: err.response.data.message
                         })
                     );
             } else {
@@ -78,7 +78,7 @@ export const recruiterLogin = (userData) => dispatch => {
         .catch(err =>
             dispatch({
                 type: RECRUITER_SIGNUP_ERROR_REDUCER,
-                payload: err.message
+                payload: err.response.data.error
             })
         );
 };
@@ -100,6 +100,35 @@ export const recruiterDetails = (recruiterEmail) => dispatch => {
             dispatch({
                 type: RECRUITER_GET_ERRORS,
                 payload: err.response
+            })
+        );
+};
+
+//edit summary
+export const editSummary = summary => dispatch => {
+    axios.defaults.withCredentials = true;
+    setAuthToken(localStorage.getItem("recruiterToken"));
+    axios
+        .put(`${CONSTANTS.BACKEND_URL}/recruiters/summary/edit`, summary)
+        .then(res => {
+            // Save to localStorage
+
+            if (res.status === 202) {
+                dispatch({
+                    type: EDIT_SUMMARY,
+                    payload: res.data
+                });
+            } else {
+                dispatch({
+                    type: UPDATE_PROFILE_ERROR,
+                    payload: res.data
+                });
+            }
+        })
+        .catch(err =>
+            dispatch({
+                type: UPDATE_PROFILE_ERROR,
+                payload: err.message
             })
         );
 };

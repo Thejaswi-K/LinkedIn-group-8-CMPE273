@@ -10,13 +10,18 @@ var mysql = require("mysql");
 var jwt = require("jsonwebtoken");
 var passport = require("passport");
 var kafka = require("./kafka/client");
+const photos = require("./routes/api/photos");
+const doc = require("./routes/api/documentsUpload");
+const morgan = require('morgan');
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// //Use morgan 
+app.use(morgan('dev'));
+
 
 //MONGODB Config
-
 const dbkey = require("./config/keys").mongoURI;
 
 // Connect to Mongo Db
@@ -25,9 +30,12 @@ mongoose
   .then(() => console.log("MongoDB Connected!!"))
   .catch(err => console.log(err));
 
-
-
-app.use(cors({origin: 'http://localhost:3000', credentials: true}));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true
+  })
+);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -58,6 +66,8 @@ var recruiter = require("./routes/api/recruiter");
 app.use("/jobs", jobs);
 app.use("/applicants", applicant);
 app.use("/recruiters", recruiter);
+app.use("/api/photos", photos);
+app.use("/api/documentsUpload", doc);
 app.use;
 
 app.get("/healthcheck", (req, res) => {
@@ -70,7 +80,7 @@ app.get("/healthcheck", (req, res) => {
 app.use(passport.initialize());
 
 // Passport Config
-require('./config/passport')(passport);
+require("./config/passport")(passport);
 
 app.listen(3001);
 console.log("Server Listening on port 3001");

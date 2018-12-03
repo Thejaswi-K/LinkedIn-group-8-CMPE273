@@ -6,7 +6,7 @@ function handle_request(msg, callback) {
 
     var res = {};
 
-    ApplicantUser.findOneAndRemove({email: msg.applicant_id})
+    ApplicantUser.findOneAndDelete({email: msg.applicant_id})
         .then(profile => {
             if (!profile) {
                 res.code = 401 ;
@@ -15,7 +15,7 @@ function handle_request(msg, callback) {
 
             }
 
-            res.code = 200 ;
+            res.code = 202 ;
             res.message = "Record deleted successfully" ;
             callback(null,res);
         })

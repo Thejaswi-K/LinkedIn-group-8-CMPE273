@@ -16,10 +16,14 @@ function handle_request(msg, callback) {
       console.log(members);
       const newMessage = new Messages({
         messageMembers: members,
+        senderFirstname: msg.senderFirstName,
+        receiverFirstname: msg.receiverFirstName,
+        from_email: msg.from_email,
+        to_email: msg.to_email,
         authorMessage: [
           {
             author: msg.from_email,
-            message: msg.sendMessage
+            message: msg.messageSent
           }
         ]
       });
@@ -28,6 +32,7 @@ function handle_request(msg, callback) {
           console.log("Message send to desired User: ", message);
           res.status = "200";
           res.value = "Success Sending Message to desired User";
+          res.data = message;
           callback(null, res);
         },
         err => {
@@ -45,8 +50,8 @@ function handle_request(msg, callback) {
           $push: {
             authorMessage: [
               {
-                author: msg.from_email,
-                message: msg.sendMessage
+                author: msg.author,
+                message: msg.messageSent
               }
             ]
           }
@@ -59,6 +64,7 @@ function handle_request(msg, callback) {
           );
           res.status = "200";
           res.value = "Success Sending Message to desired User";
+          res.data = message;
           callback(null, res);
         },
         err => {

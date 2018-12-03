@@ -1,20 +1,22 @@
 // Load Property model
 const Applicants = require('../../Model/Applicant');
 
+
 function handle_request(msg, callback) {
-    console.log("KAFKA : viewApplicantConnections --> ", msg.applicant_id);
+    console.log("KAFKA : viewApplicantConnections --> ", msg.email);
     var res = {};
     
-    Applicants.findById(msg.applicant_id)
+    Applicants.find({email:msg.email},
+        { 'connections':['requestFrom'] }
+  )
   .then(job => {
     if (!job) {
         res.code = 404 ;
         res.message = "Applicant Connections not found" ;
         callback(null,res);
     }
-    res.code = 200 ;
-    res.message = job ;
-    callback(null,res);
+    
+    callback(null,job);
 })
 .catch(function (err) {
     res.message = err;

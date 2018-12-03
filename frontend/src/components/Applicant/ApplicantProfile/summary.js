@@ -1,15 +1,15 @@
 import Image from "react-bootstrap/es/Image";
-import Profile from "../../../images/profile.jpg"
 import Card from "@material-ui/core/Card/Card";
 import {Component} from "react";
-import moment from "moment";
 import connect from "react-redux/es/connect/connect";
-import {addExperience, editExperience, editSummary} from "../../../actions/applicantActions";
+import {editSummary} from "../../../actions/applicantActions";
+import {getPhoto, postPhotos} from "../../../actions/photoActions";
 
 var React = require('react');
 
 class Summary extends Component {
     added = false;
+    imageBase = [];
 
     constructor(props) {
         super(props);
@@ -22,8 +22,14 @@ class Summary extends Component {
             state: "",
             profileSummary: "",
             profileImage: ""
-        }
+        };
+        this.getPhoto = false;
+        this.handleClicked = false;
+        this.edit = false;
+
+
     }
+
 
     render() {
         var show;
@@ -46,13 +52,48 @@ class Summary extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.applicantProfile.summary.firstName !== undefined) {
+        if (nextProps.applicantProfile.summary.firstName !== undefined && !this.handleClicked) {
             this.sumAdded = nextProps.applicantProfile.summary;
             this.setState({editing: false, adding: false});
+            this.handleGetPhoto(this.sumAdded.profileImage);
             this.added = true;
+        } else if (this.getPhoto) {
+            let imagePreview = 'data:image/jpg;base64, ' + nextProps.photos.photo;
+            this.imageBase.push(imagePreview);
+            this.setState({
+                imagePushed: true
+            })
+        } else if (nextProps.applicantProfile.summary.firstName == undefined && nextProps.profileImage !== "" && !this.getPhoto) {
+            this.handleGetPhoto(nextProps.profileImage);
         }
 
     }
+
+    handleDrop = files => {
+        // Push all the axios request promise into a single array
+        // Initial FormData
+        const formData = new FormData();
+        formData.append("file", files);
+        this.uid = new Date().valueOf();
+        formData.append("imagename", files.name);
+        this.state.profileImage = files.name;
+
+        console.log(files.name);
+
+
+        formData.append("timestamp", (Date.now() / 1000) | 0);
+
+        this.props.postPhotos(formData);
+    };
+
+    handleGetPhoto = (imgName) => {
+        this.props.getPhoto(imgName);
+        this.getPhoto = true;
+        if(this.edit){
+            this.handleClicked = true;
+        }
+
+    };
 
 
     defaultExperience() {
@@ -80,38 +121,35 @@ class Summary extends Component {
         return (
             <Card className="w-75 p-3 ml-5" style={{overflow: "auto", height: "auto"}}>
 
-                <div style={{margin: "1px"}}>
+                <div>
 
                     <div style={{
                         alignItems: 'center',
                         width: "100px",
-                        height: "auto",
-
-                        padding: "1px",
-                        backgroundColor: "white"
-
+                        height: "100px",
+                        margin: "1px",
+                        overflow: "auto"
                     }}>
-                        <Image src={Profile} circle/>
 
 
+                        <Image src={this.imageBase[0]} rounded/>
                     </div>
-
-
-                    <h3 className="ml-4">{name}
-                        <button className="btn btn-default" onClick={this.handleClickEdit.bind(this)}><span
-                            className="glyphicon glyphicon-edit" title="Edit Experience">
-			                </span>
-                        </button>
-                    </h3>
-
-                    <label className="ml-4">{cityState}</label>
-
-                    <hr/>
-
-                    <h5 className="ml-4">{profileSummary}</h5>
-
-
                 </div>
+
+
+                <h3 className="ml-4">{name}
+                    <button className="btn btn-default" onClick={this.handleClickEdit.bind(this)}><span
+                        className="glyphicon glyphicon-edit" title="Edit Experience">
+			                </span>
+                    </button>
+                </h3>
+
+                <label className="ml-4">{cityState}</label>
+
+                <h5 className="ml-4">{profileSummary}</h5>
+
+                <hr/>
+
 
             </Card>
 
@@ -139,16 +177,17 @@ class Summary extends Component {
                             <div style={{
                                 alignItems: 'center',
                                 width: "100px",
-                                height: "auto",
-
+                                height: "100px",
+                                overflow: "auto",
                                 padding: "1px",
                                 backgroundColor: "white"
 
                             }}>
-                                <Image src={Profile} circle/>
+                                <Image src={this.imageBase[0]} circle/>
 
 
                             </div>
+                            <input type="file" onChange={(e) => this.handleDrop(e.target.files[0])}/>
 
 
                             <input className="ml-4" ref="firstName" defaultValue={this.sum.firstName}/>
@@ -191,8 +230,8 @@ class Summary extends Component {
             lastName: this.refs.lastName.value,
             city: this.refs.city.value,
             state: this.refs.state.value,
-            profileSummary: this.refs.profileSummary.value
-
+            profileSummary: this.refs.profileSummary.value,
+            profileImage: this.state.profileImage
         };
 
 
@@ -202,6 +241,7 @@ class Summary extends Component {
         };
 
         this.props.editSummary(body);
+        this.edit = true;
 
     }
 
@@ -214,9 +254,10 @@ class Summary extends Component {
 
 const mapStateToProps = (state) => ({
     applicantErrorReducer: state.applicantErrorReducer,
-    applicantProfile: state.applicantProfile
+    applicantProfile: state.applicantProfile,
+    photos: state.photos
 });
 
-export default connect(mapStateToProps, {editSummary})(Summary);
+export default connect(mapStateToProps, {editSummary, postPhotos, getPhoto})(Summary);
 
 
