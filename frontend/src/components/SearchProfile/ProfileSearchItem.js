@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import {withRouter} from "react-router"; 
+
 import jwt_decode from "jwt-decode";
 import { connect } from "react-redux";
 import {extractNameFromEmail,capitalizeFirstLetter} from '../../utility';
@@ -54,15 +56,15 @@ class ProfileSearchItem extends Component {
               //call recruiter profile view count
               console.log("in applicant profile view")
               this.props.history.push({
-                  pathname: "/recruiterProfileViewer",
-                  state: this.props.toEmail
+                  pathname: "/recruiterprofileviewonly",
+                  state: {"clicked":this.props.toEmail, "loggedin": jwt_decode(localStorage.getItem("applicantToken")).email}
               });
           }else{ 
             console.log("in recruiter profile view ") 
               //call applicant profile view count
               this.props.history.push({
                   pathname: "/applicantprofileviewonly",
-                  state: this.props.toEmail
+                  state: {"clicked":this.props.toEmail, "loggedin": jwt_decode(localStorage.getItem("applicantToken")).email}
               });
           }
           
@@ -194,4 +196,4 @@ const mapStateToProps = state => ({
     applicantProfile: state.applicantProfile
   });
 
-export default connect(mapStateToProps)(ProfileSearchItem);
+export default withRouter(connect(mapStateToProps)(ProfileSearchItem));

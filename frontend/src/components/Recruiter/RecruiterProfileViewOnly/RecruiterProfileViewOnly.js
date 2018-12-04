@@ -33,7 +33,7 @@ class RecruiterProfileView extends Component {
         //setAuthToken(localStorage.getItem("recruiterToken"));
         let trackerdata = { "page": "6" };
         axios
-            .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.email, trackerdata)
+            .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.props.location.state.loggedin, trackerdata)
             .then(response => {
                 console.log("Recruiter Profile  View Tracked ", response.data);
       
@@ -44,8 +44,9 @@ class RecruiterProfileView extends Component {
             });
       
 
+            console.log("Component did mount in Recruiter profile view count only ", this.props.location.state);
 
-        this.props.recruiterDetails(this.props.location.state);
+        this.props.recruiterDetails(this.props.location.state.clicked);
     }
 
     componentWillReceiveProps(nextProps) {

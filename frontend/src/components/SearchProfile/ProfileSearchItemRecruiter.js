@@ -54,17 +54,17 @@ console.log("Go to applicant profile");
        
         console.log("in applicant profile view")
         this.props.history.push({
-            pathname: "/recruiterJobListing",
-            state: this.props.toEmail
-        });
+            pathname: "/recruiterprofileviewonly",
+            state: {"clicked":this.props.toEmail, "loggedin": jwt_decode(localStorage.getItem("recruiterToken")).email}
+          });
     }else{ 
       console.log("in recruiter profile view ") 
         //call applicant profile view count
         
         this.props.history.push({
             pathname: "/applicantprofileviewonly",
-            state: this.props.toEmail
-        });
+            state: {"clicked":this.props.toEmail, "loggedin": jwt_decode(localStorage.getItem("recruiterToken")).email}
+          });
     }
     
       

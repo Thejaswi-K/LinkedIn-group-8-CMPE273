@@ -99,19 +99,19 @@ class ApplicantProfileView extends Component {
                 console.log("errored");
                 console.log(error);
             });
-            axios.defaults.withCredentials = true;
-            //setAuthToken(localStorage.getItem("recruiterToken"));
+            // axios.defaults.withCredentials = true;
+            // //setAuthToken(localStorage.getItem("recruiterToken"));
             
-            axios
-                .put(`${CONSTANTS.BACKEND_URL}/applicants/${this.email}/logs/profile-view-count`)
-                .then(response => {
-                    console.log("Applicant Profile View Count incremented ", response.data);
+            // axios
+            //     .put(`${CONSTANTS.BACKEND_URL}/applicants/${this.email}/logs/profile-view-count`)
+            //     .then(response => {
+            //         console.log("Applicant Profile View Count incremented ", response.data);
     
-                })
-                .catch(function (error) {
-                    console.log("errored");
-                    console.log(error);
-                });
+            //     })
+            //     .catch(function (error) {
+            //         console.log("errored");
+            //         console.log(error);
+            //     });
     }
 
 

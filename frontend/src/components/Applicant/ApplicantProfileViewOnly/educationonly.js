@@ -75,10 +75,7 @@ class EducationOnly extends Component {
                         {this.edu.map((experience, index) => (
                             <li key={index} className="ml-5">
                                 <h4><strong>{experience.degreeLevel}</strong>
-                                    <button className="btn btn-default ml-5"
-                                            onClick={this.handleClickEdit.bind(this, index)}>
-                                        <span className="glyphicon glyphicon-pencil" title="Edit Education"></span>
-                                    </button>
+
                                 </h4>
                                 <h5>{experience.school}</h5>
                                 <h6>{experience.location}</h6>

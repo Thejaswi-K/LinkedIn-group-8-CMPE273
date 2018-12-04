@@ -5,6 +5,7 @@ import Education from "./educationonly";
 import Summary from "./summaryonly";
 import Skills from "./skillsonly";
 import {applicantDetails} from "../../../actions/applicantActions";
+import ApplicantNavBar from "../../Navbar/applicantNavbar";
 
 import axios from "axios";
 import {CONSTANTS} from '../../../Constants'
@@ -69,14 +70,15 @@ class ApplicantProfileViewOnly extends Component {
 
 
     componentDidMount() {
-        this.props.applicantDetails(this.props.location.state);
+        this.props.applicantDetails(this.props.location.state.clicked);
+        console.log("Component did mount in Applicant profile view count only ", this.props.location.state);
 
 
         axios.defaults.withCredentials = true;
         //setAuthToken(localStorage.getItem("recruiterToken"));
         let trackerdata = { "page": "4" };
         axios
-            .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.email, trackerdata)
+            .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` +  this.props.location.state.loggedin, trackerdata)
             .then(response => {
                 console.log("Applicant Profile View Tracked ", response.data);
 
@@ -85,6 +87,22 @@ class ApplicantProfileViewOnly extends Component {
                 console.log("errored");
                 console.log(error);
             });
+
+
+
+    axios.defaults.withCredentials = true;
+            //setAuthToken(localStorage.getItem("recruiterToken"));
+            
+            axios
+                .put(`${CONSTANTS.BACKEND_URL}/applicants/${this.props.location.state.clicked}/logs/profile-view-count`)
+                .then(response => {
+                    console.log("Applicant Profile View Count incremented ", response.data);
+    
+                })
+                .catch(function (error) {
+                    console.log("errored");
+                    console.log(error);
+                });
     }
 
 
@@ -93,6 +111,8 @@ class ApplicantProfileViewOnly extends Component {
 
         return (
             <div>
+                {/* <ApplicantNavBar/> */}
+
 
 
                 <br/>
