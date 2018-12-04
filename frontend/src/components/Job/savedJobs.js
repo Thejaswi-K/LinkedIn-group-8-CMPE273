@@ -29,10 +29,10 @@ class SavedJobsList extends Component {
 
     componentDidMount(){
         axios.defaults.withCredentials = true;
-        axios.get(CONSTANTS.BACKEND_URL+"/jobs/savedjobs/"+this.email)
+        axios.get(CONSTANTS.BACKEND_URL+"/jobs/savedjobs?email="+this.email)
         .then(response => {
             this.setState({
-                savedJobsList: response.data
+                savedJobsList: response.data.data
             })
         })
         .catch(function (error) {
