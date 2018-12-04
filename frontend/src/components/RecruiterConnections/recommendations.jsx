@@ -9,25 +9,25 @@ export default class Recommendations extends Component {
     super(props);
 
     this.state = {
-      applicant: localStorage.getItem("applicantToken")
-        ? jwtDecode(localStorage.getItem("applicantToken")).email
+      recruiter: localStorage.getItem("recruiterToken")
+        ? jwtDecode(localStorage.getItem("recruiterToken")).email
         : "",
-      // applicant: "applicant13@gmail.com",
-      applicantData: ""
+      // recruiter: "recruiter13@gmail.com",
+      recruiterData: ""
     };
   }
 
   componentDidMount() {
     axios.defaults.withCredentials = true;
-    setAuthToken(localStorage.getItem("applicantToken"));
+    setAuthToken(localStorage.getItem("recruiterToken"));
     axios
       .get(
-        `${CONSTANTS.BACKEND_URL}/graphs/getRecommendation/` +this.state.applicant)
+        `${CONSTANTS.BACKEND_URL}/graphs/getRecommendation/` +this.state.recruiter)
       .then(response => {
         console.log("Recommendation details in right rail ", response.data);
 
         this.setState({
-          applicantData: response.data
+          recruiterData: response.data
         });
       })
       .catch(function(error) {
@@ -36,7 +36,7 @@ export default class Recommendations extends Component {
       });
   }
   render() {
-    var allImgs = Array.prototype.slice.call(this.state.applicantData);
+    var allImgs = Array.prototype.slice.call(this.state.recruiterData);
     return (
       <div className="container-fluid">
         <div
