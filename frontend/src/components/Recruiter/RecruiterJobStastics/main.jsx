@@ -6,18 +6,35 @@ import jwtDecode from "jwt-decode";
 import  JobStats from "./jobStats";
 import JobNavbar from "../../Navbar/JobNavbar";
 import  LeftRailComponent from "./jobstatLeftRail";
+import axios from "axios";
+import { CONSTANTS } from "../../../Constants";
 
 export default class MainRecruiterJobStats extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "testrecruiter2@gmail.com",
+      recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
+      // recruiter: "testrecruiter2@gmail.com",
       jobId : this.props.location.state
     };
   }
+componentDidMount(){
+  axios.defaults.withCredentials = true;
+  //setAuthToken(localStorage.getItem("recruiterToken"));
+  let trackerdata = { "page": "38" };
+  axios
+      .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.state.recruiter, trackerdata)
+      .then(response => {
+          console.log("Recruiter message  View Tracked ", response.data);
 
+      })
+      .catch(function (error) {
+          console.log("Tracker errored");
+          console.log(error);
+      });
+
+}
   render() {
     // check for auth flag
     let redirectVar = null;

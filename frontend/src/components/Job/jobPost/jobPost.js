@@ -47,11 +47,22 @@ class PostJob extends Component {
         this.jobCompanyLogoDrop = this.jobCompanyLogoDrop.bind(this);
         this.postJob = this.postJob.bind(this);
     }
+    
+    componentDidMount() {
+        axios.defaults.withCredentials = true;
+        //setAuthToken(localStorage.getItem("recruiterToken"));
+        let trackerdata = { "page": "20" };
+        axios
+            .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.state.email, trackerdata)
+            .then(response => {
+                console.log("Recruiter Job Posting  View Tracked ", response.data);
 
-    // componentDidMount = () => {
-
-    // }
-
+            })
+            .catch(function (error) {
+                console.log("Tracker errored");
+                console.log(error);
+            });
+    }
     //Company change handler to update state variable with the text entered by the user
     jobCompanyChangeHandler = (e) => {
         const jobCompany = e.target.value;

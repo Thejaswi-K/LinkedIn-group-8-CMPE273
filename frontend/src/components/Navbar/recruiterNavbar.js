@@ -6,7 +6,7 @@ import "react-dropdown/style.css";
 import { extractNameFromEmail, capitalizeFirstLetter } from "../../utility";
 import jwtDecode from "jwt-decode";
 import { logOutRecruiter } from "../../actions/recruiterActions";
-import { searchProfileFunc } from "../../actions/searchProfileActions";
+import { searchProfileFuncRecruiter } from "../../actions/searchProfileActions";
 import PropTypes from "prop-types";
 import Redirect from "react-router/es/Redirect";
 import connect from "react-redux/es/connect/connect";
@@ -50,7 +50,7 @@ class recruiterNavbar extends Component {
     var data = {
       firstName: this.state.firstName
     };
-    this.props.searchProfileFunc(data);
+    this.props.searchProfileFuncRecruiter(data);
     this.setState({
       isPushed: true
     });
@@ -59,7 +59,7 @@ class recruiterNavbar extends Component {
 
   render() {
     if (this.state.isPushed) {
-      return <Redirect to="/searchRecruiterProfile" />;
+      return <Redirect to="/searchProfileRecruiter" />;
     }
 
     var loginOrOut;
@@ -316,7 +316,7 @@ class recruiterNavbar extends Component {
 
 recruiterNavbar.propTypes = {
   logOutRecruiter: PropTypes.func.isRequired,
-  searchProfileFunc: PropTypes.func.isRequired
+  searchProfileFuncRecruiter: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -325,5 +325,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { searchProfileFunc, logOutRecruiter }
+  { searchProfileFuncRecruiter, logOutRecruiter }
 )(recruiterNavbar);

@@ -11,8 +11,7 @@ var yLabels = {
   6: "Recruiter Profile",
   8: "Applicant Messages",
   10: "Recruiter Messages",
-  12: "Applicant Signup",
-  14: "Recruiter Signup",
+  12: "Signup",
   16: "Recruiter Dashboard",
   18: "Applicant Dashboard",
   20: "Recruiter Job Posting",
@@ -22,7 +21,12 @@ var yLabels = {
   28: "Applicant Connections",
   30 : "Job Apply",
   32 : "Recruiter Job Listing",
-  34 : "Job List"
+  34 : "Job List",
+  36 : "Job Edit",
+  38 : "Recruiter View Applications",
+  40: "Recruiter Pending  Connections",
+  42: "Applicant Pending Connections",
+  44 : "Profile Search"
 
 
 };
@@ -103,12 +107,12 @@ export default class LocationTraceDashboard extends Component {
             pointBorderColor: "rgba(75,192,192,1)",
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
-            pointHoverRadius: 5,
+            pointHoverRadius: 10,
             pointHoverBackgroundColor: "rgba(75,192,192,1)",
             pointHoverBorderColor: "rgba(220,220,220,1)",
             pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
+            pointRadius: 3,
+            pointHitRadius: 15,
             steppedLine: true,
             data: []
           }

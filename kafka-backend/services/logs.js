@@ -239,7 +239,7 @@ function trackUserId(msg, callback) {
   userTrackerModel
     .findOne({ username: msg.id }, "tracker")
     .then(trackDetails => {
-      if (!trackDetails) {
+      if (trackDetails.length === 0) {
         callback(null, {
           success: false,
           status: "No track details found for user"
@@ -275,12 +275,20 @@ function trackUserLocation(msg, callback) {
       }
     ])
     .then(trackDetails => {
-       console.log("Result in track user location ", trackDetails);
+      console.log("trackdetails ", trackDetails)
+      if(trackDetails.length === 0){
+        console.log("LEngth is 0")
+        callback(null, {success: false, status: "No such location"})
+      }
+      else {
+        console.log("Result in track user location ", trackDetails);
         callback(null, {
           success: true,
           status: "Tracking details found",
           data: trackDetails
         });
+      }
+
       
     })
     .catch(function(err) {
@@ -309,11 +317,12 @@ function createTrackUserId(msg, callback) {
         status: "Tracker for user already exist"
       });
     } else {
+      // new tracker creation always defaulted to signup page
       const newTracker = new userTrackerModel({
         username: msg.id,
         location: msg.body.location,
         tracker: {
-          page: "Sign up"
+          page: 12
         }
       }); 
       newTracker
@@ -439,7 +448,7 @@ function lastFiveJobs(msg, callback) {
       },
       // {$pull : {jobApplicationssize:{$lt:1}}},
       { $sort: { jobApplicationssize: 1 } },
-      // { $limit: 5 }
+     { $limit: 5 }
     ])
 
     .then(jobs => {

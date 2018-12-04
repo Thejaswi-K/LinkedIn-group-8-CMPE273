@@ -19,24 +19,62 @@ export const recruiterSignup = (userData, history) => dispatch => {
   axios.defaults.withCredentials = true;
   axios
     .post(`${CONSTANTS.BACKEND_URL}/recruiters/`, userData)
-    .then(res => {
+    .then(resSQL => {
       // Save to localStorage
-      if (res.status === 201) {
+      if (resSQL.status === 201) {
         axios.defaults.withCredentials = true;
         axios
           .post(`${CONSTANTS.BACKEND_URL}/recruiters/mongo`, userData)
-          .then(res => {
-            if (res.status === 201) {
-              const { token } = res.data;
-              //set token to local storage
-              localStorage.setItem("recruiterToken", token);
-              setAuthToken(token);
-              // Decode token to get user data
-              const decoded = jwt_decode(token);
-              // Set current user
-              dispatch(setRecruiter(decoded));
-              history.push("/recruitersignup");
-              alert("Recruiter created successfully.");
+          .then(resMongo => {
+            if (resMongo.status === 201) {
+
+              const trackerBody = {"location" : "San Jose"};
+              console.log("UserDAta is ",userData.email)
+              axios.defaults.withCredentials=true;
+              axios
+                .post(`${CONSTANTS.BACKEND_URL}/recruiters/track/${userData.email}`, trackerBody,{headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+              .then(res => {
+                console.log("tracker response",res);
+                if(res.data.success){
+                  console.log("Tracker started successfully ", res);
+                  //create a node in graph DB
+                  axios.defaults.withCredentials=true;
+                  axios.post(`${CONSTANTS.BACKEND_URL}/graphs/${userData.email}`,{headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+                  .then(res=>{
+                    console.log("Added to Graph DB");
+                    const { token } =resSQL.data;
+                    //set token to local storage
+                    localStorage.setItem("recruiterToken", token);
+                    setAuthToken(token);
+                    // Decode token to get user data
+                    const decoded = jwt_decode(token);
+                    // Set current user
+                    dispatch(setRecruiter(decoded));
+                    history.push("/recruitersignup");
+                    alert("Recruiter created successfully.");
+                  })
+                  .catch(err =>{
+                    console.log("Graph error is ", err);
+                    dispatch({
+                      type: RECRUITER_SIGNUP_ERROR_REDUCER,
+                      payload: err.response.data.message
+                    })
+                  })
+                }
+                
+
+
+              })
+              .catch(err =>{
+                console.log();
+                dispatch({
+                  type: RECRUITER_SIGNUP_ERROR_REDUCER,
+                  payload: err.response.data.message
+                })
+              })
+
+
+
             }
           })
           .catch(err =>
@@ -46,7 +84,7 @@ export const recruiterSignup = (userData, history) => dispatch => {
             })
           );
       } else {
-        dispatchRecruiterSignupError(res.data);
+        dispatchRecruiterSignupError(resSQL.data);
       }
     })
     .catch(err =>

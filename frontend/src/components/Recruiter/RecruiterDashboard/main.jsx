@@ -25,8 +25,9 @@ export default class MainRecruiterDashboard extends Component {
   componentDidMount() {
     axios.defaults.withCredentials = true;
     //setAuthToken(localStorage.getItem("recruiterToken"));
+    let trackerdata = { "page":"16"};
     axios
-    .put(`${CONSTANTS.BACKEND_URL}/recruiters/track` + this.state.recruiter, {"page":"16"})
+    .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.state.recruiter,trackerdata)
     .then(response => {
       console.log("Recruiter Dashboard Tracked ",response.data);
       

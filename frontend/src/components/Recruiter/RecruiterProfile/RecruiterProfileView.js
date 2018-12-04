@@ -5,7 +5,8 @@ import connect from "react-redux/es/connect/connect";
 import {recruiterDetails} from "../../../actions/recruiterActions";
 import jwt_decode from "jwt-decode";
 import Redirect from "react-router/es/Redirect";
-
+import axios from "axios";
+import { CONSTANTS } from "../../../Constants";
 class RecruiterProfileView extends Component {
 
     isApplicantLoggedIn = false;
@@ -34,6 +35,22 @@ class RecruiterProfileView extends Component {
     }
 
     componentDidMount() {
+        axios.defaults.withCredentials = true;
+        //setAuthToken(localStorage.getItem("recruiterToken"));
+        let trackerdata = { "page": "6" };
+        axios
+            .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.email, trackerdata)
+            .then(response => {
+                console.log("Recruiter Profile  View Tracked ", response.data);
+      
+            })
+            .catch(function (error) {
+                console.log("Tracker errored");
+                console.log(error);
+            });
+      
+
+
         this.props.recruiterDetails(this.email);
     }
 

@@ -40,6 +40,23 @@ class JobApply extends Component {
             this.jobID = sessionStorage.getItem("jobId");
         }
     }
+
+
+    componentDidMount(){
+        axios.defaults.withCredentials = true;
+        //setAuthToken(localStorage.getItem("recruiterToken"));
+        let trackerdata = { "page": "30" };
+        axios
+            .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.email, trackerdata)
+            .then(response => {
+                console.log("Applicant Job Apply  View Tracked ", response.data);
+    
+            })
+            .catch(function (error) {
+                console.log("Tracker errored");
+                console.log(error);
+            });
+    }
     valueChangeHandler = (e) => {
         if(e.target.name == 'resume'){
             console.log("Target files",e.target.files);

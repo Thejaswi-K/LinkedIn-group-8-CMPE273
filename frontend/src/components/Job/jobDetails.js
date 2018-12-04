@@ -56,6 +56,23 @@ class JobDetails extends Component {
     };
 
     componentDidMount(){
+
+        axios.defaults.withCredentials = true;
+        //setAuthToken(localStorage.getItem("recruiterToken"));
+        let trackerdata = { "page": "22" };
+        axios
+            .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.email, trackerdata)
+            .then(response => {
+                console.log("Job Details  View Tracked ", response.data);
+    
+            })
+            .catch(function (error) {
+                console.log("Tracker errored");
+                console.log(error);
+            });
+
+
+
         console.log("Job details initial state", this.state);
         axios.defaults.withCredentials = true;
         axios.put(CONSTANTS.BACKEND_URL+"/recruiters/jobs/logs/click-count",{ "jobid": localStorage.getItem('jobId')})
