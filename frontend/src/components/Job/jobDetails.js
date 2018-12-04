@@ -73,9 +73,9 @@ class JobDetails extends Component {
             });
             axios.get(CONSTANTS.BACKEND_URL+"/jobs/" + this.props.jobSearchReducer.jobDetailsByID)
             .then(response => {
-                console.log("response in then",response.data.data[0].companyLogo[0]);
-                if(response.data.data[0].companyLogo[0]){
-                    axios.post(CONSTANTS.BACKEND_URL+"/api/photos/download/"+ response.data.data[0].companyLogo[0])
+                console.log("response in then",response.data.data[0].companyLogo);
+                if(response.data.data[0].companyLogo){
+                    axios.post(CONSTANTS.BACKEND_URL+"/api/photos/download/"+ response.data.data[0].companyLogo)
                     .then(response => {
                         console.log("Image res: ", response);
                         let imagePreview = "data:image/jpg;base64, "+ response.data;
