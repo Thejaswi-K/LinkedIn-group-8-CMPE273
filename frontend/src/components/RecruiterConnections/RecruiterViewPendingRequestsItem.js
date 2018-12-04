@@ -24,7 +24,11 @@ class RecruiterViewConnectionsItem extends Component {
       )
       .then(function(res) {
         if (res.data) {
+          //create connection in Graph
+
+
           alert("Connection Accepted Successfully");
+
           window.location.reload();
         }
       });

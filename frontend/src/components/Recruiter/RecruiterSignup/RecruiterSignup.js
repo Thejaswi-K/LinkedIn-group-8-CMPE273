@@ -60,7 +60,7 @@ class RecruiterSignup extends Component {
     render() {
         let redirectVar = null;
         if (localStorage.getItem("recruiterToken")) {
-          return redirectVar = <Redirect to="/recruiterprofileview" />;
+          return redirectVar = <Redirect to="/job" />;
         }
         let message = null;
         if (this.state.messageDiv !== '') {

@@ -272,7 +272,7 @@ class recruiterNavbar extends Component {
         <div>
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="navbar-header row" style={{ marginLeft: 10 }}>
-              <Link to="/" className="navbar-brand">
+              <Link to="/job" className="navbar-brand">
                 <img
                   src="https://static.licdn.com/sc/h/95o6rrc5ws6mlw6wqzy0xgj7y"
                   alt="logo"

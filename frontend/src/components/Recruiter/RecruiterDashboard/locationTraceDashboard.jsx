@@ -136,7 +136,7 @@ export default class LocationTraceDashboard extends Component {
       var tempstate = {...this.state.chartData};
       tempstate.datasets[0].data = response.data.data;
       tempstate.labels = response.data.labels;
-      console.log("Temp state in did mount bottom five job posting",tempstate);
+      console.log("Temp state in did mount Location trace",tempstate);
 
      this.setState({
        chartData : tempstate,
@@ -147,7 +147,8 @@ export default class LocationTraceDashboard extends Component {
     })
     
     .catch(function(error) {
-      console.log("errored in component did mount last five jobs ");
+      console.log("errored in component did mount Location trace ");
+      alert("No such location, Try again");
       console.log(error);
     });
   }
