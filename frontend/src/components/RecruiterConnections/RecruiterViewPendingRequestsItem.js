@@ -12,10 +12,14 @@ class RecruiterViewConnectionsItem extends Component {
       this.decodedRecruiter = jwt_decode(token);
      // this.isApplicantLoggedIn = true;
       this.email = this.decodedRecruiter.email;
+      this.isRecruiter=this.decodedRecruiter.isRecruiter;
       console.log("Emmail", this.email);
+      console.log("isRecruiter........", this.isRecruiter);
     }
     const requestEmail = {
-      requestFrom: this.props.toEmail
+      requestFrom: this.props.toEmail,
+      recruiterLoggedin:this.isRecruiter,
+      sendToRecruiter:this.props.sendTo
     };
     axios
       .post(

@@ -29,10 +29,12 @@ class ProfileSearchItemRecruiter extends Component {
       this.isRecruiterLoggedIn = true;
       this.email = this.decodedRecruiter.email;
       this.firstName = this.decodedRecruiter.firstName;
+      this.isRecruiter=this.decodedRecruiter.isRecruiter;
       console.log("Email", this.email);
     }
     const requestEmail = {
-      requestFrom: this.props.toEmail
+      requestFrom: this.props.toEmail,
+      isRecruiter:this.isRecruiter
     };
     axios
       .post(

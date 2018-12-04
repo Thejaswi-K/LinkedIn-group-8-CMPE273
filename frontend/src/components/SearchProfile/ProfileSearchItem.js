@@ -32,10 +32,13 @@ class ProfileSearchItem extends Component {
             this.isApplicantLoggedIn = true;
             this.email = this.decodedApplicant.email;
             this.firstName = this.decodedApplicant.firstName;
+            this.isRecruiter=this.decodedApplicant.isRecruiter;
+            
             console.log("Emmail", this.email)
         }
         const requestEmail={
-            requestFrom:this.props.toEmail
+            requestFrom:this.props.toEmail,
+            isRecruiter:this.isRecruiter
         }
         axios
           .post(`http://localhost:3001/applicants/connections/${this.email}`, requestEmail)

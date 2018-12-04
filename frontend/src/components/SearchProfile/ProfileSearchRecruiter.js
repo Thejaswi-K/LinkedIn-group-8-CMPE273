@@ -93,6 +93,7 @@ class ProfileSearchRecruiter extends Component {
               profile={profile}
               toEmail={profile.email}
               toFirstName={profile.firstName}
+              isRecruiter={profile.isRecruiter}
             />
           </div>
         ))}
