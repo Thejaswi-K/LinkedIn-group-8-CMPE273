@@ -442,7 +442,7 @@ export const logoutCustomer = () => dispatch => {
   setAuthToken(false);
   // Set current user to {} which will ser isAuthenticated to false
  //dispatch(setCustomerOut({}));
-    var isAuthenticated = false;
+  //  var isAuthenticated = false;
     dispatch(setDelete(""));
   window.location = "/";
 };
