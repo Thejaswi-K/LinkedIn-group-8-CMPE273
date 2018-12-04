@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { CONSTANTS } from "../../Constants";
+import {withRouter} from "react-router"; 
 import PropTypes from "prop-types";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
@@ -45,22 +46,22 @@ class ProfileSearchItemRecruiter extends Component {
         }
       });
   }
-  onViewProfile = e => {
-
+  onViewProfile(){
+console.log("Go to applicant profile");
     if(this.props.isRec){
         //call recruiter profile view count
-        e.preventDefault();
+       
         console.log("in applicant profile view")
         this.props.history.push({
-            pathname: "/applicantProfileViewer",
+            pathname: "/recruiterJobListing",
             state: this.props.toEmail
         });
     }else{ 
       console.log("in recruiter profile view ") 
         //call applicant profile view count
-        e.preventDefault();
+        
         this.props.history.push({
-            pathname: "/recruiterProfileViewer",
+            pathname: "/recruiterProfile",
             state: this.props.toEmail
         });
     }
@@ -221,4 +222,4 @@ const mapStateToProps = state => ({
   applicantProfile: state.applicantProfile
 });
 
-export default connect(mapStateToProps)(ProfileSearchItemRecruiter);
+export default withRouter(connect(mapStateToProps)(ProfileSearchItemRecruiter));

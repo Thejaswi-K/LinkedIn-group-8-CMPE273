@@ -4,7 +4,7 @@ import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import { connect } from "react-redux";
 import {extractNameFromEmail,capitalizeFirstLetter} from '../../utility';
-
+import { CONSTANTS } from "../../Constants";
 
 class ProfileSearchItem extends Component {
 

@@ -269,8 +269,6 @@ function trackUserLocation(msg, callback) {
         $group: {
           _id: { location: "$location" },
           tracker : { $first : "$tracker"}
-          
-          
         }
       }
     ])
@@ -281,7 +279,7 @@ function trackUserLocation(msg, callback) {
         callback(null, {success: false, status: "No such location"})
       }
       else {
-        console.log("Result in track user location ", trackDetails);
+        console.log("Result in track user location ", JSON.stringify(trackDetails));
         callback(null, {
           success: true,
           status: "Tracking details found",
