@@ -22,9 +22,7 @@ export default class Recommendations extends Component {
     setAuthToken(localStorage.getItem("applicantToken"));
     axios
       .get(
-        `${CONSTANTS.BACKEND_URL}/graphs/getRecommendation/` +
-          this.state.applicant
-      )
+        `${CONSTANTS.BACKEND_URL}/graphs/getRecommendation/` +this.state.applicant)
       .then(response => {
         console.log("Recommendation details in right rail ", response.data);
 
