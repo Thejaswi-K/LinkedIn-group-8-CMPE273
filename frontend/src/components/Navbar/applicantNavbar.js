@@ -9,6 +9,7 @@ import connect from "react-redux/es/connect/connect";
 import { searchProfileFunc } from "../../actions/searchProfileActions";
 import PropTypes from "prop-types";
 import Redirect from "react-router/es/Redirect";
+import { logoutCustomer } from "../../actions/applicantActions";
 
 class applicantNavbar extends Component {
   arr = [];
@@ -30,20 +31,14 @@ class applicantNavbar extends Component {
   }
 
   //handle logout to destroy the cookie
-  handleLogout = () => {
+  handleLogout = e => {
     let loggedInUser = capitalizeFirstLetter(
       extractNameFromEmail(
         jwtDecode(localStorage.getItem("applicantToken")).email
       )
     );
-    localStorage.removeItem("applicantToken");
-    // let user = {}
-    // this.props.logoutData(false, user, true);
-    this.setState = {
-      ...this.state,
-      isLogged: false
-    };
-    this.props.history.push("/");
+    e.preventDefault();
+    this.props.logoutCustomer();
     alert(`${loggedInUser} logged out successfully.`);
     console.log("User logged out Successfully.");
   };
@@ -151,9 +146,12 @@ class applicantNavbar extends Component {
                   &nbsp;&nbsp;&nbsp;My Dashboard
                 </Link>
               </li>
-              <li class="dropdown-item"><Link to="/viewPendingRequests"><span
-                          className="glyphicon glyphicon-link"></span>&nbsp;&nbsp;&nbsp;My Requests</Link>
-                      </li>
+              <li class="dropdown-item">
+                <Link to="/viewPendingRequests">
+                  <span className="glyphicon glyphicon-link" />
+                  &nbsp;&nbsp;&nbsp;My Requests
+                </Link>
+              </li>
               <li class="dropdown-item">
                 <Link to="/applicantSignup" onClick={this.handleLogout}>
                   <span className="glyphicon glyphicon-log-out" />
@@ -255,7 +253,10 @@ class applicantNavbar extends Component {
 
     home = (
       <li>
-        <Link to="/applicantprofileview" className="navbar-brand text-center text-white">
+        <Link
+          to="/applicantprofileview"
+          className="navbar-brand text-center text-white"
+        >
           <span className="glyphicon glyphicon-home navbar-icon" />
           <div className="text-white">Home</div>
         </Link>
@@ -345,6 +346,7 @@ class applicantNavbar extends Component {
 }
 
 applicantNavbar.propTypes = {
+  logoutCustomer: PropTypes.func.isRequired,
   searchProfileFunc: PropTypes.func.isRequired
 };
 
@@ -354,5 +356,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { searchProfileFunc }
+  { searchProfileFunc, logoutCustomer }
 )(applicantNavbar);

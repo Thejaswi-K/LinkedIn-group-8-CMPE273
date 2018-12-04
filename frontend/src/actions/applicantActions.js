@@ -11,7 +11,8 @@ import {
   ADD_SKILLS,
   ADD_EDUCATION,
   EDIT_SUMMARY,
-    APPLICANT_DELETE
+  APPLICANT_DELETE,
+  SET_USER_LOGOUT
 } from "./types";
 
 import setAuthToken from "../utils/setAuthToken";
@@ -310,46 +311,46 @@ export const applicantDetails = applicantEmail => dispatch => {
 
 //delete applicant
 export const deleteApplicant = applicantEmail => dispatch => {
-    axios.defaults.withCredentials = true;
-    setAuthToken(localStorage.getItem("applicantToken"));
+  axios.defaults.withCredentials = true;
+  setAuthToken(localStorage.getItem("applicantToken"));
 
-    axios
-        .delete(`${CONSTANTS.BACKEND_URL}/applicants/${applicantEmail}`)
-        .then(res => {
-            // Save to localStorage
+  axios
+    .delete(`${CONSTANTS.BACKEND_URL}/applicants/${applicantEmail}`)
+    .then(res => {
+      // Save to localStorage
 
+      if (res.status === 202) {
+        setAuthToken(localStorage.getItem("applicantToken"));
+        axios.defaults.withCredentials = true;
+        axios
+          .delete(`${CONSTANTS.BACKEND_URL}/applicants/mysql/${applicantEmail}`)
+          .then(res => {
             if (res.status === 202) {
-                setAuthToken(localStorage.getItem("applicantToken"));
-                axios.defaults.withCredentials = true;
-                axios
-                    .delete(`${CONSTANTS.BACKEND_URL}/applicants/mysql/${applicantEmail}`)
-                    .then(res => {
-                        if (res.status === 202) {
-                            dispatch({
-                                type: APPLICANT_DELETE,
-                                payload: res.data
-                            })
-                        }
-                    })
-                    .catch(err =>
-                        dispatch({
-                            type: UPDATE_PROFILE_ERROR,
-                            payload: err.response
-                        })
-                    );
-            } else {
-                dispatch({
-                    type: UPDATE_PROFILE_ERROR,
-                    payload: res.message
-                })
+              dispatch({
+                type: APPLICANT_DELETE,
+                payload: res.data
+              });
             }
-        })
-        .catch(err =>
+          })
+          .catch(err =>
             dispatch({
-                type: UPDATE_PROFILE_ERROR,
-                payload: err.response
+              type: UPDATE_PROFILE_ERROR,
+              payload: err.response
             })
-        );
+          );
+      } else {
+        dispatch({
+          type: UPDATE_PROFILE_ERROR,
+          payload: res.message
+        });
+      }
+    })
+    .catch(err =>
+      dispatch({
+        type: UPDATE_PROFILE_ERROR,
+        payload: err.response
+      })
+    );
 };
 
 export const currentApplicantProfile = decoded => {
@@ -376,19 +377,33 @@ export const dispatchApplicantSignupError = decoded => {
 
 // Set logged in user
 export const setDelete = decoded => {
-    return {
-        type: APPLICANT_DELETE,
-        payload: decoded
-    };
+  return {
+    type: APPLICANT_DELETE,
+    payload: decoded
+  };
 };
 
 // Log user out
 export const deleteUser = () => dispatch => {
-    setAuthToken(false);
-    // Set current user to {} which will set isAuthenticated to false
-    dispatch(setDelete(""));
+  setAuthToken(false);
+  // Set current user to {} which will set isAuthenticated to false
+  dispatch(setDelete(""));
 };
 
+//Set Logged out User
+export const setCustomerOut = decoded => {
+  return {
+    type: SET_USER_LOGOUT,
+    payload: decoded
+  };
+};
 
-
-
+//Set Logged Out User
+export const logoutCustomer = () => dispatch => {
+  // Remove token from sessionStorage
+  localStorage.removeItem("applicantToken");
+  //Remove auth Header from future requests
+  setAuthToken(false);
+  // Set current user to {} which will ser isAuthenticated to false
+  dispatch(setCustomerOut({}));
+};

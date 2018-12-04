@@ -148,6 +148,8 @@ class JobDetails extends Component {
         axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
         .then((result=>{
             console.log("upload successful");
+            let applicant_resume = "";
+            (this.state.applicantData.resume)? applicant_resume = this.state.applicantData.resume: applicant_resume = this.state.resume;
             const data = {
                 firstName: this.state.applicantData.firstName,
                 lastName: this.state.applicantData.lastName,
@@ -157,7 +159,7 @@ class JobDetails extends Component {
                 sponsorship: this.state.sponsorship,
                 diversity: this.state.diversity,
                 disablility: this.state.disability,
-                resume: this.state.resume.name,
+                resume: applicant_resume,
                 coverLetter: this.state.coverletter.name
             }
             console.log("submit data",data);
