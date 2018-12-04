@@ -3,16 +3,21 @@ import { withRouter } from "react-router";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { CONSTANTS } from "../../../Constants";
-
+import Pagination from "../../common/pagination";
+import { paginate } from "../../../utility";
 
 class JobListingComponent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      //recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "recruiter13@gmail.com",
-      joblist: ""
+      recruiter: localStorage.getItem("recruiterToken")
+        ? jwtDecode(localStorage.getItem("recruiterToken")).email
+        : "",
+      // recruiter: "recruiter13@gmail.com",
+      joblist: "",
+      currentPage: 1,
+      pageSize: 10
     };
   }
 
@@ -23,7 +28,7 @@ class JobListingComponent extends Component {
         `${CONSTANTS.BACKEND_URL}/recruiters/` + this.state.recruiter + "/jobs"
       )
       .then(response => {
-        console.log("Inside JobListing component",response.data.jobsList);
+        console.log("Inside JobListing component", response.data.jobsList);
         // console.log("Inside JobListing component didmount",response.data.jobsList.data);
         this.setState({
           joblist: response.data.jobsList.data
@@ -34,6 +39,11 @@ class JobListingComponent extends Component {
         console.log(error);
       });
   }
+
+  handlePageChange = page => {
+    this.setState({ currentPage: page });
+  };
+
   buttonEdit = e => {
     e.preventDefault();
     this.props.history.push({
@@ -48,6 +58,7 @@ class JobListingComponent extends Component {
       state: e.target.value
     });
   };
+
   render() {
     //    var propertylist = ();
 
@@ -57,6 +68,9 @@ class JobListingComponent extends Component {
     //var resu = allImgs.map(p=>p.propertyName);
 
     //console.log("result is", resu);
+
+    const { pageSize, currentPage } = this.state;
+    const imgPaginate = paginate(allImgs, currentPage, pageSize);
 
     return (
       <div>
@@ -72,22 +86,29 @@ class JobListingComponent extends Component {
             borderRadius: "10px"
           }}
         >
-
-        <h1 data-test-post-page-title="" className="jobs__main-title" style={{ marginLeft: "5rem", marginTop: "3rem" , marginBottom:"2rem"}}>
-                <b>Listed Jobs</b>
-            </h1>
+          <h1
+            data-test-post-page-title=""
+            className="jobs__main-title"
+            style={{
+              marginLeft: "5rem",
+              marginTop: "3rem",
+              marginBottom: "2rem"
+            }}
+          >
+            <b>Listed Jobs</b>
+          </h1>
           {/* <h4 style={{ marginLeft: "5rem", marginTop: "7rem" }}>
             Jobs listed
           </h4> */}
-          {allImgs.map((job, i) => (
+          {imgPaginate.map((job, i) => (
             <div
               className="card"
               style={{
-                 marginLeft: "3rem",
-                 marginRight:"3rem",
-                 marginBottom: "1rem",
+                marginLeft: "3rem",
+                marginRight: "3rem",
+                marginBottom: "1rem",
                 //  marginLeft: "3rem",
-                 borderRadius: "10px",
+                borderRadius: "10px",
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
               }}
@@ -158,17 +179,35 @@ class JobListingComponent extends Component {
                           Applicants
                         </label>
                       </dl>
+
                     </dl>
+                    <br>
+                    </br>
+                    <dl className="row">
+                        <dt className="col">Applicants Viewed :</dt>
+                        <dd className="col">{job.readCounter} </dd>
+                        <dt className="col">Applicants InProgress :</dt>
+                        <dd className="col">{job.startCounter}</dd>
+                        <dt className="col">Applicants Completed :</dt>
+                        <dd className="col">{job.completedCounter}</dd>
+                      </dl>
                   </div>
                 </li>
               </ul>
             </div>
           ))}
         </div>
+        <div className="ml-5 mt-2">
+          <Pagination
+            itemsCount={allImgs.length}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
+        </div>
       </div>
     );
   }
 }
-
 
 export default withRouter(JobListingComponent);

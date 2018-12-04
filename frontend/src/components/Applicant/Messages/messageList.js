@@ -4,7 +4,8 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import MessageView from "./messageView";
 import ProfileNavbar from "../../Navbar/applicantNavbar";
-
+import jwtDecode from "jwt-decode";
+import { CONSTANTS } from "../../../Constants";
 // REDUX functionality
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -44,13 +45,33 @@ class messageList extends Component {
 
   componentDidMount() {
     var data = {
-      from_email: this.props.applicantProfile.applicantUser.email
+      // from_email: this.props.applicantProfile.applicantUser.email
+      from_email: localStorage.getItem("applicantToken")
+        ? jwtDecode(localStorage.getItem("applicantToken")).email
+        : ""
     };
-    var author = this.props.applicantProfile.applicantUser.email;
+    // var author = this.props.applicantProfile.applicantUser.email;
+    var author = localStorage.getItem("applicantToken")
+      ? jwtDecode(localStorage.getItem("applicantToken")).email
+      : "";
     sessionStorage.setItem("author", author);
-
-    // setAuthToken(localStorage.getItem("applicantToken"));
     this.props.messageListFunc(data.from_email);
+
+    axios.defaults.withCredentials = true;
+    //setAuthToken(localStorage.getItem("recruiterToken"));
+    let trackerdata = { "page": "8" };
+    axios
+        .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + data.from_email, trackerdata)
+        .then(response => {
+            console.log("Applicant Message View Tracked ", response.data);
+
+        })
+        .catch(function (error) {
+            console.log("Tracker errored");
+            console.log(error);
+        });
+
+
   }
 
   render() {
@@ -66,13 +87,13 @@ class messageList extends Component {
             <div className="col-sm-3">
               <ul className="nav nav-navs" id="myTab" role="tablist">
                 {this.props.messageReducer.messageList.map((propval, place) => (
-                  <li className="nav-item">
-                    <a data-toggle="tab" href="#location">
+                  <li>
+                    <a data-toggle="tab" href="#messages">
                       <div className="ml-5 mt-2">
                         <Messages
                           // membername={propval.messageMembers[1]}
                           membername={propval.messageMembers[1]}
-                          from_email={propval.authorMessage[place].author}
+                          // from_email={propval.authorMessage[place].author}
                           onClick={() =>
                             this.redirectDetails(propval.messageMembers)
                           }
@@ -85,8 +106,8 @@ class messageList extends Component {
             </div>
 
             <div className="col-sm-9">
-              <div className="tab-content">
-                <div className="tab-pane fade in" id="location" role="tabpanel">
+              <div>
+                <div id="messages">
                   {redirect}
                   {/* {(this.state.isClicked) ? <MessageView /> : } */}
                 </div>

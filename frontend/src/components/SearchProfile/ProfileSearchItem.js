@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import {withRouter} from "react-router"; 
+
 import jwt_decode from "jwt-decode";
 import { connect } from "react-redux";
 import {extractNameFromEmail,capitalizeFirstLetter} from '../../utility';
-
+import { CONSTANTS } from "../../Constants";
 
 class ProfileSearchItem extends Component {
 
@@ -14,7 +16,7 @@ class ProfileSearchItem extends Component {
           messageContent: ""
         }
         this.changeMessage = this.changeMessage.bind(this);
-       
+
       }
 
       changeMessage = e => {
@@ -32,13 +34,16 @@ class ProfileSearchItem extends Component {
             this.isApplicantLoggedIn = true;
             this.email = this.decodedApplicant.email;
             this.firstName = this.decodedApplicant.firstName;
+            this.isRecruiter=this.decodedApplicant.isRecruiter;
+            
             console.log("Emmail", this.email)
         }
         const requestEmail={
-            requestFrom:this.email
+            requestFrom:this.props.toEmail,
+            isRecruiter:this.isRecruiter
         }
         axios
-          .post(`http://localhost:3001/applicants/connections/${this.props.toEmail}`, requestEmail)
+          .post(`${CONSTANTS.BACKEND_URL}/applicants/connections/${this.email}`, requestEmail)
           .then(function(res) { 
               if (res.data) {
                 alert("Connection Sent Successfully")
@@ -47,6 +52,28 @@ class ProfileSearchItem extends Component {
     })
           
     }
+
+    onViewProfile() {
+        console.log("propssss"+this.props);
+          if(this.props.isRec){
+              //call recruiter profile view count
+              console.log("in applicant profile view")
+              this.props.history.push({
+                  pathname: "/recruiterprofileviewonly",
+                  state: {"clicked":this.props.toEmail, "loggedin": jwt_decode(localStorage.getItem("applicantToken")).email}
+              });
+          }else{ 
+            console.log("in recruiter profile view ") 
+              //call applicant profile view count
+              this.props.history.push({
+                  pathname: "/applicantprofileviewonly",
+                  state: {"clicked":this.props.toEmail, "loggedin": jwt_decode(localStorage.getItem("applicantToken")).email}
+              });
+          }
+          
+            
+      }
+  
 
     onMessageSendClick() {
         //  console.log('email on click',email)
@@ -58,6 +85,7 @@ class ProfileSearchItem extends Component {
               this.firstName = this.decodedApplicant.firstName;
               console.log("Emmail", this.email)
           }
+    
           const messageDetails={
               from_email:this.email,
               to_email:this.props.toEmail,
@@ -67,7 +95,7 @@ class ProfileSearchItem extends Component {
           }
           console.log("mD",messageDetails);
           axios
-            .post('http://localhost:3001/applicants/sendMessage', messageDetails)
+            .post(`${CONSTANTS.BACKEND_URL}/applicants/sendMessage`, messageDetails)
             .then(function(res) { 
                 if (res.data) {
                   alert("Message Sent Successfully")
@@ -94,9 +122,17 @@ class ProfileSearchItem extends Component {
         <div className="col-3">
         <h3>{profile.firstName} {profile.lastName}</h3>
         <h5>{profile.city} {profile.state}</h5>
+        <h5>{profile.email}</h5>
         </div>
         <div className="col-4">
-        
+        <button 
+                type="submit" 
+                className="btn btn-primary"
+             //  onClick={this.onConnectClick(profile.email).bind(this)} 
+               onClick={this.onViewProfile.bind(this)} 
+                >
+                    View Profile
+                </button>
         </div>
         <div className="col-3">
             <div className="text-right">
@@ -163,4 +199,4 @@ const mapStateToProps = state => ({
     applicantProfile: state.applicantProfile
   });
 
-export default connect(mapStateToProps)(ProfileSearchItem);
+export default withRouter(connect(mapStateToProps)(ProfileSearchItem));

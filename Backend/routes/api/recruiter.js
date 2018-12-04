@@ -395,6 +395,7 @@ pass location of user as Body    -->  {"location": "San Jose" }
 */
 router.post("/track/:user", function(req, res) {
   console.log("inside backend post track user by id");
+  
   kafka.make_request(
     "logs_topic",
     { path: "createTrackUserById", id: req.params.user, body: req.body },
@@ -506,6 +507,7 @@ router.get("/locations/track/:location", function(req, res) {
           .json({ success: false, error: "Location track record failed" })
           .send(err);
       } else {
+        if (result.success) {
         console.log("location track record ", result);
         let pages = result.data[0].tracker.map((eachPage)=>(
           eachPage.page
@@ -513,7 +515,7 @@ router.get("/locations/track/:location", function(req, res) {
         let times = result.data[0].tracker.map((eachTime)=>(
           eachTime.timeStamp
         ))
-        if (result.status) {
+        
           res.status(200);
            res.send({
              "data": pages,
@@ -595,6 +597,78 @@ router.put("/jobs/logs/click-count", function(req, res) {
   );
 });
 
+router.put("/jobs/logs/read-count", function(req, res) {
+  console.log("inside backend update read count for job", req.body.jobid);
+  kafka.make_request(
+    "logs_topic",
+    { path: "readCounter", id: req.body.jobid },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Update readCounter count failed" })
+          .send(err);
+      } else {
+        console.log("Update readCounter count success ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+router.put("/jobs/logs/start-count", function(req, res) {
+  console.log("inside backend update start-count for job", req.body.jobid);
+  kafka.make_request(
+    "logs_topic",
+    { path: "startCounter", id: req.body.jobid },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Update start-count count failed" })
+          .send(err);
+      } else {
+        console.log("Update start-count count success ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+router.put("/jobs/logs/completed-count", function(req, res) {
+  console.log("inside backend update completed-count count for job", req.body.jobid);
+  kafka.make_request(
+    "logs_topic",
+    { path: "completeCounter", id: req.body.jobid },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Update completed-count count failed" })
+          .send(err);
+      } else {
+        console.log("Update completed-count count success ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
 //Route to get the Bottom 5 job posting of a recruiter
 router.get("/:recruiterId/last-five", function(req, res) {
   console.log("inside backend Find last 5 jobs");
@@ -608,6 +682,7 @@ router.get("/:recruiterId/last-five", function(req, res) {
           .json({ success: false, error: "Get Bottom 5 job posting failed" })
           .send(err);
       } else {
+        if (result.success) {
         console.log("bottom 5 jobs  are", result.data);
         let title = result.data.map((eachJob)=>(
           eachJob.title
@@ -616,7 +691,7 @@ router.get("/:recruiterId/last-five", function(req, res) {
           eachJob.jobApplicationssize
         ))
 
-        if (result.success) {
+        
           res.status(200);
           res.send({"labels" :title , "data": jobSize});
         } else {
@@ -688,6 +763,112 @@ router.get("/:recruiterId/jobs/logs/citywise", function(req, res) {
         } else {
           res.status(400).json({ success: false });
         }
+      }
+    }
+  );
+});
+
+/****************Recruiter View All Connections*********************/
+router.get(
+  "/viewconnections/:email",
+  passport.authenticate("jwt", { session: false }),
+  function(req, res) {
+    console.log("Backend Recruiter View Connections");
+    kafka.make_request(
+      "recruiter_ViewConnection",
+      { email: req.params.email },
+      function(err, results) {
+        console.log("in result");
+        console.log(results);
+        if (err) {
+          console.log("Inside err");
+          res.json({
+            status: "error",
+            msg: "Unable to fetch Connections."
+          });
+        } else {
+          console.log("Inside else");
+          res.json(results);
+          res.end();
+        }
+      }
+    );
+  }
+);
+
+/****************Recruiter View Pending Requests*********************/
+router.get("/viewPendingRequests/:email", function(req, res) {
+  console.log("Backend Recruiter View Connections");
+  kafka.make_request(
+    "recruiter_PendingRequests",
+    { email: req.params.email },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to fetch Connections."
+        });
+      } else {
+        console.log("Inside else");
+        res.json(results);
+        res.end();
+      }
+    }
+  );
+});
+
+/****************Recruiter Send Connection*********************/
+router.post("/connections/:email", function(req, res) {
+  console.log("Backend Recruiter Send Connection");
+  kafka.make_request(
+    "recruiter_SendConnection",
+    { email: req.params.email, body: req.body },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to Send Connection."
+        });
+      } else {
+        console.log("Inside else");
+        res.json({
+          SendConnections: results
+        });
+
+        res.end();
+      }
+    }
+  );
+});
+
+/****************Recruiter Accept Connection*********************/
+router.post("/acceptConnection/:email", function(req, res) {
+  console.log("Backend Recruiter Accept Connection");
+  kafka.make_request(
+    "recruiter_AcceptConnection",
+    { email: req.params.email, body: req.body },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to Accept Connection."
+        });
+      } else {
+        console.log("Inside else");
+        res.json({
+          SendConnections: results
+        });
+
+        res.end();
       }
     }
   );

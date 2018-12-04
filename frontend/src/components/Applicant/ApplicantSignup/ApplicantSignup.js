@@ -6,6 +6,7 @@ import Loginfooter from './FooterSignup';
 import * as Validation from "../../../validation/ValidationUtil";
 import {applicantSignup} from "../../../actions/applicantActions";
 import {isEmpty} from "lodash";
+import { Redirect } from "react-router";
 
 class ApplicantSignup extends Component {
     constructor(props) {
@@ -59,7 +60,10 @@ class ApplicantSignup extends Component {
     };
 
     render() {
-
+        let redirectVar = null;
+        if (localStorage.getItem("applicantToken")) {
+          return redirectVar = <Redirect to="/applicantprofileview" />;
+        }
         let message = null;
         if (this.state.messageDiv !== '') {
             message = (
@@ -85,6 +89,7 @@ class ApplicantSignup extends Component {
         return (
             <div>
                 <ApplicantLoginNavbar/>
+                {redirectVar}
                 {/* <div className="text-center">
                     {message}
                 </div> */}

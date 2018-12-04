@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
+import jwtDecode from 'jwt-decode';
 import {CONSTANTS} from '../../../../Constants';
 
 export default class GraphBottomFiveJobPostingComponent extends Component {
@@ -8,8 +9,8 @@ export default class GraphBottomFiveJobPostingComponent extends Component {
     super(props);
 
     this.state = {
-      recruiter : "recruiter13@gmail.com",
-      // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
+      // recruiter : "recruiter13@gmail.com",
+      recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
       chartData: {
         labels: [],
         datasets: [

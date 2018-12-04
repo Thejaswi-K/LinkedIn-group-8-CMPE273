@@ -43,35 +43,20 @@ function jobListCard(props) {
                 <Typography
                   gutterBottom
                   variant="subheading"
-                  style={{ fontSize: "25px" }}
+                  style={{ fontSize: "25px", color: "#0073e6" }}
                 >
-                  {`${props.title}`}
+                  <b>{`${props.title}`}</b>
                 </Typography>
                 <Typography gutterBottom style={{ fontSize: "20px" }}>
-                  {`${props.description}`}
+                  {`${props.companyName}`}
                 </Typography>
                 <Typography color="textPrimary" style={{ fontSize: "15px" }}>
-                  <b>
-                    <span class="glyphicon glyphicon-home" />
-                    {"    "} &nbsp;
-                    {`${props.propertytype}`} &nbsp;
-                    <span class="glyphicon glyphicon-bed" />
-                    {"    "} &nbsp;
-                    {`${props.beds}`}
-                    &nbsp;
-                    <span class="glyphicon glyphicon-tint" />
-                    {"    "} &nbsp;
-                    {`${props.baths}`}
-                  </b>{" "}
-                  <br />
+                  <span class="glyphicon glyphicon-map-marker" />
+                  &nbsp;
+                  {`${props.location}`} <br />
+                  <b>{`${props.description}`}</b> <br />
                 </Typography>
               </Grid>
-            </Grid>
-            <Grid item>
-              <Typography variant="subheading" style={{ fontSize: "25px " }}>
-                {`${props.currtype}`}
-                {`${props.price}`}
-              </Typography>
             </Grid>
           </Grid>
         </Grid>

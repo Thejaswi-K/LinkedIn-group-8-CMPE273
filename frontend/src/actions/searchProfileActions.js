@@ -1,32 +1,43 @@
-import axios from 'axios';
+import axios from "axios";
+import { CONSTANTS } from "../Constants";
 
-import {
-  GET_SEARCHED_PROFILES
-  
+import { GET_SEARCHED_PROFILES, GET_SEARCH_NAME } from "./types";
 
-} from './types';
+// Get all homes
+export const getSearchedProfiles = searchdata => dispatch => {
+  axios
+    .post(`${CONSTANTS.BACKEND_URL}/applicants/searchprofile`, searchdata)
+    .then(res =>
+      dispatch({
+        type: GET_SEARCHED_PROFILES,
+        payload: res.data
+      })
+    );
+};
 
-const ROOT_URL = "http://localhost:3001";
+export const searchProfileFunc = nameData => async dispatch => {
+  console.log(nameData);
+  dispatch({
+    type: GET_SEARCH_NAME,
+    payload: nameData
+  });
+};
 
+export const getSearchedProfilesRecruiter = searchdata => dispatch => {
+  axios
+    .post(`${CONSTANTS.BACKEND_URL}/applicants/searchprofile`, searchdata)
+    .then(res =>
+      dispatch({
+        type: GET_SEARCHED_PROFILES,
+        payload: res.data
+      })
+    );
+};
 
-  // Get all homes
-  export const getSearchedProfiles = (searchdata) => dispatch => {
-    axios
-      .post('http://localhost:3001/applicants/searchprofile', searchdata)
-      .then(res =>
-        dispatch({
-          type: GET_SEARCHED_PROFILES,
-          payload: res.data
-        })
-      )
-      .catch(err =>
-        dispatch({
-          type: GET_SEARCHED_PROFILES,
-          payload: null
-        })
-      );
-  };
-
- 
-
-  
+export const searchProfileFuncRecruiter = nameData => async dispatch => {
+  console.log(nameData);
+  dispatch({
+    type: GET_SEARCH_NAME,
+    payload: nameData
+  });
+};

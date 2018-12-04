@@ -47,7 +47,21 @@ var jobSchema = new mongoose.Schema({
     required: false,
     default: 0
   },
-
+  readCounter: {
+    type: Number,
+    required: false,
+    default: 0
+  },
+  startCounter: {
+    type: Number,
+    required: false,
+    default: 0
+  },
+  completedCounter: {
+    type: Number,
+    required: false,
+    default: 0
+  },
   companyName: {
     type: String,
     required: false,
@@ -55,9 +69,9 @@ var jobSchema = new mongoose.Schema({
     default: ""
   },
   companyLogo: {
-    type: Array,
+    type: String,
     required: false,
-    default: "[\"preview.png\"]"
+    default: "preview.png"
   },
 
   postedDate: {

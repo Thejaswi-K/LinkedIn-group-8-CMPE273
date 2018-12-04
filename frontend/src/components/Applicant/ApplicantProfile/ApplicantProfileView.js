@@ -5,10 +5,11 @@ import Education from "./education";
 import Summary from "./summary";
 import Skills from "./skills";
 import jwt_decode from "jwt-decode";
-import {applicantDetails, deleteApplicant} from "../../../actions/applicantActions";
+import {applicantDetails, deleteApplicant, deleteUser} from "../../../actions/applicantActions";
 import Redirect from "react-router/es/Redirect";
 import ProfileNavbar from "../../Navbar/applicantNavbar"
-
+import axios from "axios";
+import {CONSTANTS} from '../../../Constants'
 
 class ApplicantProfileView extends Component {
 
@@ -27,7 +28,10 @@ class ApplicantProfileView extends Component {
             profileImage: "",
             experience: [],
             education: [],
-            skills: []
+            skills: [],
+            zipcode: "",
+            gender: "",
+            resume: ""
         };
 
         if (localStorage.getItem("applicantToken")) {
@@ -38,6 +42,8 @@ class ApplicantProfileView extends Component {
 
         }
 
+
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -47,8 +53,9 @@ class ApplicantProfileView extends Component {
             if (nextProps.applicantProfile.delete !== "") {
                 this.isDelete = true;
                 alert("User deleted successfully");
-                this.isApplicantLoggedIn = false ;
+                this.isApplicantLoggedIn = false;
                 localStorage.removeItem('applicantToken');
+                this.props.deleteUser();
             }
             this.setState({
                 ...this.state,
@@ -60,22 +67,51 @@ class ApplicantProfileView extends Component {
                 experience: this.applicantProfile.experience,
                 education: this.applicantProfile.education,
                 skills: this.applicantProfile.skills,
-                profileImage: this.applicantProfile.profileImage
+                profileImage: this.applicantProfile.profileImage,
+                zipcode: this.applicantProfile.zipcode,
+                gender: this.applicantProfile.gender,
+                resume: this.applicantProfile.resume
             })
         }
     }
 
-    deleteClicked(){
+    deleteClicked() {
 
         this.props.deleteApplicant(this.email);
 
     }
 
 
-
-
     componentDidMount() {
         this.props.applicantDetails(this.email);
+
+        
+        axios.defaults.withCredentials = true;
+        //setAuthToken(localStorage.getItem("recruiterToken"));
+        let trackerdata = { "page": "4" };
+        axios
+            .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.email, trackerdata)
+            .then(response => {
+                console.log("Applicant Profile View Tracked ", response.data);
+
+            })
+            .catch(function (error) {
+                console.log("errored");
+                console.log(error);
+            });
+            // axios.defaults.withCredentials = true;
+            // //setAuthToken(localStorage.getItem("recruiterToken"));
+            
+            // axios
+            //     .put(`${CONSTANTS.BACKEND_URL}/applicants/${this.email}/logs/profile-view-count`)
+            //     .then(response => {
+            //         console.log("Applicant Profile View Count incremented ", response.data);
+    
+            //     })
+            //     .catch(function (error) {
+            //         console.log("errored");
+            //         console.log(error);
+            //     });
     }
 
 
@@ -83,7 +119,6 @@ class ApplicantProfileView extends Component {
         if (!this.isApplicantLoggedIn) {
             return <Redirect to="/applicantsignup"/>
         }
-
 
 
         return (
@@ -96,7 +131,8 @@ class ApplicantProfileView extends Component {
                 <Summary firstName={this.state.firstName} lastName={this.state.lastName}
                          city={this.state.city} state={this.state.state}
                          profileSummary={this.state.profileSummary} applicantEmail={this.email}
-                         profileImage={this.state.profileImage}/>
+                         profileImage={this.state.profileImage} zipcode={this.state.zipcode} gender={this.state.gender}
+                         resume={this.state.resume}/>
 
                 <br/>
 
@@ -133,6 +169,6 @@ const mapStateToProps = (state) => ({
     applicantProfile: state.applicantProfile
 });
 
-export default connect(mapStateToProps, {applicantDetails, deleteApplicant})(ApplicantProfileView);
+export default connect(mapStateToProps, {applicantDetails, deleteApplicant, deleteUser})(ApplicantProfileView);
 
 

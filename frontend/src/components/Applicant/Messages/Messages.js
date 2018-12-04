@@ -29,16 +29,20 @@ function messageCard(props) {
   return (
     <div onClick={props.onClick}>
       {props.value}
-      <Paper className={classes.root}>
+      <Paper className={classes.root} style={{ backgroundColor: "#555" }}>
         {props.value}
         <Grid container spacing={16}>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={16}>
               <Grid item xs>
-                <Typography gutterBottom variant="heading">
-                  {/* {`${props.membername}`} */}
-                  <br />
-                  {`${props.from_email}`}
+                <Typography
+                  gutterBottom
+                  variant="heading"
+                  style={{ color: "white" }}
+                >
+                  {`${props.membername}`}
+                  {/* <br />
+                  {`${props.from_email}`} */}
                 </Typography>
               </Grid>
             </Grid>

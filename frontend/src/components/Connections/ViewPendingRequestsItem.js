@@ -1,67 +1,91 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
 import jwt_decode from "jwt-decode";
+import Messages from "./Messages";
+import { CONSTANTS } from "./../../Constants";
 
 class ViewConnectionsItem extends Component {
-
   onAcceptClick() {
-     //console.log('email on click',email)
-      if (localStorage.getItem("applicantToken")) {
-          let token = localStorage.getItem("applicantToken");
-          this.decodedApplicant = jwt_decode(token);
-          this.isApplicantLoggedIn = true;
-          this.email = this.decodedApplicant.email;
-          console.log("Emmail", this.email)
-      }
-      const requestEmail={
-          acceptedFrom:this.email
-      }
-      axios
-        .post(`http://localhost:3001/applicants/acceptConnection/${this.props.toEmail}`, requestEmail)
-        .then(function(res) { 
-            if (res.data) {
-              alert("Connection Accepted Successfully")
-              
-            } 
-  })
-        
+    if (localStorage.getItem("applicantToken")) {
+      let token = localStorage.getItem("applicantToken");
+      this.decodedApplicant = jwt_decode(token);
+      this.isApplicantLoggedIn = true;
+      this.email = this.decodedApplicant.email;
+      this.isRecruiter=this.decodedApplicant.isRecruiter;
+      console.log("Emmail", this.email);
+    }
+    const requestEmail = {
+      requestFrom: this.props.toEmail,
+      recruiterLoggedin:this.isRecruiter,
+      sendToRecruiter:this.props.sendTo
+    };
+    axios
+      .post(
+        `${CONSTANTS.BACKEND_URL}/applicants/acceptConnection/${this.email}`,
+        requestEmail
+      )
+      .then(res=>{
+        if (res.data) {
+          //applicant Create Graph
+          const connectionBody = { email: requestEmail.requestFrom };
+          axios
+            .post(
+              `${CONSTANTS.BACKEND_URL}/graphs/createConnection/${this.email}`,
+              connectionBody
+            )
+            .then(resGraph => {
+              console.log("Graph conencted ", resGraph);
+              alert("Connection Accepted Successfully");
+              window.location.reload();
+            })
+            .catch(errGraph => {
+              console.log("Accept connection failed ", errGraph);
+              alert("Accept Connection Failed");
+            });
+        }
+      })
+      .catch(err => {
+        console.log("Accept connection failed ", err);
+        alert("Accept Connection Failed");
+      });
   }
   render() {
     const { ownerhome } = this.props;
 
     return (
-      
-      <div className="card card-body bg-light mb-3">
-      <div className="row">
+      <div className="container">
+        <div className="row" style={{ height: "50px", marginTop: "5px" }}>
+          <div className="col-7">
+            <div
+              className="card"
+              style={{
+                // margin: "50px",
+                // marginRight: "10px",
+                // padding: "40px",
+                // paddingBottom: "100px",
 
-        <div className="col-1">
-        
-        </div>
+                backgroundColor: "white",
+                padding: "15px",
+                borderRadius: "5px"
+              }}
+            >
+              {/* <Messages membername={ownerhome.requestFrom} /> */}
+              {ownerhome.requestFrom}
+            </div>
+          </div>
 
-        <div className="col-3">
-        <h4>{ownerhome.requestFrom}</h4>
+          <div className="col-5">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={this.onAcceptClick.bind(this)}
+            >
+              Accept
+            </button>
+          </div>
         </div>
-        <div className="col-5">
-        
-        </div>
-        <div className="col-2">
-        <button 
-                type="submit" 
-                className="btn btn-primary"
-             //  onClick={this.onConnectClick(profile.email).bind(this)} 
-               onClick={this.onAcceptClick.bind(this)} 
-                >
-                    Accept
-                </button>
-        </div>
-        <div className="col-1">
-        
-        </div>
-        
       </div>
-    </div>
-      
     );
   }
 }

@@ -5,17 +5,33 @@ import jwtDecode from "jwt-decode";
 // import LeftRailComponent from "./rightrail";
 import  JobListingComponent from "./jobListing";
 import JobNavbar from "../../Navbar/JobNavbar";
-
+import axios from "axios";
+import { CONSTANTS } from "../../../Constants";
 export default class MainRecruiterJobListing extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "recruiter1@gmail.com"
+      recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : ""
+      
     };
   }
+componentDidMount(){
+  axios.defaults.withCredentials = true;
+  //setAuthToken(localStorage.getItem("recruiterToken"));
+  let trackerdata = { "page": "32" };
+  axios
+      .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` +this.state.recruiter, trackerdata)
+      .then(response => {
+          console.log("Recruiter JobListing  View Tracked ", response.data);
 
+      })
+      .catch(function (error) {
+          console.log("Tracker errored");
+          console.log(error);
+      });
+
+}
   render() {
     // check for auth flag
     let redirectVar = null;
@@ -32,7 +48,7 @@ export default class MainRecruiterJobListing extends Component {
           borderRadius: "15px"
         }}
       >
-        {/* {redirectVar} */}
+        {redirectVar}
 
         <JobNavbar />
 

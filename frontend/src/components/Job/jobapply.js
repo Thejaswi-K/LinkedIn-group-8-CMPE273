@@ -4,7 +4,10 @@ import ProfileNavbar from "../Navbar/applicantNavbar";
 import axios from "axios";
 import {CONSTANTS} from '../../Constants';
 import jwt_decode from "jwt-decode";
-
+import { connect } from "react-redux";
+import { jobDetalsByID } from "../../actions/jobSearchActions"; 
+import { withRouter } from "react-router-dom";
+import * as Validate from '../../validation/ValidationUtil';
 class JobApply extends Component {
     constructor(props){
         super(props);
@@ -18,7 +21,8 @@ class JobApply extends Component {
             diversity:"",
             disability:"",
             resume:"",
-            coverletter:""
+            coverletter:"",
+            validationMessage:""
         }
         if (localStorage.getItem("applicantToken")) {
             let token = localStorage.getItem("applicantToken");
@@ -29,6 +33,29 @@ class JobApply extends Component {
         this.applyJobHandler = this.applyJobHandler.bind(this);
         this.valueChangeHandler = this.valueChangeHandler.bind(this);
         this.backHandler = this.backHandler.bind(this);
+
+
+        
+        if(sessionStorage.getItem("jobId")){
+            this.jobID = sessionStorage.getItem("jobId");
+        }
+    }
+
+
+    componentDidMount(){
+        axios.defaults.withCredentials = true;
+        //setAuthToken(localStorage.getItem("recruiterToken"));
+        let trackerdata = { "page": "30" };
+        axios
+            .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.email, trackerdata)
+            .then(response => {
+                console.log("Applicant Job Apply  View Tracked ", response.data);
+    
+            })
+            .catch(function (error) {
+                console.log("Tracker errored");
+                console.log(error);
+            });
     }
     valueChangeHandler = (e) => {
         if(e.target.name == 'resume'){
@@ -49,52 +76,83 @@ class JobApply extends Component {
     }
     applyJobHandler = (e) => {
         e.preventDefault();
-        axios.defaults.withCredentials = true;
-        const { resume } = this.state;
-        const { coverletter } = this.state;
-        const formData = new FormData();
-        formData.append('resume', resume);
-        formData.append('coverletter', coverletter);
-        axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
-        .then((result=>{
-            console.log("upload successful");
-            const data = {
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                email: this.state.email,
-                address: this.state.address,
-                hearAboutUs: this.state.hearaboutus,
-                sponsorship: this.state.sponsorship,
-                diversity: this.state.diversity,
-                disablility: this.state.disability,
-                resume: this.state.resume.name,
-                coverLetter: this.state.coverletter.name
-            }
-            console.log("submit data",data);
-            console.log("apply job axios post", CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID);
-            axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID, data)
-            .then(response=>{
-                console.log("job applied through regular apply")
-            })
-            .catch(function(error){
-                console.log(error);
+        const data = {
+            firstName: this.state.firstname,
+            lastName: this.state.lastname,
+            email: this.state.email,
+            address: this.state.address,
+            hearAboutUs: this.state.hearaboutus,
+            sponsorship: this.state.sponsorship,
+            diversity: this.state.diversity,
+            disability: this.state.disability,
+            resume: this.state.resume.name,
+            coverLetter: this.state.coverletter.name
+        }
+        console.log("submit data",data);
+        let valid = Validate.applyJob(data);
+        if(valid === ''){
+            axios.defaults.withCredentials = true;
+            const { resume } = this.state;
+            const { coverletter } = this.state;
+            const formData = new FormData();
+            formData.append('resume', resume);
+            formData.append('coverletter', coverletter);
+            axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
+            .then((result=>{
+                console.log("upload successful");
+                
+                console.log("apply job axios post", CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.jobID);
+                axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.jobID, data)
+                    .then(response => {
+                        console.log("job applied through regular apply");
+
+                        axios.defaults.withCredentials = true;
+                        axios
+                            .put(`${CONSTANTS.BACKEND_URL}/recruiters/jobs/logs/completed-count`, { "jobid": this.jobID })
+                            .then(response => {
+                                console.log("Job complete count incremented ", response.data);
+
+                            })
+                            .catch(function (error) {
+                                console.log("start complete errored");
+                                console.log(error);
+                            });
+                    window.close();
+                    alert("Job applied successfully");
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+            }))
+            .catch((error)=>{
+                console.log("unable to upload");
+            });  
+        }
+        else {
+            this.setState({
+                validationMessage: valid
             });
-        }))
-        .catch((error)=>{
-            console.log("unable to upload");
-        });  
-        //window.close();
+        } 
     };
 
     backHandler = (e) => {
         window.close();
     }
     render() { 
+        let message;
+        if(this.state.messagediv !== ''){
+            message = this.state.validationMessage;
+        } else {
+            message = "";
+        }
         return ( 
             <div>
                 <ProfileNavbar />
                 <Card className="w-80 p-3 ml-5">
                     <form className="form-group">
+                        <label className = "form-group" style={{color:"red"}}>
+                            {message}
+                        </label>
                         <div className="row">
                             <div className="col">
                                 <label>First name</label>
@@ -172,4 +230,12 @@ class JobApply extends Component {
     }
 }
  
-export default JobApply;
+const mapStateToProps = state => ({
+    jobSearchReducer: state.jobSearchReducer,
+    applicantProfile: state.applicantProfile
+  });
+  
+  export default connect(
+    mapStateToProps,
+    { jobDetalsByID }
+  )(withRouter(JobApply));

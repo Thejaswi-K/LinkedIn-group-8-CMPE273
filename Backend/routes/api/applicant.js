@@ -462,7 +462,6 @@ router.get(
 //Get Applicant details
 router.get(
   "/:applicant_id",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const errors = {};
     var responseRadis = {};
@@ -559,33 +558,35 @@ router.delete(
   }
 );
 
-
 //delete applicant
 router.delete(
-    "/mysql/:applicant_id",
-    passport.authenticate("jwt", { session: false }),
-    (req, res) => {
-        const errors = {};
-        kafka.make_request("applicant_mysql_delete", req.params, function(err, results) {
-            console.log("in result");
-            console.log(results);
-            if (err) {
-                console.log("Inside err");
-                res.json({
-                    status: "error",
-                    msg: "System Error, Try Again."
-                });
-            } else {
-                console.log("Inside else", results);
-                if (results.code === 202) {
-                    res.status(results.code).json(results.message);
-                } else {
-                    res.status(results.code).json(results.errorMessage);
-                }
-                res.end();
-            }
+  "/mysql/:applicant_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    kafka.make_request("applicant_mysql_delete", req.params, function(
+      err,
+      results
+    ) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "System Error, Try Again."
         });
-    }
+      } else {
+        console.log("Inside else", results);
+        if (results.code === 202) {
+          res.status(results.code).json(results.message);
+        } else {
+          res.status(results.code).json(results.errorMessage);
+        }
+        res.end();
+      }
+    });
+  }
 );
 /*
 //Get Profile view count of particular applicant
@@ -635,7 +636,7 @@ router.post("/:applicantId/jobs/:jobId", function(req, res) {
         throw err;
         done(err, {});
       } else {
-        console.log("results in backend",results);
+        console.log("results in backend", results);
         if (results.code == 200) {
           return res.status(200).json(results);
         } else {
@@ -663,7 +664,7 @@ router.post("/:applicantId/jobs/:jobId/save", function(req, res) {
         throw err;
         done(err, {});
       } else {
-        console.log("results logged",results);
+        console.log("results logged", results);
         // console.log("results code",results.code);
         // console.log("results.value", results.value);
         // console.log("results.status", results.status);
@@ -682,7 +683,11 @@ router.post("/:applicantId/jobs/:jobId/save", function(req, res) {
 
 router.post("/sendMessage", (req, res) => {
   console.log("Inside sending the message to the Target");
-  console.log(req.body);
+  console.log(req.body.from_email);
+  console.log(req.body.to_email);
+  console.log(req.body.sendMessage);
+  console.log(req.body.senderFirstname);
+  console.log(req.body.receiverFirstname);
 
   kafka.make_request("send_message", req.body, function(err, results) {
     console.log("In sending message success call");
@@ -700,71 +705,86 @@ router.post("/sendMessage", (req, res) => {
 });
 
 /****************Receiving Messages *************** */
-router.get("/receiveMessage/:emails", (req, res) => {
-  console.log("Inside getting messages conversation");
-  console.log(req.query);
-  // console.log(req.query.to_email);
-  kafka.make_request("receive_message", req.params.emails, function(
-    err,
-    results
-  ) {
-    console.log("In message conversation result call");
-    console.log(results);
-    if (err) {
-      console.log("Inside err");
-      return res.status(400).json({
-        message: "Getting message conversation Failed"
-      });
-    } else {
-      console.log("Inside getting message conversation Success");
-      return res.status(200).json(results);
-    }
-  });
-});
-
-/****************Applicant Messages Names *************** */
-
-router.get("/applicantMessages/:from_email", (req, res) => {
-  console.log("Inside getting messagers names");
-  console.log(req.params);
-  kafka.make_request("applicant_messages", req.params, function(err, results) {
-    console.log("In message names result call");
-    console.log(results);
-    if (err) {
-      console.log("Inside err");
-      return res.status(400).json({
-        message: "Getting message names Failed"
-      });
-    } else {
-      console.log("Inside getting message names Success");
-      return res.status(200).json(results);
-    }
-  });
-});
-
-/****************Applicant View All Connections*********************/
-router.get("/viewconnections/:email", function(req, res) {
-  console.log("Backend Applicant View Connections");
-  kafka.make_request(
-    "applicant_ViewConnection",
-    { email: req.params.email },
-    function(err, results) {
-      console.log("in result");
+router.get(
+  "/receiveMessage/:emails",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("Inside getting messages conversation");
+    console.log(req.query);
+    // console.log(req.query.to_email);
+    kafka.make_request("receive_message", req.params.emails, function(
+      err,
+      results
+    ) {
+      console.log("In message conversation result call");
       console.log(results);
       if (err) {
         console.log("Inside err");
-        res.json({
-          status: "error",
-          msg: "Unable to fetch Connections."
+        return res.status(400).json({
+          message: "Getting message conversation Failed"
         });
       } else {
-        console.log("Inside else");
-        res.json(results);
-        res.end();
+        console.log("Inside getting message conversation Success");
+        return res.status(200).json(results);
       }
-    }
-  );
-});
+    });
+  }
+);
+
+/****************Applicant Messages Names *************** */
+
+router.get(
+  "/applicantMessages/:from_email",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("Inside getting messagers names");
+    console.log(req.params);
+    kafka.make_request("applicant_messages", req.params, function(
+      err,
+      results
+    ) {
+      console.log("In message names result call");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        return res.status(400).json({
+          message: "Getting message names Failed"
+        });
+      } else {
+        console.log("Inside getting message names Success");
+        return res.status(200).json(results);
+      }
+    });
+  }
+);
+
+/****************Applicant View All Connections*********************/
+router.get(
+  "/viewconnections/:email",
+  passport.authenticate("jwt", { session: false }),
+  function(req, res) {
+    console.log("Backend Applicant View Connections");
+    kafka.make_request(
+      "applicant_ViewConnection",
+      { email: req.params.email },
+      function(err, results) {
+        console.log("in result");
+        console.log(results);
+        if (err) {
+          console.log("Inside err");
+          res.json({
+            status: "error",
+            msg: "Unable to fetch Connections."
+          });
+        } else {
+          console.log("Inside else");
+          res.json(results);
+          res.end();
+        }
+      }
+    );
+  }
+);
 
 /****************Applicant View Pending Requests*********************/
 router.get("/viewPendingRequests/:email", function(req, res) {
@@ -885,19 +905,21 @@ router.get("/:applicantId/logs/profile-view-count", function(req, res) {
           .json({ success: false, error: "Applicant not found" })
           .send(err);
       } else {
-        console.log("applicantdsafdasfasfasfas log profile view count", result.data);
-       let months = new Array(30).fill(0);
+        console.log(
+          "applicantdsafdasfasfasfas log profile view count",
+          result.data
+        );
+        let months = new Array(30).fill(0);
 
-       for(var day = 0 ; day < result.data.length; day++){
-         console.log("each available day is", day );
-         months[result.data[day]._id.day] = result.data[day].count;
-       }
-
+        for (var day = 0; day < result.data.length; day++) {
+          console.log("each available day is", day);
+          months[result.data[day]._id.day] = result.data[day].count;
+        }
 
         // let days = result.data.map((day)=>day._id.day);
         // let counts = result.data.map((count)=>count.count);
 
-        console.log("Days array ",months);
+        console.log("Days array ", months);
         if (result.success) {
           res.status(200);
           res.send(months);
@@ -923,7 +945,6 @@ router.put("/:applicantId/logs/profile-view-count", function(req, res) {
           .json({ success: false, error: "Applicant not found" })
           .send(err);
       } else {
-
         console.log("applicant log profile view count updated", result);
 
         if (result.success) {
@@ -936,5 +957,7 @@ router.put("/:applicantId/logs/profile-view-count", function(req, res) {
     }
   );
 });
+
+
 
 module.exports = router;

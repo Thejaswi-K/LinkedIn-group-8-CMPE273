@@ -21,7 +21,9 @@ class Summary extends Component {
             city: "",
             state: "",
             companyName: "",
-            profileImage: ""
+            profileImage: "",
+            zipcode: "",
+            gender: ""
         };
         this.getPhoto = false;
         this.handleClicked = false;
@@ -106,7 +108,9 @@ class Summary extends Component {
                 lastName: this.props.lastName,
                 city: this.props.city,
                 state: this.props.state,
-                companyName: this.props.companyName
+                companyName: this.props.companyName,
+                zipcode: this.props.zipcode,
+                gender: this.props.gender
             };
             this.sum = this.sumProp;
         }
@@ -147,6 +151,11 @@ class Summary extends Component {
                 <label className="ml-4">{cityState}</label>
 
                 <h5 className="ml-4">{companyName}</h5>
+
+
+                <h5 className="ml-4" >Zipcode  - {this.sum.zipcode}</h5>
+
+                <h5 className="ml-4" >Gender - {this.sum.gender}</h5>
 
                 <hr/>
 
@@ -190,15 +199,77 @@ class Summary extends Component {
                             <input type="file" onChange={(e) => this.handleDrop(e.target.files[0])}/>
 
 
-                            <input className="ml-4" ref="firstName" defaultValue={this.sum.firstName}/>
-                            <input className="ml-4" ref="lastName" defaultValue={this.sum.lastName}/>
+                            <input className="ml-4" ref="firstName" defaultValue={this.sum.firstName} placeholder="First Name"/>
+                            <input className="ml-4" ref="lastName" defaultValue={this.sum.lastName} placeholder="Last Name"/>
 
-                            <input className="ml-4" ref="city" defaultValue={this.sum.city}/>
-                            <input className="ml-4" ref="state" defaultValue={this.sum.state}/>
+                            <input className="ml-4" ref="city" defaultValue={this.sum.city} placeholder="City"/>
+                            <div className="form-group">
+                                <label htmlFor="inputState">State</label>
+                                <select id="inputState" ref="state" className="form-control" name="diversity"
+                                >
+
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </div>
 
                             <hr/>
 
-                            <input className="ml-4" ref="companyName" defaultValue={companyName}/>
+                            <input className="ml-4" ref="zipcode" defaultValue={this.sum.zipcode} placeholder="Zipcode"/>
+                            <hr/>
+                            <input className="ml-4" ref="gender" defaultValue={this.sum.gender} placeholder="Gender"/>
+
+                            <hr/>
+
+                            <input className="ml-4" ref="companyName" defaultValue={companyName} placeholder="Company"/>
 
                             <center>
                                 <div className="btn btn-toolbar">
@@ -231,7 +302,9 @@ class Summary extends Component {
             city: this.refs.city.value,
             state: this.refs.state.value,
             companyName: this.refs.companyName.value,
-            profileImage: this.state.profileImage
+            profileImage: this.state.profileImage,
+            zipcode:this.refs.zipcode.value,
+            gender:this.refs.gender.value,
         };
 
 
