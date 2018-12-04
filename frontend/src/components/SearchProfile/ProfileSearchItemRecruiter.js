@@ -6,6 +6,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { connect } from "react-redux";
 import { extractNameFromEmail, capitalizeFirstLetter } from "../../utility";
+import {withRouter} from "react-router";
 
 class ProfileSearchItemRecruiter extends Component {
   constructor(props) {
@@ -53,7 +54,7 @@ console.log("Go to applicant profile");
        
         console.log("in applicant profile view")
         this.props.history.push({
-            pathname: "/recruiterJobListing",
+            pathname: "/applicantprofileviewonly",
             state: this.props.toEmail
         });
     }else{ 
