@@ -69,13 +69,11 @@ componentDidMount(){
                   <dd class="col-sm-7">{this.state.applicantData.lastName}</dd>
                   <dt class="col-sm-5">Email :</dt>
                   <dd class="col-sm-7"> {this.state.applicantData.email}</dd>
-                  <dt class="col-sm-5">Phone Number</dt>
-                  <dd class="col-sm-7">{this.state.applicantData.phoneNumber} </dd>
+                 
                   <dt class="col-sm-5">Location:</dt>
                   <dd class="col-sm-7">{this.state.applicantData.address}</dd>
-                  <dt class="col-sm-5">Zip Code:</dt>
-                  <dd class="col-sm-7">{this.state.applicantData.zipcode}</dd>
-                  <dt class="col-sm-5">Connections:</dt>
+           
+                  <dt class="col-sm-5">Pending Requests:</dt>
                   <dd class="col-sm-7">{this.lengthOFConnections}</dd>
                   </dl>
 

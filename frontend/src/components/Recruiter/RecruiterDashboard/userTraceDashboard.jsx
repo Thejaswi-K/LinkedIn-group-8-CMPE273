@@ -23,7 +23,10 @@ var yLabels = {
   32 : "Recruiter Job Listing",
   34 : "Job List",
   36 : "Job Edit",
-  38 : "Recruiter View Applications"
+  38 : "Recruiter View Applications",
+  40: "Recruiter Pending  Connections",
+  42: "Applicant Pending Connections",
+  44 : "Profile Search"
 
 
 
@@ -134,7 +137,7 @@ export default class UserTraceDashboard extends Component {
       var tempstate = {...this.state.chartData};
       tempstate.datasets[0].data = response.data.data;
       tempstate.labels = response.data.labels;
-      console.log("Temp state in did mount bottom five job posting",tempstate);
+      console.log("Temp state in did mount User trace diagram",tempstate);
 
      this.setState({
        chartData : tempstate,
@@ -145,7 +148,8 @@ export default class UserTraceDashboard extends Component {
     })
     
     .catch(function(error) {
-      console.log("errored in component did mount last five jobs ");
+      console.log("errored in component did mount User trace diagram");
+      alert("No such user, Try again");
       console.log(error);
     });
   }

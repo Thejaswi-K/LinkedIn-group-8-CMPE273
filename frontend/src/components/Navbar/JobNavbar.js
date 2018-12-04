@@ -148,7 +148,7 @@ class JobNavbar extends Component {
                             className="ts-nav-dropdown__header"
                           >
                             <a
-                              href={CONSTANTS.ROOTURL + "/"}
+                              href={CONSTANTS.ROOTURL + "/job"}
                               id="ember780"
                               className="ts-nav-dropdown__primary-link ts-nav-dropdown__sublink--internal ember-view"
                             >

@@ -35,7 +35,7 @@ export default class MainRecruiterConnections extends Component {
   
 
 
-    this.props.recruiterDetails(this.email);
+    
   }
   
   render() {

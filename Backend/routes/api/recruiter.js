@@ -395,6 +395,7 @@ pass location of user as Body    -->  {"location": "San Jose" }
 */
 router.post("/track/:user", function(req, res) {
   console.log("inside backend post track user by id");
+  
   kafka.make_request(
     "logs_topic",
     { path: "createTrackUserById", id: req.params.user, body: req.body },
@@ -506,6 +507,7 @@ router.get("/locations/track/:location", function(req, res) {
           .json({ success: false, error: "Location track record failed" })
           .send(err);
       } else {
+        if (result.success) {
         console.log("location track record ", result);
         let pages = result.data[0].tracker.map((eachPage)=>(
           eachPage.page
@@ -513,7 +515,7 @@ router.get("/locations/track/:location", function(req, res) {
         let times = result.data[0].tracker.map((eachTime)=>(
           eachTime.timeStamp
         ))
-        if (result.status) {
+        
           res.status(200);
            res.send({
              "data": pages,
@@ -608,6 +610,7 @@ router.get("/:recruiterId/last-five", function(req, res) {
           .json({ success: false, error: "Get Bottom 5 job posting failed" })
           .send(err);
       } else {
+        if (result.success) {
         console.log("bottom 5 jobs  are", result.data);
         let title = result.data.map((eachJob)=>(
           eachJob.title
@@ -616,7 +619,7 @@ router.get("/:recruiterId/last-five", function(req, res) {
           eachJob.jobApplicationssize
         ))
 
-        if (result.success) {
+        
           res.status(200);
           res.send({"labels" :title , "data": jobSize});
         } else {

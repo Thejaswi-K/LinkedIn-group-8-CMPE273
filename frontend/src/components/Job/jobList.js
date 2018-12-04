@@ -81,6 +81,7 @@ class jobList extends Component {
   };
 
   redirectDetails = jobID => {
+    localStorage.setItem('jobId',jobID);
     this.props.jobDetalsByID(jobID);
     this.props.history.push("/jobDetails");
   };
