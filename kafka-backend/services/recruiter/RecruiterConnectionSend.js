@@ -6,7 +6,7 @@ function handle_request(msg, callback) {
     console.log("KAFKA : viewRecruiterConnections --> ", msg.email, msg.body);
     var res = {};
 
-    if (msg.body.isRecruiter) {
+    if (!msg.body.isRecieverAORR) {
 
         Applicants.update(
             {'email':msg.body.requestFrom},

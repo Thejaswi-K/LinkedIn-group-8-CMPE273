@@ -40,7 +40,8 @@ class ProfileSearchItem extends Component {
         }
         const requestEmail={
             requestFrom:this.props.toEmail,
-            isRecruiter:this.isRecruiter
+            isRecruiter:this.isRecruiter,
+            isRecieverAORR:this.props.isRec
         }
         axios
           .post(`${CONSTANTS.BACKEND_URL}/applicants/connections/${this.email}`, requestEmail)
