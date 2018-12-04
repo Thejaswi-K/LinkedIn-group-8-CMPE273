@@ -76,8 +76,9 @@ class RecruiterViewPendingRequests extends Component {
           <div className="container" >
           <div className="row">
          
-          <div>
+          <div>   <br/>
                   <h3 className="display-8 text-left"> Your Pending Requests</h3>
+                  <br/>
           </div>
           </div>
             <div className="row">

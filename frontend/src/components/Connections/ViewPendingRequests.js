@@ -75,7 +75,9 @@ class ViewPendingRequests extends Component {
             <div className="row">
            
             <div>
+                    <br/>
                     <h3 className="display-8 text-left"> Your Pending Requests</h3>
+                    <br/>
             </div>
             </div>
               <div className="row">
