@@ -103,8 +103,20 @@ class JobApply extends Component {
                 
                 console.log("apply job axios post", CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.jobID);
                 axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.jobID, data)
-                .then(response=>{
-                    console.log("job applied through regular apply");
+                    .then(response => {
+                        console.log("job applied through regular apply");
+
+                        axios.defaults.withCredentials = true;
+                        axios
+                            .put(`${CONSTANTS.BACKEND_URL}/recruiters/jobs/logs/completed-count`, { "jobid": sessionStorage.getItem("jobId") })
+                            .then(response => {
+                                console.log("Job complete count incremented ", response.data);
+
+                            })
+                            .catch(function (error) {
+                                console.log("start complete errored");
+                                console.log(error);
+                            });
                     window.close();
                     alert("Job applied successfully");
                 })

@@ -63,7 +63,7 @@ class RecruiterViewPendingRequests extends Component {
                
           <div>
               
-              <RecruiterViewPendingRequestsItem key={ownerhome._id} ownerhome={ownerhome} toEmail={ownerhome.requestFrom} />
+              <RecruiterViewPendingRequestsItem key={ownerhome._id} ownerhome={ownerhome} toEmail={ownerhome.requestFrom} sendTo={ownerhome.isRecr} />
         </div>
       ));
         

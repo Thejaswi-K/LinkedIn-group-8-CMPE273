@@ -83,14 +83,16 @@ var recruiterSchema = new mongoose.Schema({
     {
       requestFrom: { type: String, required: false, default: "" },
       requestTo: { type: String, required: false, default: "" },
-      isAccepted: { type: Boolean, required: false, default: false }
+      isAccepted: { type: Boolean, required: false, default: false },
+      isRecr:{type:Boolean, default: false}
     }
   ],
   connections: [
     {
       acceptedFrom: { type: String, required: false, default: "" },
       acceptedTo: { type: String, required: false, default: "" },
-      isAccepted: { type: Boolean, required: false, default: true }
+      isAccepted: { type: Boolean, required: false, default: true },
+      isRecr:{type:Boolean, default: false }
     }
   ]
 });

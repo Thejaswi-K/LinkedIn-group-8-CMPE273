@@ -70,6 +70,16 @@ class JobDetails extends Component {
                 console.log("Tracker errored");
                 console.log(error);
             });
+            axios
+            .put(`${CONSTANTS.BACKEND_URL}/recruiters/jobs/logs/read-count`,{ "jobid": localStorage.getItem('jobId')})
+            .then(response => {
+                console.log("Job Read count incremented ", response.data);
+    
+            })
+            .catch(function (error) {
+                console.log("Read count errored");
+                console.log(error);
+            });
 
 
 
@@ -152,11 +162,26 @@ class JobDetails extends Component {
     };
     applyJobHandler = (e) => {
         e.preventDefault();
+        axios.defaults.withCredentials = true;
+        axios
+            .put(`${CONSTANTS.BACKEND_URL}/recruiters/jobs/logs/start-count`,{ "jobid": localStorage.getItem('jobId')})
+            .then(response => {
+                console.log("Job start count incremented ", response.data);
+    
+            })
+            .catch(function (error) {
+                console.log("start count errored");
+                console.log(error);
+            });
+
         sessionStorage.setItem("jobId",localStorage.getItem('jobId'));
         window.open(CONSTANTS.ROOTURL+"/jobApply","_blank");
+
+
     };
     easyApplyJobHandler = (e) => {
         e.preventDefault();
+
         let applicant_resume = "";
         (this.state.applicantData.resume)? applicant_resume = this.state.applicantData.resume: applicant_resume = this.state.resume.name;
         const data = {
@@ -188,6 +213,17 @@ class JobDetails extends Component {
                     this.setState({
                         appliedStatus: true
                     })
+                    axios.defaults.withCredentials = true;
+                    axios
+                        .put(`${CONSTANTS.BACKEND_URL}/recruiters/jobs/logs/completed-count`, localStorage.getItem('jobId'))
+                        .then(response => {
+                            console.log("Job complete count incremented ", response.data);
+
+                        })
+                        .catch(function (error) {
+                            console.log("start complete errored");
+                            console.log(error);
+                        });
                     alert("Job applied successfully");
                 })
                 .catch(function(error){
