@@ -34,6 +34,7 @@ import ProfileSearch from "./SearchProfile/ProfileSearch";
 import LocationTraceDashboard from "./Recruiter/RecruiterDashboard/locationTraceDashboard";
 import EditJob from "./Job/jobEdit/jobEdit";
 import ProfileSearchRecruiter from "./SearchProfile/ProfileSearchRecruiter";
+import SavedJobsList from "./Job/savedJobs";
 // Create a Main Component
 class Main extends Component {
   render() {
@@ -79,6 +80,7 @@ class Main extends Component {
           <Route path="/viewPendingRequests" component={ViewPendingRequests} />
           <Route path="/viewRecruiterPendingRequests" component={ViewRecruiterPendingRequests} />
           <Route path="/jobSearch" component={JobSearch} />
+          <Route path="/savedJobs" component={SavedJobsList} />
           <Route path="/jobList" component={JobList} />
           <Route path="/temp" component={Temp} />
           <Route path="/recruiterjobstats" component={MainRecruiterJobStats} />
