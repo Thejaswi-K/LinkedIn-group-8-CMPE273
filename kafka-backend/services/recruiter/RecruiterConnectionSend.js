@@ -2,7 +2,7 @@
 const Recruiter = require('../../Model/Recruiter');
 
 function handle_request(msg, callback) {
-    console.log("KAFKA : viewApplicantConnections --> ", msg.email, msg.body);
+    console.log("KAFKA : viewRecruiterConnections --> ", msg.email, msg.body);
     var res = {};
     
     Recruiter.update(
@@ -15,7 +15,7 @@ function handle_request(msg, callback) {
   .then(job => {
     if (!job) {
         res.code = 404 ;
-        res.message = "Applicant Connections not found" ;
+        res.message = "Recruiter Connections not found" ;
         callback(null,res);
     }
     Recruiter.update(

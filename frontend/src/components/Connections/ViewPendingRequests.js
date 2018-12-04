@@ -43,7 +43,7 @@ class ViewPendingRequests extends Component {
         console.log("print all", this.arr);
         homeItems = this.arr.map(ownerhome => (
                
-          <div>
+          <div style={{borderRadius:"5px"}}>
               
               <ViewPendingRequestsItem key={ownerhome._id} ownerhome={ownerhome} toEmail={ownerhome.requestFrom} />
         </div>
@@ -54,49 +54,19 @@ class ViewPendingRequests extends Component {
         return (
           <div>
             <ApplicantNavbar/>
-          <div className="homes">
-            <div className="container">
-            <br/>
-              <div className="row">
-                <div className="col-md-12">
-                  
-                  
-
-
-                  <div className="row">
-                  <div className="col-8">
+          
+            <div className="container" >
+            <div className="row">
+           
+            <div>
                     <h3 className="display-8 text-left"> Your Pending Requests</h3>
-                  </div>
-                  <div className="col-2">
-                    
-                  </div>
-                  <div className="col-2">
-                    
-                  </div>
-                </div>
-                <br/>
-
+            </div>
+            </div>
+              <div className="row">
                 {homeItems}
-
-                  <br/>
-                  <br/> 
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  
-                  
-                </div>
               </div>
             </div>
-          </div>
+
           </div>
         );
     
