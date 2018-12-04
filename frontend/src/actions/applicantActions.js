@@ -1,5 +1,6 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { browserHistory } from 'react-router'
 
 import {
   APPLICANT_PROFILE,
@@ -440,5 +441,8 @@ export const logoutCustomer = () => dispatch => {
   //Remove auth Header from future requests
   setAuthToken(false);
   // Set current user to {} which will ser isAuthenticated to false
-  dispatch(setCustomerOut({}));
+ //dispatch(setCustomerOut({}));
+  //  var isAuthenticated = false;
+    dispatch(setDelete(""));
+  window.location = "/";
 };

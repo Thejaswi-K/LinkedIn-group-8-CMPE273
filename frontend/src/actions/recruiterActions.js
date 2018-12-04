@@ -3,16 +3,17 @@ import jwt_decode from "jwt-decode";
 import { CONSTANTS } from "../Constants";
 
 import {
-  RECRUITER_PROFILE,
-  RECRUITER_GET_ERRORS,
-  SET_APPLICANT_CURRENT_USER,
-  RECRUITER_SIGNUP_ERROR_REDUCER,
-  UPDATE_PROFILE_ERROR,
-  EDIT_SUMMARY,
-  SET_USER_LOGOUT
+    RECRUITER_PROFILE,
+    RECRUITER_GET_ERRORS,
+    SET_APPLICANT_CURRENT_USER,
+    RECRUITER_SIGNUP_ERROR_REDUCER,
+    UPDATE_PROFILE_ERROR,
+    EDIT_SUMMARY,
+    SET_USER_LOGOUT, APPLICANT_DELETE
 } from "./types";
 
 import setAuthToken from "../utils/setAuthToken";
+import {setDelete} from "./applicantActions";
 
 //Recruiter signup
 export const recruiterSignup = (userData, history) => dispatch => {
@@ -201,6 +202,9 @@ export const setRecruiterOut = decoded => {
   };
 };
 
+
+
+
 //Set Logged Out User
 export const logOutRecruiter = () => dispatch => {
   // Remove token from sessionStorage
@@ -208,5 +212,7 @@ export const logOutRecruiter = () => dispatch => {
   //Remove auth Header from future requests
   setAuthToken(false);
   // Set current user to {} which will ser isAuthenticated to false
-  dispatch(setRecruiterOut({}));
+ // dispatch(setRecruiterOut({}));
+
+    window.location = "/";
 };

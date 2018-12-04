@@ -14,6 +14,7 @@ class ProfileSearchItem extends Component {
           messageContent: ""
         }
         this.changeMessage = this.changeMessage.bind(this);
+        this.onViewProfile = this.onViewProfile.bind(this);
        
       }
 
@@ -47,6 +48,30 @@ class ProfileSearchItem extends Component {
     })
           
     }
+
+    onViewProfile = e => {
+
+          if(this.props.isRec){
+              //call recruiter profile view count
+              e.preventDefault();
+              console.log("in applicant profile view")
+              this.props.history.push({
+                  pathname: "/applicantProfileViewer",
+                  state: this.props.toEmail
+              });
+          }else{ 
+            console.log("in recruiter profile view ") 
+              //call applicant profile view count
+              e.preventDefault();
+              this.props.history.push({
+                  pathname: "/recruiterProfileViewer",
+                  state: this.props.toEmail
+              });
+          }
+          
+            
+      }
+  
 
     onMessageSendClick() {
         //  console.log('email on click',email)
@@ -98,7 +123,14 @@ class ProfileSearchItem extends Component {
         <h5>{profile.email}</h5>
         </div>
         <div className="col-4">
-        
+        <button 
+                type="submit" 
+                className="btn btn-primary"
+             //  onClick={this.onConnectClick(profile.email).bind(this)} 
+               onClick={this.onViewProfile.bind(this)} 
+                >
+                    View Profile
+                </button>
         </div>
         <div className="col-3">
             <div className="text-right">

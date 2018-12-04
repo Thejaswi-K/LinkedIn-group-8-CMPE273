@@ -171,7 +171,7 @@ class Summary extends Component {
 
                 <h5 className="ml-4">{profileSummary}</h5>
 
-                <h5 className="ml-4">Zipcode - {this.sum.zipcode}</h5>
+                <h5 className="ml-4" >Zipcode - {this.sum.zipcode}</h5>
 
                 <h5 className="ml-4">Gender - {this.sum.gender}</h5>
 
@@ -220,10 +220,10 @@ class Summary extends Component {
                             <input type="file" onChange={(e) => this.handleDrop(e.target.files[0])}/>
 
 
-                            <input className="ml-4" ref="firstName" defaultValue={this.sum.firstName}/>
-                            <input className="ml-4" ref="lastName" defaultValue={this.sum.lastName}/>
+                            <input className="ml-4" ref="firstName" defaultValue={this.sum.firstName} placeholder="firstName"/>
+                            <input className="ml-4" ref="lastName" defaultValue={this.sum.lastName} placeholder="lastName"/>
 
-                            <input className="ml-4" ref="city" defaultValue={this.sum.city}/>
+                            <input className="ml-4" ref="city" defaultValue={this.sum.city} placeholder="city"/>
 
                             <div className="form-group">
                                 <label htmlFor="inputState">State</label>
@@ -285,12 +285,12 @@ class Summary extends Component {
 
                             <hr/>
 
-                            <input className="ml-4" ref="profileSummary" defaultValue={profileSummary}/>
+                            <input className="ml-4" ref="profileSummary" defaultValue={profileSummary} placeholder="Profile Summary"/>
                             <hr/>
 
-                            <input className="ml-4" ref="zipcode" defaultValue={this.sum.zipcode}/>
+                            <input className="ml-4" ref="zipcode" defaultValue={this.sum.zipcode} placeholder="Zipcode"/>
                             <hr/>
-                            <input className="ml-4" ref="gender" defaultValue={this.sum.gender}/>
+                            <input className="ml-4" ref="gender" defaultValue={this.sum.gender} placeholder="Gender"/>
                             <hr/>
                             <input type="file" className="ml-4" ref="resume" defaultValue="" onChange={(e) => this.handleDropResume(e.target.files[0])}/>
                             <hr/>
