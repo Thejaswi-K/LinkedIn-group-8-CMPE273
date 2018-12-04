@@ -33,10 +33,11 @@ mongoose
   .connect(dbkey)
   .then(() => console.log("MongoDB Connected!!"))
   .catch(err => console.log(err));
+ 
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://linkedinfrontewndelb-1812843532.us-west-1.elb.amazonaws.com",
     credentials: true
   })
 );
@@ -46,7 +47,7 @@ app.use(bodyParser.json());
 
 //Allow Access Control
 app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "http://linkedinfrontewndelb-1812843532.us-west-1.elb.amazonaws.com");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Methods",
