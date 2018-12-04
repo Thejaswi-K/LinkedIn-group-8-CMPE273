@@ -12,8 +12,8 @@ class RecruiterViewConnections extends Component {
     
 
       componentWillReceiveProps(nextProps){
-        if(nextProps.connection.allconnections !== undefined){
-       this.arr  = nextProps.connection.allconnections[0].connections;
+        if(nextProps.recruiterConnection.allconnections !== undefined){
+       this.arr  = nextProps.recruiterConnection.allconnections[0].connections;
           
        console.log("Array is" + this.arr);
         }
@@ -107,7 +107,7 @@ class RecruiterViewConnections extends Component {
     };
     
     const mapStateToProps = state => ({
-      recruiterConnection: state.connection
+      recruiterConnection: state.recruiterConnection
     });
     
     export default connect(mapStateToProps, { getRecruiterConnections })(RecruiterViewConnections);

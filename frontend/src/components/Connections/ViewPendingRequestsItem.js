@@ -34,40 +34,36 @@ class ViewConnectionsItem extends Component {
 
     return (
       <div className="container">
-     
-     <div className="row" style={{height: "50px" , marginTop : "5px" }}>
-     <div className="col-7">
-     <div className="card"
-          style={{
-            // margin: "50px",
-            // marginRight: "10px",
-            // padding: "40px",
-            // paddingBottom: "100px",
-            
-            backgroundColor: "white",
-             padding : "15px",
-            borderRadius: "5px"
-          }}
-        >
-                {/* <Messages membername={ownerhome.requestFrom} /> */}
-                {ownerhome.requestFrom}
-              </div>
+        <div className="row" style={{ height: "50px", marginTop: "5px" }}>
+          <div className="col-7">
+            <div
+              className="card"
+              style={{
+                // margin: "50px",
+                // marginRight: "10px",
+                // padding: "40px",
+                // paddingBottom: "100px",
+
+                backgroundColor: "white",
+                padding: "15px",
+                borderRadius: "5px"
+              }}
+            >
+              {/* <Messages membername={ownerhome.requestFrom} /> */}
+              {ownerhome.requestFrom}
+            </div>
           </div>
-            
-       
-        <div className="col-5">
-        <button
+
+          <div className="col-5">
+            <button
               type="submit"
               className="btn btn-primary"
               onClick={this.onAcceptClick.bind(this)}
-             
             >
               Accept
             </button>
+          </div>
         </div>
-     </div>
-
-   
       </div>
     );
   }
