@@ -62,6 +62,39 @@ export const jobSearch = data => {
   return msg;
 };
 
+export const applyJob = data => {
+  let msg = "";
+  const namePattern = /^[a-zA-Z\s]+$/;
+  const emailPattern = /^[\w.]*@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+  if(
+    data.firstName === "" ||
+    data.lastName === "" ||
+    data.email === "" ||
+    data.address === "" ||
+    data.hearAboutUs === "" ||
+    data.sponsorship === "" ||
+    data.diversity === "" ||
+    data.disablility === "" ||
+    data.resume === ""
+  ){
+    msg = "All fields except cover letter are mandatory. Please fill those mandatory fields";
+    return msg;
+  }
+  if(!namePattern.test(data.firstName)) {
+    msg = "Enter valid First name";
+    return msg;
+  }
+  if(!namePattern.test(data.lastName)) {
+    msg = "Enter valid Last name";
+    return msg;
+  }
+  if(!emailPattern.test(data.email)) {
+    msg = "Enter valid email";
+    return msg;
+  }
+  return msg;
+}
+
 export const postJob = data => {
   let msg = "";
   const namePattern = /^[a-zA-Z\s]+$/;

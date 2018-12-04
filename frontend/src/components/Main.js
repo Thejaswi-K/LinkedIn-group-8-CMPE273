@@ -38,6 +38,7 @@ import UserTraceDashboard from "./Recruiter/RecruiterDashboard/userTraceDashboar
 import ProfileSearch from "./SearchProfile/ProfileSearch";
 import LocationTraceDashboard from "./Recruiter/RecruiterDashboard/locationTraceDashboard";
 import EditJob from "./Job/jobEdit/jobEdit";
+import ProfileSearchRecruiter from "./SearchProfile/ProfileSearchRecruiter";
 
 //Check for applicant token
 if (localStorage.applicantToken) {
@@ -158,11 +159,17 @@ class Main extends Component {
           </Switch>
           <Switch>
             {" "}
-            <PrivateRoute path="/viewConnections" component={MainApplicantConnections} />
+            <PrivateRoute
+              path="/viewConnections"
+              component={MainApplicantConnections}
+            />
           </Switch>
           <Switch>
             {" "}
-            <PrivateRoute path="/viewRecruiterConnections" component={MainRecruiterConnections} />
+            <PrivateRoute
+              path="/viewRecruiterConnections"
+              component={MainRecruiterConnections}
+            />
           </Switch>
           <Switch>
             {" "}
@@ -200,6 +207,13 @@ class Main extends Component {
           <Switch>
             {" "}
             <PrivateRoute path="/searchProfile" component={ProfileSearch} />
+          </Switch>
+          <Switch>
+            {" "}
+            <PrivateRoute
+              path="/searchProfileRecruiter"
+              component={ProfileSearchRecruiter}
+            />
           </Switch>
           <Switch>
             {" "}
