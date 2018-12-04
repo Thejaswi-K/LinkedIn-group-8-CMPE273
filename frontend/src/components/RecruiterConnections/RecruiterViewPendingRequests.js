@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import jwt_decode from "jwt-decode";
-import ViewPendingRequestsItem from './RecruiterViewPendingRequestsItem';
-import { getPendingRequets } from '../../actions/connectionActions';
+import RecruiterViewPendingRequestsItem from './RecruiterViewPendingRequestsItem';
+import { getRecruiterPendingRequets } from '../../actions/recruiterconnectionActions';
 
-class ViewPendingRequests extends Component {
+class RecruiterViewPendingRequests extends Component {
   arr=[];
     isApplicantLoggedIn = false;
 
@@ -19,16 +19,16 @@ class ViewPendingRequests extends Component {
       }
 
       componentDidMount() {
-        if (localStorage.getItem("applicantToken")) {
-          let token = localStorage.getItem("applicantToken");
-          this.decodedApplicant = jwt_decode(token);
-          this.isApplicantLoggedIn = true;
-          this.email = this.decodedApplicant.email;
+        if (localStorage.getItem("recruiterToken")) {
+          let token = localStorage.getItem("recruiterToken");
+          this.decodedRecruiter = jwt_decode(token);
+          //this.isApplicantLoggedIn = true;
+          this.email = this.decodedRecruiter.email;
           console.log("Emmail", this.email)
 
       }
         console.log("Emmail in CDM", this.email)
-        this.props.getPendingRequets(this.email);
+        this.props.getRecruiterPendingRequets(this.email);
         
         }
     
@@ -44,7 +44,7 @@ class ViewPendingRequests extends Component {
                
           <div>
               
-              <ViewPendingRequestsItem key={ownerhome._id} ownerhome={ownerhome} toEmail={ownerhome.requestFrom} />
+              <RecruiterViewPendingRequestsItem key={ownerhome._id} ownerhome={ownerhome} toEmail={ownerhome.requestFrom} />
         </div>
       ));
         
@@ -99,15 +99,15 @@ class ViewPendingRequests extends Component {
        }
     }
     
-    ViewPendingRequests.propTypes = {
+    RecruiterViewPendingRequests.propTypes = {
       getPendingRequets: PropTypes.func.isRequired,
-      connection: PropTypes.object.isRequired
+      recruiterConnection: PropTypes.object.isRequired
     };
     
     const mapStateToProps = state => ({
-      connection: state.connection
+      recruiterConnection: state.connection
     });
     
-    export default connect(mapStateToProps, { getPendingRequets })(ViewPendingRequests);
+    export default connect(mapStateToProps, { getRecruiterPendingRequets })(RecruiterViewPendingRequests);
 
 

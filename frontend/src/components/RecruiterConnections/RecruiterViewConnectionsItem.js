@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Messages from "./Messages";
 
 
-class ViewConnectionsItem extends Component {
+class RecruiterViewConnectionsItem extends Component {
 
   render() {
     const { ownerhome } = this.props;
@@ -20,8 +20,8 @@ class ViewConnectionsItem extends Component {
   }
 }
 
-ViewConnectionsItem.propTypes = {
+RecruiterViewConnectionsItem.propTypes = {
   ownerhome: PropTypes.object.isRequired
 };
 
-export default ViewConnectionsItem;
+export default RecruiterViewConnectionsItem;

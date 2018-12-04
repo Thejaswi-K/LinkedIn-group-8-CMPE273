@@ -9,6 +9,8 @@ function handle_request(msg, callback){
 
     //Query to update the parameters received
     var newJob = new jobsModel();
+    var companyLogoStored = "";
+    (msg.jobCompanyLogo.length === 0)? companyLogoStored = "preview.png" : companyLogoStored = msg.jobCompanyLogo;
     newJob._id = new mongoose.Types.ObjectId();
     newJob.recruiterId = email;
     newJob.companyName = msg.jobCompany;
@@ -19,7 +21,7 @@ function handle_request(msg, callback){
     newJob.industry = msg.jobIndustry;
     newJob.description = msg.jobDescription;
     newJob.easyApply = msg.jobEasyApply;
-    newJob.companyLogo = msg.jobCompanyLogo;
+    newJob.companyLogo = companyLogoStored;
     newJob.savedBy = msg.jobsavedBy||[];
     newJob.jobApplications = [];
     newJob.noOfViews = 0;
