@@ -68,9 +68,7 @@ class EducationOnly extends Component {
             <Card className="w-75 p-3 ml-5">
                 <div className="card-header">
                     Education
-                    <button className="btn btn-default" onClick={this.handleClickAdd.bind(this)}><span
-                        className="glyphicon glyphicon-plus" title="Add Education"></span>
-                    </button>
+
                 </div>
                 <ul className="list-group list-group-flush">
                     <div className="mt-4">

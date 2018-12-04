@@ -14,8 +14,7 @@ class ProfileSearchItem extends Component {
           messageContent: ""
         }
         this.changeMessage = this.changeMessage.bind(this);
-        this.onViewProfile = this.onViewProfile.bind(this);
-       
+
       }
 
       changeMessage = e => {
@@ -49,22 +48,20 @@ class ProfileSearchItem extends Component {
           
     }
 
-    onViewProfile = e => {
-
+    onViewProfile() {
+        console.log("propssss"+this.props);
           if(this.props.isRec){
               //call recruiter profile view count
-              e.preventDefault();
               console.log("in applicant profile view")
               this.props.history.push({
-                  pathname: "/applicantProfileViewer",
+                  pathname: "/recruiterProfileViewer",
                   state: this.props.toEmail
               });
           }else{ 
             console.log("in recruiter profile view ") 
               //call applicant profile view count
-              e.preventDefault();
               this.props.history.push({
-                  pathname: "/recruiterProfileViewer",
+                  pathname: "/applicantprofileviewonly",
                   state: this.props.toEmail
               });
           }

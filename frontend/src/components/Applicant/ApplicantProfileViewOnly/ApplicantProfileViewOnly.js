@@ -4,10 +4,8 @@ import Experience from "./experienceonly";
 import Education from "./educationonly";
 import Summary from "./summaryonly";
 import Skills from "./skillsonly";
-import jwt_decode from "jwt-decode";
-import {applicantDetails, deleteApplicant, deleteUser} from "../../../actions/applicantActions";
-import Redirect from "react-router/es/Redirect";
-import ProfileNavbar from "../../Navbar/applicantNavbar"
+import {applicantDetails} from "../../../actions/applicantActions";
+
 import axios from "axios";
 import {CONSTANTS} from '../../../Constants'
 
@@ -73,7 +71,7 @@ class ApplicantProfileViewOnly extends Component {
     componentDidMount() {
         this.props.applicantDetails(this.props.location.state);
 
-        
+
         axios.defaults.withCredentials = true;
         //setAuthToken(localStorage.getItem("recruiterToken"));
         let trackerdata = { "page": "4" };
@@ -87,7 +85,6 @@ class ApplicantProfileViewOnly extends Component {
                 console.log("errored");
                 console.log(error);
             });
-
     }
 
 
@@ -97,7 +94,6 @@ class ApplicantProfileViewOnly extends Component {
         return (
             <div>
 
-                <ProfileNavbar/>
 
                 <br/>
 
@@ -130,6 +126,6 @@ const mapStateToProps = (state) => ({
     applicantProfile: state.applicantProfile
 });
 
-export default connect(mapStateToProps, {applicantDetails, deleteApplicant, deleteUser})(ApplicantProfileViewOnly);
+export default connect(mapStateToProps, {applicantDetails})(ApplicantProfileViewOnly);
 
 

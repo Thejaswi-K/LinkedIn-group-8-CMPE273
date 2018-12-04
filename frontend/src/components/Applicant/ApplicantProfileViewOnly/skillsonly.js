@@ -53,10 +53,7 @@ class SkillsOnly extends Component {
 
                 <div className="card-header">
                     Skills
-                    <button className="btn btn-default" onClick={this.handleClickAdd.bind(this)}><span
-                        className="glyphicon glyphicon-plus" title="Add Experience">
-			</span>
-                    </button>
+
                 </div>
                 <ul className="list-group list-group-flush">
                     <div className="mt-4">
