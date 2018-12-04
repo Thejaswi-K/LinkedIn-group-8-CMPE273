@@ -125,7 +125,7 @@ RETURN friend_of_friend.name, COUNT(*)
 ORDER BY COUNT(*) DESC, friend_of_friend.name
 
 */
-/****************get all Graph User*********************/
+/****************get Reccomendation Graph User*********************/
 router.get("/getRecommendation/:email", function(req, res) {
     console.log("Backend Applicant GET recommendation into graph");
     const session = driver.session();

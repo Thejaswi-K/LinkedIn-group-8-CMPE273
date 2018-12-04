@@ -119,7 +119,7 @@ function updateProfileViewCount(msg, callback) {
       callback(null, { success: false, status: " Profile view count failed " });
     });
 }
-
+/* ************** Get Top 10 jobs , on Application/month  **************/
 function getJobsTopTen(msg, callback) {
   console.log("KAFKA : getJobsTopTen --> ", msg.id);
 
