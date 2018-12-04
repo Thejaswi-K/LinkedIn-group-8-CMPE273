@@ -693,5 +693,111 @@ router.get("/:recruiterId/jobs/logs/citywise", function(req, res) {
   );
 });
 
+/****************Recruiter View All Connections*********************/
+router.get(
+  "/viewconnections/:email",
+  passport.authenticate("jwt", { session: false }),
+  function(req, res) {
+    console.log("Backend Recruiter View Connections");
+    kafka.make_request(
+      "recruiter_ViewConnection",
+      { email: req.params.email },
+      function(err, results) {
+        console.log("in result");
+        console.log(results);
+        if (err) {
+          console.log("Inside err");
+          res.json({
+            status: "error",
+            msg: "Unable to fetch Connections."
+          });
+        } else {
+          console.log("Inside else");
+          res.json(results);
+          res.end();
+        }
+      }
+    );
+  }
+);
+
+/****************Recruiter View Pending Requests*********************/
+router.get("/viewPendingRequests/:email", function(req, res) {
+  console.log("Backend Recruiter View Connections");
+  kafka.make_request(
+    "recruiter_PendingRequests",
+    { email: req.params.email },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to fetch Connections."
+        });
+      } else {
+        console.log("Inside else");
+        res.json(results);
+        res.end();
+      }
+    }
+  );
+});
+
+/****************Recruiter Send Connection*********************/
+router.post("/connections/:email", function(req, res) {
+  console.log("Backend Recruiter Send Connection");
+  kafka.make_request(
+    "recruiter_SendConnection",
+    { email: req.params.email, body: req.body },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to Send Connection."
+        });
+      } else {
+        console.log("Inside else");
+        res.json({
+          SendConnections: results
+        });
+
+        res.end();
+      }
+    }
+  );
+});
+
+/****************Recruiter Accept Connection*********************/
+router.post("/acceptConnection/:email", function(req, res) {
+  console.log("Backend Recruiter Accept Connection");
+  kafka.make_request(
+    "recruiter_AcceptConnection",
+    { email: req.params.email, body: req.body },
+    function(err, results) {
+      console.log("in result");
+      console.log(results);
+      if (err) {
+        console.log("Inside err");
+        res.json({
+          status: "error",
+          msg: "Unable to Accept Connection."
+        });
+      } else {
+        console.log("Inside else");
+        res.json({
+          SendConnections: results
+        });
+
+        res.end();
+      }
+    }
+  );
+});
+
 
 module.exports = router;

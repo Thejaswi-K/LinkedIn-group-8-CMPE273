@@ -22,7 +22,8 @@ class JobDetails extends Component {
             diversity:"",
             disability:"",
             resume:"",
-            coverletter:""
+            coverletter:"",
+            companyPhoto:""
         };
         if (localStorage.getItem("applicantToken")) {
             let token = localStorage.getItem("applicantToken");
@@ -72,44 +73,42 @@ class JobDetails extends Component {
             });
             axios.get(CONSTANTS.BACKEND_URL+"/jobs/" + this.props.jobSearchReducer.jobDetailsByID)
             .then(response => {
-                console.log("response in then",response.data);
-                //console.log("image file name: ",response.data.data[0].companyLogo[0]);
-                //var imgName = JSON.parse(response.data.data[0].companyLogo[0]);
-                //console.log(imgName[0]);
-                // axios.post(CONSTANTS.BACKEND_URL+"/api/photos/download/"+ imgName[0])
-                // .then(response => {
-                //     console.log("Image res: ", response);
-                //     let imagePreview = "data:image/jpg;base64, "+ response.data;
-                //     console.log(imagePreview);
-                //     this.setState({
-                //         companyPhoto: imagePreview
-                //     });
+                console.log("response in then",response.data.data[0].companyLogo);
+                if(response.data.data[0].companyLogo){
+                    axios.post(CONSTANTS.BACKEND_URL+"/api/photos/download/"+ response.data.data[0].companyLogo)
+                    .then(response => {
+                        console.log("Image res: ", response);
+                        let imagePreview = "data:image/jpg;base64, "+ response.data;
+                        console.log(imagePreview);
+                        this.setState({
+                            companyPhoto: imagePreview
+                        });
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+                }
+                this.setState({
+                    jobData: response.data.data
+                });
+                if (this.state.jobData[0].easyApply){
                     this.setState({
-                        jobData: response.data.data
+                        easyApply: true
                     });
-                    if (this.state.jobData[0].easyApply){
-                        this.setState({
-                            easyApply: true
-                        });
-                    } 
-                    if(this.state.jobData[0].savedBy.indexOf(this.email) > -1) {
-                        this.setState({
-                            savedStatus: true
-                        });
-                    }
-                    console.log("applicantData", this.state.applicantData);
-                    console.log("JobID", this.props.jobSearchReducer.jobDetailsByID); 
-                    if(this.state.applicantData.appliedJobs.indexOf(this.props.jobSearchReducer.jobDetailsByID) > -1){
-                        this.setState({
-                            appliedStatus: true
-                        });
-                    }
-                    console.log("finally state before rendering", this.state);
-                // })
-                // .catch(function(error){
-                //     console.log(error);
-                // })
-                
+                } 
+                if(this.state.jobData[0].savedBy.indexOf(this.email) > -1) {
+                    this.setState({
+                        savedStatus: true
+                    });
+                }
+                console.log("applicantData", this.state.applicantData);
+                console.log("JobID", this.props.jobSearchReducer.jobDetailsByID); 
+                if(this.state.applicantData.appliedJobs.indexOf(this.props.jobSearchReducer.jobDetailsByID) > -1){
+                    this.setState({
+                        appliedStatus: true
+                    });
+                }
+                console.log("finally state before rendering", this.state);  
             })
             .catch(function(error){
                 console.log("error in receiving job details to front end", error);
@@ -149,6 +148,8 @@ class JobDetails extends Component {
         axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
         .then((result=>{
             console.log("upload successful");
+            let applicant_resume = "";
+            (this.state.applicantData.resume)? applicant_resume = this.state.applicantData.resume: applicant_resume = this.state.resume;
             const data = {
                 firstName: this.state.applicantData.firstName,
                 lastName: this.state.applicantData.lastName,
@@ -158,7 +159,7 @@ class JobDetails extends Component {
                 sponsorship: this.state.sponsorship,
                 diversity: this.state.diversity,
                 disablility: this.state.disability,
-                resume: this.state.resume.name,
+                resume: applicant_resume,
                 coverLetter: this.state.coverletter.name
             }
             console.log("submit data",data);
@@ -218,8 +219,8 @@ class JobDetails extends Component {
                             <div className="container col-3" display="inline">
                                 <a>
                                     <img className="img-thumbnail" style={{width: "200px", height: "200px"}}
-                                    //src={this.state.companyPhoto}
-                                    src="//vignette.wikia.nocookie.net/bungostraydogs/images/1/1e/Profile-icon-9.png/revision/latest?cb=20171030104015" />
+                                    src={this.state.companyPhoto}
+                                    alt="//vignette.wikia.nocookie.net/bungostraydogs/images/1/1e/Profile-icon-9.png/revision/latest?cb=20171030104015" />
                                 </a>
                             </div>
                             <div className="container col-9" display="inline">

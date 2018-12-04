@@ -8,26 +8,29 @@ function handle_request(msg, callback) {
   var profile1 = [];
   var profile2 = [];
   var profiles = [];
-  Applicants.find({
+  Recruiter.find({
     firstName: msg.firstName
   })
+    .limit(10)
 
     .then(profile => {
       if (profile.length > 0) {
-        console.log(profile);
         profile1.push(profile);
-        profiles.push(profile1);
+        profiles = profiles.concat(profile1[0]);
       }
-      Recruiter.find({
+      Applicants.find({
         firstName: msg.firstName
-      }).then(profile => {
-        if (profile.length > 0) {
-          profile2.push(profile);
-          profiles.push(profile2);
-        }
-        // callback(null, profiles);
-      });
-      callback(null, profiles);
+      })
+        .limit(10)
+
+        .then(profile => {
+          if (profile.length > 0) {
+            profile2.push(profile);
+            profiles = profiles.concat(profile2[0]);
+          }
+          callback(null, profiles);
+        });
+
       console.log("Hi", profiles);
     })
     .catch(function(err) {

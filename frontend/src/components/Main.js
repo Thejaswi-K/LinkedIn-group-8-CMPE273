@@ -23,8 +23,10 @@ import ApplicantProfileView from "./Applicant/ApplicantProfile/ApplicantProfileV
 import RecruiterProfileView from "./Recruiter/RecruiterProfile/RecruiterProfileView";
 import MainRecruiterDashboard from "./Recruiter/RecruiterDashboard/main";
 import MainApplicantDashboard from "./Applicant/ApplicantDashboard/main";
-import ViewConnections from "./Connections/ViewConnections";
+import MainApplicantConnections from "./Connections/main";
+import MainRecruiterConnections from "../components/RecruiterConnections/main";
 import ViewPendingRequests from "./Connections/ViewPendingRequests";
+import ViewRecruiterPendingRequests from "./RecruiterConnections/RecruiterViewPendingRequests";
 import JobDetails from "./Job/jobDetails";
 import JobApply from "./Job/jobapply";
 import JobSearch from "./Job/jobSearch";

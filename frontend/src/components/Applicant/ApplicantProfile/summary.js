@@ -11,6 +11,7 @@ class Summary extends Component {
     added = false;
     imageBase = [];
     stateSelect = "";
+    resume= "";
 
     constructor(props) {
         super(props);
@@ -98,7 +99,7 @@ class Summary extends Component {
         formData.append("file", files);
         this.uid = new Date().valueOf();
         formData.append("imagename", files.name);
-        this.state.profileImage = files.name;
+        this.resume= files.name;
         console.log(files.name);
         formData.append("timestamp", (Date.now() / 1000) | 0);
         this.props.postPhotos(formData);
@@ -147,14 +148,14 @@ class Summary extends Component {
 
                     <div style={{
                         alignItems: 'center',
-                        width: "100px",
-                        height: "100px",
+                        width: "200px",
+                        height: "200px",
                         margin: "1px",
                         overflow: "auto"
                     }}>
 
 
-                        <Image src={this.imageBase[0]} rounded/>
+                        <Image  src={this.imageBase[0]} rounded/>
                     </div>
                 </div>
 
@@ -328,7 +329,7 @@ class Summary extends Component {
             profileImage: this.state.profileImage,
             zipcode: this.refs.zipcode.value,
             gender: this.refs.gender.value,
-            resume: this.refs.resume.value
+            resume:  this.resume
         };
 
 
