@@ -27,6 +27,44 @@ export const recruiterSignup = (userData, history) => dispatch => {
           .post(`${CONSTANTS.BACKEND_URL}/recruiters/mongo`, userData)
           .then(res => {
             if (res.status === 201) {
+
+              const trackerBody = {"location" : "San Jose"};
+              console.log("UserDAta is ",userData.email)
+              axios.defaults.withCredentials=true;
+              axios
+                .post(`${CONSTANTS.BACKEND_URL}/recruiters/track/${userData.email}`, trackerBody)
+              .then(res => {
+                console.log("tracker response",res);
+                if(res.success){
+                  console.log("Tracker started successfully ", res);
+                  //create a node in graph DB
+                  axios.defaults.withCredentials=true;
+                  axios.post(`${CONSTANTS.BACKEND_URL}/graphs/`+userData.email)
+                  .then(res=>{
+                    console.log("Added to Graph DB");
+
+                  })
+                  .catch(err =>{
+                    console.log("Graph error is ", err);
+                    dispatch({
+                      type: RECRUITER_SIGNUP_ERROR_REDUCER,
+                      payload: err.response.data.message
+                    })
+                  })
+                }
+                
+
+
+              })
+              .catch(err =>{
+                console.log();
+                dispatch({
+                  type: RECRUITER_SIGNUP_ERROR_REDUCER,
+                  payload: err.response.data.message
+                })
+              })
+
+
               const { token } = res.data;
               //set token to local storage
               localStorage.setItem("recruiterToken", token);
