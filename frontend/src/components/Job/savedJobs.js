@@ -39,22 +39,6 @@ class SavedJobsList extends Component {
             console.log("saved jobs fetching error");
             console.log(error);
         });
-        // this.setState({
-        //     savedJobsList: [
-        //         // {
-        //         //     _id: "1",
-        //         //     title: "job 1",
-        //         //     companyName: "Company 1",
-        //         //     location: "location 1"
-        //         // },
-        //         // {
-        //         //     _id: "2",
-        //         //     title: "job 2",
-        //         //     companyName: "Company 2",
-        //         //     location: "location 2"
-        //         // }
-        //     ]
-        // })
     }
 
     render() { 
@@ -73,8 +57,6 @@ class SavedJobsList extends Component {
                 <br />
                 {renderthis}
                 {allSavedJobs.map((job, i) => (
-                    // <ul className="list-group list-group-flush">
-                    //     <li className="list-group-item" key={i}>
                             <div>
                                 <Card className="w-75 p-3 ml-5">
                                     <div className="card-body row" display="">
@@ -95,10 +77,7 @@ class SavedJobsList extends Component {
                                     <br />
                                 </Card>
                                 <br />
-                            </div> 
-                    //     </li>
-                    // </ul>
-                    
+                            </div>    
                 ))}
             </div> 
         );
