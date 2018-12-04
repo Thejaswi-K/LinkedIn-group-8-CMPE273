@@ -7,11 +7,11 @@ import { CONSTANTS } from "../../Constants";
 
 class RecruiterViewConnectionsItem extends Component {
   onAcceptClick() {
-    if (localStorage.getItem("applicantToken")) {
-      let token = localStorage.getItem("applicantToken");
-      this.decodedApplicant = jwt_decode(token);
-      this.isApplicantLoggedIn = true;
-      this.email = this.decodedApplicant.email;
+    if (localStorage.getItem("recruiterToken")) {
+      let token = localStorage.getItem("recruiterToken");
+      this.decodedRecruiter = jwt_decode(token);
+     // this.isApplicantLoggedIn = true;
+      this.email = this.decodedRecruiter.email;
       console.log("Emmail", this.email);
     }
     const requestEmail = {
