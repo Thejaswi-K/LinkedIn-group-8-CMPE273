@@ -61,10 +61,7 @@ class SkillsOnly extends Component {
                             this.skills.map((experience, index) => (
                                 <li key={index} className="ml-5">
                                     <h4><strong>{experience}</strong>
-                                        <button className="btn btn-default ml-4"
-                                                onClick={this.handleClickEdit.bind(this, index)}>
-                                            <span className="glyphicon glyphicon-pencil" title="Edit Skills"></span>
-                                        </button>
+                                     
                                     </h4>
                                     <hr/>
 

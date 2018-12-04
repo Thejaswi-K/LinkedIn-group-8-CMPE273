@@ -267,10 +267,11 @@ function trackUserLocation(msg, callback) {
       { $match : {location: msg.location } },
       {
         $group: {
-          _id: { location: "$location" },
+          _id: { location: "$location"  },
           tracker : { $first : "$tracker"}
         }
       }
+      // {$limit :5}
     ])
     .then(trackDetails => {
       console.log("trackdetails ", trackDetails)
