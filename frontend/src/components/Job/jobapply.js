@@ -106,6 +106,7 @@ class JobApply extends Component {
                 .then(response=>{
                     console.log("job applied through regular apply");
                     window.close();
+                    alert("Job applied successfully");
                 })
                 .catch(function(error){
                     console.log(error);
