@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import jwt_decode from "jwt-decode";
-import ViewConnectionsItem from './RecruiterViewConnectionsItem';
-import { getConnections } from '../../actions/connectionActions';
+import RecruiterViewConnectionsItem from './RecruiterViewConnectionsItem';
+import { getRecruiterConnections } from '../../actions/recruiterconnectionActions';
 
 
-class ViewConnections extends Component {
+class RecruiterViewConnections extends Component {
   arr=[];
   isApplicantLoggedIn = false;
     
@@ -21,16 +21,16 @@ class ViewConnections extends Component {
       }
 
       componentDidMount() {
-        if (localStorage.getItem("applicantToken")) {
-          let token = localStorage.getItem("applicantToken");
-          this.decodedApplicant = jwt_decode(token);
-          this.isApplicantLoggedIn = true;
-          this.email = this.decodedApplicant.email;
+        if (localStorage.getItem("recruiterToken")) {
+          let token = localStorage.getItem("recruiterToken");
+          this.decodedRecruiter = jwt_decode(token);
+          //this.isApplicantLoggedIn = true;
+          this.email = this.decodedRecruiter.email;
           console.log("Emmail", this.email)
 
       }
         console.log("Emmail in CDM", this.email)
-        this.props.getConnections(this.email);
+        this.props.getRecruiterConnections(this.email);
         
         }
     
@@ -46,7 +46,7 @@ class ViewConnections extends Component {
                
           <div>
               
-              <ViewConnectionsItem key={ownerhome._id} ownerhome={ownerhome} />
+              <RecruiterViewConnectionsItem key={ownerhome._id} ownerhome={ownerhome} />
         </div>
       ));
         
@@ -101,15 +101,15 @@ class ViewConnections extends Component {
        }
     }
     
-    ViewConnections.propTypes = {
-      getConnections: PropTypes.func.isRequired,
-      connection: PropTypes.object.isRequired
+    RecruiterViewConnections.propTypes = {
+      getRecruiterConnections: PropTypes.func.isRequired,
+      recruiterConnection: PropTypes.object.isRequired
     };
     
     const mapStateToProps = state => ({
-      connection: state.connection
+      recruiterConnection: state.connection
     });
     
-    export default connect(mapStateToProps, { getConnections })(ViewConnections);
+    export default connect(mapStateToProps, { getRecruiterConnections })(RecruiterViewConnections);
 
 
