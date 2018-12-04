@@ -462,7 +462,6 @@ router.get(
 //Get Applicant details
 router.get(
   "/:applicant_id",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const errors = {};
     var responseRadis = {};

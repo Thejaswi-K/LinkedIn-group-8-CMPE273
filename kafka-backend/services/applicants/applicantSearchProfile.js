@@ -2,6 +2,7 @@
 const Applicants = require("../../Model/Applicant");
 const Recruiter = require("../../Model/Recruiter");
 
+
 function handle_request(msg, callback) {
   console.log("KAFKA : search Profile --> ", msg.body);
   var res = {};
