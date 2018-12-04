@@ -130,6 +130,9 @@ function getListOfJobs(msg, callback) {
           industry: 1,
           location: 1,
           companyLogo: 1,
+          readCounter :1,
+          startCounter: 1,
+          completedCounter:1,
           noOfApplicants: { $size: { $ifNull: ["$jobApplications", []] } }
         }
       },

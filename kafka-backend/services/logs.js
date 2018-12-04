@@ -48,10 +48,10 @@ exports.handle_request = function handle_request(msg, callback) {
       readCountIncrementer(msg,callback);
       break;
     case "startCounter":
-      startCounterIncrementer(msg,callback);
+      startCountIncrementer(msg,callback);
       break;
     case "completeCounter":
-      completedCounterIncrementer(msg,callback);
+      completedCountIncrementer(msg,callback);
       break;
 
   }
@@ -495,7 +495,7 @@ function readCountIncrementer(msg, callback) {
 
   console.log("In handle request:" + JSON.stringify(msg));
   jobsModel
-    .findOneAndUpdate({ _id: msg.id }, { $inc: { readCounter: 1, startCounter:1, completeCounter:1 } })
+    .findOneAndUpdate({ _id: msg.id }, { $inc: { readCounter: 1 } })
     .then(readCount => {
       if (!readCount) {
         callback(null, {
@@ -524,7 +524,7 @@ function startCountIncrementer(msg, callback) {
 
   console.log("In handle request:" + JSON.stringify(msg));
   jobsModel
-    .findOneAndUpdate({ _id: msg.id }, { $inc: {startCounter:1, completeCounter:1 } })
+    .findOneAndUpdate({ _id: msg.id }, { $inc: {readCounter: 1, startCounter:1 } })
     .then(readCount => {
       if (!readCount) {
         callback(null, {
@@ -553,7 +553,7 @@ function completedCountIncrementer(msg, callback) {
 
   console.log("In handle request:" + JSON.stringify(msg));
   jobsModel
-    .findOneAndUpdate({ _id: msg.id }, { $inc: {completeCounter:1 } })
+    .findOneAndUpdate({ _id: msg.id }, { $inc: {readCounter: 1, startCounter:1,completedCounter:1 } })
     .then(readCount => {
       if (!readCount) {
         callback(null, {
