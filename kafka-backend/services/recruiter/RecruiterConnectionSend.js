@@ -8,14 +8,14 @@ function handle_request(msg, callback) {
 
     if (msg.body.isRecruiter) {
 
-        Recruiter.update(
-            {'email': msg.body.requestFrom},
+        Applicants.update(
+            {'email':msg.body.requestFrom},
             {
                 $push: {
                     'connectionsRequests': [
                         {
                             'requestFrom': msg.email,
-                            'requestTo': msg.body.requestTo,
+                            'requestTo': msg.body.requestFrom,
                             'isAccepted': false,
                             'isRecr': msg.body.isRecruiter
                         }
@@ -40,7 +40,7 @@ function handle_request(msg, callback) {
                 callback(null, res);
             });
     } else {
-        Applicants.update(
+        Recruiter.update(
             {'email': msg.body.requestFrom},
             {
                 $push: {

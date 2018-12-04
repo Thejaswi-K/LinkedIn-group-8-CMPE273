@@ -9,7 +9,7 @@ function handle_request(msg, callback) {
 
     if (msg.body.isRecruiter) {
 
-        Recruiter.update(
+        Applicants.update(
             {'email': msg.body.requestFrom},
             {
                 $push: {
@@ -41,7 +41,7 @@ function handle_request(msg, callback) {
                 callback(null, res);
             });
     } else {
-        Applicants.update(
+        Recruiter.update(
             {'email': msg.body.requestFrom},
             {
                 $push: {
