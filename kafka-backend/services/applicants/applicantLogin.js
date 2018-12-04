@@ -57,7 +57,7 @@ function handle_request(msg, callback) {
                             callback(null, res);
                         });
                     } else {
-                        res.err = 'Incorrect username';
+                        res.err = 'User does not exist, Please Sign Up';
                         res.code = 401;
                         callback(null, res);
                     }

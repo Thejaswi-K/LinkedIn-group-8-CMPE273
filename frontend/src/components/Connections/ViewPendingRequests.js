@@ -61,7 +61,7 @@ class ViewPendingRequests extends Component {
                
           <div style={{borderRadius:"5px"}}>
               
-              <ViewPendingRequestsItem key={ownerhome._id} ownerhome={ownerhome} toEmail={ownerhome.requestFrom} />
+              <ViewPendingRequestsItem key={ownerhome._id} ownerhome={ownerhome} toEmail={ownerhome.requestFrom} sendTo={ownerhome.isRecr}/>
         </div>
       ));
         

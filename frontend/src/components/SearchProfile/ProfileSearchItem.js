@@ -34,13 +34,16 @@ class ProfileSearchItem extends Component {
             this.isApplicantLoggedIn = true;
             this.email = this.decodedApplicant.email;
             this.firstName = this.decodedApplicant.firstName;
+            this.isRecruiter=this.decodedApplicant.isRecruiter;
+            
             console.log("Emmail", this.email)
         }
         const requestEmail={
-            requestFrom:this.props.toEmail
+            requestFrom:this.props.toEmail,
+            isRecruiter:this.isRecruiter
         }
         axios
-          .post(`http://localhost:3001/applicants/connections/${this.email}`, requestEmail)
+          .post(`${CONSTANTS.BACKEND_URL}/applicants/connections/${this.email}`, requestEmail)
           .then(function(res) { 
               if (res.data) {
                 alert("Connection Sent Successfully")
@@ -92,7 +95,7 @@ class ProfileSearchItem extends Component {
           }
           console.log("mD",messageDetails);
           axios
-            .post('http://localhost:3001/applicants/sendMessage', messageDetails)
+            .post(`${CONSTANTS.BACKEND_URL}/applicants/sendMessage`, messageDetails)
             .then(function(res) { 
                 if (res.data) {
                   alert("Message Sent Successfully")

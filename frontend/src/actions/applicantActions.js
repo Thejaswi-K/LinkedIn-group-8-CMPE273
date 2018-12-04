@@ -126,7 +126,7 @@ export const applicantLogin = userData => dispatch => {
     .catch(err =>
       dispatch({
         type: APPLICANT_SIGNUP_ERROR_REDUCER,
-        payload: err.message
+        payload: err.response.data.error
       })
     );
 };

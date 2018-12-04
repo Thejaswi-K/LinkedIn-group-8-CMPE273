@@ -41,7 +41,8 @@ class RecruiterLoginNavbar extends Component {
     } else if (nextProps.recruiterErrorReducer.error !== "") {
       if (
         nextProps.recruiterErrorReducer.error !== "Incorrect password" &&
-        nextProps.recruiterErrorReducer.error !== "User already exists"
+        nextProps.recruiterErrorReducer.error !== "User already exists" &&
+        nextProps.recruiterErrorReducer.error !== "Incorrect username"
       ) {
         alert(nextProps.recruiterErrorReducer.error);
       }
