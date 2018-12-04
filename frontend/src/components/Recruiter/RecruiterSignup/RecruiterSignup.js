@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Redirect } from "react-router";
+
 import RecruiterLoginNavbar from '../../Navbar/RecruiterLoginNavbar';
 import axios from "axios";
 import connect from "react-redux/es/connect/connect";
@@ -25,7 +27,7 @@ class RecruiterSignup extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.recruiterErrorReducer.error !== "") {
-            alert(`Error:${nextProps.recruiterErrorReducer.error}`);
+            // alert(`Error:${nextProps.recruiterErrorReducer.error}`);
             this.setState({
                 ...this.state,
                 signupFlag: true,
@@ -56,6 +58,10 @@ class RecruiterSignup extends Component {
     };
 
     render() {
+        let redirectVar = null;
+        if (localStorage.getItem("recruiterToken")) {
+          return redirectVar = <Redirect to="/job" />;
+        }
         let message = null;
         if (this.state.messageDiv !== '') {
             message = (
@@ -84,6 +90,7 @@ class RecruiterSignup extends Component {
                 {/* <div className="text-center">
                     {message}
                 </div> */}
+                {redirectVar}
                 <div id="main-container" className="main background lazy-loaded show-login   " 
                 style={{backgroundImage: "url('https://static.licdn.com/sc/h/64xk850n3a8uzse6fi11l3vmz')"}}>
                     <form id="regForm" className="reg-form" action="" data-jsenabled="check">
@@ -127,7 +134,7 @@ class RecruiterSignup extends Component {
                                         tabindex="4" id="reg-email" autofocus="autofocus" onChange={(e) => {
                                     this.setState({[e.target.name]: e.target.value})
                                 }}/>
-                            <label for="reg-password">Password (8 to 15 characters)</label>
+                            <label for="reg-password">Password (4 to 15 characters)</label>
                             <input
                                 type="password" name="password" className="reg-password" id="reg-password" aria-required="true" tabindex="4"
                                 autocomplete="new-password" onChange={(e) => {

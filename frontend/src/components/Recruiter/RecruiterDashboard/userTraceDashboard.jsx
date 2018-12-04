@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
+import axios from "axios";
+import {CONSTANTS} from '../../../Constants';
+import jwtDecode from 'jwt-decode';
 
 var yLabels = {
   0: "Recruiter Login",
@@ -8,15 +11,25 @@ var yLabels = {
   6: "Recruiter Profile",
   8: "Applicant Messages",
   10: "Recruiter Messages",
-  12: "Applicant Signup",
-  14: "Recruiter Signup",
+  12: "Signup",
   16: "Recruiter Dashboard",
   18: "Applicant Dashboard",
   20: "Recruiter Job Posting",
   22: "Job Details",
   24: "Job Search",
   26: "Recruiter Connections",
-  28: "Applicant Connections"
+  28: "Applicant Connections",
+  30 : "Job Apply",
+  32 : "Recruiter Job Listing",
+  34 : "Job List",
+  36 : "Job Edit",
+  38 : "Recruiter View Applications",
+  40: "Recruiter Pending  Connections",
+  42: "Applicant Pending Connections",
+  44 : "Profile Search"
+
+
+
 };
 
 // const data = {
@@ -56,9 +69,9 @@ const options = {
           autoSkip: false,
           stepSize: 1,
           callback: function (value, index, values) {
-            // for a value (tick) equals to 8
+           
             return yLabels[value];
-            // 'junior-dev' will be returned instead and displayed on your chart
+            
           }
         }
       }
@@ -76,13 +89,14 @@ export default class UserTraceDashboard extends Component {
     super(props);
 
     this.state = {
-      // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "ag@gmail.com",
+       recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
+      //recruiter: "recruiter13@gmail.com",
+      user :"",
       chartData: {
-        labels: ["2018-11-23 02:05:00", "2018-11-23 02:06:00", "2018-11-23 02:06:30", "2018-11-23 02:07", "2018-11-23 02:08:22", "2018-11-23 02:08:30", "2018-11-23 02:09:30"],
+        labels: [],
         datasets: [
           {
-            label:"ag@gmail.com",
+            label:"",
             fill: false,
             lineTension: 0.5,
             backgroundColor: "rgba(75,192,192,0.4)",
@@ -94,14 +108,14 @@ export default class UserTraceDashboard extends Component {
             pointBorderColor: "rgba(75,192,192,1)",
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
-            pointHoverRadius: 5,
+            pointHoverRadius: 10,
             pointHoverBackgroundColor: "rgba(75,192,192,1)",
             pointHoverBorderColor: "rgba(220,220,220,1)",
             pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
+            pointRadius: 3,
+            pointHitRadius: 15,
             steppedLine: true,
-            data: [12, 2, 4, 28, 24, 22, 2]
+            data: []
           }
         ]
       }
@@ -109,17 +123,41 @@ export default class UserTraceDashboard extends Component {
     this.usernameSubmitHandler = this.usernameSubmitHandler.bind(this);
     this.valueChangeHandler= this.valueChangeHandler.bind(this);
   }
-  usernameSubmitHandler(userInput){
-    // userInput.preventDefault();
-    console.log("Username of applicant ", userInput.applicant_name.value);
+  usernameSubmitHandler(e){
+    e.preventDefault();
+    console.log("Username of applicant ", this.state.user);
 
-  
+    axios
+    .get(
+      `${CONSTANTS.BACKEND_URL}/recruiters/track/`+ this.state.user)
+    .then(response => {
+      console.log("Inside user trace   component",response.data);
+      //console.log("Inside  user trace   component didmount",response.data.jobsList.data);
+      var usertracked = this.state.user;
+      var tempstate = {...this.state.chartData};
+      tempstate.datasets[0].data = response.data.data;
+      tempstate.labels = response.data.labels;
+      console.log("Temp state in did mount User trace diagram",tempstate);
 
+     this.setState({
+       chartData : tempstate,
+       user : usertracked
+     })
+      
+     
+    })
+    
+    .catch(function(error) {
+      console.log("errored in component did mount User trace diagram");
+      alert("No such user, Try again");
+      console.log(error);
+    });
   }
   valueChangeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
     console.log(this.state);
   };
+
 
 
   render() {
@@ -140,13 +178,13 @@ export default class UserTraceDashboard extends Component {
                       type="text"
                       class="form-control"
                       placeholder="Username"
-                      name="recruiter"
+                      name="user"
                       onChange={this.valueChangeHandler}
                     />
                        
                     </div>
                     <div className="form-group">
-                    <button class="btn btn-warning" onClick={()=>this.usernameSubmitHandler(this.refs)} >Save</button>
+                    <button class="btn btn-warning" onClick={this.usernameSubmitHandler} >Submit</button>
                     </div>
 
                     

@@ -2,7 +2,6 @@ var mongoose = require("mongoose");
 var utility = require("../utility");
 
 var applicantSchema = new mongoose.Schema({
-
   firstName: {
     type: String,
     required: true,
@@ -133,9 +132,15 @@ var applicantSchema = new mongoose.Schema({
   ],
   connections: [
     {
-      accptedFrom: { type: String, required: false, default: "" },
+      acceptedFrom: { type: String, required: false, default: "" },
       acceptedTo: { type: String, required: false, default: "" },
-      isAccepted: { type: Boolean, required: false, default: false }
+      isAccepted: { type: Boolean, required: false, default: true }
+    }
+  ],
+  profileViewCount: [
+    {
+      date: { type: Date, required : false , default : Date.now}
+      
     }
   ]
 });

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 import {CONSTANTS} from '../../../Constants';
+import setAuthToken from "../../../utils/setAuthToken";
 
 
 export default class RightRailComponent extends Component {
@@ -8,18 +10,18 @@ export default class RightRailComponent extends Component {
     super(props);
 
     this.state = {
-      // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "testrecruiter@gmail.com",
+      recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
+      // recruiter: "recruiter13@gmail.com",
       recruiterData : ""
     };
   }
 componentDidMount(){
   axios.defaults.withCredentials = true;
-
+  setAuthToken(localStorage.getItem("recruiterToken"));
   axios
   .get(`${CONSTANTS.BACKEND_URL}/recruiters/` + this.state.recruiter)
   .then(response => {
-    console.log(response.data);
+    console.log("Recruiter details in right rail ",response.data);
     this.setState({
       recruiterData: response.data
     });
@@ -54,19 +56,19 @@ componentDidMount(){
                   style={{ margin: "10px" }}
                 >
                   <div className="card-body">
-                    <h4>Recruiter Name and username</h4>
+                  <b><span style={{ fontSize: "120%", color: "#006097" , paddingBottom: "5px"}}><u>Recruiter Details</u></span></b>
                     <dl class="row">
                   
                   <dt class="col-sm-5">First Name :</dt>
-                  <dd class="col-sm-7"> firstname</dd>
+                  <dd class="col-sm-7"> {this.state.recruiterData.firstName}</dd>
                   <dt class="col-sm-5">Last Name :</dt>
-                  <dd class="col-sm-7"> lastname</dd>
+                  <dd class="col-sm-7">{this.state.recruiterData.lastName}</dd>
                   <dt class="col-sm-5">Email :</dt>
-                  <dd class="col-sm-7"> emailid</dd>
+                  <dd class="col-sm-7"> {this.state.recruiterData.email}</dd>
                   <dt class="col-sm-5">Company</dt>
-                  <dd class="col-sm-7">company </dd>
+                  <dd class="col-sm-7">{this.state.recruiterData.companyName} </dd>
                   <dt class="col-sm-5">Location:</dt>
-                  <dd class="col-sm-7"> Locaiton</dd>
+                  <dd class="col-sm-7">{this.state.recruiterData.address}</dd>
                   </dl>
 
                   </div>

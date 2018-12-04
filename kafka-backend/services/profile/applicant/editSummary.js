@@ -30,6 +30,9 @@ function handle_request(msg, callback) {
             profile.state = msg.summary.state;
             profile.profileSummary = msg.summary.profileSummary;
             profile.profileImage = msg.summary.profileImage;
+            profile.zipcode = msg.summary.zipcode;
+            profile.gender = msg.summary.gender;
+            profile.resume = msg.summary.resume;
             profile.save()
                 .then(profile => {
                     res.code = 202;
@@ -39,7 +42,10 @@ function handle_request(msg, callback) {
                         city: profile.city,
                         state: profile.state,
                         profileSummary: profile.profileSummary,
-                        profileImage:profile.profileImage
+                        profileImage:profile.profileImage,
+                        zipcode:profile.zipcode,
+                        gender:profile.gender,
+                        resume:profile.resume
                     };
                     res.message = summary;
                     callback(null, res);

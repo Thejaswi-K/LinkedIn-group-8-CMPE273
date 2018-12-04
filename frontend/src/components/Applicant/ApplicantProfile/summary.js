@@ -1,17 +1,17 @@
 import Image from "react-bootstrap/es/Image";
-import Profile from "../../../images/profile.jpg"
 import Card from "@material-ui/core/Card/Card";
 import {Component} from "react";
-import moment from "moment";
 import connect from "react-redux/es/connect/connect";
 import {editSummary} from "../../../actions/applicantActions";
-import {postPhotos, getPhoto} from "../../../actions/photoActions";
+import {getPhoto, postPhotos} from "../../../actions/photoActions";
 
 var React = require('react');
 
 class Summary extends Component {
     added = false;
     imageBase = [];
+    stateSelect = "";
+    resume= "";
 
     constructor(props) {
         super(props);
@@ -23,7 +23,10 @@ class Summary extends Component {
             city: "",
             state: "",
             profileSummary: "",
-            profileImage: ""
+            profileImage: "",
+            zipcode: "",
+            gender: "",
+            resume: ""
         };
         this.getPhoto = false;
         this.handleClicked = false;
@@ -88,10 +91,24 @@ class Summary extends Component {
         this.props.postPhotos(formData);
     };
 
+
+    handleDropResume = files => {
+        // Push all the axios request promise into a single array
+        // Initial FormData
+        const formData = new FormData();
+        formData.append("file", files);
+        this.uid = new Date().valueOf();
+        formData.append("imagename", files.name);
+        this.resume= files.name;
+        console.log(files.name);
+        formData.append("timestamp", (Date.now() / 1000) | 0);
+        this.props.postPhotos(formData);
+    };
+
     handleGetPhoto = (imgName) => {
         this.props.getPhoto(imgName);
         this.getPhoto = true;
-        if(this.edit){
+        if (this.edit) {
             this.handleClicked = true;
         }
 
@@ -108,7 +125,10 @@ class Summary extends Component {
                 lastName: this.props.lastName,
                 city: this.props.city,
                 state: this.props.state,
-                profileSummary: this.props.profileSummary
+                profileSummary: this.props.profileSummary,
+                zipcode: this.props.zipcode,
+                gender: this.props.gender,
+                resume: this.props.resume
             };
             this.sum = this.sumProp;
         }
@@ -120,6 +140,7 @@ class Summary extends Component {
         var
             profileSummary = this.sum.profileSummary;
 
+
         return (
             <Card className="w-75 p-3 ml-5" style={{overflow: "auto", height: "auto"}}>
 
@@ -127,14 +148,14 @@ class Summary extends Component {
 
                     <div style={{
                         alignItems: 'center',
-                        width: "100px",
-                        height: "100px",
+                        width: "200px",
+                        height: "200px",
                         margin: "1px",
                         overflow: "auto"
                     }}>
 
 
-                        <Image src={this.imageBase[0]} rounded/>
+                        <Image  src={this.imageBase[0]} rounded/>
                     </div>
                 </div>
 
@@ -150,6 +171,12 @@ class Summary extends Component {
 
                 <h5 className="ml-4">{profileSummary}</h5>
 
+                <h5 className="ml-4">Zipcode - {this.sum.zipcode}</h5>
+
+                <h5 className="ml-4">Gender - {this.sum.gender}</h5>
+
+                <h5 className="ml-4">Resume - {this.sum.resume}</h5>
+
                 <hr/>
 
 
@@ -158,6 +185,7 @@ class Summary extends Component {
 
         )
     }
+
 
     editingSummary() {
         var
@@ -196,11 +224,76 @@ class Summary extends Component {
                             <input className="ml-4" ref="lastName" defaultValue={this.sum.lastName}/>
 
                             <input className="ml-4" ref="city" defaultValue={this.sum.city}/>
-                            <input className="ml-4" ref="state" defaultValue={this.sum.state}/>
+
+                            <div className="form-group">
+                                <label htmlFor="inputState">State</label>
+                                <select id="inputState" ref="state" className="form-control" name="diversity"
+                                >
+
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </div>
 
                             <hr/>
 
                             <input className="ml-4" ref="profileSummary" defaultValue={profileSummary}/>
+                            <hr/>
+
+                            <input className="ml-4" ref="zipcode" defaultValue={this.sum.zipcode}/>
+                            <hr/>
+                            <input className="ml-4" ref="gender" defaultValue={this.sum.gender}/>
+                            <hr/>
+                            <input type="file" className="ml-4" ref="resume" defaultValue="" onChange={(e) => this.handleDropResume(e.target.files[0])}/>
+                            <hr/>
 
                             <center>
                                 <div className="btn btn-toolbar">
@@ -233,7 +326,10 @@ class Summary extends Component {
             city: this.refs.city.value,
             state: this.refs.state.value,
             profileSummary: this.refs.profileSummary.value,
-            profileImage: this.state.profileImage
+            profileImage: this.state.profileImage,
+            zipcode: this.refs.zipcode.value,
+            gender: this.refs.gender.value,
+            resume:  this.resume
         };
 
 

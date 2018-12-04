@@ -4,8 +4,10 @@ const Messages = require("../../Model/Messages");
 function handle_request(msg, callback) {
   var res = {};
   console.log("In handle request:" + JSON.stringify(msg));
+  var frome = JSON.parse(msg).from_email;
+  var toe = JSON.parse(msg).to_email;
 
-  Messages.findOne({ messageMembers: { $all: [msg.from_email, msg.to_email] } })
+  Messages.findOne({ messageMembers: { $all: [frome, toe] } })
     .then(messages => {
       if (!messages) {
         console.log("No conversation between the users");
