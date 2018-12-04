@@ -138,10 +138,10 @@ class Experience extends Component {
                         /><br/>
                         <div className="input-group">
                             <input type="year" ref="from" className="form-control" defaultValue={moment(indexedExperience.from).format("YYYY")}
-                                  />
+                                 placeholder="From Year" />
                             <span className="input-group-addon">-</span>
                             <input type="year" ref="to" className="form-control" defaultValue={moment(indexedExperience.to).format("YYYY")}
-                            />
+                           placeholder="To Year" />
                         </div>
                         <br/>
                         <input type="text" ref="location" className="form-control"

@@ -123,24 +123,24 @@ class Education extends Component {
                     </div>
                     <div className="col-md-8">
                         <input type="text" ref="degreeLevel" className="form-control"
-                               defaultValue={indexedExperience.degreeLevel}
+                               defaultValue={indexedExperience.degreeLevel} placeholder="Degree Level"
                         /><br/>
                         <input type="text" ref="school" className="form-control"
-                               defaultValue={indexedExperience.school}
+                               defaultValue={indexedExperience.school} placeholder="School"
                         /><br/>
                         <input type="text" ref="location" className="form-control"
-                               defaultValue={indexedExperience.location}
+                               defaultValue={indexedExperience.location} placeholder="Location"
                                onChange={(e) => {
                                    this.setState({[e.target.name]: e.target.value})
                                }}/><br/>
                         <div className="input-group">
                             <input type="year" ref="from" className="form-control"
                                    defaultValue={moment(indexedExperience.from).format("YYYY")}
-                            />
+                            placeholder="From Year"/>
                             <span className="input-group-addon">-</span>
                             <input type="year" ref="to" className="form-control"
                                    defaultValue={moment(indexedExperience.to).format("YYYY")}
-                            />
+                            placeholder="To Year"/>
                         </div>
                         <br/>
                         <center>
