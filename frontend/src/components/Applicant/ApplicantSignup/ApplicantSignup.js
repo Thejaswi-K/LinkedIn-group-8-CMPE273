@@ -61,8 +61,8 @@ class ApplicantSignup extends Component {
 
     render() {
         let redirectVar = null;
-        if (localStorage.getItem("recruiterToken")) {
-          return redirectVar = <Redirect to="/recruiterprofileview" />;
+        if (localStorage.getItem("applicantToken")) {
+          return redirectVar = <Redirect to="/applicantprofileview" />;
         }
         let message = null;
         if (this.state.messageDiv !== '') {
