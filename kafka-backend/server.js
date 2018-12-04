@@ -126,6 +126,7 @@ handleTopicRequest("recruiter_ViewConnection", RecruiterViewConnections);
 handleTopicRequest("recruiter_SendConnection", RecruiterSendConnections);
 handleTopicRequest("recruiter_PendingRequests", RecruiterViewPendingRequests);
 handleTopicRequest("recruiter_AcceptConnection", RecruiterAcceptConnection);
+handleTopicRequest("saved_jobs", ApplicantSavedJobs);
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */
