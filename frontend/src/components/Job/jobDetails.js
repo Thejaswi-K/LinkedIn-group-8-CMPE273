@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import axios from "axios";
 import ProfileNavbar from "../Navbar/applicantNavbar";
 import jwt_decode from "jwt-decode";
-
 import { connect } from "react-redux";
 import { jobDetalsByID } from "../../actions/jobSearchActions"; 
 import { withRouter } from "react-router-dom";
@@ -15,7 +14,6 @@ class JobDetails extends Component {
         this.state = {
             jobData: "",
             applicantData:"",
-            jobId: this.props.location.jobId,
             savedStatus:false,
             appliedStatus:false,
             easyApply: false,
@@ -24,7 +22,8 @@ class JobDetails extends Component {
             diversity:"",
             disability:"",
             resume:"",
-            coverletter:""
+            coverletter:"",
+            companyPhoto:""
         };
         if (localStorage.getItem("applicantToken")) {
             let token = localStorage.getItem("applicantToken");
@@ -65,41 +64,55 @@ class JobDetails extends Component {
         .catch(function(error){
             console.log("error in incrementing click count", error);
         });
-        axios.get(CONSTANTS.BACKEND_URL+"/jobs/" + this.props.jobSearchReducer.jobDetailsByID)
-        .then(response => {
-            console.log("response in then",response.data);
-            // var data = JSON.parse(response.data);
-            // console.log("parsed data",data);
-            this.setState({
-                jobData: response.data.data
-            });
-            if (this.state.jobData[0].easyApply){
-                this.setState({
-                    easyApply: true
-                });
-            } 
-            if(this.state.jobData[0].savedBy.indexOf(this.email) > -1) {
-                this.setState({
-                    savedStatus: true
-                });
-            } 
-            if(this.state.applicantData.appliedJobs.indexof(this.props.jobSearchReducer.jobDetailsByID)){
-                this.setState({
-                    appliedStatus: true
-                });
-            }
-        })
-        .catch(function(error){
-            console.log("error in receiving job details to front end", error);
-        });
-        //console.log("BEARER TOKEN", localStorage.getItem("applicantToken"));
-        //localStorage.getItem("applicantToken")
         axios.get(CONSTANTS.BACKEND_URL+"/applicants/"+this.email,{headers: {'Authorization': localStorage.getItem("applicantToken")}}) 
         .then(response => {
             console.log("response in applicant details retrieval",response.data);
             this.setState({
+                ...this.state,
                 applicantData: response.data
+            });
+            axios.get(CONSTANTS.BACKEND_URL+"/jobs/" + this.props.jobSearchReducer.jobDetailsByID)
+            .then(response => {
+                console.log("response in then",response.data.data[0].companyLogo[0]);
+                if(response.data.data[0].companyLogo[0]){
+                    axios.post(CONSTANTS.BACKEND_URL+"/api/photos/download/"+ response.data.data[0].companyLogo[0])
+                    .then(response => {
+                        console.log("Image res: ", response);
+                        let imagePreview = "data:image/jpg;base64, "+ response.data;
+                        console.log(imagePreview);
+                        this.setState({
+                            companyPhoto: imagePreview
+                        });
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+                }
+                this.setState({
+                    jobData: response.data.data
+                });
+                if (this.state.jobData[0].easyApply){
+                    this.setState({
+                        easyApply: true
+                    });
+                } 
+                if(this.state.jobData[0].savedBy.indexOf(this.email) > -1) {
+                    this.setState({
+                        savedStatus: true
+                    });
+                }
+                console.log("applicantData", this.state.applicantData);
+                console.log("JobID", this.props.jobSearchReducer.jobDetailsByID); 
+                if(this.state.applicantData.appliedJobs.indexOf(this.props.jobSearchReducer.jobDetailsByID) > -1){
+                    this.setState({
+                        appliedStatus: true
+                    });
+                }
+                console.log("finally state before rendering", this.state);  
             })
+            .catch(function(error){
+                console.log("error in receiving job details to front end", error);
+            });
         })
         .catch(function(error){
             console.log("error in receiving applicant details to front end", error);
@@ -121,6 +134,7 @@ class JobDetails extends Component {
     };
     applyJobHandler = (e) => {
         e.preventDefault();
+        sessionStorage.setItem("jobId",this.props.jobSearchReducer.jobDetailsByID);
         window.open(CONSTANTS.ROOTURL+"/jobApply","_blank");
     };
     easyApplyJobHandler = (e) => {
@@ -153,6 +167,7 @@ class JobDetails extends Component {
                 this.setState({
                     appliedStatus: true
                 })
+                alert("Job applied successfully");
             })
             .catch(function(error){
                 console.log(error);
@@ -201,7 +216,9 @@ class JobDetails extends Component {
                         <div className="card-body row" display="">
                             <div className="container col-3" display="inline">
                                 <a>
-                                    <img className="img-thumbnail" style={{width: "200px", height: "200px"}}src="//vignette.wikia.nocookie.net/bungostraydogs/images/1/1e/Profile-icon-9.png/revision/latest?cb=20171030104015" />
+                                    <img className="img-thumbnail" style={{width: "200px", height: "200px"}}
+                                    src={this.state.companyPhoto}
+                                    alt="//vignette.wikia.nocookie.net/bungostraydogs/images/1/1e/Profile-icon-9.png/revision/latest?cb=20171030104015" />
                                 </a>
                             </div>
                             <div className="container col-9" display="inline">
@@ -288,8 +305,16 @@ class JobDetails extends Component {
                                                     </div>
                                                     <br />
                                                     <div class="form-group">
+                                                    {(this.state.applicantData.resume)?
+                                                    <div>
+                                                        <label>{this.state.applicantData.resume}</label>
+                                                        <input type="file" className="form-control-file" id="exampleFormControlFile1" name="resume" onChange={this.valueChangeHandler} disabled/>
+                                                        </div>:
+                                                        <div>
                                                         <label>Upload your resume</label>
-                                                        <input type="file" className="form-control-file" id="exampleFormControlFile1" name="resume" onChange={this.valueChangeHandler}/>
+                                                        <input type="file" className="form-control-file" id="exampleFormControlFile1" title = "Choose a video please" name="resume" onChange={this.valueChangeHandler} />
+                                                        </div>
+                                                    }
                                                     </div>
                                                     <br />
                                                     <div class="form-group">

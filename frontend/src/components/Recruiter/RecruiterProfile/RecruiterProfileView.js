@@ -19,6 +19,8 @@ class RecruiterProfileView extends Component {
             state: "",
             companyName: "",
             profileImage:"",
+            zipcode: "",
+            gender: ""
 
         };
 
@@ -48,7 +50,9 @@ class RecruiterProfileView extends Component {
                 experience: this.recruiterProfile.experience,
                 education: this.recruiterProfile.education,
                 skills: this.recruiterProfile.skills,
-                profileImage:this.recruiterProfile.profileImage
+                profileImage:this.recruiterProfile.profileImage,
+                zipcode: this.recruiterProfile.zipcode,
+                gender: this.recruiterProfile.gender
             })
         }
     }
@@ -67,7 +71,7 @@ class RecruiterProfileView extends Component {
                 <Summary firstName={this.state.firstName} lastName={this.state.lastName}
                          city={this.state.city} state={this.state.state}
                          companyName={this.state.companyName} applicantEmail={this.email}
-                         profileImage={this.state.profileImage}/>
+                         profileImage={this.state.profileImage} zipcode={this.state.zipcode} gender={this.state.gender}/>
 
             </div>
         )

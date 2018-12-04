@@ -6,6 +6,7 @@ import ViewConnectionsItem from './ViewConnectionsItem';
 import { getConnections } from '../../actions/connectionActions';
 
 
+
 class ViewConnections extends Component {
   arr=[];
   isApplicantLoggedIn = false;
@@ -29,7 +30,7 @@ class ViewConnections extends Component {
           console.log("Emmail", this.email)
 
       }
-        console.log("Emmail in CDM", this.email)
+        console.log("Email in CDM", this.email)
         this.props.getConnections(this.email);
         
         }
@@ -45,7 +46,6 @@ class ViewConnections extends Component {
         homeItems = this.arr.map(ownerhome => (
                
           <div>
-              
               <ViewConnectionsItem key={ownerhome._id} ownerhome={ownerhome} />
         </div>
       ));
@@ -53,6 +53,9 @@ class ViewConnections extends Component {
         }
         
         return (
+          <div>
+            
+          
           <div className="homes">
             <div className="container">
             <br/>
@@ -95,6 +98,7 @@ class ViewConnections extends Component {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         );
     
