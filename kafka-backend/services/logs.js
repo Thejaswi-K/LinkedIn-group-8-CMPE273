@@ -309,11 +309,12 @@ function createTrackUserId(msg, callback) {
         status: "Tracker for user already exist"
       });
     } else {
+      // new tracker creation always defaulted to signup page
       const newTracker = new userTrackerModel({
         username: msg.id,
         location: msg.body.location,
         tracker: {
-          page: "Sign up"
+          page: 12
         }
       }); 
       newTracker

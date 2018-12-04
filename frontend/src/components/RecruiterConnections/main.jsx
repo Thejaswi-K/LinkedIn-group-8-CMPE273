@@ -6,6 +6,8 @@ import RecruiterNavbar from '../Navbar/recruiterNavbar';
 import RecruiterViewConnections from './RecruiterViewConnections';
 import LeftRailComponent from './leftrail';
 import Recommendations from  './recommendations';
+import { CONSTANTS } from "../../Constants";
+import axios from "axios";
 export default class MainRecruiterConnections extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +17,25 @@ export default class MainRecruiterConnections extends Component {
       
     };
     
+  }
+  componentDidMount(){
+    axios.defaults.withCredentials = true;
+    //setAuthToken(localStorage.getItem("recruiterToken"));
+    let trackerdata = { "page": "26" };
+    axios
+        .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.state.recruiter, trackerdata)
+        .then(response => {
+            console.log("Recruiter Connections  View Tracked ", response.data);
+  
+        })
+        .catch(function (error) {
+            console.log("Tracker errored");
+            console.log(error);
+        });
+  
+
+
+    this.props.recruiterDetails(this.email);
   }
   
   render() {

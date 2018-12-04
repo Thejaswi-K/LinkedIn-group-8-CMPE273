@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getSearchedProfiles } from "../../actions/searchProfileActions";
@@ -8,7 +9,8 @@ import { withRouter } from "react-router-dom";
 // import { Redirect } from "react-router";
 import { paginate } from "../../utils/paginate";
 import { getPhoto } from "../../actions/jobPhotosAction";
-
+import { CONSTANTS } from "../../Constants";
+import axios from "axios";
 import Pagination from "../common/pagination";
 
 class ProfileSearch extends Component {
@@ -70,6 +72,24 @@ class ProfileSearch extends Component {
     };
     console.log(data);
     this.props.getSearchedProfiles(data);
+
+    axios.defaults.withCredentials = true;
+    //setAuthToken(localStorage.getItem("recruiterToken"));
+    let trackerdata = { "page": "44" };
+    // axios
+    //     .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.email, trackerdata)
+    //     .then(response => {
+    //         console.log("Applicant Pending connections  View Tracked ", response.data);
+  
+    //     })
+    //     .catch(function (error) {
+    //         console.log("Tracker errored");
+    //         console.log(error);
+    //     });
+  
+
+
+
   }
 
   //   handleGetPhoto = imgName => {
@@ -82,9 +102,14 @@ class ProfileSearch extends Component {
     console.log(count);
     const { pageSize, currentPage } = this.state;
     const profileResults = paginate(this.searchResult, currentPage, pageSize);
+    let redirectVar = null;
+    if (!localStorage.getItem("applicantToken")) {
+      return redirectVar = <Redirect to="/applicantsignup" />;
 
+    }
     return (
       <div>
+        {redirectVar}
         <ApplicantNavBar />
         {profileResults.map(profile => (
           <div className="ml-5 mt-2">

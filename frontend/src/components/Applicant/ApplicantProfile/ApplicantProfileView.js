@@ -8,7 +8,8 @@ import jwt_decode from "jwt-decode";
 import {applicantDetails, deleteApplicant, deleteUser} from "../../../actions/applicantActions";
 import Redirect from "react-router/es/Redirect";
 import ProfileNavbar from "../../Navbar/applicantNavbar"
-
+import axios from "axios";
+import {CONSTANTS} from '../../../Constants'
 
 class ApplicantProfileView extends Component {
 
@@ -81,6 +82,22 @@ class ApplicantProfileView extends Component {
 
     componentDidMount() {
         this.props.applicantDetails(this.email);
+
+        
+        axios.defaults.withCredentials = true;
+        //setAuthToken(localStorage.getItem("recruiterToken"));
+        let trackerdata = { "page": "4" };
+        axios
+            .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.email, trackerdata)
+            .then(response => {
+                console.log("Applicant Profile View Tracked ", response.data);
+
+            })
+            .catch(function (error) {
+                console.log("errored");
+                console.log(error);
+            });
+
     }
 
 

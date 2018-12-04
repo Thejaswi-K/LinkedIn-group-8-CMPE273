@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import ProfileNavbar from "../Navbar/applicantNavbar";
-// import axios from "axios";
+import axios from "axios";
 import JobCard from "./JobCard";
 import { Redirect } from "react-router";
 import * as Validate from "../../validation/ValidationUtil";
-
+import { CONSTANTS } from "../../Constants";
 import { connect } from "react-redux";
 import { jobSearchFunc, jobDetalsByID } from "../../actions/jobSearchActions";
 import PropTypes from "prop-types";
@@ -13,6 +13,7 @@ import Pagination from "../common/pagination";
 import { paginate } from "../../utils/paginate";
 import { getPhoto } from "../../actions/jobPhotosAction";
 import { capitalizeFirstLetter } from "../../utility";
+import jwtDecode from 'jwt-decode';
 import _ from "lodash";
 
 class jobList extends Component {
@@ -124,6 +125,21 @@ class jobList extends Component {
       joblocation: sessionStorage.getItem("joblocation")
     };
     this.props.jobSearchFunc(data);
+
+
+    axios.defaults.withCredentials = true;
+    //setAuthToken(localStorage.getItem("recruiterToken"));
+    let trackerdata = { "page": "34" };
+    axios
+        .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + jwtDecode(localStorage.getItem('applicantToken')).email, trackerdata)
+        .then(response => {
+            console.log("Recruiter Job edit  View Tracked ", response.data);
+
+        })
+        .catch(function (error) {
+            console.log("Tracker errored");
+            console.log(error);
+        });
   }
 
   filterData = e => {

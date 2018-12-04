@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
 import jwtDecode from "jwt-decode";
-
+import axios from "axios";
+import {CONSTANTS} from '../../../Constants';
 import RightRailComponent from "./rightrail";
 import ApplicantNavbar from "../../Navbar/applicantNavbar";
 import GraphProfileViewCount from "./graphProfileViewCount";
@@ -14,7 +15,22 @@ export default class MainApplicantDashboard extends Component {
     //   applicant: "ag@gmail.com"
     };
   }
+componentDidMount(){
+  axios.defaults.withCredentials = true;
+  //setAuthToken(localStorage.getItem("recruiterToken"));
+  let trackerdata = { "page":"18"};
+  axios
+  .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.state.applicant,trackerdata)
+  .then(response => {
+    console.log("Applicant Dashboard Tracked ",response.data);
+    
+  }) 
+  .catch(function(error) {
+    console.log("errored");
+    console.log(error);
+  });
 
+}
   render() {
     // check for auth flag
     let redirectVar = null;
