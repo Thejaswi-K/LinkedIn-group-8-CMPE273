@@ -81,10 +81,7 @@ class ExperienceOnly extends Component {
                         {this.exp.map((experience, index) => (
                             <li key={index} className="ml-5">
                                 <h4><strong>{experience.title}</strong>
-                                    <button className="btn btn-default ml-4"
-                                            onClick={this.handleClickEdit.bind(this, index)}>
-                                        <span className="glyphicon glyphicon-pencil" title="Edit Experience"></span>
-                                    </button>
+
                                 </h4>
                                 <h5>{experience.company}</h5>
                                 <h6>{moment(experience.from).format("YYYY")} - {moment(experience.to).format("YYYY")}</h6>

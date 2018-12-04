@@ -62,6 +62,7 @@ class SkillsOnly extends Component {
                                 <li key={index} className="ml-5">
                                     <h4><strong>{experience}</strong>
                                      
+
                                     </h4>
                                     <hr/>
 
