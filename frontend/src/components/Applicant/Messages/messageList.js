@@ -4,6 +4,7 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import MessageView from "./messageView";
 import ProfileNavbar from "../../Navbar/applicantNavbar";
+import jwtDecode from "jwt-decode";
 
 // REDUX functionality
 import { connect } from "react-redux";
@@ -45,10 +46,14 @@ class messageList extends Component {
   componentDidMount() {
     var data = {
       // from_email: this.props.applicantProfile.applicantUser.email
-      from_email: "apurav@gmail.com"
+      from_email: localStorage.getItem("applicantToken")
+        ? jwtDecode(localStorage.getItem("applicantToken")).email
+        : ""
     };
-    var author = this.props.applicantProfile.applicantUser.email;
-    var author = "apurav@gmail.com";
+    // var author = this.props.applicantProfile.applicantUser.email;
+    var author = localStorage.getItem("applicantToken")
+      ? jwtDecode(localStorage.getItem("applicantToken")).email
+      : "";
     sessionStorage.setItem("author", author);
     this.props.messageListFunc(data.from_email);
   }

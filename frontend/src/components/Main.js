@@ -18,7 +18,7 @@ import Provider from "react-redux/es/components/Provider";
 import store from "../store";
 import MainRecruiterDashboard from "./Recruiter/RecruiterDashboard/main";
 import MainApplicantDashboard from "./Applicant/ApplicantDashboard/main";
-import ViewConnections from "./Connections/ViewConnections";
+import MainApplicantConnections from "./Connections/main";
 import ViewPendingRequests from "./Connections/ViewPendingRequests";
 import JobDetails from "./Job/jobDetails";
 import JobApply from "./Job/jobapply";
@@ -72,7 +72,7 @@ class Main extends Component {
             path="/recruiterJobListing"
             component={MainRecruiterJobListing}
           />
-          <Route path="/viewConnections" component={ViewConnections} />
+          <Route path="/viewConnections" component={MainApplicantConnections} />
           <Route path="/viewPendingRequests" component={ViewPendingRequests} />
           <Route path="/jobSearch" component={JobSearch} />
           <Route path="/jobList" component={JobList} />

@@ -7,7 +7,8 @@ import recruiterErrorReducer from "./recruiterErrorReducer";
 import photosReducer from "./photosReducer";
 import jobSearchReducer from "./jobSearchReducer";
 import connection from "./connectionReducer";
-import searchProfile from './searchProfileReducer'
+import searchProfile from './searchProfileReducer';
+import recruiterConnection from './recruiterconnectionReducer';
 
 export default combineReducers({
   applicantProfile: applicantProfile,
@@ -18,5 +19,6 @@ export default combineReducers({
   messageReducer: messageReducer,
   jobSearchReducer: jobSearchReducer,
   connection: connection,
-  searchProfile: searchProfile
+  searchProfile: searchProfile,
+  recruiterConnection: recruiterConnection
 });

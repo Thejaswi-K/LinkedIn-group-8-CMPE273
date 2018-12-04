@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import jwt_decode from "jwt-decode";
 import ViewConnectionsItem from './ViewConnectionsItem';
 import { getConnections } from '../../actions/connectionActions';
-import ApplicantNavbar from '../Navbar/applicantNavbar';
+
 
 
 class ViewConnections extends Component {
@@ -30,7 +30,7 @@ class ViewConnections extends Component {
           console.log("Emmail", this.email)
 
       }
-        console.log("Emmail in CDM", this.email)
+        console.log("Email in CDM", this.email)
         this.props.getConnections(this.email);
         
         }
@@ -54,7 +54,7 @@ class ViewConnections extends Component {
         
         return (
           <div>
-            <ApplicantNavbar/>
+            
           
           <div className="homes">
             <div className="container">

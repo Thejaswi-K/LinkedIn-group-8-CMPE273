@@ -6,7 +6,7 @@ import Messages from "./Messages";
 import {CONSTANTS} from "../../Constants"
 
 
-class ViewConnectionsItem extends Component {
+class RecruiterViewConnectionsItem extends Component {
 
   onAcceptClick() {
       if (localStorage.getItem("applicantToken")) {
@@ -20,7 +20,7 @@ class ViewConnectionsItem extends Component {
           requestFrom:this.props.toEmail
       }
       axios
-        .post(`${CONSTANTS.BACKEND_URL}/applicants/acceptConnection/${this.email}`, requestEmail)
+        .post(`${CONSTANTS.BACKEND_URL}/recruiters/acceptConnection/${this.email}`, requestEmail)
         .then(function(res) { 
             if (res.data) {
               alert("Connection Accepted Successfully")
@@ -50,8 +50,8 @@ class ViewConnectionsItem extends Component {
   }
 }
 
-ViewConnectionsItem.propTypes = {
+RecruiterViewConnectionsItem.propTypes = {
   ownerhome: PropTypes.object.isRequired
 };
 
-export default ViewConnectionsItem;
+export default RecruiterViewConnectionsItem;
