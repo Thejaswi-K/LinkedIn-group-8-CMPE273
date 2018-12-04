@@ -20,7 +20,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // //Use morgan 
 app.use(morgan('dev'));
+// const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "password273"));
 
+const driver = neo4j.driver("bolt://purple-keebler-trail-bennie.graphstory.link/", neo4j.auth.basic("purple_keebler_trail_bennie", "dSn2RBNgttSIxhnLmERYEcpuuUW"));
+const session = driver.session();
 
 //MONGODB Config
 const dbkey = require("./config/keys").mongoURI;
@@ -56,8 +59,7 @@ app.use(function(req, res, next) {
   res.setHeader("Cache-Control", "no-cache");
   next();
 });
-const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "password273"));
-const session = driver.session();
+
 //index.js stores the homepage
 var index = require("./routes/api/index");
 var applicant = require("./routes/api/applicant");
