@@ -34,6 +34,27 @@ router.post("/", function(req, res) {
   });
 });
 
+//View Saved Jobs:
+router.get("/savedjobs", function(req,res){
+  console.log("Inside backend--> Get saved Jobs for Applicant.");
+  kafka.make_request("saved_jobs", req.query, function(err, result) {
+    if (err) {
+      res
+        .status(404)
+        .json({ success: false, error: "Jobs not found" })
+        .send(err);
+    } else console.log("Saved Jobs", result);
+    {
+      if (result.status) {
+        res.status(200);
+        res.send(result);
+      } else {
+        res.status(400).json({ success: false });
+      }
+    }
+  });
+})
+
 //Recruiter -- View Posted Jobs
 router.get("/", function(req, res) {
   console.log("Inside backend--> Job Post route");

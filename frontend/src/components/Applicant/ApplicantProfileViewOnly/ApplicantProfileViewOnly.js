@@ -1,17 +1,16 @@
 import React, {Component} from "react";
 import connect from "react-redux/es/connect/connect";
-import Experience from "./experience";
-import Education from "./education";
-import Summary from "./summary";
-import Skills from "./skills";
-import jwt_decode from "jwt-decode";
-import {applicantDetails, deleteApplicant, deleteUser} from "../../../actions/applicantActions";
-import Redirect from "react-router/es/Redirect";
-import ProfileNavbar from "../../Navbar/applicantNavbar"
+import Experience from "./experienceonly";
+import Education from "./educationonly";
+import Summary from "./summaryonly";
+import Skills from "./skillsonly";
+import {applicantDetails} from "../../../actions/applicantActions";
+import ApplicantNavBar from "../../Navbar/applicantNavbar";
+
 import axios from "axios";
 import {CONSTANTS} from '../../../Constants'
 
-class ApplicantProfileView extends Component {
+class ApplicantProfileViewOnly extends Component {
 
     applicantProfile = {};
     isApplicantLoggedIn = false;
@@ -33,14 +32,6 @@ class ApplicantProfileView extends Component {
             gender: "",
             resume: ""
         };
-
-        if (localStorage.getItem("applicantToken")) {
-            let token = localStorage.getItem("applicantToken");
-            this.decodedApplicant = jwt_decode(token);
-            this.isApplicantLoggedIn = true;
-            this.email = this.decodedApplicant.email;
-
-        }
 
 
 
@@ -75,22 +66,19 @@ class ApplicantProfileView extends Component {
         }
     }
 
-    deleteClicked() {
 
-        this.props.deleteApplicant(this.email);
-
-    }
 
 
     componentDidMount() {
-        this.props.applicantDetails(this.email);
+        this.props.applicantDetails(this.props.location.state.clicked);
+        console.log("Component did mount in Applicant profile view count only ", this.props.location.state);
 
-        
+
         axios.defaults.withCredentials = true;
         //setAuthToken(localStorage.getItem("recruiterToken"));
         let trackerdata = { "page": "4" };
         axios
-            .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.email, trackerdata)
+            .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` +  this.props.location.state.loggedin, trackerdata)
             .then(response => {
                 console.log("Applicant Profile View Tracked ", response.data);
 
@@ -99,32 +87,33 @@ class ApplicantProfileView extends Component {
                 console.log("errored");
                 console.log(error);
             });
-            // axios.defaults.withCredentials = true;
-            // //setAuthToken(localStorage.getItem("recruiterToken"));
+
+
+
+    axios.defaults.withCredentials = true;
+            //setAuthToken(localStorage.getItem("recruiterToken"));
             
-            // axios
-            //     .put(`${CONSTANTS.BACKEND_URL}/applicants/${this.email}/logs/profile-view-count`)
-            //     .then(response => {
-            //         console.log("Applicant Profile View Count incremented ", response.data);
+            axios
+                .put(`${CONSTANTS.BACKEND_URL}/applicants/${this.props.location.state.clicked}/logs/profile-view-count`)
+                .then(response => {
+                    console.log("Applicant Profile View Count incremented ", response.data);
     
-            //     })
-            //     .catch(function (error) {
-            //         console.log("errored");
-            //         console.log(error);
-            //     });
+                })
+                .catch(function (error) {
+                    console.log("errored");
+                    console.log(error);
+                });
     }
 
 
     render() {
-        if (!this.isApplicantLoggedIn) {
-            return <Redirect to="/applicantsignup"/>
-        }
 
 
         return (
             <div>
+                {/* <ApplicantNavBar/> */}
 
-                <ProfileNavbar/>
+
 
                 <br/>
 
@@ -145,18 +134,6 @@ class ApplicantProfileView extends Component {
 
                 <Skills skills={this.state.skills} applicantEmail={this.email}/>
 
-                <br/>
-
-                <div className="text-center">
-
-                    <button type="submit" onClick={this.deleteClicked.bind(this)}>Delete Profile</button>
-
-                </div>
-
-                <br/>
-                <br/>
-
-                <hr/>
 
 
             </div>
@@ -169,6 +146,6 @@ const mapStateToProps = (state) => ({
     applicantProfile: state.applicantProfile
 });
 
-export default connect(mapStateToProps, {applicantDetails, deleteApplicant, deleteUser})(ApplicantProfileView);
+export default connect(mapStateToProps, {applicantDetails})(ApplicantProfileViewOnly);
 
 

@@ -25,11 +25,29 @@ class ViewConnectionsItem extends Component {
         `${CONSTANTS.BACKEND_URL}/applicants/acceptConnection/${this.email}`,
         requestEmail
       )
-      .then(function(res) {
+      .then(res=>{
         if (res.data) {
-          alert("Connection Accepted Successfully");
-          window.location.reload();
+          //applicant Create Graph
+          const connectionBody = { email: requestEmail.requestFrom };
+          axios
+            .post(
+              `${CONSTANTS.BACKEND_URL}/graphs/createConnection/${this.email}`,
+              connectionBody
+            )
+            .then(resGraph => {
+              console.log("Graph conencted ", resGraph);
+              alert("Connection Accepted Successfully");
+              window.location.reload();
+            })
+            .catch(errGraph => {
+              console.log("Accept connection failed ", errGraph);
+              alert("Accept Connection Failed");
+            });
         }
+      })
+      .catch(err => {
+        console.log("Accept connection failed ", err);
+        alert("Accept Connection Failed");
       });
   }
   render() {

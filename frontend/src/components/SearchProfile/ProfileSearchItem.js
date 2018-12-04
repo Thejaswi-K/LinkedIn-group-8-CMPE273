@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import {withRouter} from "react-router"; 
+
 import jwt_decode from "jwt-decode";
 import { connect } from "react-redux";
 import {extractNameFromEmail,capitalizeFirstLetter} from '../../utility';
-
+import { CONSTANTS } from "../../Constants";
 
 class ProfileSearchItem extends Component {
 
@@ -14,7 +16,7 @@ class ProfileSearchItem extends Component {
           messageContent: ""
         }
         this.changeMessage = this.changeMessage.bind(this);
-       
+
       }
 
       changeMessage = e => {
@@ -50,6 +52,28 @@ class ProfileSearchItem extends Component {
     })
           
     }
+
+    onViewProfile() {
+        console.log("propssss"+this.props);
+          if(this.props.isRec){
+              //call recruiter profile view count
+              console.log("in applicant profile view")
+              this.props.history.push({
+                  pathname: "/recruiterprofileviewonly",
+                  state: {"clicked":this.props.toEmail, "loggedin": jwt_decode(localStorage.getItem("applicantToken")).email}
+              });
+          }else{ 
+            console.log("in recruiter profile view ") 
+              //call applicant profile view count
+              this.props.history.push({
+                  pathname: "/applicantprofileviewonly",
+                  state: {"clicked":this.props.toEmail, "loggedin": jwt_decode(localStorage.getItem("applicantToken")).email}
+              });
+          }
+          
+            
+      }
+  
 
     onMessageSendClick() {
         //  console.log('email on click',email)
@@ -101,7 +125,14 @@ class ProfileSearchItem extends Component {
         <h5>{profile.email}</h5>
         </div>
         <div className="col-4">
-        
+        <button 
+                type="submit" 
+                className="btn btn-primary"
+             //  onClick={this.onConnectClick(profile.email).bind(this)} 
+               onClick={this.onViewProfile.bind(this)} 
+                >
+                    View Profile
+                </button>
         </div>
         <div className="col-3">
             <div className="text-right">
@@ -168,4 +199,4 @@ const mapStateToProps = state => ({
     applicantProfile: state.applicantProfile
   });
 
-export default connect(mapStateToProps)(ProfileSearchItem);
+export default withRouter(connect(mapStateToProps)(ProfileSearchItem));

@@ -153,6 +153,12 @@ class applicantNavbar extends Component {
                 </Link>
               </li>
               <li class="dropdown-item">
+                <Link to="/savedJobs">
+                  <span className="glyphicon glyphicon-floppy-saved" />
+                  &nbsp;&nbsp;&nbsp;My Saved Jobs
+                </Link>
+              </li>
+              <li class="dropdown-item">
                 <Link to="/applicantSignup" onClick={this.handleLogout}>
                   <span className="glyphicon glyphicon-log-out" />
                   &nbsp;&nbsp;&nbsp;Logout

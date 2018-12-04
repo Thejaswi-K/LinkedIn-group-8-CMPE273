@@ -39,7 +39,7 @@ class ApplicantLoginNavbar extends Component {
                 success: true
             })
         } else if (nextProps.applicantErrorReducer.error !== "") {
-            if(nextProps.applicantErrorReducer.error !== "Incorrect password" && nextProps.applicantErrorReducer.error !== "User already exists"){
+            if(nextProps.applicantErrorReducer.error !== "Incorrect password" && nextProps.applicantErrorReducer.error !== "User already exists" && nextProps.applicantErrorReducer.error !== "Incorrect username"){
                 alert(nextProps.applicantErrorReducer.error);
             }
         }

@@ -199,10 +199,10 @@ class Summary extends Component {
                             <input type="file" onChange={(e) => this.handleDrop(e.target.files[0])}/>
 
 
-                            <input className="ml-4" ref="firstName" defaultValue={this.sum.firstName}/>
-                            <input className="ml-4" ref="lastName" defaultValue={this.sum.lastName}/>
+                            <input className="ml-4" ref="firstName" defaultValue={this.sum.firstName} placeholder="First Name"/>
+                            <input className="ml-4" ref="lastName" defaultValue={this.sum.lastName} placeholder="Last Name"/>
 
-                            <input className="ml-4" ref="city" defaultValue={this.sum.city}/>
+                            <input className="ml-4" ref="city" defaultValue={this.sum.city} placeholder="City"/>
                             <div className="form-group">
                                 <label htmlFor="inputState">State</label>
                                 <select id="inputState" ref="state" className="form-control" name="diversity"
@@ -263,13 +263,13 @@ class Summary extends Component {
 
                             <hr/>
 
-                            <input className="ml-4" ref="zipcode" defaultValue={this.sum.zipcode}/>
+                            <input className="ml-4" ref="zipcode" defaultValue={this.sum.zipcode} placeholder="Zipcode"/>
                             <hr/>
-                            <input className="ml-4" ref="gender" defaultValue={this.sum.gender}/>
+                            <input className="ml-4" ref="gender" defaultValue={this.sum.gender} placeholder="Gender"/>
 
                             <hr/>
 
-                            <input className="ml-4" ref="companyName" defaultValue={companyName}/>
+                            <input className="ml-4" ref="companyName" defaultValue={companyName} placeholder="Company"/>
 
                             <center>
                                 <div className="btn btn-toolbar">
