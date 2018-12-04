@@ -406,4 +406,5 @@ export const logoutCustomer = () => dispatch => {
   setAuthToken(false);
   // Set current user to {} which will ser isAuthenticated to false
   dispatch(setCustomerOut({}));
+    dispatch(setDelete(""));
 };
