@@ -13,7 +13,7 @@ import { CONSTANTS } from "../Constants";
   // Get All Connections
   export const getRecruiterConnections = (email) => dispatch => {
     axios.defaults.withCredentials = true;
-  setAuthToken(localStorage.getItem("applicantToken"));
+  setAuthToken(localStorage.getItem("recruiterToken"));
     axios
       .get(`${CONSTANTS.BACKEND_URL}/recruiters/viewconnections/${email}`)
       .then(res =>

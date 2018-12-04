@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import jwt_decode from "jwt-decode";
 import RecruiterViewPendingRequestsItem from './RecruiterViewPendingRequestsItem';
 import { getRecruiterPendingRequets } from '../../actions/recruiterconnectionActions';
-
+import RecruiterNavbar from '../Navbar/recruiterNavbar';
 class RecruiterViewPendingRequests extends Component {
   arr=[];
     isApplicantLoggedIn = false;
 
       componentWillReceiveProps(nextProps){
-        if(nextProps.connection.pendingrequests !== undefined){
-       this.arr  = nextProps.connection.pendingrequests[0].connectionsRequests;
+        if(nextProps.recruiterConnection.pendingrequests !== undefined){
+       this.arr  = nextProps.recruiterConnection.pendingrequests[0].connectionsRequests;
           
        console.log("Array is " + this.arr);
         }
@@ -51,49 +51,22 @@ class RecruiterViewPendingRequests extends Component {
         }
             
         return (
-          <div className="homes">
-            <div className="container">
-            <br/>
-              <div className="row">
-                <div className="col-md-12">
-                  
-                  
-
-
-                  <div className="row">
-                  <div className="col-8">
-                    <h3 className="display-8 text-left"> Your Pending Requests</h3>
-                  </div>
-                  <div className="col-2">
-                    
-                  </div>
-                  <div className="col-2">
-                    
-                  </div>
-                </div>
-                <br/>
-
-                {homeItems}
-
-                  <br/>
-                  <br/> 
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  
-                  
-                </div>
-              </div>
+          <div>
+          <RecruiterNavbar/>
+        
+          <div className="container" >
+          <div className="row">
+         
+          <div>
+                  <h3 className="display-8 text-left"> Your Pending Requests</h3>
+          </div>
+          </div>
+            <div className="row">
+              {homeItems}
             </div>
           </div>
+
+        </div>
         );
     
        }
@@ -105,7 +78,7 @@ class RecruiterViewPendingRequests extends Component {
     };
     
     const mapStateToProps = state => ({
-      recruiterConnection: state.connection
+      recruiterConnection: state.recruiterConnection
     });
     
     export default connect(mapStateToProps, { getRecruiterPendingRequets })(RecruiterViewPendingRequests);

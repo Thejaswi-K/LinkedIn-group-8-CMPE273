@@ -10,9 +10,9 @@ export default class LeftRailComponent extends Component {
     super(props);
 
     this.state = {
-      applicant: localStorage.getItem('applicantToken')?jwtDecode(localStorage.getItem('applicantToken')).email : "",
-      // applicant: "applicant13@gmail.com",
-      applicantData : ""
+      recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
+      // recruiter: "recruiter13@gmail.com",
+      recruiterData : ""
     };
   }
 
@@ -20,14 +20,14 @@ export default class LeftRailComponent extends Component {
 
 componentDidMount(){
   axios.defaults.withCredentials = true;
-  setAuthToken(localStorage.getItem("applicantToken"));
+  setAuthToken(localStorage.getItem("recruiterToken"));
   axios
-  .get(`${CONSTANTS.BACKEND_URL}/applicants/` + this.state.applicant)
+  .get(`${CONSTANTS.BACKEND_URL}/recruiters/` + this.state.recruiter)
   .then(response => {
-    console.log("applicant details in left rail ",response.data);
+    console.log("recruiter details in left rail ",response.data);
     this.lengthOFConnections= response.data.connectionsRequests.length;
     this.setState({
-        applicantData: response.data
+        recruiterData: response.data
     });
   }) 
   .catch(function(error) {
@@ -64,17 +64,17 @@ componentDidMount(){
                     <dl class="row">
                   
                   <dt class="col-sm-5">First Name :</dt>
-                  <dd class="col-sm-7"> {this.state.applicantData.firstName}</dd>
+                  <dd class="col-sm-7"> {this.state.recruiterData.firstName}</dd>
                   <dt class="col-sm-5">Last Name :</dt>
-                  <dd class="col-sm-7">{this.state.applicantData.lastName}</dd>
+                  <dd class="col-sm-7">{this.state.recruiterData.lastName}</dd>
                   <dt class="col-sm-5">Email :</dt>
-                  <dd class="col-sm-7"> {this.state.applicantData.email}</dd>
-                  <dt class="col-sm-5">Phone Number</dt>
-                  <dd class="col-sm-7">{this.state.applicantData.phoneNumber} </dd>
+                  <dd class="col-sm-7"> {this.state.recruiterData.email}</dd>
+                  <dt class="col-sm-5">Company</dt>
+                  <dd class="col-sm-7">{this.state.recruiterData.companyName} </dd>
                   <dt class="col-sm-5">Location:</dt>
-                  <dd class="col-sm-7">{this.state.applicantData.address}</dd>
+                  <dd class="col-sm-7">{this.state.recruiterData.address}</dd>
                   <dt class="col-sm-5">Zip Code:</dt>
-                  <dd class="col-sm-7">{this.state.applicantData.zipcode}</dd>
+                  <dd class="col-sm-7">{this.state.recruiterData.zipcode}</dd>
                   <dt class="col-sm-5">Connections:</dt>
                   <dd class="col-sm-7">{this.lengthOFConnections}</dd>
                   </dl>
