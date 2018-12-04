@@ -81,7 +81,7 @@ function handleTopicRequest(topic_name, fname) {
 //first argument is topic name
 //second argument is a function that will handle this topic request
 
-handleTopicRequest("logs_topic", Log);
+/*handleTopicRequest("logs_topic", Log);
 handleTopicRequest("jobs_topic", Job);
 handleTopicRequest("applicant_details", ApplicantDetails);
 handleTopicRequest("recruiter_details", RecruiterDetails);
@@ -127,7 +127,7 @@ handleTopicRequest("recruiter_ViewConnection", RecruiterViewConnections);
 handleTopicRequest("recruiter_SendConnection", RecruiterSendConnections);
 handleTopicRequest("recruiter_PendingRequests", RecruiterViewPendingRequests);
 handleTopicRequest("recruiter_AcceptConnection", RecruiterAcceptConnection);
-handleTopicRequest("saved_jobs", ApplicantSavedJobs);
+handleTopicRequest("saved_jobs", ApplicantSavedJobs);*/
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */
