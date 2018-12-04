@@ -44,6 +44,16 @@ exports.handle_request = function handle_request(msg, callback) {
     case "lastFive":
       lastFiveJobs(msg, callback);
       break;
+    case "readCounter":
+      readCountIncrementer(msg,callback);
+      break;
+    case "startCounter":
+      startCountIncrementer(msg,callback);
+      break;
+    case "completeCounter":
+      completedCountIncrementer(msg,callback);
+      break;
+
   }
 };
 
@@ -466,5 +476,102 @@ function lastFiveJobs(msg, callback) {
     })
     .catch(function(err) {
       callback(null, { success: false, status: "error for jobs" });
+    });
+}
+
+
+
+// To increment the number of views  in job schema
+/*
+Include this call in every route to a job details page
+BODY:
+{
+	"jobid":"5bfc781ce8df91050d1b484f"
+}
+
+*/
+function readCountIncrementer(msg, callback) {
+  console.log("KAFKA : job clickCountIncrementer  of  --> ", msg.id);
+
+  console.log("In handle request:" + JSON.stringify(msg));
+  jobsModel
+    .findOneAndUpdate({ _id: msg.id }, { $inc: { readCounter: 1 } })
+    .then(readCount => {
+      if (!readCount) {
+        callback(null, {
+          success: false,
+          status: "No readCounts increment for user"
+        });
+      } else {
+        callback(null, {
+          success: true,
+          status: "readCount incremented",
+          data: readCount
+        });
+      }
+    })
+    .catch(function(err) {
+      callback(null, {
+        success: false,
+        status: "error for readCountIncrementer"
+      });
+    });
+}
+
+
+function startCountIncrementer(msg, callback) {
+  console.log("KAFKA : job startCountIncrementer  of  --> ", msg.id);
+
+  console.log("In handle request:" + JSON.stringify(msg));
+  jobsModel
+    .findOneAndUpdate({ _id: msg.id }, { $inc: {readCounter: 1, startCounter:1 } })
+    .then(readCount => {
+      if (!readCount) {
+        callback(null, {
+          success: false,
+          status: "No startcounter increment for user"
+        });
+      } else {
+        callback(null, {
+          success: true,
+          status: "startcounter incremented",
+          data: readCount
+        });
+      }
+    })
+    .catch(function(err) {
+      callback(null, {
+        success: false,
+        status: "error for startCOunterIncrementer"
+      });
+    });
+}
+
+
+function completedCountIncrementer(msg, callback) {
+  console.log("KAFKA : job completedCountIncrementer  of  --> ", msg.id);
+
+  console.log("In handle request:" + JSON.stringify(msg));
+  jobsModel
+    .findOneAndUpdate({ _id: msg.id }, { $inc: {readCounter: 1, startCounter:1,completedCounter:1 } })
+    .then(readCount => {
+      if (!readCount) {
+        callback(null, {
+          success: false,
+          status: "No completedCountIncrementer increment for user"
+        });
+      } else {
+        callback(null, {
+          success: true,
+          status: "completedCountIncrementer incremented",
+          data: readCount
+        });
+      }
+    })
+    .catch(function(err) {
+      callback(null, {
+        success: false,
+        status: "error for completedCountIncrementer"
+      });
     });
 }

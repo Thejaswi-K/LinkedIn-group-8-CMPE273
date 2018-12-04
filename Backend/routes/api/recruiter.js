@@ -597,6 +597,78 @@ router.put("/jobs/logs/click-count", function(req, res) {
   );
 });
 
+router.put("/jobs/logs/read-count", function(req, res) {
+  console.log("inside backend update read count for job", req.body.jobid);
+  kafka.make_request(
+    "logs_topic",
+    { path: "readCounter", id: req.body.jobid },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Update readCounter count failed" })
+          .send(err);
+      } else {
+        console.log("Update readCounter count success ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+router.put("/jobs/logs/start-count", function(req, res) {
+  console.log("inside backend update start-count for job", req.body.jobid);
+  kafka.make_request(
+    "logs_topic",
+    { path: "startCounter", id: req.body.jobid },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Update start-count count failed" })
+          .send(err);
+      } else {
+        console.log("Update start-count count success ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
+router.put("/jobs/logs/completed-count", function(req, res) {
+  console.log("inside backend update completed-count count for job", req.body.jobid);
+  kafka.make_request(
+    "logs_topic",
+    { path: "completeCounter", id: req.body.jobid },
+    function(err, result) {
+      if (err) {
+        res
+          .status(404)
+          .json({ success: false, error: "Update completed-count count failed" })
+          .send(err);
+      } else {
+        console.log("Update completed-count count success ", result);
+        if (result.status) {
+          res.status(200);
+          res.send(result);
+        } else {
+          res.status(400).json({ success: false });
+        }
+      }
+    }
+  );
+});
+
 //Route to get the Bottom 5 job posting of a recruiter
 router.get("/:recruiterId/last-five", function(req, res) {
   console.log("inside backend Find last 5 jobs");
