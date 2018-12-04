@@ -22,15 +22,30 @@ class RecruiterViewConnectionsItem extends Component {
         `${CONSTANTS.BACKEND_URL}/recruiters/acceptConnection/${this.email}`,
         requestEmail
       )
-      .then(function(res) {
-        if (res.data) {
-          //create connection in Graph
-
-
-          alert("Connection Accepted Successfully");
-
-          window.location.reload();
+      .then(resGraph=> {
+        if (resGraph.data) {
+          //applicant Create Graph
+          const connectionBody = { email: requestEmail.requestFrom };
+          axios
+            .post(
+              `${CONSTANTS.BACKEND_URL}/graphs/createConnection/${this.email}`,
+              connectionBody
+            )
+            .then(resGraph => {
+              console.log("Graph conencted ", resGraph);
+              alert("Connection Accepted Successfully");
+              window.location.reload();
+            })
+            .catch(errGraph => {
+              console.log("Accept connection failed ", errGraph);
+              alert("Accept Connection Failed");
+            });
         }
+      })
+      .catch(err=>{
+        console.log("Accept connection recruiter failed" , err);
+        alert("accept connection failed");
+
       });
   }
   render() {
