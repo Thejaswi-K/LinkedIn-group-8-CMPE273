@@ -46,6 +46,7 @@ var RecruiterViewConnections = require("./services/recruiter/RecruiterViewConnec
 var RecruiterSendConnections = require("./services/recruiter/RecruiterConnectionSend");
 var RecruiterViewPendingRequests = require("./services/recruiter/RecruiterViewPendingRequests");
 var RecruiterAcceptConnection = require("./services/recruiter/RecruiterConnectionAccept");
+var ApplicantSavedJobs = require("./services/Jobs/ApplicantSavedJobs");
 
 function handleTopicRequest(topic_name, fname) {
   //var topic_name = 'root_topic';
@@ -79,8 +80,8 @@ function handleTopicRequest(topic_name, fname) {
 // Add your TOPICs here
 //first argument is topic name
 //second argument is a function that will handle this topic request
-
-/*handleTopicRequest("logs_topic", Log);
+/*
+handleTopicRequest("logs_topic", Log);
 handleTopicRequest("jobs_topic", Job);
 handleTopicRequest("applicant_details", ApplicantDetails);
 handleTopicRequest("recruiter_details", RecruiterDetails);
@@ -125,7 +126,8 @@ handleTopicRequest("applicant_SearchProfile", ApplicantSearchProfile);
 handleTopicRequest("recruiter_ViewConnection", RecruiterViewConnections);
 handleTopicRequest("recruiter_SendConnection", RecruiterSendConnections);
 handleTopicRequest("recruiter_PendingRequests", RecruiterViewPendingRequests);
-handleTopicRequest("recruiter_AcceptConnection", RecruiterAcceptConnection);*/
+handleTopicRequest("recruiter_AcceptConnection", RecruiterAcceptConnection);
+handleTopicRequest("saved_jobs", ApplicantSavedJobs);*/
 /* ****************************************************
 please  UPDATE  below code before adding new topics
 */
@@ -135,6 +137,7 @@ Run the topics using
 //Change port between 2181(default) / 2183 depending on compatability 
 (bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic logs_topic;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic jobs_topic; 
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_details;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_details;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_details;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic applicant_login;
@@ -175,5 +178,6 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_SendConnection;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_PendingRequests;
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recruiter_AcceptConnection;
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic saved_jobs;
 ) &
 */
