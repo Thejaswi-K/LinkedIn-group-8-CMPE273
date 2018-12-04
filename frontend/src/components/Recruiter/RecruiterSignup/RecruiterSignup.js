@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Redirect } from "react-router";
+
 import RecruiterLoginNavbar from '../../Navbar/RecruiterLoginNavbar';
 import axios from "axios";
 import connect from "react-redux/es/connect/connect";
@@ -56,6 +58,10 @@ class RecruiterSignup extends Component {
     };
 
     render() {
+        let redirectVar = null;
+        if (localStorage.getItem("recruiterToken")) {
+          return redirectVar = <Redirect to="/job" />;
+        }
         let message = null;
         if (this.state.messageDiv !== '') {
             message = (
@@ -84,6 +90,7 @@ class RecruiterSignup extends Component {
                 {/* <div className="text-center">
                     {message}
                 </div> */}
+                {redirectVar}
                 <div id="main-container" className="main background lazy-loaded show-login   " 
                 style={{backgroundImage: "url('https://static.licdn.com/sc/h/64xk850n3a8uzse6fi11l3vmz')"}}>
                     <form id="regForm" className="reg-form" action="" data-jsenabled="check">
