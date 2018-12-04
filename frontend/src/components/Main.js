@@ -14,6 +14,7 @@ import ApplicantSignup from "./Applicant/ApplicantSignup/ApplicantSignup";
 import RecruiterSignup from "./Recruiter/RecruiterSignup/RecruiterSignup";
 import ApplicantProfileView from "./Applicant/ApplicantProfile/ApplicantProfileView";
 import ApplicantProfileViewOnly from "./Applicant/ApplicantProfileViewOnly/ApplicantProfileViewOnly";
+import RecruiterProfileViewOnly from "./Recruiter/RecruiterProfileViewOnly/RecruiterProfileViewOnly";
 import RecruiterProfileView from "./Recruiter/RecruiterProfile/RecruiterProfileView";
 import Provider from "react-redux/es/components/Provider";
 import store from "../store";
@@ -53,6 +54,10 @@ class Main extends Component {
                     <Route
                         path="/applicantprofileviewonly"
                         component={ApplicantProfileViewOnly}
+                    />
+                    <Route
+                        path="/recruiterprofileviewonly"
+                        component={RecruiterProfileViewOnly}
                     />
                     <Route
                         path="/recruiterprofileview"
