@@ -12,13 +12,14 @@ import { isEmpty } from "../validation/ValidationUtil";
 
 const initialState = {
   applicantProfile: {},
-  isAuthenticated: false,
+
   applicantUser: {},
   experience: [],
   education: [],
   skills: [],
   summary: {},
-  delete: ""
+  delete: "",
+    isAuthenticated: false
 };
 
 export default function(state = initialState, action) {
@@ -26,7 +27,7 @@ export default function(state = initialState, action) {
     case SET_APPLICANT_CURRENT_USER:
       return {
         ...state,
-        isAuthenticated: !isEmpty(action.payload),
+        isAuthenticated: true,
         applicantUser: action.payload
       };
     case APPLICANT_PROFILE:

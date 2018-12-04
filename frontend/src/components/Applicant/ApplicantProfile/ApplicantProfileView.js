@@ -42,6 +42,8 @@ class ApplicantProfileView extends Component {
 
         }
 
+
+
     }
 
     componentWillReceiveProps(nextProps) {
