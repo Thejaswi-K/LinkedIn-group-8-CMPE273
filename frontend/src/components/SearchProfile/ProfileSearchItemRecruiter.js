@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { CONSTANTS } from "../../Constants";
+import {withRouter} from "react-router"; 
 import PropTypes from "prop-types";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { connect } from "react-redux";
 import { extractNameFromEmail, capitalizeFirstLetter } from "../../utility";
+
 
 class ProfileSearchItemRecruiter extends Component {
   constructor(props) {
@@ -45,24 +47,24 @@ class ProfileSearchItemRecruiter extends Component {
         }
       });
   }
-  onViewProfile = e => {
-
+  onViewProfile(){
+console.log("Go to applicant profile");
     if(this.props.isRec){
         //call recruiter profile view count
-        e.preventDefault();
+       
         console.log("in applicant profile view")
         this.props.history.push({
-            pathname: "/applicantProfileViewer",
-            state: this.props.toEmail
-        });
+            pathname: "/recruiterprofileviewonly",
+            state: {"clicked":this.props.toEmail, "loggedin": jwt_decode(localStorage.getItem("recruiterToken")).email}
+          });
     }else{ 
       console.log("in recruiter profile view ") 
         //call applicant profile view count
-        e.preventDefault();
+        
         this.props.history.push({
-            pathname: "/recruiterProfileViewer",
-            state: this.props.toEmail
-        });
+            pathname: "/applicantprofileviewonly",
+            state: {"clicked":this.props.toEmail, "loggedin": jwt_decode(localStorage.getItem("recruiterToken")).email}
+          });
     }
     
       
@@ -221,4 +223,4 @@ const mapStateToProps = state => ({
   applicantProfile: state.applicantProfile
 });
 
-export default connect(mapStateToProps)(ProfileSearchItemRecruiter);
+export default withRouter(connect(mapStateToProps)(ProfileSearchItemRecruiter));

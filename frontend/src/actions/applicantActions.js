@@ -126,7 +126,7 @@ export const applicantLogin = userData => dispatch => {
     .catch(err =>
       dispatch({
         type: APPLICANT_SIGNUP_ERROR_REDUCER,
-        payload: err.message
+        payload: err.response.data.error
       })
     );
 };
@@ -330,7 +330,6 @@ export const editSummary = summary => dispatch => {
 //get applicant profile
 export const applicantDetails = applicantEmail => dispatch => {
   axios.defaults.withCredentials = true;
-  setAuthToken(localStorage.getItem("applicantToken"));
 
   axios
     .get(`${CONSTANTS.BACKEND_URL}/applicants/${applicantEmail}`)
