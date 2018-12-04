@@ -5,44 +5,63 @@ import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import { extractNameFromEmail, capitalizeFirstLetter } from "../../utility";
 import jwtDecode from "jwt-decode";
+import { logOutRecruiter } from "../../actions/recruiterActions";
+import { searchProfileFunc } from "../../actions/searchProfileActions";
+import PropTypes from "prop-types";
+import Redirect from "react-router/es/Redirect";
+import connect from "react-redux/es/connect/connect";
 
 class recruiterNavbar extends Component {
+  arr = [];
   constructor(props) {
     super();
     this.state = {
+      firstName: "",
+      isPushed: false,
       isRecruiter: true,
       isLogged: true
       // isTraveler: jwtDecode(localStorage.getItem('token')).isTraveler
     };
     // this.notOwnerHandler = this.notOwnerHandler.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.changeFirstName = this.changeFirstName.bind(this);
+    this.searchProfile = this.searchProfile.bind(this);
   }
   //handle logout to destroy the cookie
-  handleLogout = () => {
+  handleLogout = e => {
     let loggedInUser = capitalizeFirstLetter(
       extractNameFromEmail(
         jwtDecode(localStorage.getItem("recruiterToken")).email
       )
     );
-    localStorage.removeItem("recruiterToken");
-    // let user = {}
-    // this.props.logoutData(false, user, true);
-    this.setState = {
-      ...this.state,
-      isLogged: false
-    };
-    this.props.history.push("/");
+    e.preventDefault();
+    this.props.logOutRecruiter();
     alert(`${loggedInUser} logged out successfully.`);
     console.log("User logged out Successfully.");
   };
-  //  options = [
-  //     'one', 'two', 'three'
-  // ]
-  searchProfile = () => {
-    alert("I was clicked");
+
+  changeFirstName = e => {
+    this.setState({
+      firstName: e.target.value
+    });
+  };
+
+  searchProfile = e => {
+    var data = {
+      firstName: this.state.firstName
+    };
+    this.props.searchProfileFunc(data);
+    this.setState({
+      isPushed: true
+    });
+    // this.props.history.push("/searchProfile");
   };
 
   render() {
+    if (this.state.isPushed) {
+      return <Redirect to="/searchRecruiterProfile" />;
+    }
+
     var loginOrOut;
     var profile;
     var signUp;
@@ -89,20 +108,26 @@ class recruiterNavbar extends Component {
             </div>
           </button>
           <div className="dropdown-menu" aria-labelledby="site-header__login">
-                  <ul style={{ padding: "0px" }}>
-                      <li class="dropdown-item"><Link to="/recruiterDashboard"><span
-                          className="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;My Dashboard</Link>
-                      </li>
-                      <li class="dropdown-item"><Link to="/viewRecruiterPendingRequests"><span
-                          className="glyphicon glyphicon-link"></span>&nbsp;&nbsp;&nbsp;My Requests</Link>
-                      </li>
-                      <li class="dropdown-item">
-                          <Link to="/RecruiterSignup" onClick={this.handleLogout}>
-                              <span className="glyphicon glyphicon-log-out" />
-                              &nbsp;&nbsp;&nbsp;Logout
-                        </Link>
-                      </li>
-                  </ul>
+            <ul style={{ padding: "0px" }}>
+              <li class="dropdown-item">
+                <Link to="/recruiterDashboard">
+                  <span className="glyphicon glyphicon-briefcase" />
+                  &nbsp;&nbsp;&nbsp;My Dashboard
+                </Link>
+              </li>
+              <li class="dropdown-item">
+                <Link to="/viewRecruiterPendingRequests">
+                  <span className="glyphicon glyphicon-link" />
+                  &nbsp;&nbsp;&nbsp;My Requests
+                </Link>
+              </li>
+              <li class="dropdown-item">
+                <Link to="/RecruiterSignup" onClick={this.handleLogout}>
+                  <span className="glyphicon glyphicon-log-out" />
+                  &nbsp;&nbsp;&nbsp;Logout
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       );
@@ -197,7 +222,10 @@ class recruiterNavbar extends Component {
 
     home = (
       <li>
-        <Link to="/recruiterprofileview" className="navbar-brand text-center text-white">
+        <Link
+          to="/recruiterprofileview"
+          className="navbar-brand text-center text-white"
+        >
           <span className="glyphicon glyphicon-home navbar-icon" />
           <div className="text-white">Home</div>
         </Link>
@@ -206,11 +234,14 @@ class recruiterNavbar extends Component {
 
     search = (
       <input
+        name="firstName"
         className="form-control mr-sm-1 "
         type="search"
         placeholder="Search"
         aria-label="Search"
         style={{ width: 250, marginTop: 10 }}
+        value={this.state.firstName}
+        onChange={this.changeFirstName}
       />
     );
 
@@ -263,7 +294,7 @@ class recruiterNavbar extends Component {
                 className="header wrapper login-form login submit-button"
                 type="submit"
                 value="Search"
-                onClick={this.searchProfile.bind(this)}
+                onClick={this.searchProfile}
               />
             </div>
             <div className="collapse navbar-collapse" id="navbarNav">
@@ -283,4 +314,16 @@ class recruiterNavbar extends Component {
   }
 }
 
-export default recruiterNavbar;
+recruiterNavbar.propTypes = {
+  logOutRecruiter: PropTypes.func.isRequired,
+  searchProfileFunc: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  searchProfile: state.searchProfile
+});
+
+export default connect(
+  mapStateToProps,
+  { searchProfileFunc, logOutRecruiter }
+)(recruiterNavbar);

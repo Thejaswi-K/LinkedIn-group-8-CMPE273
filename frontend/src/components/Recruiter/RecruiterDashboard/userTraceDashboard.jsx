@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
 import {CONSTANTS} from '../../../Constants';
+import jwtDecode from 'jwt-decode';
 
 var yLabels = {
   0: "Recruiter Login",
@@ -83,8 +84,8 @@ export default class UserTraceDashboard extends Component {
     super(props);
 
     this.state = {
-      // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "recruiter13@gmail.com",
+       recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
+      //recruiter: "recruiter13@gmail.com",
       user :"",
       chartData: {
         labels: [],

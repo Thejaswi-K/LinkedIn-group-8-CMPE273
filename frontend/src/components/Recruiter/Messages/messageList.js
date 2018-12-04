@@ -132,8 +132,7 @@ messageList.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  messageReducer: state.messageReducer,
-  recruiterProfile: state.recruiterProfile
+  messageReducer: state.messageReducer
 });
 
 export default connect(
