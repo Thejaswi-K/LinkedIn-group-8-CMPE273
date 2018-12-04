@@ -96,7 +96,7 @@ class recruiterNavbar extends Component {
             data-toggle="dropdown"
           >
             {/* {this.props.userData.loginData.userFirstName.toUpperCase()}<span aria-hidden="true" className="caret"></span> */}
-            <span className="glyphicon glyphicon-comment " />
+            <span className="glyphicon glyphicon-user" />
             <div className="text-white">
               {capitalizeFirstLetter(
                 extractNameFromEmail(
