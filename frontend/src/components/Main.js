@@ -158,13 +158,24 @@ class Main extends Component {
           </Switch>
           <Switch>
             {" "}
-            <PrivateRoute path="/viewConnections" component={ViewConnections} />
+            <PrivateRoute path="/viewConnections" component={MainApplicantConnections} />
+          </Switch>
+          <Switch>
+            {" "}
+            <PrivateRoute path="/viewRecruiterConnections" component={MainRecruiterConnections} />
           </Switch>
           <Switch>
             {" "}
             <PrivateRoute
               path="/viewPendingRequests"
               component={ViewPendingRequests}
+            />
+          </Switch>
+          <Switch>
+            {" "}
+            <PrivateRoute
+              path="/viewRecruiterPendingRequests"
+              component={ViewRecruiterPendingRequests}
             />
           </Switch>
           <Switch>
