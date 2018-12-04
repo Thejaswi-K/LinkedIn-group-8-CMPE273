@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
+import jwtDecode from "jwt-decode"
 import ProfileNavbar from "../Navbar/applicantNavbar";
 import * as Validate from "../../validation/ValidationUtil";
 import { capitalizeFirstLetter } from "../../utility";
-
+import { CONSTANTS } from "../../Constants";
+import axios from "axios"
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -49,6 +51,24 @@ class Home extends Component {
       e.preventDefault();
     }
   };
+  componentDidMount(){
+
+    axios.defaults.withCredentials = true;
+    //setAuthToken(localStorage.getItem("recruiterToken"));
+    let trackerdata = { "page": "24" };
+    axios
+        .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + jwtDecode(localStorage.getItem('applicantToken')).email, trackerdata)
+        .then(response => {
+            console.log("Job Search  View Tracked ", response.data);
+
+        })
+        .catch(function (error) {
+            console.log("Tracker errored");
+            console.log(error);
+        });
+
+
+  }
 
   render() {
     let message = null;

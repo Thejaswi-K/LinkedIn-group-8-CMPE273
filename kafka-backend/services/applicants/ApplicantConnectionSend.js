@@ -6,22 +6,9 @@ function handle_request(msg, callback) {
     var res = {};
     
     Applicants.update(
-        {'email':msg.email},
-        {$push:{ 'connectionsRequests':[
-          {'requestFrom':msg.body.requestFrom,'requestTo':msg.body.requestTo, 'isAccepted':false}
-        ]
-      }
-    })
-  .then(job => {
-    if (!job) {
-        res.code = 404 ;
-        res.message = "Applicant Connections not found" ;
-        callback(null,res);
-    }
-    Applicants.update(
         {'email':msg.body.requestFrom},
         {$push:{ 'connectionsRequests':[
-          {'requestFrom':msg.email, 'isAccepted':false}
+          {'requestFrom':msg.email,'requestTo':msg.body.requestTo, 'isAccepted':false}
         ]
       }
     })
@@ -31,10 +18,10 @@ function handle_request(msg, callback) {
         res.message = "Applicant Connections not found" ;
         callback(null,res);
     }
+   
     res.code = 200 ;
     res.message = job ;
     callback(null,res);
-})
 })
 .catch(function (err) {
     res.message = err;

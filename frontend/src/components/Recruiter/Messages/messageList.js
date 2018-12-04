@@ -5,7 +5,7 @@ import { Redirect } from "react-router";
 import MessageView from "./messageView";
 import RecruiterNavbar from "../../Navbar/recruiterNavbar";
 import jwtDecode from "jwt-decode";
-
+import { CONSTANTS } from "../../../Constants";
 // REDUX functionality
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -54,6 +54,22 @@ class messageList extends Component {
       ? jwtDecode(localStorage.getItem("recruiterToken")).email
       : "";
     sessionStorage.setItem("author", author);
+
+
+
+    axios.defaults.withCredentials = true;
+    //setAuthToken(localStorage.getItem("recruiterToken"));
+    let trackerdata = { "page": "10" };
+    axios
+        .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + data.from_email, trackerdata)
+        .then(response => {
+            console.log("Recruiter message  View Tracked ", response.data);
+
+        })
+        .catch(function (error) {
+            console.log("Tracker errored");
+            console.log(error);
+        });
 
     // setAuthToken(localStorage.getItem("applicantToken"));
     this.props.messageListFuncRecruiter(data.from_email);

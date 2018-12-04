@@ -58,6 +58,7 @@ class ProfileSearchItem extends Component {
               this.firstName = this.decodedApplicant.firstName;
               console.log("Emmail", this.email)
           }
+    
           const messageDetails={
               from_email:this.email,
               to_email:this.props.toEmail,
@@ -94,6 +95,7 @@ class ProfileSearchItem extends Component {
         <div className="col-3">
         <h3>{profile.firstName} {profile.lastName}</h3>
         <h5>{profile.city} {profile.state}</h5>
+        <h5>{profile.email}</h5>
         </div>
         <div className="col-4">
         

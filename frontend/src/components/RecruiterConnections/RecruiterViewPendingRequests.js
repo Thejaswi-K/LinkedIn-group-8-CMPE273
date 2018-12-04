@@ -5,6 +5,9 @@ import jwt_decode from "jwt-decode";
 import RecruiterViewPendingRequestsItem from './RecruiterViewPendingRequestsItem';
 import { getRecruiterPendingRequets } from '../../actions/recruiterconnectionActions';
 import RecruiterNavbar from '../Navbar/recruiterNavbar';
+import axios from "axios";
+import { CONSTANTS } from "../../Constants";
+
 class RecruiterViewPendingRequests extends Component {
   arr=[];
     isApplicantLoggedIn = false;
@@ -27,6 +30,22 @@ class RecruiterViewPendingRequests extends Component {
           console.log("Emmail", this.email)
 
       }
+
+      axios.defaults.withCredentials = true;
+      //setAuthToken(localStorage.getItem("recruiterToken"));
+      let trackerdata = { "page": "40" };
+      axios
+          .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.email, trackerdata)
+          .then(response => {
+              console.log("Recruiter Pending connections  View Tracked ", response.data);
+    
+          })
+          .catch(function (error) {
+              console.log("Tracker errored");
+              console.log(error);
+          });
+    
+  
         console.log("Emmail in CDM", this.email)
         this.props.getRecruiterPendingRequets(this.email);
         
@@ -57,8 +76,9 @@ class RecruiterViewPendingRequests extends Component {
           <div className="container" >
           <div className="row">
          
-          <div>
+          <div>   <br/>
                   <h3 className="display-8 text-left"> Your Pending Requests</h3>
+                  <br/>
           </div>
           </div>
             <div className="row">

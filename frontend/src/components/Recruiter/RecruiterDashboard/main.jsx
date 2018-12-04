@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
 import jwtDecode from "jwt-decode";
-
+import {CONSTANTS} from '../../../Constants';
 import RightRailComponent from "./rightrail";
-import  UserTraceDashboard from "./userTraceDashboard";
 import JobNavbar from "../../Navbar/JobNavbar";
 import GraphDashboardMain from "./graphDashboard";
+import setAuthToken from "../../../utils/setAuthToken";
+import axios from 'axios';
 // import GraphTopTenJobPostingComponent from './GraphDashboardComponents/graphTopTenJobPosting';
 
 export default class MainRecruiterDashboard extends Component {
@@ -13,13 +14,31 @@ export default class MainRecruiterDashboard extends Component {
     super(props);
 
     this.state = {
-      // recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
-      recruiter: "ag@gmail.com"
+       recruiter: localStorage.getItem('recruiterToken')?jwtDecode(localStorage.getItem('recruiterToken')).email : "",
+      //recruiter: "ag@gmail.com"
     };
     this.userTraceRedirect = this.userTraceRedirect.bind(this);
     this.locationTraceRedirect = this.locationTraceRedirect.bind(this);
   }
 
+
+  componentDidMount() {
+    axios.defaults.withCredentials = true;
+    //setAuthToken(localStorage.getItem("recruiterToken"));
+    let trackerdata = { "page":"16"};
+    axios
+    .put(`${CONSTANTS.BACKEND_URL}/recruiters/track/` + this.state.recruiter,trackerdata)
+    .then(response => {
+      console.log("Recruiter Dashboard Tracked ",response.data);
+      
+    }) 
+    .catch(function(error) {
+      console.log("errored");
+      console.log(error);
+    });
+  
+
+  }
   userTraceRedirect = (e) =>{
     e.preventDefault();
   
@@ -28,7 +47,7 @@ export default class MainRecruiterDashboard extends Component {
       
       })
     }
-  
+
   locationTraceRedirect = (e) =>{
       e.preventDefault();
     
@@ -41,7 +60,7 @@ export default class MainRecruiterDashboard extends Component {
     // check for auth flag
     let redirectVar = null;
     if (!localStorage.getItem("recruiterToken")) {
-      redirectVar = <Redirect to="/" />;
+      redirectVar = <Redirect to="/recruiterSignup" />;
     }
     return (
       <div
@@ -53,7 +72,7 @@ export default class MainRecruiterDashboard extends Component {
           borderRadius: "15px"
         }}
       >
-        {/* {redirectVar} */}
+        {redirectVar}
 
         <JobNavbar />
 
