@@ -7,6 +7,7 @@ import jwt_decode from "jwt-decode";
 import { connect } from "react-redux";
 import { jobDetalsByID } from "../../actions/jobSearchActions"; 
 import { withRouter } from "react-router-dom";
+import * as Validate from '../../validation/ValidationUtil';
 class JobApply extends Component {
     constructor(props){
         super(props);
@@ -20,7 +21,8 @@ class JobApply extends Component {
             diversity:"",
             disability:"",
             resume:"",
-            coverletter:""
+            coverletter:"",
+            validationMessage:""
         }
         if (localStorage.getItem("applicantToken")) {
             let token = localStorage.getItem("applicantToken");
@@ -57,53 +59,70 @@ class JobApply extends Component {
     }
     applyJobHandler = (e) => {
         e.preventDefault();
-        axios.defaults.withCredentials = true;
-        const { resume } = this.state;
-        const { coverletter } = this.state;
-        const formData = new FormData();
-        formData.append('resume', resume);
-        formData.append('coverletter', coverletter);
-        axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
-        .then((result=>{
-            console.log("upload successful");
-            const data = {
-                firstName: this.state.firstname,
-                lastName: this.state.lastname,
-                email: this.state.email,
-                address: this.state.address,
-                hearAboutUs: this.state.hearaboutus,
-                sponsorship: this.state.sponsorship,
-                diversity: this.state.diversity,
-                disability: this.state.disability,
-                resume: this.state.resume.name,
-                coverLetter: this.state.coverletter.name
-            }
-            console.log("submit data",data);
-            console.log("apply job axios post", CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.jobID);
-            axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.jobID, data)
-            .then(response=>{
-                console.log("job applied through regular apply");
-                window.close();
-            })
-            .catch(function(error){
-                console.log(error);
+        const data = {
+            firstName: this.state.firstname,
+            lastName: this.state.lastname,
+            email: this.state.email,
+            address: this.state.address,
+            hearAboutUs: this.state.hearaboutus,
+            sponsorship: this.state.sponsorship,
+            diversity: this.state.diversity,
+            disability: this.state.disability,
+            resume: this.state.resume.name,
+            coverLetter: this.state.coverletter.name
+        }
+        console.log("submit data",data);
+        let valid = Validate.applyJob(data);
+        if(valid === ''){
+            axios.defaults.withCredentials = true;
+            const { resume } = this.state;
+            const { coverletter } = this.state;
+            const formData = new FormData();
+            formData.append('resume', resume);
+            formData.append('coverletter', coverletter);
+            axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
+            .then((result=>{
+                console.log("upload successful");
+                
+                console.log("apply job axios post", CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.jobID);
+                axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.jobID, data)
+                .then(response=>{
+                    console.log("job applied through regular apply");
+                    window.close();
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+            }))
+            .catch((error)=>{
+                console.log("unable to upload");
+            });  
+        }
+        else {
+            this.setState({
+                validationMessage: valid
             });
-        }))
-        .catch((error)=>{
-            console.log("unable to upload");
-        });  
-        
+        } 
     };
 
     backHandler = (e) => {
         window.close();
     }
     render() { 
+        let message;
+        if(this.state.messagediv !== ''){
+            message = this.state.validationMessage;
+        } else {
+            message = "";
+        }
         return ( 
             <div>
                 <ProfileNavbar />
                 <Card className="w-80 p-3 ml-5">
                     <form className="form-group">
+                        <label className = "form-group" style={{color:"red"}}>
+                            {message}
+                        </label>
                         <div className="row">
                             <div className="col">
                                 <label>First name</label>

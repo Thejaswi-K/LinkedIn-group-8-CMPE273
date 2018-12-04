@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { jobDetalsByID } from "../../actions/jobSearchActions"; 
 import { withRouter } from "react-router-dom";
 import { CONSTANTS } from '../../Constants';
-
+import * as Validate from '../../validation/ValidationUtil';
 class JobDetails extends Component {
     constructor(props) {
         super(props);
@@ -23,7 +23,8 @@ class JobDetails extends Component {
             disability:"",
             resume:"",
             coverletter:"",
-            companyPhoto:""
+            companyPhoto:"",
+            validationMessage:""
         };
         if (localStorage.getItem("applicantToken")) {
             let token = localStorage.getItem("applicantToken");
@@ -57,7 +58,7 @@ class JobDetails extends Component {
     componentDidMount(){
         console.log("Job details initial state", this.state);
         axios.defaults.withCredentials = true;
-        axios.put(CONSTANTS.BACKEND_URL+"/recruiters/jobs/logs/click-count",{ "jobid": this.props.jobSearchReducer.jobDetailsByID})
+        axios.put(CONSTANTS.BACKEND_URL+"/recruiters/jobs/logs/click-count",{ "jobid": localStorage.getItem('jobId')})
         .then(response => {
             console.log("click count successful");
         })
@@ -71,7 +72,7 @@ class JobDetails extends Component {
                 ...this.state,
                 applicantData: response.data
             });
-            axios.get(CONSTANTS.BACKEND_URL+"/jobs/" + this.props.jobSearchReducer.jobDetailsByID)
+            axios.get(CONSTANTS.BACKEND_URL+"/jobs/" + localStorage.getItem('jobId'))
             .then(response => {
                 console.log("response in then",response.data.data[0].companyLogo);
                 if(response.data.data[0].companyLogo){
@@ -102,8 +103,8 @@ class JobDetails extends Component {
                     });
                 }
                 console.log("applicantData", this.state.applicantData);
-                console.log("JobID", this.props.jobSearchReducer.jobDetailsByID); 
-                if(this.state.applicantData.appliedJobs.indexOf(this.props.jobSearchReducer.jobDetailsByID) > -1){
+                console.log("JobID", localStorage.getItem('jobId')); 
+                if(this.state.applicantData.appliedJobs.indexOf(localStorage.getItem('jobId')) > -1){
                     this.setState({
                         appliedStatus: true
                     });
@@ -121,8 +122,8 @@ class JobDetails extends Component {
     
     saveHandler = (e) => {
         e.preventDefault();
-        console.log("save call", CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID+"/save");
-        axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID+"/save")
+        console.log("save call", CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+localStorage.getItem('jobId')+"/save");
+        axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+localStorage.getItem('jobId')+"/save")
         .then(response=>{
             this.setState({
                 savedStatus: true
@@ -134,54 +135,66 @@ class JobDetails extends Component {
     };
     applyJobHandler = (e) => {
         e.preventDefault();
-        sessionStorage.setItem("jobId",this.props.jobSearchReducer.jobDetailsByID);
+        sessionStorage.setItem("jobId",localStorage.getItem('jobId'));
         window.open(CONSTANTS.ROOTURL+"/jobApply","_blank");
     };
     easyApplyJobHandler = (e) => {
         e.preventDefault();
-        axios.defaults.withCredentials = true;
-        const { resume } = this.state;
-        const { coverletter } = this.state;
-        const formData = new FormData();
-        formData.append('resume', resume);
-        formData.append('coverletter', coverletter);
-        axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
-        .then((result=>{
-            console.log("upload successful");
-            let applicant_resume = "";
-            (this.state.applicantData.resume)? applicant_resume = this.state.applicantData.resume: applicant_resume = this.state.resume;
-            const data = {
-                firstName: this.state.applicantData.firstName,
-                lastName: this.state.applicantData.lastName,
-                email: this.state.applicantData.email,
-                address: this.state.address,
-                hearAboutUs: this.state.hearaboutus,
-                sponsorship: this.state.sponsorship,
-                diversity: this.state.diversity,
-                disablility: this.state.disability,
-                resume: applicant_resume,
-                coverLetter: this.state.coverletter.name
-            }
-            console.log("submit data",data);
-    
-            axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+this.props.jobSearchReducer.jobDetailsByID, data)
-            .then(response=>{
-                this.setState({
-                    appliedStatus: true
+        let applicant_resume = "";
+        (this.state.applicantData.resume)? applicant_resume = this.state.applicantData.resume: applicant_resume = this.state.resume.name;
+        const data = {
+            firstName: this.state.applicantData.firstName,
+            lastName: this.state.applicantData.lastName,
+            email: this.state.applicantData.email,
+            address: this.state.address,
+            hearAboutUs: this.state.hearaboutus,
+            sponsorship: this.state.sponsorship,
+            diversity: this.state.diversity,
+            disablility: this.state.disability,
+            resume: applicant_resume,
+            coverLetter: this.state.coverletter.name
+        }
+        console.log("submit data",data);
+        let valid = Validate.applyJob(data);
+        if(valid === ''){
+            axios.defaults.withCredentials = true;
+            const { resume } = this.state;
+            const { coverletter } = this.state;
+            const formData = new FormData();
+            formData.append('resume', resume);
+            formData.append('coverletter', coverletter);
+            axios.post(CONSTANTS.BACKEND_URL+"/api/documentsUpload/uploadResume", formData)
+            .then((result=>{
+                console.log("upload successful");
+                axios.post(CONSTANTS.BACKEND_URL+"/applicants/"+this.email+"/jobs/"+localStorage.getItem('jobId'), data)
+                .then(response=>{
+                    this.setState({
+                        appliedStatus: true
+                    })
+                    alert("Job applied successfully");
                 })
-                alert("Job applied successfully");
-            })
-            .catch(function(error){
-                console.log(error);
+                .catch(function(error){
+                    console.log(error);
+                });
+            }))
+            .catch((error)=>{
+                console.log("unable to upload");
             });
-        }))
-        .catch((error)=>{
-            console.log("unable to upload");
-        });
-        
+        }
+        else {
+            this.setState({
+                validationMessage: valid
+            });
+        } 
     };
 
     render() { 
+        let message;
+        if(this.state.messagediv !== ''){
+            message = this.state.validationMessage;
+        } else {
+            message = "";
+        }
         const easyApply = this.state.easyApply;
         const savedStatus = this.state.savedStatus;
         const appliedStatus = this.state.appliedStatus;
@@ -249,6 +262,9 @@ class JobDetails extends Component {
                                             </div>
                                             <div className="modal-body">
                                                 <form className="form-group">
+                                                    <label className = "form-group" style={{color:"red"}}>
+                                                        {message}
+                                                    </label>
                                                     <div className="row">
                                                         <div className="col">
                                                             <label>First name</label>
@@ -314,14 +330,14 @@ class JobDetails extends Component {
                                                         </div>:
                                                         <div>
                                                         <label>Upload your resume</label>
-                                                        <input type="file" className="form-control-file" id="exampleFormControlFile1" title = "Choose a video please" name="resume" onChange={this.valueChangeHandler} />
+                                                        <input type="file" className="form-control-file" id="exampleFormControlFile1" title = "Choose your resume please" name="resume" onChange={this.valueChangeHandler} />
                                                         </div>
                                                     }
                                                     </div>
                                                     <br />
                                                     <div class="form-group">
                                                         <label>Upload your cover letter</label>
-                                                        <input type="file" className="form-control-file" id="exampleFormControlFile1" name="coverletter" onChange={this.valueChangeHandler}/>
+                                                        <input type="file" className="form-control-file" id="exampleFormControlFile1" title = "Choose your cover letter please" name="coverletter" onChange={this.valueChangeHandler}/>
                                                     </div>
                                                 </form>
                                             </div>
