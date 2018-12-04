@@ -4,6 +4,7 @@ import {Component} from "react";
 import connect from "react-redux/es/connect/connect";
 import {editSummary} from "../../../actions/applicantActions";
 import {getPhoto, postPhotos} from "../../../actions/photoActions";
+import * as Validate from "../../../validation/ValidationUtil";
 
 var React = require('react');
 
@@ -26,7 +27,8 @@ class Summary extends Component {
             profileImage: "",
             zipcode: "",
             gender: "",
-            resume: ""
+            resume: "",
+            messagediv:"",
         };
         this.getPhoto = false;
         this.handleClicked = false;
@@ -331,15 +333,22 @@ class Summary extends Component {
             gender: this.refs.gender.value,
             resume:  this.resume
         };
+        let valid = Validate.editProfile(experience);
+        if(valid === '') {
+            var body = {
+                summary: experience,
+                email: this.props.applicantEmail
+            };
+
+            this.props.editSummary(body);
+            this.edit = true;
+        }else {
+            alert("Please enter valid zipcode");
+        }
 
 
-        var body = {
-            summary: experience,
-            email: this.props.applicantEmail
-        };
 
-        this.props.editSummary(body);
-        this.edit = true;
+
 
     }
 
