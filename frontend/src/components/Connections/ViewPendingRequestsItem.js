@@ -41,7 +41,7 @@ class ViewConnectionsItem extends Component {
             })
             .catch(errGraph => {
               console.log("Accept connection failed ", errGraph);
-              alert("Accept Connection Failed");
+              //alert("Accept Connection Failed");
             });
         }
       })

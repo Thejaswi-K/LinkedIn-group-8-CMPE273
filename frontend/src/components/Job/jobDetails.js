@@ -286,7 +286,7 @@ class JobDetails extends Component {
                                 <a>
                                     <img className="img-thumbnail" style={{width: "200px", height: "200px"}}
                                     src={this.state.companyPhoto}
-                                    alt="//vignette.wikia.nocookie.net/bungostraydogs/images/1/1e/Profile-icon-9.png/revision/latest?cb=20171030104015" />
+                                    />
                                 </a>
                             </div>
                             <div className="container col-9" display="inline">

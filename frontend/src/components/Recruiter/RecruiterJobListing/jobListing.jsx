@@ -185,11 +185,9 @@ class JobListingComponent extends Component {
                     </br>
                     <dl className="row">
                         <dt className="col">Applicants Viewed :</dt>
-                        <dd className="col">{job.readCounter} </dd>
+                        <dd className="col">{job.readCounter - job.startCounter} </dd>
                         <dt className="col">Applicants InProgress :</dt>
-                        <dd className="col">{job.startCounter}</dd>
-                        <dt className="col">Applicants Completed :</dt>
-                        <dd className="col">{job.completedCounter}</dd>
+                        <dd className="col">{job.startCounter - job.completedCounter}</dd>
                       </dl>
                   </div>
                 </li>

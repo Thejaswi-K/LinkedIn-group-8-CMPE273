@@ -108,7 +108,7 @@ class JobApply extends Component {
 
                         axios.defaults.withCredentials = true;
                         axios
-                            .put(`${CONSTANTS.BACKEND_URL}/recruiters/jobs/logs/completed-count`, { "jobid": this.jobID })
+                            .put(`${CONSTANTS.BACKEND_URL}/recruiters/jobs/logs/completed-count`, { "jobid": sessionStorage.getItem("jobId") })
                             .then(response => {
                                 console.log("Job complete count incremented ", response.data);
 
